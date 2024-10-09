@@ -1,0 +1,43 @@
+{
+  "BrandVoiceTitle": "Brand Voice",
+  "BrandVoiceSubTitle": "",
+
+  "valuesLabel": "Your Values",
+  "valuesDesc": "Indicate in one sentence what is essential for your entity, your project",
+  "valuesPlaceHolder": "The love of wood of the men and women of the company",
+
+  "historyLabel": "Your history",
+  "historyDesc": "Tell the history about your project, your company...",
+  "historyPlaceHolder": "Once upon a time...",
+
+  "anecdotesLabel": "Anecdotes",
+  "anecdotesDesc": "  Remember anecdotes about your project, your company. Do not hesitate to tell several.",
+  "anecdotesPlaceHolder": "I remember...",
+
+  "EditorialLineTitle": "Editorial Line",
+  "EditorialLineSubTitle": "",
+
+  "benefitsLabel": "Benefits",
+  "benefitsDesc": "Explain the benefits of your approach. Be educational.",
+  "benefitsPlaceHolder": "Our approach finally allows to...",
+
+  "painsLabel": "Pains",
+  "painsDesc": "Indicate which pains you alleviate.",
+  "painsPlaceHolder": "Usually, this requires a lot of time, days of work. Now, with our approach, it's 1 hour.",
+
+  "solutionsLabel": "Solutions",
+  "solutionsDesc": "Explain by what means you make the pain disappear.",
+  "solutionsPlaceHolder": "Thanks to...",
+
+  "offersLabel": "Offers",
+  "offersDesc": "Describe your offer of products, solutions, services by clearly showing the differences between each.",
+  "offersPlaceHolder": "We offer 2 ranges of products/solutions/service offers/...",
+
+  "uniqueFeaturesLabel": "Competitive Advantages",
+  "uniqueFeaturesDesc": "Provide your unique characteristics, features and describe them succinctly with meaningful words. Be specific, avoid generic, grandiose terms that are vague and do not provide any information.",
+  "uniqueFeaturesPlaceHolder": "We are the only ones to...",
+  
+  "AtLeast": "Must be at least {{length}} chars.",
+
+  "Stop": "Stop"
+}

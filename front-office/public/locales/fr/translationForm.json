@@ -1,0 +1,153 @@
+{
+  "BrandVoiceTitle": "Vos valeurs",
+  "BrandVoiceSubTitle": "Sous-titre",
+
+  "valuesLabel": "Vos valeurs",
+  "valuesDesc": "Indiquez en une phrase ce qui est essentiel pour votre entité, votre projet",
+  "valuesPlaceHolder": "L'amour du bois des hommes et des femmes de l'entreprise",
+
+  "historyLabel": "Votre histoire",
+  "historyDesc": "Racontez l'histoire de votre projet, votre société",
+  "historyPlaceHolder": "Il était une fois...",
+
+  "anecdotesLabel": "Anecdotes",
+  "anecdotesDesc": "Rappelez-vous des anecdotes sur votre projet, votre société. N'hésitez pas à en raconter plusieurs.",
+  "anecdotesPlaceHolder": "Je me rappelle...",
+
+  "EditorialLineTitle": "Ligne éditoriale",
+  "EditorialLineSubTitle": "",
+
+  "Pitch": "Présentation",
+  "Target": "Cible",
+  "Content": "Contenu",
+  "Frequency": "Fréquence",
+  "Scheduling": "Programmation",
+
+  "benefitsLabel": "Bénéfices",
+  "benefitsDesc": "Expliquez les bénéfices de votre approche. Soyez pédagogique.",
+  "benefitsPlaceHolder": "Notre approche permet enfin de...",
+
+  "painsLabel": "Douleurs",
+  "painsDesc": "Indiquez quelles douleurs vous soulagez.",
+  "painsPlaceHolder": "Habituellement, cela nécessite beaucoup de temps, des jours de travail. Maitenant, avec notre approche, c'est 1h.",
+
+  "solutionsLabel": "Solutions",
+  "solutionsDesc": "Expliquez par quel moyen vous faîtes disparaître la douleur.",
+  "solutionsPlaceHolder": "Grâce à...",
+
+  "offersLabel": "Offres",
+  "offersDesc": "Décrivez votre offre de produits, de solutions, de services en montrant bien les différences entre chaque.",
+  "offersPlaceHolder": "Nous proposons 2 gammes de produits/solutions/offres de services/...",
+
+  "uniqueFeaturesLabel": "Avantages concurrentiels",
+  "uniqueFeaturesDesc": "Donnez vos caractéristiques, fonctionnalités uniques et décrivez-les succinctement avec des mots qui ont du sens. Soyez précis, évitez les termes génériques, ronflants qui sont vagues et n'apportent aucune information.",
+  "uniqueFeaturesPlaceHolder": "Nous sommes les seul.e.s à...",
+
+  "icpLabel": "Profil client idéal (ICP)",
+  "icpDesc": "Indiquez et détaillez les 3 principaux profils de société que vous ciblez. Plus ils sont ciblés et spécialisés, plus la prospection est efficace.",
+  "icpPlaceHolder": "PME historique, ayant de nombreux clients et pour lesquelles la valeur humaine est fondamentale. C'est d'abord une histoire d'hommes et de femmes.",
+
+  "buyerPersonaLabel": "Profil acheteur",
+  "buyerPersonaDesc": "Indiquez et détaillez les 3 principaux buyer personae que vous ciblez. Plus ils sont ciblés et spécialisés, plus la prospection est efficace.",
+  "buyerPersonaPlaceHolder": "Chargé de projet marketing",
+
+  "themesLabel": "Thèmes",
+  "themesDesc": "Indiquez les thèmes que vous souhaitez aborder",
+  "themesPlaceHolder": "L'utilisation de l'IA dans les entreprises pour gagner en compétitivité, les usines à contenus en entreprise",
+
+  "rolesLabel": "Roles",
+  "rolesDesc": "Indiquez et détaillez les rôles disponibles pour la génération des contenus.",
+  "rolesPlaceHolder": "Sélectionnez un role",
+
+  "styleLabel": "Style",
+  "styleDesc": "Un style d'écriture est souvent reconnaissable grâce à la combinaison unique de ces éléments et à la manière dont un auteur les utilise pour transmettre une histoire, une argumentation ou une idée.",
+  "stylePlaceHolder": "Sélectionnez un style",
+
+  "vocabularyLabel": "Vocabulaire",
+  "vocabularyDesc": "L'utilisation de mots spécifiques, leur complexité, l'étendue du lexique et l'usage de jargon ou d'argot contribuent grandement à définir un style d'écriture. Certains auteurs peuvent préférer un langage simple et direct, tandis que d'autres optent pour des termes plus recherchés ou techniques.",
+  "vocabularyPlaceHolder": "Sélectionnez le type de vocabulaire.",
+
+  "syntaxLabel": "Syntaxe",
+  "syntaxDesc": "Cela inclut la longueur des phrases, la complexité de la construction des phrases, l'utilisation de phrases courtes et incisives ou, au contraire, de phrases longues et fluides. La syntaxe influence également le rythme de la lecture et la façon dont les idées sont assemblées.",
+  "syntaxPlaceHolder": "Sélectionnez une syntaxe",
+
+  "toneLabel": "Ton",
+  "toneDesc": "Le ton reflète l'attitude de l'auteur envers le sujet et les lecteurs. Il peut être formel, informel, humoristique, grave, sarcastique, etc. Le ton donne une couleur émotionnelle au texte et aide à établir une connexion avec le lecteur.",
+  "tonePlaceHolder": "Sélectionnez un ton",
+
+  "pointOfViewLabel": "Point de vue",
+  "pointOfViewDesc": "La perspective à partir de laquelle une histoire est racontée influence le style d'écriture. Le choix entre la première personne, la deuxième personne ou la troisième personne, omnisciente ou limitée, change la façon dont l'histoire est présentée et reçue.",
+  "pointOfViewPlaceHolder": "Sélectionnez le point de vue.",
+
+  "structureLabel": "Structure",
+  "structurePlaceHolder": "Sélectionnez la structure.",
+  "structureDesc": "La façon dont un texte est organisé peut définir un style d'écriture. Cela inclut non seulement la structure générale d'une œuvre (par exemple, chronologique, non linéaire, en flashback) mais aussi la structure des paragraphes et des chapitres. La cohérence et la clarté de la structure contribuent à la signature stylistique de l'auteur.",
+
+  "genderLabel": "Genre",
+  "genderDesc": "Indiquez éventuellement si vous vous adressez à un genre particulier",
+  "genderPlaceHolder": "Sélectionnez un genre",
+  "genderSearch": "Cherchez un genre",
+  
+  "languageLabel": "Langue",
+  "languageDesc": "Choisissez la langue de publication.",
+  "languagePlaceHolder": "Sélectionnez une langue",
+  "languageSearch": "Cherchez une langue",
+
+  "emojisLabel": "Nb emojis",
+  "emojisDesc": "Nombre d'émojis par paragraphe",
+  "emojisPlaceHolder": "Sélectionnez un nombre d'émojis",
+  "emojisSearch": "Cherchez un nombre d'émojis",
+
+  "emojisGranularityLabel": "Niveau des émojis",
+  "emojisGranularityDesc": "Niveau d'apparition des émojis.",
+  "emojisGranularityPlaceHolder": "Sélectionnez le niv. d'apparition des émojis",
+  "emojisGranularitySearch": "Cherchez le niv. d'apparition",
+
+  "Paragraph": "Paragraphe",
+  "Sentence": "Phrase",
+
+  "frequencyLabel": "Fréquence",
+  "frequencyDesc": "Nombre de publications",
+  "frequencyPlaceHolder": "Sélectionnez une fréquence",
+  "frequencySearch": "Cherchez une fréquence",
+
+  "1T": "Une fois",
+  "2T": "Deux fois",
+  "3T": "Trois fois",
+  "4T": "Quatre fois",
+  "5T": "Cinq fois",
+  "6T": "Six fois",
+  "7T": "Sept fois",
+  "8T": "Huit fois",
+  "9T": "Neuf fois",
+  "10T": "Dix fois",
+  
+  "frequencyGranularityLabel": "Type de fréquence",
+  "frequencyGranularityDesc": "Type de fréquence (quotidien, hebdomadaire, bi-hebdomadaire...",
+  "frequencyGranularityPlaceHolder": "Sélectionnez un type de fréquence",
+  "frequencyGranularitySearch": "Cherchez un type de fréquence",
+
+  "Day": "Jour",
+  "Week": "Semaine",
+  "Fortnight": "Quinzaine",
+  "Month": "Mois",
+  "Quarter": "Trimestre",
+  "Half-Year": "Semestre",
+  "Year": "An",
+
+  "frameworkLabel": "Tactique",
+  "frameworkDesc": "TOFU/MOFU/BODU (Top/Middle/Bottom Of FUnnel) ou AARRR (Acquisition, Activation, Retention, Recommandation, Revenue",
+  "frameworkPlaceHolder": "Sélectionnez une tactique",
+  "frameworkSearch": "Cherchez une tactique",
+
+  "signatureLabel": "Signature",
+  "signatureDesc": "Écrivez la signature que vous voulez retrouver en bas de vos messages.",
+  "signaturePlaceHolder": "Sélectionnez une signature",
+  "signatureSearch": "Cherchez une signature",
+
+  "AtLeast": "Contenu trop court. Doit avoir au moins {{length}} caractères.",
+  "AtMost": "Contenu trop long. Doit avoir au plus {{length}} caractères.",
+
+  "NoMatter": "Indifférent",
+  "Stop": "Stop"
+}

@@ -1,0 +1,99 @@
+diff --git a/src/components/AudioRecordingComponent.tsx b/src/components/AudioRecordingComponent.tsx
+index 8b376d3..7c4d94b 100644
+--- a/src/components/AudioRecordingComponent.tsx
++++ b/src/components/AudioRecordingComponent.tsx
+@@ -37,6 +37,7 @@ const AudioRecorder: (props: Props) => ReactElement = ({
+   downloadFileExtension = "webm",
+   showVisualizer = false,
+   mediaRecorderOptions,
++  visualizer,
+   classes,
+ }: Props) => {
+   const {
+@@ -162,14 +163,14 @@ const AudioRecorder: (props: Props) => ReactElement = ({
+             <Suspense fallback={<></>}>
+               <LiveAudioVisualizer
+                 mediaRecorder={mediaRecorder}
+-                barWidth={2}
+-                gap={2}
+-                width={140}
+-                height={30}
+-                fftSize={512}
+-                maxDecibels={-10}
+-                minDecibels={-80}
+-                smoothingTimeConstant={0.4}
++                barWidth={visualizer?.barWidth?? 2}
++                gap={visualizer?.gap?? 2}
++                width={visualizer?.width?? 70}
++                height={visualizer?.height?? 30}
++                fftSize={visualizer?.fftSize?? 512}
++                maxDecibels={visualizer?.maxDecibels?? -10}
++                minDecibels={visualizer?.minDecibels?? -80}
++                smoothingTimeConstant={visualizer?.smoothingTimeConstant?? 0.4}
+               />
+             </Suspense>
+           )}
+diff --git a/src/components/interfaces.ts b/src/components/interfaces.ts
+index 998b435..0de5d22 100644
+--- a/src/components/interfaces.ts
++++ b/src/components/interfaces.ts
+@@ -3,6 +3,17 @@ import {
+   recorderControls,
+ } from "../hooks/useAudioRecorder";
+ 
++interface VisualizerProps {
++  width?: string;
++  height?: string;
++  barWidth?: number;
++  gap?: number;
++  fftSize?: 512 | 32 | 64 | 128 | 256 | 1024 | 2048 | 4096 | 8192 | 16384 | 32768 | undefined;
++  maxDecibels?: number;
++  minDecibels?: number;
++  smoothingTimeConstant?: number;
++}
++
+ interface StyleProps {
+   /**
+    * Applies passed classes to audio recorder container
+@@ -77,6 +88,10 @@ export interface Props {
+    * The options passed to the HTML MediaRecorder API.
+    **/
+   mediaRecorderOptions?: MediaRecorderOptions;
++  /**
++   * The options passed to the visualizer options
++   **/
++  visualizer?: VisualizerProps
+   /**
+    * Custom classes to changes styles.
+    **/
+diff --git a/src/hooks/useAudioRecorder.ts b/src/hooks/useAudioRecorder.ts
+index 18db0ea..73753e6 100644
+--- a/src/hooks/useAudioRecorder.ts
++++ b/src/hooks/useAudioRecorder.ts
+@@ -58,11 +58,12 @@ const useAudioRecorder: (
+     const interval = setInterval(() => {
+       setRecordingTime((time) => time + 1);
+     }, 1000);
++    
+     setTimerInterval(interval);
+   }, [setRecordingTime, setTimerInterval]);
+ 
+   const _stopTimer: () => void = useCallback(() => {
+-    timerInterval != null && clearInterval(timerInterval);
++    timerInterval != null && clearInterval(Number(timerInterval));
+     setTimerInterval(undefined);
+   }, [timerInterval, setTimerInterval]);
+ 
+diff --git a/src/styles/audio-recorder.css b/src/styles/audio-recorder.css
+index 42d51bc..41bc347 100644
+--- a/src/styles/audio-recorder.css
++++ b/src/styles/audio-recorder.css
+@@ -70,7 +70,7 @@
+ 
+ .recording {
+     border-radius: 12px;
+-    width: 300px;
++    width: 200px;
+     transition: all 0.2s ease-out;
+ }
+ 

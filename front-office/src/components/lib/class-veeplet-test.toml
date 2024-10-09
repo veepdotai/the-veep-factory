@@ -1,0 +1,141 @@
+[metadata]
+schema = 1.0
+name = "veepdotai"
+# ns = "veeplet.kermaprojects.jck.marketing.social_network.linkedin-marketing"
+# ns = "veeplet.{orgId}.{authorId}.{category}.{subCategory}.{name}
+summary = '''
+Cette Veeplet permet de générer un dossier de synthèse à partir d'un contenu initial, ici sous la forme d'un vocal.
+'''
+reviews = 5
+version = 1.0
+
+effort = 10
+
+[owner]
+creationDate = "20231219"
+authorId = "JCK"
+orgId = "kermaprojects"
+
+[metadata.publication]
+status = "active" # *active | draft | inactive
+scope = "public"  # *private | public | useonly
+
+[metadata.classification]
+group = "Business"
+category = "Marketing"
+subCategory = "Social_Network"
+
+[details.presentation]
+heading = "Métadonnées"
+icon = "Heading"
+image = "/assets/images/linkedin.jpg"
+tips1 = "Idéalement, c'est le même contexte que pour un post ou un article de blog"
+tips2 = "Nope"
+description = '''
+Présentation au format markdown
+'''
+
+[details.usermanual]
+description = '''
+Manuel utilisateur au format markdown
+'''
+
+[details.adminmanual]
+description = '''
+Manuel administrateur au format markdown
+'''
+
+[details.faq]
+faq1.q = '''
+Question au format markdown
+'''
+faq1.a = '''
+Réponse au format markdown
+'''
+
+[details.changelog]
+description = '''
+Changelog au format Markdown
+'''
+
+[details.screenshots]
+screenshot1.title = ""
+screenshot1.href = ""
+screenshot2.title = ""
+screenshot2.href = ""
+screenshot3.title = ""
+screenshot3.href = ""
+
+[prompts]
+chain = ['g0', 'g1', 'g2', 'g3', 'g4', 'g5']
+
+[prompts.g0]
+label = "Plan"
+prompt = '''
+{{inspiration}}
+
+A partir du texte ci-dessus, extrais un plan détaillé du contenu en 3 parties, en ajoutant une introduction et une conclusion.
+'''
+
+[prompts.g1]
+label = "Intro"
+prompt = '''
+Source:
+{{inspiration}}
+
+Plan:
+{{g0}}
+
+A partir de la source et du plan, rédige l'introduction.
+'''
+
+[prompts.g2]
+label = "P.1"
+prompt = '''
+Source:
+{{inspiration}}
+
+Plan:
+{{g0}}
+
+A partir de la source, rédige la partie 1 du plan.
+'''
+
+[prompts.g3]
+label = "P.2"
+prompt = '''
+Source:
+{{inspiration}}
+
+Plan:
+{{g0}}
+
+A partir de la source, rédige la partie 2 du plan.
+'''
+
+[prompts.g4]
+label = "P.3"
+prompt = '''
+Source:
+{{inspiration}}
+
+Plan:
+{{g0}}
+
+A partir de la source et du plan, rédige la partie 3 du plan.
+'''
+
+[prompts.g5]
+label = "Conclusion"
+prompt = '''
+Source:
+{{inspiration}}
+
+Plan:
+{{g0}}
+
+Introduction:
+{{g1}}
+
+A partir de la source, du plan et de l'introduction, rédige la conclusion.
+'''

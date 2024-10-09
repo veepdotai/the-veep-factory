@@ -1,0 +1,40 @@
+.reactMarkdown :root {
+    --padding: 10px;
+}
+
+.reactMarkdown h1 {
+    font-weight: 600;
+    font-size: 2em;
+    border-bottom: 1px lightgray solid;
+    padding-bottom: var(--padding);
+
+}
+
+.reactMarkdown h2 {
+    font-weight: 600;
+    font-size: 1.5em;
+    padding-bottom: 5px;
+}
+
+.reactMarkdown h3 {
+    font-weight: 600;
+    font-size: 1.25em;
+    padding-bottom: 5px;
+}
+
+.reactMarkdown h4 {
+    font-weight: 600;
+    font-size: 1em;
+    padding-bottom: 5px;
+}
+
+.reactMarkdown h5 {
+    font-weight: 500;
+    font-size: 1em;
+    padding-bottom: 5px;
+}
+
+.reactMarkdown p {
+    padding-bottom: 10px;
+    text-align: justify;
+}

@@ -1,0 +1,52 @@
+{
+  "tones": [
+    {
+      "name": "Formel",
+      "description": "Utilisé dans les documents officiels, les articles scientifiques, ou tout contexte nécessitant un haut degré de professionnalisme. Évite le langage familier et privilégie une structure et un vocabulaire sophistiqués."
+    },
+    {
+      "name": "Informel",
+      "description": "Convient aux communications avec des amis, dans les blogs personnels ou sur les réseaux sociaux. Peut inclure du langage courant, des expressions idiomatiques, et une structure moins rigide."
+    },
+    {
+      "name": "Convivial",
+      "description": "Chaleureux et accueillant, souvent utilisé dans les communications de service client ou dans le marketing pour créer une connexion avec le lecteur."
+    },
+    {
+      "name": "Persuasif",
+      "description": "Utilisé pour convaincre ou influencer le lecteur. Fait appel à la logique, aux émotions, ou à l'éthique."
+    },
+    {
+      "name": "Descriptif",
+      "description": "Vise à décrire une scène, un objet, ou une idée de manière détaillée pour permettre au lecteur de visualiser le sujet."
+    },
+    {
+      "name": "Narratif",
+      "description": "Raconte une histoire ou relate des événements. Inclut un début, un milieu, et une fin, avec des personnages, un cadre, et une intrigue."
+    },
+    {
+      "name": "Instructif",
+      "description": "Fournit des informations ou des instructions claires et précises. Souvent adopté dans les manuels, les guides pratiques, et les articles éducatifs."
+    },
+    {
+      "name": "Sarcastique / Ironique",
+      "description": "Emploie l'ironie pour transmettre un message, souvent de manière humoristique ou critique. À utiliser avec prudence."
+    },
+    {
+      "name": "Inspirant",
+      "description": "Vise à motiver ou à inspirer le lecteur. Largement utilisé dans les discours motivationnels, les écrits de développement personnel, et certains types de publicité."
+    },
+    {
+      "name": "Professionnel",
+      "description": "Similaire au ton formel, mais légèrement moins rigide. Utilisé dans les courriels professionnels, les rapports d'affaires, et les présentations."
+    },
+    {
+      "name": "Humoristique",
+      "description": "Utilise l'humour pour divertir le lecteur. Doit être employé avec discernement selon le public."
+    },
+    {
+      "name": "Critique",
+      "description": "Évalue de manière critique un sujet. Peut être constructif ou négatif."
+    }
+  ]
+}

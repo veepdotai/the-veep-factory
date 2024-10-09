@@ -1,0 +1,14 @@
+.audio-recorder-recording {
+    width: 100%;
+}
+
+.audio-recorder-mic {
+    display: none;
+    background-color: greenyellow;
+}        
+
+/*
+.audio-recorder-visualizer-canvas {
+    width: 10px ! important;
+}
+*/

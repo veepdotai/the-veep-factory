@@ -1,0 +1,45 @@
+{
+    "styles": [
+      {
+        "name": "Expositif",
+        "description": "Vise à informer ou à expliquer, se concentrant sur la présentation de faits, de statistiques et d'informations sans opinions personnelles."
+      },
+      {
+        "name": "Descriptif",
+        "description": "Utilisé pour décrire des personnes, lieux, expériences ou objets, employant souvent un langage sensoriel pour aider le lecteur à visualiser le sujet."
+      },
+      {
+        "name": "Narratif",
+        "description": "Raconte une histoire, incluant un début, un milieu, et une fin, avec des personnages, un cadre, et une intrigue."
+      },
+      {
+        "name": "Persuasif",
+        "description": "Vise à convaincre le lecteur d'adopter un point de vue spécifique ou d'agir d'une certaine manière, utilisant des arguments logiques et des appels à l'émotion."
+      },
+      {
+        "name": "Analytique",
+        "description": "Examine et interprète des informations pour explorer des questions, des idées ou des œuvres, utilisant l'analyse critique."
+      },
+      {
+        "name": "Réflexif",
+        "description": "Encourage l'auteur à réfléchir à ses propres expériences et opinions, souvent de manière introspective."
+      },
+      {
+        "name": "Argumentatif",
+        "description": "Se concentre sur l'utilisation de la logique et de la preuve pour soutenir une position ou une thèse."
+      },
+      {
+        "name": "Journalistique",
+        "description": "Rapporte les actualités et les informations de manière concise et accessible, s'attachant à la véracité et à l'impartialité."
+      },
+      {
+        "name": "Poétique",
+        "description": "Caractérisé par l'utilisation de techniques littéraires comme la métrique, les rimes, et les figures de style, visant à exprimer des émotions ou des idées de manière esthétique."
+      },
+      {
+        "name": "Scientifique",
+        "description": "Caractérisé par la précision, l'objectivité, et la clarté, utilisant des termes techniques et se conformant aux conventions de la publication scientifique."
+      }
+    ]
+  }
+  

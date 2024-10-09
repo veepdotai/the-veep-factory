@@ -1,0 +1,18 @@
+:root {
+  --flash-color: blue;
+  --flash-bg-color: white;
+}
+
+.flash {
+  /*transition: all 0.75s;*/
+  animation: glow 2s infinite;
+}
+
+@keyframes glow {
+  0% {
+    color: var(--flash-color);
+    background-color: var(--flash-bg-color);
+    box-shadow: 0 0 0 0 var(--flash-bg-color);
+  }
+  
+}
