@@ -1,0 +1,72 @@
+import Link from 'next/link';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import styles from './AllCards.module.css';
+import { Card, Container, Col, Row, } from 'react-bootstrap';
+
+import './lib/i18n';
+//import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import { t } from 'i18next';
+
+import Heading from './Heading';
+
+export default function AllCards() {
+  const { t, i18n } = useTranslation()
+
+  const config = { className: 'pb-2', xs: 12, md: 6, ld: 4, xl: 3};
+  return (
+    <Container className={styles.container}>
+      <Row className={styles.row}>
+        <Col xs={12}>
+          <Heading>Marketing</Heading>
+        </Col>
+        <Col {...config}>
+          <Card className={styles.card}>
+            <Card.Header><img src={Constants.ROOT + '/assets/images/veep.ai-wnb.png'} alt="Veep.AI" className={styles.logo} /></Card.Header>
+            <Card.Body>
+              <Card.Title>Créer un post LinkedIn &rarr;</Card.Title>
+              <Card.Text>LinkedIn permet de communiquer auprès de votre éco-système (cible commerciale si vous êtes en B2B, partenaires, collaborateurs mais aussi de vos futurs talents).</Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col {...config}>
+          <Card className={styles.card}>
+            <Card.Header><img src={Constants.ROOT + '/assets/images/veep.ai-wnb.png'} alt="Veep.AI" className={styles.logo} /></Card.Header>
+            <Card.Body>
+              <Card.Title>Créer un article de blog &rarr;</Card.Title>
+              <Card.Text>C'est l'outil indispensable pour augmenter votre visibilité et votre notoriété sur internet. Vous devez créer des contenus avec les mots-clés recherchés par votre cible afin de correspondre à leurs intentions et orienter les moteurs de recherche vers vos pages.</Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col {...config}>
+          <Card className={styles.card}>
+            <Card.Header><img src={Constants.ROOT + '/assets/images/veep.ai-wnb.png'} alt="Veep.AI" className={styles.logo} /></Card.Header>
+            <Card.Body>
+              <Card.Title>Créer un site web &rarr;</Card.Title>
+              <Card.Text>Pitchez votre projet d'entreprise et obtenez un site web avec plusieurs pages en quelques minutes. Idéal pour démarrer votre communication et présenter votre projet pour trouver des testeurs puis vos premiers clients.</Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col {...config}>
+          <Card className={styles.card}>
+            <Card.Header><img src={Constants.ROOT + '/assets/images/veep.ai-wnb.png'} alt="Veep.AI" className={styles.logo} /></Card.Header>
+            <Card.Body>
+              <Card.Title>Créer une landing page &rarr;</Card.Title>
+              <Card.Text>Pitchez votre produit et obtenez une landing page en quelques minutes. Idéal pour tester une offre business, une nouvelle idée.</Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col {...config}>
+          <Card className={styles.card}>
+            <Card.Header><img src={Constants.ROOT + '/assets/images/veep.ai-wnb.png'} alt="Veep.AI" className={styles.logo} /></Card.Header>
+            <Card.Body>
+              <Card.Title>Créer une stratégie éditoriale &rarr;</Card.Title>
+              <Card.Text>On ne sait pas toujours quoi dire. Veep.AI vous propose des sujets à aborder en fonction de votre rôle dans l'entreprise. Vous pouvez aussi créer votre propre stratégie pour faciliter la création de contenus</Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
+  );
+}

@@ -1,0 +1,10 @@
+import { Logger } from 'react-logger-lib';
+
+import * as icons from 'react-bootstrap-icons';
+
+export default function Icon ({ iconName, ...props }) {
+  const log = Logger.of(Icon.name);
+
+  const BootstrapIcon = icons[iconName];
+  return <BootstrapIcon {...props} />;
+}

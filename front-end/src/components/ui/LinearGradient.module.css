@@ -1,0 +1,67 @@
+@use postcss-preset-env {
+    stage: 0;
+  }
+  
+  :root {
+    --color-background: #e8e0fd;
+    --color-text: #111;
+    --font-family: Roboto, sans-serif;
+  }
+  
+  
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    display: grid;
+    font-family: var(--font-family);
+    line-height: 1.5;
+    margin: 0;
+    min-block-size: 100vh;
+    place-content: center;
+  }
+  
+  .app {
+    padding: 5vmin;
+  }
+  
+  .grid {
+    inline-size: 90vw;
+    margin-inline: auto;
+    max-inline-size: 1440px;
+  }
+  
+  .aspect-ratio {
+    overflow: hidden;
+    padding-block-start: 100%;
+    position: relative;
+  }
+  
+  .aspect-ratio > * {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  
+  .palettes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 3em;
+  }
+  
+  .palette {
+    box-shadow: 0.25em 0.25em 2em rgba(0, 0, 0, 0.25);
+    border-radius: 0.5em;
+    margin: 0;
+    overflow: hidden;
+  }
+  
+  .palette__caption {
+    background-color: #fff;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 1.5em;
+    text-align: center;
+    text-transform: uppercase;
+  }

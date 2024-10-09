@@ -1,0 +1,41 @@
+{
+    "contentCombinations": [
+      {
+        "contentType": "Blog d'entreprise",
+        "tone": "Convivial",
+        "style": "Narratif",
+        "description": "Un article de blog pour une entreprise adoptant un style narratif pour raconter l'histoire de la marque ou partager une étude de cas client, tout en utilisant un ton convivial."
+      },
+      {
+        "contentType": "Article de recherche",
+        "tone": "Formel",
+        "style": "Analytique",
+        "description": "Un article de recherche scientifique combinant un style analytique pour l'examen et l'interprétation des données, avec un ton formel pour refléter le sérieux et la rigueur académique."
+      },
+      {
+        "contentType": "Publicité",
+        "tone": "Inspirant",
+        "style": "Persuasif",
+        "description": "Une campagne publicitaire employant un style persuasif pour convaincre de l'achat d'un produit ou service, et un ton inspirant pour susciter l'enthousiasme."
+      },
+      {
+        "contentType": "Manuel d'utilisation",
+        "tone": "Professionnel",
+        "style": "Instructif",
+        "description": "Un manuel d'utilisation ou guide pratique utilisant un style instructif pour des instructions claires, avec un ton professionnel transmettant expertise et fiabilité."
+      },
+      {
+        "contentType": "Critique de film",
+        "tone": "Sarcastique / Ironique",
+        "style": "Descriptif",
+        "description": "Les critiques de films combinant un style descriptif pour évoquer des scènes ou performances, avec un ton sarcastique pour un commentaire divertissant."
+      },
+      {
+        "contentType": "Essai personnel",
+        "tone": "Intime",
+        "style": "Réflexif",
+        "description": "Un essai personnel mêlant un style réflexif pour l'exploration de pensées et sentiments, avec un ton intime invitant le lecteur à partager ces réflexions."
+      }
+    ]
+  }
+  

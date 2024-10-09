@@ -1,0 +1,17 @@
+.select {
+    width: 100%;
+    height: 40px;
+    background-color: whitesmoke;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: silver;
+    padding: 5px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.disabled {
+    background-color: silver;
+    opacity: 0.5;
+    pointer-events: none;
+}

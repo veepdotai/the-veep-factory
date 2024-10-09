@@ -1,0 +1,11 @@
+.roundedSquare {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /*width: 25px;*/
+    /*height: 17px;*/
+    background-color: transparent;
+    border: none;
+    border-radius: 5%;
+    cursor: pointer;
+}
