@@ -1,0 +1,191 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+
+body .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)) {
+    max-width: 100% ! important;
+}
+
+header, footer {
+    /* display: none; */
+}
+
+footer {
+   background-color: black;
+   color: white;
+   font-size: smaller;
+}
+
+footer a {
+   color: white;
+}
+
+footer img {
+   scale: 75%;
+}
+
+footer h3 {
+   padding: 10px;
+   font-size: large;
+}
+
+footer ul {
+   margin-block-start: 0px ! important;
+}
+
+footer nav {
+   margin-top: 0 ! important;
+   margin-left: 40px;
+}
+
+footer .wp-block-navigation__container {
+   display: list-item;
+}
+
+footer .wp-block-navigation .wp-block-navigation-item {
+   display: list-item;
+}
+
+footer .wp-block-navigation ul,
+footer .wp-block-navigation ul li {
+   list-style: disc;
+}
+
+footer nav a {
+   text-decoration: underline ! important;
+}
+
+body.single-post main {
+   min-width: 480px;
+   max-width: 768px;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+/*
+body.page main {
+   margin-top: 0px ! important;
+}
+*/
+
+header {
+   position: sticky;
+   top: 0px;
+
+   padding-top: 25px;
+   background-color: rgb(15, 13, 13);
+   color: white;
+   z-index: 100;
+   opacity: 90%;
+}
+
+main figure span img {
+   height: 300px ! important;
+   object-fit: cover;
+}
+
+main figure span.wp-block-post-featured-image__overlay {
+   display: none;
+}
+
+.wp-block-latest-posts__featured-image img {
+   border-radius: 5px;
+   width: 100%;
+   height: 220px;
+   object-fit: cover;
+}
+
+.wp-block-post-featured-image img {
+   border-radius: 5px;
+}
+
+.wp-block-latest-posts__featured-image a {
+      width: 100%;
+}
+
+.wp-block-post-featured-image.alignwide img {
+   border-radius: 5px;
+   width: 100%;
+   height: 340px;
+   object-fit: cover
+}
+
+.veep_section:first-child {
+  display: flex;
+  /*flex-direction: column;*/
+  justify-content: center;
+  flex-grow: 1;
+  min-height: 80vh;
+}
+
+.veep_section:not(first-child) + .veep_section {
+    padding-bottom: 50px;
+}
+
+.veep_section img {
+   border-radius: 5px;
+   width: 90%;
+   margin: auto;
+   display: block;
+   height: 400px;
+   object-fit: cover;
+}
+
+.veep_section:first-child .veep_title span {
+    display: inline flow-root;
+    background-color: black;
+    padding: 5px;
+    color:white;
+    transform: rotate(358deg);
+    border-radius: 5px;
+}
+ 
+.veep_section:first-child .veep_title {
+    font-weight: 900;
+}
+
+.veep_section .veep_title {
+    font-size: 3em;
+    font-weight: 600;
+}
+
+.veep_section .veep_text {
+    /* */
+}
+
+.veep_section .veep_cta {
+    width: 100%;
+    /*
+    margin-left: auto;
+    margin-right: auto;
+    */
+}
+
+.veep_page {
+    width: 70%;
+}
+
+.veep_page figure {
+    display: block ! important;
+}
+
+.veep_page img {
+    border-radius: 5px;
+    width: 100%;
+}
+
+.veep_page .veep_text_generated {
+    width: 100%;   
+}
+
+@media screen and (max-width: 781px) {
+
+   #accueil > .wp-block-columns:nth-child(1) > .wp-block-column:nth-child(2) > figure {
+      display: none;
+   }
+}
+
+#contact .wpcf7-text, .wpcf7-textarea {
+   padding: 10px;
+}

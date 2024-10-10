@@ -1,0 +1,506 @@
+# Translation of Themes - Twenty Ten in French (France)
+# This file is distributed under the same license as the Themes - Twenty Ten package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2021-07-26 08:47:00+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: GlotPress/4.0.0-alpha.7\n"
+"Language: fr\n"
+"Project-Id-Version: Themes - Twenty Ten\n"
+
+#. Description of the theme
+#, gp-priority: high
+msgid "The 2010 theme for WordPress is stylish, customizable, simple, and readable -- make it yours with a custom menu, header image, and background. Twenty Ten supports six widgetized areas (two in the sidebar, four in the footer) and featured images (thumbnails for gallery posts and custom header images for posts and pages). It includes stylesheets for print and the admin Visual Editor, special styles for posts in the \"Asides\" and \"Gallery\" categories, and has an optional one-column page template that removes the sidebar."
+msgstr "Le thème de WordPress pour 2010. Il est beau, personnalisable, simple et lisible. Appropriez-le-vous grâce en personnalisant son menu, son image d&rsquo;en-tête et son image de fond. Twenty Ten dispose de six zones de widgets (deux dans la barre latérale, quatre en pied de page), et peut exploiter vos images de Une (minitatures pour galeries, et image d&rsquo;en-tête personnalisé pour les articles et pages). Il intègre une feuille de style pour l&rsquo;impression et pour l&rsquo;éditeur visuel, un style spécial pour les articles des catégories &laquo;&nbsp;Apartés&nbsp;&raquo; et &laquo;&nbsp;Galerie&nbsp;&raquo;, et peut fonctionner sous la forme d&rsquo;une colonne seule, en enlevant la barre latérale."
+
+#. Theme Name of the theme
+#: block-patterns.php:20
+#, gp-priority: high
+msgid "Twenty Ten"
+msgstr "Twenty Ten"
+
+#: block-patterns.php:58
+msgid "Relaxing at the lake after dinner"
+msgstr "Détente au lac après le dîner"
+
+#: block-patterns.php:58
+msgid "A lake at night, with Adirondack chairs in the foreground. The sun sets in the background."
+msgstr "Un lac la nuit, avec des chaises Adirondack au premier plan. Le soleil se couche en arrière-plan."
+
+#: block-patterns.php:58
+msgid "Later that night, we went back to the lake and sat by the shore. It felt different at night; quieter, as if all of nature had gone to sleep for  a little while. The only noises were the chirp of crickets and the soft splash of the waves lapping at the shore. What a beautiful way to end the day."
+msgstr "Plus tard dans la nuit, nous sommes retournés au lac et nous nous sommes assis sur la rive. C‘était différent la nuit, plus calme, comme si toute la nature s‘était endormie pour un petit moment. Les seuls bruits étaient le chant des grillons et le doux clapotis des vagues sur la berge. Quelle belle façon de terminer la journée."
+
+#: block-patterns.php:58
+msgid "Nearby our cabin was a lake. The sunrise looked beautiful as it rose over the hills beyond the water, reflecting down onto the gentle morning waves. I sat on the dock and drank a cup of coffee, enjoying the cool air on my skin. The coffee kept me warm inside."
+msgstr "Près de notre chalet il y avait un lac. Le lever du soleil était magnifique lorsqu‘il se levait au-dessus des collines au-delà de l‘eau, se reflétant sur les douces vagues du matin. Je me suis assis sur le ponton et j‘ai bu une tasse de café, appréciant l‘air frais sur ma peau. Le café me tenait chaud à l‘intérieur."
+
+#: block-patterns.php:58
+msgid "The lake at 6:54 AM"
+msgstr "Le lac à 6h54"
+
+#: block-patterns.php:58
+msgid "A lake with several boats docked. The sun is rising behind mountains in the background."
+msgstr "Un lac avec plusieurs bateaux amarrés. Le soleil se lève derrière les montagnes à l‘arrière-plan."
+
+#: block-patterns.php:55
+msgid "Alternating Images"
+msgstr "Images alternatives"
+
+#: block-patterns.php:47
+msgid "— Malebo Sephodi"
+msgstr "— Malebo Sephodi"
+
+#: block-patterns.php:47
+msgid "\"Take time off&hellip; The world will not fall apart without you.\""
+msgstr "« Prends du temps pour toi… ; Le monde ne s‘écroulera pas sans toi. » "
+
+#: block-patterns.php:44
+msgid "Highlighted Quote"
+msgstr "Citation surlignée"
+
+#: block-patterns.php:36
+msgid "It’s amazing what a good weekend can do. After a tough couple weeks at work, I knew I needed to get away and be in nature. My partner and I decided to take a long weekend and stay in a cabin in the woods. We packed up after work on Friday and drove out into the country, passing through fields full of horses, old farms, and quaint little town squares. It was an idyllic drive. Eventually, we reached our destination and unpacked the car. We couldn’t wait to cook up a simple dinner and then relax by the fireplace."
+msgstr "C‘est incroyable ce qu‘un bon week-end peut faire. Après deux semaines compliquées au travail, je savais que j‘avais besoin de m‘évader et d‘être dans la nature. Mon compagnon et moi avons décidé de prendre un long week-end et de séjourner dans une cabane dans les bois. Nous avons fait nos valises après le travail le vendredi et nous sommes partis en voiture dans la campagne, en passant par des champs pleins de chevaux, de vieilles fermes et des petites villes pittoresques. C‘était un trajet idyllique. Finalement, nous sommes arrivés à destination et avons vidé la voiture. Nous étions impatients de préparer un dîner simple et de nous détendre près de la cheminée."
+
+#: block-patterns.php:36
+msgid "A Weekend Away"
+msgstr "Un week-end d‘évasion"
+
+#: block-patterns.php:36
+msgid "An old barn we passed on the drive"
+msgstr "Une vieille grange que nous avons croisée sur la route"
+
+#: block-patterns.php:36
+msgid "A red barn with a white roof in a field."
+msgstr "Une grange rouge avec un toit blanc dans un champ."
+
+#: block-patterns.php:33
+msgid "Introduction"
+msgstr "Introduction"
+
+#. translators: %s: Post title.
+#: loop-attachment.php:27
+msgid "Go to %s"
+msgstr "Aller à %s"
+
+#: functions.php:445
+msgid "Your comment is awaiting moderation. This is a preview; your comment will be visible after it has been approved."
+msgstr "Votre commentaire est en attente de modération. Il s’agit d’un aperçu, votre commentaire sera visible lorsqu’il sera approuvé."
+
+#. translators: %s: The post title.
+#: comments.php:40
+msgid "One Response to %s"
+msgstr "Une réponse à %s"
+
+#: functions.php:112
+msgid "White"
+msgstr "Blanc"
+
+#: functions.php:107
+msgid "Light Gray"
+msgstr "Gris clair"
+
+#: functions.php:102
+msgid "Medium Gray"
+msgstr "Gris moyen"
+
+#: functions.php:97
+msgid "Black"
+msgstr "Noir"
+
+#: functions.php:92
+msgid "Blue"
+msgstr "Bleu"
+
+#. Template Name of the theme
+msgid "One column, no sidebar"
+msgstr "Une colonne, pas de colonne latérale"
+
+#. translators: %s: Tag title.
+#: tag.php:18
+msgid "Tag Archives: %s"
+msgstr "Archives par mot-clé&nbsp;: %s"
+
+#: sidebar.php:36
+msgid "Meta"
+msgstr "Méta"
+
+#: sidebar.php:29
+msgid "Archives"
+msgstr "Archives"
+
+#: search.php:34
+msgid "Sorry, but nothing matched your search criteria. Please try again with some different keywords."
+msgstr "Désolé, mais rien ne correspond à votre critère de recherche. Veuillez réessayer avec d&rsquo;autres mots-clés."
+
+#: search.php:32
+msgid "Nothing Found"
+msgstr "Aucun résultat"
+
+#. translators: %s: Search query.
+#: search.php:19
+msgid "Search Results for: %s"
+msgstr "Résultats de recherche pour %s"
+
+#. translators: 1: CSS classes, 2: Category list.
+#: loop.php:187
+msgid "<span class=\"%1$s\">Tagged</span> %2$s"
+msgstr "<span class=\"%1$s\">Marqué avec</span> %2$s"
+
+#. translators: 1: CSS classes, 2: Category list.
+#: loop.php:174
+msgid "<span class=\"%1$s\">Posted in</span> %2$s"
+msgstr "<span class=\"%1$s\">Publié dans</span> %2$s"
+
+#: loop.php:120
+msgctxt "asides category slug"
+msgid "asides"
+msgstr "apartes"
+
+#: loop.php:113 loop.php:136 loop.php:193
+msgid "% Comments"
+msgstr "% commentaires"
+
+#: loop.php:113 loop.php:136 loop.php:193
+msgid "1 Comment"
+msgstr "Un commentaire"
+
+#: loop.php:113 loop.php:136 loop.php:193
+msgid "Leave a comment"
+msgstr "Laisser un commentaire"
+
+#: loop.php:110
+msgid "View posts in the Gallery category"
+msgstr "Afficher les articles de la catégorie Galerie"
+
+#: loop.php:107 loop.php:110
+msgid "More Galleries"
+msgstr "Toutes les galeries"
+
+#: loop.php:107
+msgid "View Galleries"
+msgstr "Afficher les galeries"
+
+#. translators: %s: Post title.
+#: loop.php:92
+msgid "Permalink to %s"
+msgstr "Permalien vers %s"
+
+#. translators: 1: HTML tag attributes, 2: Image count.
+#: loop.php:90
+msgid "This gallery contains <a %1$s>%2$s photo</a>."
+msgid_plural "This gallery contains <a %1$s>%2$s photos</a>."
+msgstr[0] "Cette galerie contient <a %1$s>%2$s photo</a>."
+msgstr[1] "Cette galerie contient <a %1$s>%2$s photos</a>."
+
+#: loop.php:65 loop.php:104
+msgctxt "gallery category slug"
+msgid "gallery"
+msgstr "galerie"
+
+#: loop.php:35
+msgid "Apologies, but no results were found for the requested archive. Perhaps searching will help find a related post."
+msgstr "Toutes nos excuses, mais aucun résultat n&rsquo;a été trouvé dans l&rsquo;archive demandée. Peut-être qu&rsquo;une recherche vous permettra de trouver un article similaire."
+
+#: loop.php:26 loop.php:209
+msgid "Newer posts <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Articles plus récents <span class=\"meta-nav\">&rarr;</span>"
+
+#: loop.php:25 loop.php:208
+msgid "<span class=\"meta-nav\">&larr;</span> Older posts"
+msgstr "<span class=\"meta-nav\">&larr;</span> Articles plus anciens"
+
+#. translators: %s: Author display name.
+#: loop-single.php:69
+msgid "View all posts by %s <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Voir tous les articles de %s <span class=\"meta-nav\">&rarr;</span>"
+
+#: loop-single.php:26 loop-single.php:85
+msgctxt "Next post link"
+msgid "&rarr;"
+msgstr "&rarr;"
+
+#: loop-single.php:25 loop-single.php:84
+msgctxt "Previous post link"
+msgid "&larr;"
+msgstr "&larr;"
+
+#: loop-attachment.php:166 loop-page.php:36 loop-single.php:41 loop.php:161
+msgid "Pages:"
+msgstr "Pages&nbsp;:"
+
+#: loop-attachment.php:83 loop-attachment.php:176 loop-page.php:41
+#: loop-single.php:79 loop.php:114 loop.php:137 loop.php:195
+msgid "Edit"
+msgstr "Modifier"
+
+#: loop-attachment.php:76
+msgid "Link to full-size image"
+msgstr "Lien vers l&rsquo;image originale"
+
+#. translators: %s: Image dimensions.
+#: loop-attachment.php:72
+msgid "Full size is %s pixels"
+msgstr "La taille originale est de %s pixels"
+
+#. translators: 1: CSS classes, 2: Date.
+#: loop-attachment.php:59
+msgid "<span class=\"%1$s\">Published</span> %2$s"
+msgstr "<span class=\"%1$s\">Publié le</span> %2$s"
+
+#. translators: %s: Author display name.
+#: loop-attachment.php:44
+msgid "<span class=\"%1$s\">By</span> %2$s"
+msgstr "<span class=\"%1$s\">Par</span> %2$s"
+
+#. translators: %s: Title of parent post.
+#: loop-attachment.php:32
+msgid "<span class=\"meta-nav\">&larr;</span> %s"
+msgstr "<span class=\"meta-nav\">&larr;</span> %s"
+
+#: header.php:115
+msgid "Skip to content"
+msgstr "Aller au contenu"
+
+#. translators: %s: Page number.
+#: header.php:36
+msgid "Page %s"
+msgstr "Page %s"
+
+#. translators: 3: Post permalink, 4: Post title.
+#: functions.php:650
+msgid "Bookmark the <a href=\"%3$s\" title=\"Permalink to %4$s\" rel=\"bookmark\">permalink</a>."
+msgstr "Vous pouvez la mettre en favoris avec <a href=\"%3$s\" title=\"Permalien pour %4$s\" rel=\"bookmark\">ce permalien</a>."
+
+#. translators: 1: Category name, 3: Post permalink, 4: Post title.
+#: functions.php:647
+msgid "This entry was posted in %1$s. Bookmark the <a href=\"%3$s\" title=\"Permalink to %4$s\" rel=\"bookmark\">permalink</a>."
+msgstr "Ce contenu a été publié dans %1$s. Vous pouvez le mettre en favoris avec <a href=\"%3$s\" title=\"Permalien pour %4$s\" rel=\"bookmark\">ce permalien</a>."
+
+#. translators: 1: Category name, 2: Tag name, 3: Post permalink, 4: Post
+#. title.
+#: functions.php:644
+msgid "This entry was posted in %1$s and tagged %2$s. Bookmark the <a href=\"%3$s\" title=\"Permalink to %4$s\" rel=\"bookmark\">permalink</a>."
+msgstr "Ce contenu a été publié dans %1$s, avec comme mot(s)-clé(s) %2$s. Vous pouvez le mettre en favoris avec <a href=\"%3$s\" title=\"Permalien pour %4$s\" rel=\"bookmark\">ce permalien</a>."
+
+#. translators: %s: Author display name.
+#: functions.php:625 loop-attachment.php:50
+msgid "View all posts by %s"
+msgstr "Afficher tous les articles par %s"
+
+#. translators: 1: CSS classes, 2: Date, 3: Author display name.
+#: functions.php:613
+msgid "<span class=\"%1$s\">Posted on</span> %2$s <span class=\"meta-sep\">by</span> %3$s"
+msgstr "<span class=\"%1$s\">Publié le</span> %2$s <span class=\"meta-sep\">par</span> %3$s"
+
+#: functions.php:574
+msgid "Fourth Footer Widget Area"
+msgstr "4ème zone de pied de page"
+
+#: functions.php:561
+msgid "Third Footer Widget Area"
+msgstr "3ème zone de pied de page"
+
+#: functions.php:548
+msgid "Second Footer Widget Area"
+msgstr "2ème zone de pied de page"
+
+#: functions.php:537 functions.php:550 functions.php:563 functions.php:576
+msgid "An optional widget area for your site footer."
+msgstr "Une zone de widgets facultative pour le pied de page de votre site."
+
+#: functions.php:535
+msgid "First Footer Widget Area"
+msgstr "1ère zone de pied de page"
+
+#: functions.php:524
+msgid "An optional secondary widget area, displays below the primary widget area in your sidebar."
+msgstr "Une zone de widgets facultative, qui s’affiche sous la zone de widget principale de votre barre latérale."
+
+#: functions.php:522
+msgid "Secondary Widget Area"
+msgstr "Zone secondaire de widgets"
+
+#: functions.php:511
+msgid "Add widgets here to appear in your sidebar."
+msgstr "Ajoutez des widgets ici afin qu’ils apparaissent dans votre barre latérale."
+
+#: functions.php:509
+msgid "Primary Widget Area"
+msgstr "Zone principale de widgets"
+
+#: functions.php:488
+msgid "Pingback:"
+msgstr "Ping&nbsp;:"
+
+#: functions.php:461 functions.php:488
+msgid "(Edit)"
+msgstr "(Modifier)"
+
+#. translators: 1: Date, 2: Time.
+#: functions.php:457
+msgid "%1$s at %2$s"
+msgstr "%1$s à %2$s"
+
+#: functions.php:443
+msgid "Your comment is awaiting moderation."
+msgstr "Votre commentaire est en attente de validation."
+
+#. translators: %s: Author display name.
+#: functions.php:436
+msgid "%s <span class=\"says\">says:</span>"
+msgstr "%s <span class=\"says\">dit&nbsp;:</span>"
+
+#: functions.php:336 loop-attachment.php:162 loop.php:129 loop.php:157
+msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Continuer la lecture <span class=\"meta-nav\">&rarr;</span>"
+
+#. translators: Header image description.
+#: functions.php:261
+msgid "Sunset"
+msgstr "Coucher du soleil"
+
+#. translators: Header image description.
+#: functions.php:255
+msgid "Path"
+msgstr "Chemin "
+
+#. translators: Header image description.
+#: functions.php:249
+msgid "Inkwell"
+msgstr "Encrier"
+
+#. translators: Header image description.
+#: functions.php:243
+msgid "Forest Floor"
+msgstr "Paysage forestier"
+
+#. translators: Header image description.
+#: functions.php:237
+msgid "Fern"
+msgstr "Fougère"
+
+#. translators: Header image description.
+#: functions.php:231
+msgid "Concave"
+msgstr "Mirroir"
+
+#. translators: Header image description.
+#: functions.php:225
+msgid "Cherry Blossoms"
+msgstr "Fleurs de cerisier"
+
+#. translators: Header image description.
+#: functions.php:219
+msgid "Berries"
+msgstr "Framboises"
+
+#: functions.php:144
+msgid "Primary Navigation"
+msgstr "Navigation principale"
+
+#. translators: %s: WordPress
+#: footer.php:49
+msgid "Proudly powered by %s."
+msgstr "Fièrement propulsé par %s"
+
+#: footer.php:46
+msgid "Semantic Personal Publishing Platform"
+msgstr "Plate-forme de publication personnelle à la pointe de la sémantique"
+
+#: comments.php:88
+msgid "Comments are closed."
+msgstr "Les commentaires sont fermés."
+
+#: comments.php:57 comments.php:77
+msgid "Newer Comments <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Commentaires plus récents <span class=\"meta-nav\">&rarr;</span>"
+
+#: comments.php:56 comments.php:76
+msgid "<span class=\"meta-nav\">&larr;</span> Older Comments"
+msgstr "<span class=\"meta-nav\">&larr;</span> Commentaires plus anciens"
+
+#. translators: 1: The number of comments, 2: The post title.
+#: comments.php:46
+msgid "%1$s Response to %2$s"
+msgid_plural "%1$s Responses to %2$s"
+msgstr[0] "%1$s réponse à %2$s"
+msgstr[1] "%1$s réponses à %2$s"
+
+#: comments.php:18
+msgid "This post is password protected. Enter the password to view any comments."
+msgstr "Cet article est protégé par un mot de passe. Saisissez le mot de passe pour lire les commentaires."
+
+#. translators: %s: Category title.
+#: category.php:18
+msgid "Category Archives: %s"
+msgstr "Archives de catégorie&nbsp;: %s"
+
+#. translators: %s: Author display name.
+#: author.php:58 loop-single.php:61
+msgid "About %s"
+msgstr "A propos %s"
+
+#. translators: %s: Author display name.
+#: author.php:32
+msgid "Author Archives: %s"
+msgstr "Archives de l&rsquo;auteur&nbsp;: %s"
+
+#: archive.php:45
+msgid "Blog Archives"
+msgstr "Archives du blog"
+
+#. translators: %s: Date.
+#: archive.php:43
+msgctxt "yearly archives date format"
+msgid "Y"
+msgstr "Y"
+
+#. translators: %s: Date.
+#: archive.php:43
+msgid "Yearly Archives: <span>%s</span>"
+msgstr "Archives annuelles&nbsp;: <span>%s</span>"
+
+#. translators: %s: Date.
+#: archive.php:40
+msgctxt "monthly archives date format"
+msgid "F Y"
+msgstr "F Y"
+
+#. translators: %s: Date.
+#: archive.php:40
+msgid "Monthly Archives: <span>%s</span>"
+msgstr "Archives mensuelles&nbsp;: <span>%s</span>"
+
+#. translators: %s: Date.
+#: archive.php:37
+msgid "Daily Archives: <span>%s</span>"
+msgstr "Archives quotidiennes&nbsp;: <span>%s</span>"
+
+#: 404.php:18
+msgid "Apologies, but the page you requested could not be found. Perhaps searching will help."
+msgstr "Toutes nos excuses, mais la page que vous demandez est introuvable. Essayez de lancer une recherche."
+
+#: 404.php:16 loop.php:33
+msgid "Not Found"
+msgstr "Rien de trouvé"
+
+#. Author URI of the theme
+#: footer.php:46
+#, gp-priority: low
+msgid "https://wordpress.org/"
+msgstr "https://wordpress.org/"
+
+#. Author of the theme
+#, gp-priority: low
+msgid "the WordPress team"
+msgstr "L&rsquo;équipe WordPress"
+
+#. Theme URI of the theme
+#, gp-priority: low
+msgid "https://wordpress.org/themes/twentyten/"
+msgstr "https://wordpress.org/themes/twentyten/"

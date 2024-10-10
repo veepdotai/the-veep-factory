@@ -1,0 +1,9 @@
+img-finder:
+  repositories:
+    Tests\Repository\SpyRepository:
+      params:
+        authorization: my-credentials
+
+  # Optional
+  translators:
+    Tests\Translator\SpyTranslator:

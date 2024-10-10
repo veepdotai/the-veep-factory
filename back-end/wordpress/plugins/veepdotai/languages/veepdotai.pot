@@ -1,0 +1,517 @@
+# Copyright (C) 2023 Jean-Christophe Kermagoret
+# This file is distributed under the GPL-2.0+.
+msgid ""
+msgstr ""
+"Project-Id-Version: Veepdotai 1.9.10\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/veepdotai\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2023-09-18T17:23:28+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.7.1\n"
+"X-Domain: veepdotai\n"
+
+#. Plugin Name of the plugin
+#: admin/class-veepdotai-admin.php:136
+#: admin/class-veepdotai-admin.php:145
+#: admin/class-veepdotai-admin.php:165
+#: admin/class-veepdotai-admin.php:174
+#: admin/class-veepdotai-admin.php:183
+#: admin/class-veepdotai-admin.php:192
+#: admin/class-veepdotai-admin.php:201
+#: admin/class-veepdotai-admin.php:210
+#: admin/class-veepdotai-admin.php:219
+#: dist/veepdotai/admin/class-veepdotai-admin.php:136
+#: dist/veepdotai/admin/class-veepdotai-admin.php:145
+#: dist/veepdotai/admin/class-veepdotai-admin.php:165
+#: dist/veepdotai/admin/class-veepdotai-admin.php:174
+#: dist/veepdotai/admin/class-veepdotai-admin.php:183
+#: dist/veepdotai/admin/class-veepdotai-admin.php:192
+#: dist/veepdotai/admin/class-veepdotai-admin.php:201
+#: dist/veepdotai/admin/class-veepdotai-admin.php:210
+#: dist/veepdotai/admin/class-veepdotai-admin.php:219
+msgid "Veepdotai"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://www.veep.ai"
+msgstr ""
+
+#. Description of the plugin
+msgid "Veepdotai is a project to create a complete autonomous virtual presence through voice and AI (ChatGPT)."
+msgstr ""
+
+#. Author of the plugin
+msgid "Jean-Christophe Kermagoret"
+msgstr ""
+
+#: admin/class-veepdotai-admin-site.php:157
+#: admin/class-veepdotai-admin-site.php:245
+#: admin/class-veepdotai-admin-site.php:430
+#: dist/veepdotai/admin/class-veepdotai-admin-site.php:157
+#: dist/veepdotai/admin/class-veepdotai-admin-site.php:245
+#: dist/veepdotai/admin/class-veepdotai-admin-site.php:430
+msgid "Bénéfices"
+msgstr ""
+
+#: admin/class-veepdotai-admin-site.php:158
+#: admin/class-veepdotai-admin-site.php:246
+#: admin/class-veepdotai-admin-site.php:431
+#: dist/veepdotai/admin/class-veepdotai-admin-site.php:158
+#: dist/veepdotai/admin/class-veepdotai-admin-site.php:246
+#: dist/veepdotai/admin/class-veepdotai-admin-site.php:431
+msgid "Besoins"
+msgstr ""
+
+#: admin/class-veepdotai-admin-site.php:159
+#: admin/class-veepdotai-admin-site.php:247
+#: admin/class-veepdotai-admin-site.php:432
+#: admin/partials/main-admin-interview.php:26
+#: admin/partials/main-admin-prompts.php:17
+#: admin/partials/main-admin-site.php:17
+#: admin/partials/main-admin-site.php:33
+#: dist/veepdotai/admin/class-veepdotai-admin-site.php:159
+#: dist/veepdotai/admin/class-veepdotai-admin-site.php:247
+#: dist/veepdotai/admin/class-veepdotai-admin-site.php:432
+#: dist/veepdotai/admin/partials/main-admin-interview.php:26
+#: dist/veepdotai/admin/partials/main-admin-prompts.php:17
+#: dist/veepdotai/admin/partials/main-admin-site.php:17
+#: dist/veepdotai/admin/partials/main-admin-site.php:33
+msgid "Solutions"
+msgstr ""
+
+#: admin/class-veepdotai-admin-site.php:160
+#: admin/class-veepdotai-admin-site.php:248
+#: admin/class-veepdotai-admin-site.php:433
+#: dist/veepdotai/admin/class-veepdotai-admin-site.php:160
+#: dist/veepdotai/admin/class-veepdotai-admin-site.php:248
+#: dist/veepdotai/admin/class-veepdotai-admin-site.php:433
+msgid "Avantages concurrentiels"
+msgstr ""
+
+#: admin/class-veepdotai-admin-site.php:181
+#: admin/class-veepdotai-admin-site.php:254
+#: dist/veepdotai/admin/class-veepdotai-admin-site.php:181
+#: dist/veepdotai/admin/class-veepdotai-admin-site.php:254
+msgid "Section : "
+msgstr ""
+
+#: admin/class-veepdotai-admin.php:137
+#: dist/veepdotai/admin/class-veepdotai-admin.php:137
+msgid "Getting started"
+msgstr ""
+
+#: admin/class-veepdotai-admin.php:146
+#: dist/veepdotai/admin/class-veepdotai-admin.php:146
+msgid "Configuration"
+msgstr ""
+
+#: admin/class-veepdotai-admin.php:166
+#: admin/partials/main-admin-interview.php:7
+#: dist/veepdotai/admin/class-veepdotai-admin.php:166
+#: dist/veepdotai/admin/partials/main-admin-interview.php:7
+msgid "Interview"
+msgstr ""
+
+#: admin/class-veepdotai-admin.php:175
+#: admin/partials/main-admin-prompts.php:5
+#: dist/veepdotai/admin/class-veepdotai-admin.php:175
+#: dist/veepdotai/admin/partials/main-admin-prompts.php:5
+msgid "Prompts"
+msgstr ""
+
+#: admin/class-veepdotai-admin.php:184
+#: admin/partials/main-admin-site.php:7
+#: dist/veepdotai/admin/class-veepdotai-admin.php:184
+#: dist/veepdotai/admin/partials/main-admin-site.php:7
+msgid "Site"
+msgstr ""
+
+#: admin/class-veepdotai-admin.php:193
+#: dist/veepdotai/admin/class-veepdotai-admin.php:193
+msgid "Editorial Strategy"
+msgstr ""
+
+#: admin/class-veepdotai-admin.php:202
+#: dist/veepdotai/admin/class-veepdotai-admin.php:202
+msgid "Editorial Calendar"
+msgstr ""
+
+#: admin/class-veepdotai-admin.php:211
+#: dist/veepdotai/admin/class-veepdotai-admin.php:211
+msgid "About"
+msgstr ""
+
+#: admin/class-veepdotai-admin.php:220
+#: admin/partials/main-admin-settings.php:5
+#: dist/veepdotai/admin/class-veepdotai-admin.php:220
+#: dist/veepdotai/admin/partials/main-admin-settings.php:5
+msgid "Settings"
+msgstr ""
+
+#: admin/partials/main-admin-configuration.php:5
+#: dist/veepdotai/admin/partials/main-admin-configuration.php:5
+msgid "Configure"
+msgstr ""
+
+#: admin/partials/main-admin-configuration.php:8
+#: dist/veepdotai/admin/partials/main-admin-configuration.php:8
+msgid "If you enjoy the plugin, we would really appreciate if you could <a href=\"https://wordpress.org/support/plugin/veep/reviews/\" target=\"_blank\">drop us a review</a> or support us with <a href=\"https://www.paypal.me/veep\" target=\"_blank\">a donation</a>"
+msgstr ""
+
+#: admin/partials/main-admin-configuration.php:9
+#: dist/veepdotai/admin/partials/main-admin-configuration.php:9
+msgid "If you find a bug or have any suggestion, create a <a href=\"https://wordpress.org/support/plugin/veep\" target=\"_blank\">new topic in the plugin support</a>"
+msgstr ""
+
+#: admin/partials/main-admin-configuration.php:10
+#: dist/veepdotai/admin/partials/main-admin-configuration.php:10
+msgid "If you need detailed information about the plugin, have a look at <a href=\"https://www.veep.ai/veep-user-guide/\" target=\"_blank\">the user guide</a>"
+msgstr ""
+
+#: admin/partials/main-admin-configuration.php:21
+#: admin/partials/main-admin-editorial-strategy.php:23
+#: admin/partials/main-admin-interview.php:52
+#: admin/partials/main-admin-prompts.php:26
+#: dist/veepdotai/admin/partials/main-admin-configuration.php:21
+#: dist/veepdotai/admin/partials/main-admin-editorial-strategy.php:22
+#: dist/veepdotai/admin/partials/main-admin-interview.php:52
+#: dist/veepdotai/admin/partials/main-admin-prompts.php:26
+msgid "Save"
+msgstr ""
+
+#: admin/partials/main-admin-configuration.php:22
+#: dist/veepdotai/admin/partials/main-admin-configuration.php:22
+msgid "Next"
+msgstr ""
+
+#: admin/partials/main-admin-editorial-calendar.php:9
+msgid "Editorial Calendar Inline Help"
+msgstr ""
+
+#: admin/partials/main-admin-editorial-calendar.php:39
+#: admin/partials/main-admin-editorial-strategy.php:21
+#: admin/partials/main-admin-interview.php:49
+#: admin/partials/main-admin-site.php:37
+#: dist/veepdotai/admin/partials/main-admin-editorial-calendar.php:38
+#: dist/veepdotai/admin/partials/main-admin-editorial-strategy.php:20
+#: dist/veepdotai/admin/partials/main-admin-interview.php:49
+#: dist/veepdotai/admin/partials/main-admin-site.php:37
+msgid "Processing..."
+msgstr ""
+
+#: admin/partials/main-admin-editorial-strategy.php:7
+#: dist/veepdotai/admin/partials/main-admin-editorial-strategy.php:7
+msgid "Editorial strategy"
+msgstr ""
+
+#: admin/partials/main-admin-editorial-strategy.php:9
+msgid "Editorial Strategy Inline Help"
+msgstr ""
+
+#: admin/partials/main-admin-editorial-strategy.php:14
+#: dist/veepdotai/admin/partials/main-admin-editorial-strategy.php:13
+msgid "A set of questions is going to be generated from the context you provided during your project pitch."
+msgstr ""
+
+#: admin/partials/main-admin-editorial-strategy.php:24
+#: dist/veepdotai/admin/partials/main-admin-editorial-strategy.php:23
+msgid "Generate editorial strategy"
+msgstr ""
+
+#: admin/partials/main-admin-editorial-strategy.php:25
+#: dist/veepdotai/admin/partials/main-admin-editorial-strategy.php:24
+msgid "Copy editorial strategy to target user"
+msgstr ""
+
+#: admin/partials/main-admin-interview.php:14
+#: dist/veepdotai/admin/partials/main-admin-interview.php:14
+msgid "Tell your organization's pitch."
+msgstr ""
+
+#: admin/partials/main-admin-interview.php:15
+#: dist/veepdotai/admin/partials/main-admin-interview.php:15
+msgid "Tell the value for your users. What is the interest of your organization, your products, your solutions? Don't be afraid to repeat yourself."
+msgstr ""
+
+#: admin/partials/main-admin-interview.php:16
+#: dist/veepdotai/admin/partials/main-admin-interview.php:16
+msgid "Tell the pains you address. Talk about you users' needs. Talk about your persona."
+msgstr ""
+
+#: admin/partials/main-admin-interview.php:17
+#: dist/veepdotai/admin/partials/main-admin-interview.php:17
+msgid "Talk about your products and services or solutions that resolve thier pains. Name and describe them briefly."
+msgstr ""
+
+#: admin/partials/main-admin-interview.php:18
+#: dist/veepdotai/admin/partials/main-admin-interview.php:18
+msgid "Talk about your difference. What makes you unique? Give examples."
+msgstr ""
+
+#: admin/partials/main-admin-interview.php:24
+#: admin/partials/main-admin-prompts.php:15
+#: admin/partials/main-admin-site.php:15
+#: admin/partials/main-admin-site.php:31
+#: dist/veepdotai/admin/partials/main-admin-interview.php:24
+#: dist/veepdotai/admin/partials/main-admin-prompts.php:15
+#: dist/veepdotai/admin/partials/main-admin-site.php:15
+#: dist/veepdotai/admin/partials/main-admin-site.php:31
+msgid "Benefits"
+msgstr ""
+
+#: admin/partials/main-admin-interview.php:25
+#: admin/partials/main-admin-prompts.php:16
+#: admin/partials/main-admin-site.php:16
+#: admin/partials/main-admin-site.php:32
+#: dist/veepdotai/admin/partials/main-admin-interview.php:25
+#: dist/veepdotai/admin/partials/main-admin-prompts.php:16
+#: dist/veepdotai/admin/partials/main-admin-site.php:16
+#: dist/veepdotai/admin/partials/main-admin-site.php:32
+msgid "Pains"
+msgstr ""
+
+#: admin/partials/main-admin-interview.php:27
+#: admin/partials/main-admin-prompts.php:18
+#: admin/partials/main-admin-site.php:18
+#: admin/partials/main-admin-site.php:34
+#: dist/veepdotai/admin/partials/main-admin-interview.php:27
+#: dist/veepdotai/admin/partials/main-admin-prompts.php:18
+#: dist/veepdotai/admin/partials/main-admin-site.php:18
+#: dist/veepdotai/admin/partials/main-admin-site.php:34
+msgid "Strengths"
+msgstr ""
+
+#: admin/partials/main-admin-settings.php:12
+#: dist/veepdotai/admin/partials/main-admin-settings.php:12
+msgid "Reset roles"
+msgstr ""
+
+#: admin/partials/main-admin-settings.php:13
+#: dist/veepdotai/admin/partials/main-admin-settings.php:13
+msgid "Create roles"
+msgstr ""
+
+#: admin/partials/main-admin-settings.php:14
+#: dist/veepdotai/admin/partials/main-admin-settings.php:14
+msgid "Change user"
+msgstr ""
+
+#: admin/partials/main-admin-site.php:30
+#: dist/veepdotai/admin/partials/main-admin-site.php:30
+msgid "All"
+msgstr ""
+
+#: admin/partials/main-admin-site.php:41
+#: dist/veepdotai/admin/partials/main-admin-site.php:41
+msgid "Transform original text"
+msgstr ""
+
+#: admin/partials/main-admin-site.php:42
+#: dist/veepdotai/admin/partials/main-admin-site.php:42
+msgid "Generate images"
+msgstr ""
+
+#: admin/partials/main-admin-site.php:43
+#: dist/veepdotai/admin/partials/main-admin-site.php:43
+msgid "Generate site (home page)"
+msgstr ""
+
+#: admin/partials/main-admin-site.php:44
+#: dist/veepdotai/admin/partials/main-admin-site.php:44
+msgid "Generate pages"
+msgstr ""
+
+#: admin/partials/main-admin-site.php:46
+#: dist/veepdotai/admin/partials/main-admin-site.php:46
+msgid "Generate all"
+msgstr ""
+
+#: admin/partials/main-admin-site.php:47
+#: dist/veepdotai/admin/partials/main-admin-site.php:47
+msgid "Transform + Generate all"
+msgstr ""
+
+#: admin/partials/veepdotai-form-configuration-functions.php:23
+#: dist/veepdotai/admin/partials/veepdotai-form-configuration-functions.php:23
+msgid "OpenAI API Key"
+msgstr ""
+
+#: admin/partials/veepdotai-form-configuration-functions.php:26
+#: dist/veepdotai/admin/partials/veepdotai-form-configuration-functions.php:26
+msgid "Pexels API Key"
+msgstr ""
+
+#: admin/partials/veepdotai-form-configuration-functions.php:29
+#: dist/veepdotai/admin/partials/veepdotai-form-configuration-functions.php:29
+msgid "Unsplash API Key"
+msgstr ""
+
+#: admin/partials/veepdotai-form-configuration-functions.php:39
+#: dist/veepdotai/admin/partials/veepdotai-form-configuration-functions.php:39
+msgid "If you dont have one, <a href=\"\" target=\"_blank\">get an API Key</a>"
+msgstr ""
+
+#: admin/partials/veepdotai-form-editorial-calendar-functions.php:62
+#: dist/veepdotai/admin/partials/veepdotai-form-editorial-calendar-functions.php:60
+msgid "Retranscription"
+msgstr ""
+
+#: admin/partials/veepdotai-form-editorial-calendar-functions.php:63
+#: admin/partials/veepdotai-form-editorial-strategy-functions.php:24
+#: dist/veepdotai/admin/partials/veepdotai-form-editorial-calendar-functions.php:61
+#: dist/veepdotai/admin/partials/veepdotai-form-editorial-strategy-functions.php:24
+msgid "Prompt"
+msgstr ""
+
+#: admin/partials/veepdotai-form-editorial-calendar-functions.php:82
+#: admin/partials/veepdotai-form-site-functions.php:29
+#: dist/veepdotai/admin/partials/veepdotai-form-editorial-calendar-functions.php:80
+#: dist/veepdotai/admin/partials/veepdotai-form-site-functions.php:29
+msgid "Title"
+msgstr ""
+
+#: admin/partials/veepdotai-form-editorial-calendar-functions.php:83
+#: dist/veepdotai/admin/partials/veepdotai-form-editorial-calendar-functions.php:81
+msgid "Description"
+msgstr ""
+
+#: admin/partials/veepdotai-form-editorial-calendar-functions.php:84
+#: admin/partials/veepdotai-form-site-functions.php:32
+#: dist/veepdotai/admin/partials/veepdotai-form-editorial-calendar-functions.php:82
+#: dist/veepdotai/admin/partials/veepdotai-form-site-functions.php:32
+msgid "Content"
+msgstr ""
+
+#: admin/partials/veepdotai-form-editorial-calendar-functions.php:85
+#: dist/veepdotai/admin/partials/veepdotai-form-editorial-calendar-functions.php:83
+msgid "Linkedin"
+msgstr ""
+
+#: admin/partials/veepdotai-form-editorial-calendar-functions.php:86
+#: dist/veepdotai/admin/partials/veepdotai-form-editorial-calendar-functions.php:84
+msgid "Hashtags"
+msgstr ""
+
+#: admin/partials/veepdotai-form-editorial-calendar-functions.php:87
+#: dist/veepdotai/admin/partials/veepdotai-form-editorial-calendar-functions.php:85
+msgid "Themes"
+msgstr ""
+
+#: admin/partials/veepdotai-form-editorial-calendar-functions.php:88
+#: admin/partials/veepdotai-form-editorial-strategy-functions.php:21
+#: dist/veepdotai/admin/partials/veepdotai-form-editorial-calendar-functions.php:86
+#: dist/veepdotai/admin/partials/veepdotai-form-editorial-strategy-functions.php:21
+msgid "Keywords"
+msgstr ""
+
+#: admin/partials/veepdotai-form-editorial-calendar-functions.php:89
+#: admin/partials/veepdotai-form-site-functions.php:34
+#: dist/veepdotai/admin/partials/veepdotai-form-editorial-calendar-functions.php:87
+#: dist/veepdotai/admin/partials/veepdotai-form-site-functions.php:34
+msgid "Image prompt"
+msgstr ""
+
+#: admin/partials/veepdotai-form-editorial-calendar-functions.php:90
+#: admin/partials/veepdotai-form-site-functions.php:35
+#: dist/veepdotai/admin/partials/veepdotai-form-editorial-calendar-functions.php:88
+#: dist/veepdotai/admin/partials/veepdotai-form-site-functions.php:35
+msgid "Image href"
+msgstr ""
+
+#: admin/partials/veepdotai-form-editorial-calendar-functions.php:91
+msgid "Idea"
+msgstr ""
+
+#: admin/partials/veepdotai-form-editorial-strategy-functions.php:22
+#: dist/veepdotai/admin/partials/veepdotai-form-editorial-strategy-functions.php:22
+msgid "Strategy"
+msgstr ""
+
+#: admin/partials/veepdotai-form-editorial-strategy-functions.php:23
+#: dist/veepdotai/admin/partials/veepdotai-form-editorial-strategy-functions.php:23
+msgid "Target user"
+msgstr ""
+
+#: admin/partials/veepdotai-form-interview-functions.php:34
+#: dist/veepdotai/admin/partials/veepdotai-form-interview-functions.php:34
+msgid "Transcribe"
+msgstr ""
+
+#: admin/partials/veepdotai-form-prompts-functions.php:38
+#: dist/veepdotai/admin/partials/veepdotai-form-prompts-functions.php:38
+msgid "Pré-prompt"
+msgstr ""
+
+#: admin/partials/veepdotai-form-prompts-functions.php:46
+#: dist/veepdotai/admin/partials/veepdotai-form-prompts-functions.php:46
+msgid "Post-prompt"
+msgstr ""
+
+#: admin/partials/veepdotai-form-site-functions.php:30
+#: dist/veepdotai/admin/partials/veepdotai-form-site-functions.php:30
+msgid "Summary"
+msgstr ""
+
+#: admin/partials/veepdotai-form-site-functions.php:36
+#: dist/veepdotai/admin/partials/veepdotai-form-site-functions.php:36
+msgid "Image alt"
+msgstr ""
+
+#: admin/partials/veepdotai-form-site-functions.php:37
+#: dist/veepdotai/admin/partials/veepdotai-form-site-functions.php:37
+msgid "CTA text"
+msgstr ""
+
+#: admin/partials/veepdotai-form-site-functions.php:38
+#: dist/veepdotai/admin/partials/veepdotai-form-site-functions.php:38
+msgid "CTA href"
+msgstr ""
+
+#: admin/partials/veepdotai-form-site-functions.php:50
+#: dist/veepdotai/admin/partials/veepdotai-form-site-functions.php:50
+msgid "Landing page template"
+msgstr ""
+
+#: admin/partials/veepdotai-form-site-functions.php:59
+#: dist/veepdotai/admin/partials/veepdotai-form-site-functions.php:59
+msgid "mod(è|e)le\\sde"
+msgstr ""
+
+#: admin/partials/veepdotai-form-site-functions.php:73
+#: dist/veepdotai/admin/partials/veepdotai-form-site-functions.php:73
+msgid "Aucun modèle de page disponible."
+msgstr ""
+
+#: dist/veepdotai/plugins/veepdotai-saas.php:173
+#: plugins/veepdotai-saas.php:173
+msgid "All <span class=\"count\">(%s)</span>"
+msgstr ""
+
+#: dist/veepdotai/plugins/veepdotai-saas.php:189
+#: plugins/veepdotai-saas.php:189
+msgid "Unattached <span class=\"count\">(%s)</span>"
+msgstr ""
+
+#: dist/veepdotai/plugins/www-post-thumb.php:65
+#: plugins/www-post-thumb.php:65
+msgid "Or"
+msgstr ""
+
+#: dist/veepdotai/plugins/www-post-thumb.php:66
+#: plugins/www-post-thumb.php:66
+msgid "Enter the url for external featured image"
+msgstr ""
+
+#: dist/veepdotai/plugins/www-post-thumb.php:70
+#: plugins/www-post-thumb.php:70
+msgid "Leave url blank to remove."
+msgstr ""
+
+#: dist/veepdotai/plugins/www-post-thumb.php:120
+#: plugins/www-post-thumb.php:120
+msgid "thumbnail"
+msgstr ""

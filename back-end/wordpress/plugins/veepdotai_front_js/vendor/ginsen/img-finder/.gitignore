@@ -1,0 +1,32 @@
+###> IDE (SublimeText, Eclipse, Zend Studio, Netbeans, PHPStorm, TextMate2, Visual Studio Code) ###
+Capfile
+.buildpath
+/.idea/
+nbproject
+.project
+.settings
+.sublime-project
+TextMate2
+.vscode
+**/.DS_Store
+###< IDE ###
+
+###> img-finder ###
+/vendor/
+/var/
+composer.lock
+/config.yml
+###< img-finder ###
+
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###
+
+###> phpunit/phpunit ###
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+###> Sonar Scanner ###
+/.scannerwork/
+sonar-project.properties
+###< Sonar Scanner ###

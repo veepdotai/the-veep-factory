@@ -1,0 +1,8 @@
+.env
+
+dist
+node_modules
+
+debug.log
+wonolog
+wp-content/uploads

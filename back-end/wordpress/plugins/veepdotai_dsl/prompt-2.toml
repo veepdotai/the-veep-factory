@@ -1,0 +1,50 @@
+[veepdotai]
+title = "Veep.AI Marketing Prompts"
+name = "veepdotai"
+ns = "app.kermaprojects.marketing.social_network.linkedin"
+description = '''
+Cette librairie permet de générer les éléments suivants :
+* un ensemble de métadonnées pour organiser le stockage et la génération
+* un post LinkedIn
+* un post LinkedIn amélioré qui s'appuie sur le post précédent
+
+'''
+version = 1.0
+
+[owner]
+creationDate = "20231219"
+author = "JCK"
+company = "Veepdotai"
+
+[prompts]
+chain = [
+'g0',
+'g1',
+'g2'
+]
+
+[prompts.g0]
+label = "LI v1"
+prompt='''
+{{inspiration}}
+
+Tu es un spécialiste des stratégies digitales de contenu. A partir du texte ci-dessus, fais un plan numéroté détaillé en 5 chapitres principaux, introduction et conclusion inclus.
+'''
+
+[prompts.g1]
+label = "LI v2"
+prompt='''
+{{g0}}
+
+Tu es un spécialiste des stratégies digitales de contenu. Tu détailles chaque point du plan ci-dessus.
+'''
+
+[prompts.g2]
+label = "LI v3"
+prompt = '''
+{{g1}}
+
+Tu es un spécialiste des stratégies digitales de contenu. Fais un résumé en 5 très longs paragraphes.
+'''
+
+

@@ -1,0 +1,529 @@
+# Translation of Plugins - Simple Custom CSS and JS - Stable (latest release) in French (France)
+# This file is distributed under the same license as the Plugins - Simple Custom CSS and JS - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2021-01-04 20:24:03+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: GlotPress/4.0.0-alpha.10\n"
+"Language: fr\n"
+"Project-Id-Version: Plugins - Simple Custom CSS and JS - Stable (latest release)\n"
+
+#: includes/admin-screens.php:360
+msgid "Unpublished"
+msgstr "Non publié"
+
+#: includes/admin-config.php:259
+msgid "Remove the comments from HTML"
+msgstr "Retirer les commentaires du code HTML"
+
+#: includes/admin-config.php:217
+msgid "In your page's HTML there is a comment added before and after the internal CSS or JS in order to help you locate your custom code. Enable this option in order to remove that comment."
+msgstr "Dans le code HTML de votre page, un commentaire est ajouté avant et après le code CSS ou JS interne afin de vous aider à localiser votre code personnalisé. Activez cette option pour retirer ce commentaire."
+
+#: includes/admin-addons.php:83
+msgid "Homepage"
+msgstr "Page d’accueil "
+
+#: includes/admin-config.php:215
+msgid "If you use HTML tags in your code (for example "
+msgstr "Si vous utilisez des balises HTML dans votre code (par exemple "
+
+#: includes/admin-config.php:213
+msgid "If you want to use an HTML entity in your code (for example "
+msgstr "Si vous souhaitez utiliser une entité HTML dans votre code (par exemple "
+
+#: includes/admin-config.php:251
+msgid "Add the \"Web Designer\" role"
+msgstr "Ajouter le rôle « Web Designer »"
+
+#: custom-css-js.php:54 custom-css-js.php:61
+msgid "An error has occurred. Please reload the page and try again."
+msgstr "Une erreur est survenue. Veuillez recharger la page et réessayer."
+
+#: includes/admin-config.php:247
+msgid "By default only the Administrator will be able to publish/edit/delete Custom Codes. By enabling this option there is also a \"Web Designer\" role created which can be assigned to a non-admin user in order to publish/edit/delete Custom Codes."
+msgstr "Par défaut, l’administrateur pourra uniquement publier/modifier/supprimer des codes personnalisés. En activant cette option, un rôle « Web Designer » est également créé et peut être attribué à un utilisateur non administrateur afin de publier/modifier/supprimer les codes personnalisés."
+
+#: includes/admin-screens.php:340
+msgid "Published"
+msgstr "Publié"
+
+#. Author of the plugin
+msgid "SilkyPress.com"
+msgstr "SilkyPress.com"
+
+#: includes/admin-config.php:248
+msgid "General Settings"
+msgstr "Réglages généraux"
+
+#: includes/admin-config.php:230
+msgid "Encode the HTML entities"
+msgstr "Encoder les entités HTML"
+
+#: includes/admin-config.php:224
+msgid "Keep the HTML entities, don't convert to its character"
+msgstr "Conserver le code HTML, ne pas le convertir en caractères"
+
+#: includes/admin-config.php:221 includes/admin-screens.php:815
+msgid "Editor Settings"
+msgstr "Réglages de l’éditeur"
+
+#: includes/admin-config.php:153
+msgid "Custom CSS & JS Settings"
+msgstr "Réglages des CSS & JS personnalisés"
+
+#: includes/admin-config.php:269
+msgid "Save"
+msgstr "Enregistrer"
+
+#: includes/admin-screens.php:466
+msgid "All Custom Codes"
+msgstr "Tous les codes personnalisés"
+
+#: includes/admin-screens.php:464
+msgid "Filter Code Type"
+msgstr "Filtrer le type de code"
+
+#: includes/admin-screens.php:461
+msgid "HTML Codes"
+msgstr "Codes HTML"
+
+#: includes/admin-screens.php:460
+msgid "JS Codes"
+msgstr "Codes JS"
+
+#: includes/admin-screens.php:459
+msgid "CSS Codes"
+msgstr "Codes CSS"
+
+#: includes/admin-screens.php:835
+msgid "Last edited on %1$s at %2$s"
+msgstr "Dernière modification le %1$s à %2$s"
+
+#: includes/admin-screens.php:833
+msgid "Last edited by %1$s on %2$s at %3$s"
+msgstr "Dernière modification par %1$s le %2$s à %3$s"
+
+#: includes/admin-screens.php:600
+msgid "Edit HTML Code"
+msgstr "Modifier le code HTML"
+
+#: includes/admin-screens.php:599
+msgid "Edit JS Code"
+msgstr "Modifier le code JS"
+
+#: includes/admin-screens.php:598
+msgid "Edit CSS Code"
+msgstr "Modifier le code CSS"
+
+#: includes/admin-screens.php:224 includes/admin-screens.php:1454
+#: includes/admin-screens.php:1487
+msgid "Deactivate"
+msgstr "Désactiver"
+
+#: includes/admin-screens.php:223 includes/admin-screens.php:1457
+#: includes/admin-screens.php:1490
+msgid "Activate"
+msgstr "Activer"
+
+#: includes/admin-screens.php:222 includes/admin-screens.php:1489
+msgid "Inactive"
+msgstr "Inactif"
+
+#: includes/admin-screens.php:974
+msgid "On Login Page"
+msgstr "Sur la page de Login"
+
+#. Description of the plugin
+msgid "Easily add Custom CSS or JS to your website with an awesome editor."
+msgstr "Ajoutez facilement du code CSS et JS à votre site avec ce puissant éditeur."
+
+#: includes/admin-screens.php:1298
+msgid "Please run the following command to make the directory writable"
+msgstr "Veuillez exécuter la commande suivante pour rendre le répertoire modifiable."
+
+#. Plugin URI of the plugin
+msgid "https://wordpress.org/plugins/custom-css-js/"
+msgstr "https://wordpress.org/plugins/custom-css-js/"
+
+#. Plugin Name of the plugin
+msgid "Simple Custom CSS and JS"
+msgstr "Simple Custom CSS and JS"
+
+#: includes/admin-screens.php:1287
+msgid "Please run the following commands in order to make the directory"
+msgstr "Veuillez exécuter les commandes suivantes pour créer le répertoire "
+
+#: includes/admin-screens.php:1286
+msgid "The %s directory could not be created"
+msgstr "Le répertoire %s ne peut pas être créé"
+
+#: includes/admin-screens.php:1088
+msgid "Both"
+msgstr "Les deux"
+
+#: includes/admin-screens.php:1084
+msgid "Mobile"
+msgstr "Mobile"
+
+#: includes/admin-screens.php:1080
+msgid "Desktop"
+msgstr "Ordinateur"
+
+#: includes/admin-screens.php:1074
+msgid "On which device"
+msgstr "Sur quel appareil"
+
+#: includes/admin-screens.php:1018 includes/admin-screens.php:1109
+msgctxt "10 is the lowest priority"
+msgid "10 (lowest)"
+msgstr "10 (la plus basse)"
+
+#: includes/admin-screens.php:1009 includes/admin-screens.php:1100
+msgctxt "1 is the highest priority"
+msgid "1 (highest)"
+msgstr "1 (la plus haute)"
+
+#: includes/admin-screens.php:1004 includes/admin-screens.php:1095
+msgid "Priority"
+msgstr "Priorité"
+
+#: includes/admin-screens.php:997
+msgid "Minify the code"
+msgstr "Minifier le code"
+
+#: includes/admin-screens.php:985
+msgid "None"
+msgstr "aucun"
+
+#: includes/admin-screens.php:980
+msgid "CSS Preprocessor"
+msgstr "Préprocesseur CSS"
+
+#: includes/admin-screens.php:966 includes/admin-screens.php:1064
+msgid "In Frontend"
+msgstr "Sur le site"
+
+#: includes/admin-screens.php:961 includes/admin-screens.php:1059
+msgid "Where in site"
+msgstr "Où dans le site"
+
+#: includes/admin-screens.php:1053
+msgid "Footer"
+msgstr "Pied de page"
+
+#: includes/admin-screens.php:1049
+msgid "Header"
+msgstr "En-tête de page"
+
+#: includes/admin-screens.php:946 includes/admin-screens.php:1044
+msgid "Where on page"
+msgstr "Où dans la page"
+
+#: includes/admin-screens.php:940
+msgid "Internal"
+msgstr "Interne"
+
+#: includes/admin-screens.php:936
+msgid "External File"
+msgstr "Fichier externe"
+
+#: includes/admin-screens.php:931
+msgid "Linking type"
+msgstr "Type de liaison"
+
+#: includes/admin-screens.php:790
+msgid ""
+"/* Add your CSS code here.\n"
+"\n"
+"For example:\n"
+".example {\n"
+"    color: red;\n"
+"}\n"
+"\n"
+"For brushing up on your CSS knowledge, check out http://www.w3schools.com/css/css_syntax.asp\n"
+"\n"
+"End of comment */ "
+msgstr ""
+"/* Ajouter votre code CSS ici.\n"
+"                     \n"
+"Par exemple:\n"
+".exemple {\n"
+"    color: red;\n"
+"}\n"
+"\n"
+"Pour améliorer vos connaissances en CSS, visitez http://www.w3schools.com/css/css_syntax.asp\n"
+"\n"
+"Fin du commentaire */ "
+
+#: includes/admin-screens.php:631
+msgid "Code updated"
+msgstr "Code mis à jour"
+
+#: includes/admin-screens.php:578 includes/admin-screens.php:597
+#: includes/admin-screens.php:618
+msgid "Add HTML Code"
+msgstr "Ajouter du code HTML"
+
+#: includes/admin-screens.php:577 includes/admin-screens.php:596
+#: includes/admin-screens.php:617
+msgid "Add JS Code"
+msgstr "Ajouter du code JS"
+
+#: includes/admin-screens.php:576 includes/admin-screens.php:595
+#: includes/admin-screens.php:616
+msgid "Add CSS Code"
+msgstr "Ajouter du code CSS"
+
+#: includes/admin-screens.php:575
+msgid "Custom Code"
+msgstr "Code personnalisé"
+
+#: includes/admin-screens.php:225 includes/admin-screens.php:381
+#: includes/admin-screens.php:1453
+msgid "The code is active. Click to deactivate it"
+msgstr "Le code est actif. Cliquez pour le désactiver "
+
+#: includes/admin-screens.php:371
+msgid "Y/m/d"
+msgstr "Y/m/d"
+
+#. translators: %s: Human-readable time difference.
+#: includes/admin-screens.php:369
+msgid "%s ago"
+msgstr "Il y a %s"
+
+#: includes/admin-screens.php:341
+msgid "Modified"
+msgstr "Modifié"
+
+#: includes/admin-screens.php:338
+msgid "Title"
+msgstr "Titre"
+
+#: includes/admin-screens.php:337
+msgid "Type"
+msgstr "Type"
+
+#: includes/admin-screens.php:221 includes/admin-screens.php:336
+#: includes/admin-screens.php:1486
+msgid "Active"
+msgstr "Actif"
+
+#: includes/admin-screens.php:322
+msgid "Add HTML code"
+msgstr "Ajouter du code HTML"
+
+#: includes/admin-screens.php:321
+msgid "Add JS code"
+msgstr "Ajouter du code JS"
+
+#: includes/admin-screens.php:320
+msgid "Add CSS code"
+msgstr "Ajouter du code CSS"
+
+#: includes/admin-screens.php:260
+msgid "Options"
+msgstr "Options"
+
+#: includes/admin-screens.php:106
+msgid "Add Custom HTML"
+msgstr "Ajouter du HTML personnalisé"
+
+#: includes/admin-screens.php:103
+msgid "Add Custom JS"
+msgstr "Ajouter du JS personnalisé"
+
+#: includes/admin-screens.php:100
+msgid "Add Custom CSS"
+msgstr "Ajouter du CSS personnalisé"
+
+#: includes/admin-notices.php:126 includes/admin-notices.php:191
+msgid "Dismiss this notice"
+msgstr "Effacer cette notification"
+
+#: includes/admin-notices.php:126
+msgid "Get your discount now"
+msgstr "Obtenez votre remise maintenant"
+
+#: includes/admin-addons.php:140 includes/admin-addons.php:163
+msgid "Restore"
+msgstr "Restaurer"
+
+#: includes/admin-addons.php:139 includes/admin-addons.php:174
+msgid "Delete"
+msgstr "Effacer"
+
+#: includes/admin-addons.php:138 includes/admin-screens.php:339
+msgid "Author"
+msgstr "Auteur"
+
+#: includes/admin-addons.php:137
+msgid "Revision"
+msgstr "Révision"
+
+#: includes/admin-addons.php:136 includes/admin-addons.php:169
+msgid "Compare"
+msgstr "Comparer"
+
+#: includes/admin-addons.php:103
+msgid "Add"
+msgstr "Ajouter"
+
+#: includes/admin-addons.php:102
+msgid "Text filter"
+msgstr "Filtre de texte"
+
+#: includes/admin-addons.php:100 includes/admin-addons.php:101
+msgid "URL"
+msgstr "URL"
+
+#: includes/admin-addons.php:89
+msgid "Ends by"
+msgstr "Se termine par"
+
+#: includes/admin-addons.php:88
+msgid "Starts with"
+msgstr "Commence par"
+
+#: includes/admin-addons.php:87
+msgid "Not equal to"
+msgstr "Différent de"
+
+#: includes/admin-addons.php:86
+msgid "Is equal to"
+msgstr "Egal à"
+
+#: includes/admin-addons.php:85
+msgid "Not contains"
+msgstr "Ne contient pas"
+
+#: includes/admin-addons.php:84
+msgid "Contains"
+msgstr "Contient"
+
+#: includes/admin-addons.php:82
+msgid "All Website"
+msgstr "Tout le site"
+
+#: includes/admin-addons.php:68
+msgid "Preview Changes"
+msgstr "Prévisualiser"
+
+#: includes/admin-addons.php:67
+msgid "Full URL on which to preview the changes ..."
+msgstr "URL où prévisualiser les modifications ..."
+
+#: includes/admin-addons.php:56
+msgid "Code Revisions"
+msgstr "Révisions du code"
+
+#: includes/admin-addons.php:55
+msgid "Apply only on these URLs"
+msgstr "Appliquer seulement à ces URLs"
+
+#: includes/admin-addons.php:54
+msgid "Preview"
+msgstr "Prévisualiser"
+
+#: includes/admin-addons.php:42 includes/admin-screens.php:916
+msgid "Available only in <br />Simple Custom CSS and JS Pro"
+msgstr "Uniquement disponible dans <br />Simple Custom CSS and JS Pro"
+
+#: custom-css-js.php:277 includes/admin-config.php:59
+msgid "Settings"
+msgstr "Configuration"
+
+#: includes/admin-install.php:107
+msgid "Web Designer"
+msgstr "Designer Web"
+
+#: includes/admin-install.php:62
+msgid "Custom CSS and JS code"
+msgstr "Code CSS et JS personnalisé "
+
+#: includes/admin-install.php:41
+msgid "No Custom Code found in Trash."
+msgstr "Aucun code personnalisé trouvé dans la corbeille."
+
+#: includes/admin-install.php:40
+msgid "No Custom Code found."
+msgstr "Aucun code personnalisé trouvé."
+
+#: includes/admin-install.php:38
+msgid "Search Custom Code"
+msgstr "Rechercher du code personnalisé"
+
+#: includes/admin-install.php:37
+msgid "All Custom Code"
+msgstr "Tous les codes personnalisés"
+
+#: includes/admin-install.php:36
+msgid "View Custom Code"
+msgstr "Voir le code personnalisé"
+
+#: includes/admin-install.php:35
+msgid "Edit Custom Code"
+msgstr "Modifier le code personnalisé"
+
+#: includes/admin-install.php:34
+msgid "New Custom Code"
+msgstr "Nouveau code personnalisé"
+
+#: includes/admin-install.php:33
+msgid "Add Custom Code"
+msgstr "Ajouter du code personnalisé "
+
+#: includes/admin-install.php:32
+msgctxt "add new"
+msgid "Add Custom Code"
+msgstr "Ajouter du code personnalisé"
+
+#: includes/admin-install.php:31
+msgctxt "add new on admin bar"
+msgid "Custom Code"
+msgstr "Code personnalisé"
+
+#: includes/admin-install.php:30
+msgctxt "admin menu"
+msgid "Custom CSS & JS"
+msgstr "CSS et JS personnalisés"
+
+#: includes/admin-install.php:29
+msgctxt "post type singular name"
+msgid "Custom Code"
+msgstr "Code personnalisé"
+
+#: includes/admin-install.php:28
+msgctxt "post type general name"
+msgid "Custom Code"
+msgstr "Code personnalisé"
+
+#. Author URI of the plugin
+msgid "https://www.silkypress.com"
+msgstr "https://www.silkypress.com/"
+
+#: includes/admin-screens.php:991
+msgid "Less"
+msgstr "Less"
+
+#: includes/admin-addons.php:114
+msgctxt "revision date format"
+msgid "F j, Y @ H:i:s"
+msgstr "F j, Y @ H:i:s"
+
+#: includes/admin-screens.php:1297
+msgid "The %s directory is not writable, therefore the CSS and JS files cannot be saved."
+msgstr "Le répertoire %s n’est pas modifiable, les fichiers CSS et JS ne peuvent être sauvegardés."
+
+#: includes/admin-screens.php:970 includes/admin-screens.php:1068
+msgid "In Admin"
+msgstr "Dans l’administration"
+
+#: includes/admin-screens.php:226 includes/admin-screens.php:384
+#: includes/admin-screens.php:1456
+msgid "The code is inactive. Click to activate it"
+msgstr "Le code est inactif. Cliquez pour l’activer"

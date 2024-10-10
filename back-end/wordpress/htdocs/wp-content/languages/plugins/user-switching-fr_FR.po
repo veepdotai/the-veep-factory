@@ -1,0 +1,77 @@
+# Translation of Plugins - User Switching - Stable (latest release) in French (France)
+# This file is distributed under the same license as the Plugins - User Switching - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2022-06-24 19:28:16+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: GlotPress/4.0.0-alpha.11\n"
+"Language: fr\n"
+"Project-Id-Version: Plugins - User Switching - Stable (latest release)\n"
+
+#: user-switching.php:821
+msgctxt "verb"
+msgid "Sponsor"
+msgstr "Sponsoriser"
+
+#. Plugin URI of the plugin
+msgid "https://wordpress.org/plugins/user-switching/"
+msgstr "https://wordpress.org/plugins/user-switching/"
+
+#. Author URI of the plugin
+msgid "https://github.com/johnbillion/user-switching/graphs/contributors"
+msgstr "https://github.com/johnbillion/user-switching/graphs/contributors"
+
+#. Author of the plugin
+msgid "John Blackbourn & contributors"
+msgstr "John Blackbourn & les contributeurs"
+
+#. Description of the plugin
+msgid "Instant switching between user accounts in WordPress"
+msgstr "Changez instantanément de compte utilisateur dans WordPress"
+
+#. Plugin Name of the plugin
+msgid "User Switching"
+msgstr "User Switching"
+
+#. Translators: "switch off" means to temporarily log out
+#: user-switching.php:562
+msgid "Switch Off"
+msgstr "Déconnexion temporaire"
+
+#. Translators: 1: user display name; 2: username;
+#: user-switching.php:952
+msgid "Switched back to %1$s (%2$s)."
+msgstr "De retour sur le compte de %1$s (%2$s)."
+
+#. Translators: 1: user display name; 2: username;
+#: user-switching.php:931
+msgid "Switch back to %1$s (%2$s)"
+msgstr "Revenir au compte de %1$s (%2$s)"
+
+#. Translators: 1: user display name; 2: username;
+#: user-switching.php:910
+msgid "Switched to %1$s (%2$s)."
+msgstr "Connecté en tant que %1$s (%2$s)."
+
+#. Translators: "switch off" means to temporarily log out
+#: user-switching.php:261 user-switching.php:282
+msgid "Could not switch off."
+msgstr "Impossible de se déconnecter temporairement."
+
+#: user-switching.php:185 user-switching.php:210 user-switching.php:219
+#: user-switching.php:224 user-switching.php:252
+msgid "Could not switch users."
+msgstr "Impossible de changer d’utilisateur."
+
+#: user-switching.php:135 user-switching.php:581 user-switching.php:730
+#: user-switching.php:770 user-switching.php:801 user-switching.php:1037
+msgid "Switch&nbsp;To"
+msgstr "Se connecter en tant que"
+
+#: user-switching.php:131
+msgctxt "User Switching title on user profile screen"
+msgid "User Switching"
+msgstr "Changement d’utilisateur"

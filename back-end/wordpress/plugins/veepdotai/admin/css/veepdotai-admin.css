@@ -1,0 +1,283 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+body.veepdotai_role_user #menu-comments,
+body.veepdotai_role_user #menu-tools,
+body.veepdotai_role_user #menu-posts-custom-css-js,
+body.veepdotai_role_user #toplevel_page_wpcf7 {
+	display: none;
+}
+
+.red{
+	color: red;
+}
+
+.article{
+	width:50%; text-align: center;
+	padding:30px;
+	display:flex;
+	flex-direction: column;
+	align-items: center
+}
+
+.wp-block-post-featured-image.alignwide img {
+	border-radius: 5px;
+	width: 100%;
+	height: 340px;
+	object-fit: cover
+}
+
+.veep_configuration,
+.veep_section {
+	border: 1px solid grey;
+/*    border-radius: 5px; */
+	padding: 10px;
+/*    margin: 10px; */
+}
+
+/* */
+#veep_form_prompts textarea {
+	height: 200px;
+}
+
+.veepdotai-ai-section0-text,
+.veepdotai-ai-section1-text,
+.veepdotai-ai-section2-text,
+.veepdotai-ai-section3-text {
+	height: 100px ! important;
+}
+
+.veep_section input,
+.veep_section textarea {
+	border: 2px lightgray solid;
+	background-color: #e6e3dd;
+	padding: 10px;
+}
+
+.veep_section fieldset {
+	margin-top: 10px;
+}
+
+.veep_section fieldset legend {
+	font-weight: bold;
+}
+
+.veep_section label {
+	display: none;
+}
+
+/* */
+
+#veep_id_configuration {
+	width: 200px;
+}
+
+.editorial-calendar-question select {
+	width: 100%
+}
+
+.veep_configuration > label,
+.veep_section > label {
+		background: #dddddd;
+	color: black;
+	padding : 5px;
+}
+
+.veep_actions {
+	margin: 10px;
+	padding : 5px;
+}
+
+.veep_actions .button-primary {
+	margin: 5px;
+}
+
+
+ul.tabs_questions {
+	margin-bottom: 0;
+}
+
+.tabs_questions li {
+	padding: 5px;
+	display: inline;
+}
+
+.tabs_questions li:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.tabs_questions li.displayed {
+	background: black;
+	color: white;
+	text-decoration: underline;
+}
+
+/*
+.tabs_questions li:not(:last-child):after {
+	content: ' | ';
+}
+*/
+
+#veep_id_post_li_menu,
+#veep_id_post_fb_menu,
+#veep_id_post_insta_menu {
+	display: none;
+}
+
+.veepdotai-main-admin-about ul {
+	list-style: disc;
+	padding-left: 15px;
+}
+
+.editorial-calendar-question select {
+	max-width: fit-content;
+}
+
+.veep_section audio {
+	border-radius: 5px;
+	vertical-align: middle;
+	scale: 75%;
+}
+
+.veep_section button {
+	border: 1px solid black;
+	border-radius: 5px;
+	padding: 10px;
+	margin: 5px;
+}
+
+#recordButton {
+	background-color: greenyellow;
+}
+
+#pauseButton {
+	background-color: orange;
+}
+
+#stopButton {
+	background-color: red;
+}
+
+.timer {
+	padding-left: 20px;
+	font-size: larger;
+}
+
+.timer label {
+	background: black;
+	color: white;
+}
+
+#formats {
+	display: none;
+}
+
+/* Switch widget start */
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 38px;
+	height: 22px;
+  }
+
+  .switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+  }
+
+  .slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
+  }
+
+  .slider:before {
+	position: absolute;
+	content: "";
+	height: 15px;
+	width: 15px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
+  }
+
+  input:checked + .slider {
+	background-color: #2196F3;
+  }
+
+  input:focus + .slider {
+	box-shadow: 0 0 1px #2196F3;
+  }
+
+  input:checked + .slider:before {
+	-webkit-transform: translateX(15px);
+	-ms-transform: translateX(15px);
+	transform: translateX(15px);
+  }
+
+  /* Rounded sliders */
+  .slider.round {
+	border-radius: 21px;
+  }
+
+  .slider.round:before {
+	border-radius: 50%;
+  }
+
+  #toggle_div {
+	padding: 10px;
+  }
+
+/* Switch widget end */
+
+#toggle_div span {
+	padding-left: 5px;
+}
+
+#help img.help-icon {
+	width: 32px;
+	float: right;
+}
+
+/* Interview */
+#veep_form_edcal a.publish {
+	padding-left: 10px;
+}
+
+#veep_form_edcal a.transcribe {
+	padding-left: 10px;
+}
+
+#veep_form_interview a.publish {
+	display: none;
+}
+
+/* Editorial Calendar */
+/*
+#veep_form_edcal a.transcribe {
+	display: none;
+}
+*/
+/* Help system */
+.help-system ul,
+#help-content ul {
+	list-style-type: disc;
+	margin-left: 20px;
+}
+
+#help-content .pre {
+	background-color: linen;
+	padding: 10px;
+}

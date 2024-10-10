@@ -1,0 +1,527 @@
+# Translation of Themes - Twenty Fifteen in French (France)
+# This file is distributed under the same license as the Themes - Twenty Fifteen package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2022-05-26 20:56:26+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: GlotPress/4.0.0-alpha.7\n"
+"Language: fr\n"
+"Project-Id-Version: Themes - Twenty Fifteen\n"
+
+#. Description of the theme
+#, gp-priority: high
+msgid "Our 2015 default theme is clean, blog-focused, and designed for clarity. Twenty Fifteen's simple, straightforward typography is readable on a wide variety of screen sizes, and suitable for multiple languages. We designed it using a mobile-first approach, meaning your content takes center-stage, regardless of whether your visitors arrive by smartphone, tablet, laptop, or desktop computer."
+msgstr "Notre thème par défaut pour 2015 est pur, centré sur le blog et conçu pour être clair. Le typographie simple et directe de Twenty Fifteen est lisible sur une grand variété de tailles d’écrans, et adaptée à de nombreuses langues. Nous l’avons conçu avec la méthode « mobile avant tout », ce qui signifie que votre contenu a une place centrale, qu’importe si la personne qui visite votre site utilise un téléphone, une tablette, un ordinateur portable ou un ordinateur de bureau."
+
+#. Theme Name of the theme
+#: inc/block-patterns.php:20
+#, gp-priority: high
+msgid "Twenty Fifteen"
+msgstr "Twenty Fifteen"
+
+#: functions.php:327
+msgid "Light Blue Gradient"
+msgstr "Dégradé bleu clair"
+
+#: functions.php:322
+msgid "Bright Blue Gradient"
+msgstr "Dégradé bleu lumineux"
+
+#: functions.php:317
+msgid "Blue Gray Gradient"
+msgstr "Dégradé bleu gris"
+
+#: functions.php:312
+msgid "Purple Gradient"
+msgstr "Dégradé violet"
+
+#: functions.php:307
+msgid "Dark Purple Gradient"
+msgstr "Dégradé violet foncé"
+
+#: functions.php:302
+msgid "Light Pink Gradient"
+msgstr "Dégradé rose clair"
+
+#: functions.php:297
+msgid "Medium Pink Gradient"
+msgstr "Dégradé rose moyen"
+
+#: functions.php:292
+msgid "Dark Brown Gradient"
+msgstr "Dégradé marron foncé"
+
+#: functions.php:287
+msgid "Yellow Gradient"
+msgstr "Dégradé jaune"
+
+#: functions.php:282
+msgid "White Gradient"
+msgstr "Dégradé blanc"
+
+#: functions.php:277
+msgid "Light Gray Gradient"
+msgstr "Dégradé gris clair"
+
+#: functions.php:272
+msgid "Dark Gray Gradient"
+msgstr "Dégradé gris foncé"
+
+#: inc/block-patterns.php:65
+msgid "Snacks"
+msgstr "Snacks"
+
+#: inc/block-patterns.php:65
+msgid "Swimsuit"
+msgstr "Maillot de bain"
+
+#: inc/block-patterns.php:65
+msgid "Water Bottle"
+msgstr "Bouteille d‘eau"
+
+#: inc/block-patterns.php:65
+msgid "Camera"
+msgstr "Appareil photo"
+
+#: inc/block-patterns.php:65
+msgid "Towels"
+msgstr "Serviettes"
+
+#: inc/block-patterns.php:65
+msgid "As I watched, the planet seemed to grow larger and smaller and to advance and recede, but that was simply that my eye was tired. Forty millions of miles it was from us — more than forty millions of miles of void. Few people realize the immensity of vacancy in which the dust of the material universe swims."
+msgstr "Alors que je regardais, la planète semblait grossir et rapetisser, avancer et reculer, mais c‘était simplement parce que mon œil était fatigué. Elle était à 40 millions de kilomètres de nous - plus de 40 millions de kilomètres de vide. Peu de gens réalisent l‘immensité du vide dans lequel nage la poussière de l‘univers matériel."
+
+#: inc/block-patterns.php:65
+msgid "You don’t need a lot, trust us!"
+msgstr "Vous n‘avez pas besoin de grand chose, faites-nous confiance !"
+
+#: inc/block-patterns.php:65
+msgid "What to pack for the beach"
+msgstr "Que faut-il emporter pour la plage ?"
+
+#: inc/block-patterns.php:63
+msgid "Columns with a List"
+msgstr "Colonnes avec une liste"
+
+#: inc/block-patterns.php:55
+msgid "A boatload of people putting back came leaping out as I rushed past. The stones under my feet were muddy and slippery, and the river was so low."
+msgstr "Un bateau rempli de personnes en train de se mettre à l‘abri est sorti d‘un bond alors que je passais en trombe. Les pierres sous mes pieds étaient boueuses et glissantes, et la rivière était si basse."
+
+#: inc/block-patterns.php:55
+msgid "Travels"
+msgstr "Voyages"
+
+#: inc/block-patterns.php:55
+msgid "I faced about again, and rushed towards the approaching Martian, rushed right down the gravelly beach and headlong into the water. Others did the same."
+msgstr "Je me suis à nouveau retourné et je me suis précipité vers le Martien qui s‘approchait, j‘ai dévalé la plage de galets et j‘ai plongé tête baissée dans l‘eau. D‘autres ont fait de même."
+
+#: inc/block-patterns.php:55
+msgid "Adventure"
+msgstr "Aventure"
+
+#: inc/block-patterns.php:53
+msgid "Two Columns with Images"
+msgstr "Deux colonnes avec images"
+
+#: inc/block-patterns.php:45
+msgid "City, State, 00000"
+msgstr "Ville, région, 00000"
+
+#: inc/block-patterns.php:45
+msgid "123 Main Street"
+msgstr "123, rue de la République"
+
+#: inc/block-patterns.php:45
+msgid "Address"
+msgstr "Adresse"
+
+#: inc/block-patterns.php:45
+msgid "(123) 555-5555"
+msgstr "(+33) 04 75 01 99 00"
+
+#: inc/block-patterns.php:45
+msgid "Phone"
+msgstr "Téléphone"
+
+#: inc/block-patterns.php:45
+msgid "Follow us"
+msgstr "Suivez-nous"
+
+#: inc/block-patterns.php:45
+msgid "example@example.com"
+msgstr "example@example.com"
+
+#: inc/block-patterns.php:45
+msgid "Email"
+msgstr "E-mail"
+
+#: inc/block-patterns.php:43
+msgid "Contact area"
+msgstr "Zone de contact"
+
+#: inc/block-patterns.php:35
+msgid "Our default 2015 theme is clean, blog-focused, and designed for clarity. Twenty Fifteen’s simple, straightforward typography is readable on a wide variety of screen sizes, and suitable for multiple languages."
+msgstr "Notre thème par défaut pour 2015 est pur, centré sur le blog et conçu pour être clair. Le typographie simple et directe de Twenty Fifteen est lisible sur une grand variété de tailles d’écrans, et adaptée à de nombreuses langues."
+
+#: inc/block-patterns.php:35
+msgid "A pier at sunset"
+msgstr "Une jetée au coucher du soleil"
+
+#: inc/block-patterns.php:35 inc/block-patterns.php:55
+msgid "A pier with seagulls."
+msgstr "Une jetée avec des mouettes."
+
+#: inc/block-patterns.php:35 inc/block-patterns.php:55
+msgid "A pier with a seagull."
+msgstr "Une jetée avec une mouette."
+
+#: inc/block-patterns.php:33
+msgid "Gallery and Description"
+msgstr "Galerie et description"
+
+#: functions.php:260
+msgid "Light Blue"
+msgstr "Bleu clair"
+
+#: functions.php:255
+msgid "Bright Blue"
+msgstr "Bleu brillant"
+
+#: functions.php:250
+msgid "Blue Gray"
+msgstr "Gris bleu"
+
+#: functions.php:240
+msgid "Dark Purple"
+msgstr "Violet foncé"
+
+#: functions.php:235
+msgid "Light Pink"
+msgstr "Rose clair"
+
+#: functions.php:230
+msgid "Medium Pink"
+msgstr "Rose moyen"
+
+#: functions.php:225
+msgid "Dark Brown"
+msgstr "Marron foncé"
+
+#: functions.php:215
+msgid "White"
+msgstr "Blanc"
+
+#: functions.php:210
+msgid "Light Gray"
+msgstr "Gris clair"
+
+#: functions.php:205
+msgid "Dark Gray"
+msgstr "Gris foncé"
+
+#. translators: %s: Post title.
+#: comments.php:31
+msgctxt "comments title"
+msgid "One thought on &ldquo;%s&rdquo;"
+msgstr "Une réflexion sur « %s »"
+
+#. translators: %s: Post title. Only visible to screen readers.
+#: inc/template-tags.php:146
+msgid "Leave a comment<span class=\"screen-reader-text\"> on %s</span>"
+msgstr "Laisser un commentaire<span class=\"screen-reader-text\"> sur %s</span>"
+
+#. translators: Hidden accessibility text.
+#: single.php:41
+msgid "Previous post:"
+msgstr "Article précédent&nbsp;:"
+
+#: single.php:39
+msgid "Previous"
+msgstr "Précédent"
+
+#. translators: Hidden accessibility text.
+#: single.php:37
+msgid "Next post:"
+msgstr "Article suivant&nbsp;:"
+
+#: single.php:35
+msgid "Next"
+msgstr "Suivant"
+
+#. translators: %s: Search query.
+#: search.php:21
+msgid "Search Results for: %s"
+msgstr "Résultats de recherche pour %s"
+
+#. translators: Hidden accessibility text.
+#: inc/template-tags.php:136
+msgctxt "Used before full size attachment link."
+msgid "Full size"
+msgstr "Taille réelle"
+
+#. translators: Hidden accessibility text.
+#: inc/template-tags.php:123
+msgctxt "Used before tag names."
+msgid "Tags"
+msgstr "Mots-clés"
+
+#. translators: Hidden accessibility text.
+#: inc/template-tags.php:113
+msgctxt "Used before category names."
+msgid "Categories"
+msgstr "Catégories"
+
+#: inc/template-tags.php:108 inc/template-tags.php:118
+msgctxt "Used between list items, there is a space after the comma."
+msgid ", "
+msgstr ", "
+
+#. translators: Hidden accessibility text.
+#: inc/template-tags.php:102
+msgctxt "Used before post author name."
+msgid "Author"
+msgstr "Auteur"
+
+#. translators: Hidden accessibility text.
+#: inc/template-tags.php:91
+msgctxt "Used before publish date."
+msgid "Posted on"
+msgstr "Publié le"
+
+#. translators: Hidden accessibility text.
+#: inc/template-tags.php:66
+msgctxt "Used before post format."
+msgid "Format"
+msgstr "Format"
+
+#: inc/template-tags.php:56
+msgid "Featured"
+msgstr "Mis en avant"
+
+#: inc/template-tags.php:36
+msgid "Newer Comments"
+msgstr "Commentaires plus récents"
+
+#: inc/template-tags.php:31
+msgid "Older Comments"
+msgstr "Commentaires plus anciens"
+
+#. translators: Hidden accessibility text.
+#: inc/template-tags.php:26
+msgid "Comment navigation"
+msgstr "Navigation des commentaires"
+
+#: inc/customizer.php:239
+msgid "Blue"
+msgstr "Bleu"
+
+#: functions.php:245 inc/customizer.php:228
+msgid "Purple"
+msgstr "Violet"
+
+#: inc/customizer.php:217
+msgid "Pink"
+msgstr "Rose"
+
+#: functions.php:220 inc/customizer.php:206
+msgid "Yellow"
+msgstr "Jaune"
+
+#: inc/customizer.php:195
+msgid "Dark"
+msgstr "Sombre"
+
+#: inc/customizer.php:184
+msgid "Default"
+msgstr "Valeur par défaut"
+
+#: inc/customizer.php:103
+msgid "Header and Sidebar Background Color"
+msgstr "Couleur d‘arrière-plan de l’en-tête et de la colonne latérale"
+
+#: inc/customizer.php:79 inc/customizer.php:104 inc/customizer.php:111
+msgid "Applied to the header on small screens and the sidebar on wide screens."
+msgstr "Appliqué à l’en-tête sur les petits écrans, et à la colonne latérale sur les grands écrans."
+
+#: inc/customizer.php:78
+msgid "Header and Sidebar Text Color"
+msgstr "Couleur du texte de l’en-tête et de la colonne latérale"
+
+#: inc/customizer.php:55
+msgid "Base Color Scheme"
+msgstr "Jeu de couleurs de base"
+
+#. translators: %s: WordPress version.
+#: inc/back-compat.php:41 inc/back-compat.php:56 inc/back-compat.php:77
+msgid "Twenty Fifteen requires at least WordPress version 4.1. You are running version %s. Please upgrade and try again."
+msgstr "Twenty Fifteen ne fonctionne qu’à partir de WordPress 4.1. Vous utilisez la version %s. Veuillez mettre à jour et réessayer."
+
+#: image.php:89
+msgctxt "Parent post link"
+msgid "<span class=\"meta-nav\">Published in</span><span class=\"post-title\">%title</span>"
+msgstr "<span class=\"meta-nav\">Publié dans</span><span class=\"post-title\">%title</span>"
+
+#: image.php:25
+msgid "Next Image"
+msgstr "Image suivante"
+
+#: image.php:25
+msgid "Previous Image"
+msgstr "Image précédente"
+
+#: header.php:52
+msgid "Menu and widgets"
+msgstr "Menu et widgets"
+
+#. translators: Hidden accessibility text.
+#: header.php:27
+msgid "Skip to content"
+msgstr "Aller au contenu"
+
+#. translators: Hidden accessibility text.
+#: functions.php:465
+msgid "collapse child menu"
+msgstr "fermer le sous-menu"
+
+#. translators: Hidden accessibility text.
+#: functions.php:463
+msgid "expand child menu"
+msgstr "ouvrir le sous-menu"
+
+#. translators: If there are characters in your language that are not supported
+#. by Inconsolata, translate this to 'off'. Do not translate into your own
+#. language.
+#: functions.php:395
+msgctxt "Inconsolata font: on or off"
+msgid "on"
+msgstr "on"
+
+#. translators: If there are characters in your language that are not supported
+#. by Noto Serif, translate this to 'off'. Do not translate into your own
+#. language.
+#: functions.php:387
+msgctxt "Noto Serif font: on or off"
+msgid "on"
+msgstr "on"
+
+#. translators: If there are characters in your language that are not supported
+#. by Noto Sans, translate this to 'off'. Do not translate into your own
+#. language.
+#: functions.php:379
+msgctxt "Noto Sans font: on or off"
+msgid "on"
+msgstr "on"
+
+#: functions.php:352
+msgid "Add widgets here to appear in your sidebar."
+msgstr "Ajoutez des widgets ici afin qu’ils apparaissent dans votre colonne latérale."
+
+#: functions.php:350
+msgid "Widget Area"
+msgstr "Zone de widgets"
+
+#: functions.php:95
+msgid "Social Links Menu"
+msgstr "Menu des liens de réseaux sociaux"
+
+#: functions.php:94
+msgid "Primary Menu"
+msgstr "Menu principal"
+
+#. translators: %s: WordPress
+#: footer.php:33
+msgid "Proudly powered by %s"
+msgstr "Fièrement propulsé par %s"
+
+#: content-none.php:36
+msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr "Il semblerait que nous ne soyons pas en mesure de trouver votre contenu. Essayez en lançant une recherche."
+
+#: content-none.php:31
+msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+msgstr "Désolé, mais rien ne correspond à votre recherche. Veuillez réessayer avec des mots différents."
+
+#. translators: %s: Post editor URL.
+#: content-none.php:25
+msgid "Ready to publish your first post? <a href=\"%s\">Get started here</a>."
+msgstr "Prêt·e à publier votre premier article ? <a href=\"%s\">Lancez-vous ici</a>."
+
+#: content-none.php:15
+msgid "Nothing Found"
+msgstr "Rien de trouvé"
+
+#: content-link.php:61 content-page.php:38 content-search.php:28
+#: content-search.php:33 content.php:62 image.php:75
+msgid "Edit"
+msgstr "Modifier"
+
+#: content-link.php:39 content-page.php:26 content.php:41 image.php:61
+msgid "Pages:"
+msgstr "Pages&nbsp;:"
+
+#. translators: %s: Post title. Only visible to screen readers.
+#: content-link.php:32 content.php:34 inc/template-tags.php:266
+msgid "Continue reading %s"
+msgstr "Continuer la lecture de %s"
+
+#: comments.php:71
+msgid "Comments are closed."
+msgstr "Les commentaires sont fermés."
+
+#. translators: 1: Number of comments, 2: Post title.
+#: comments.php:35
+msgctxt "comments title"
+msgid "%1$s thought on &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
+msgstr[0] "%1$s réflexion au sujet de « %2$s »"
+msgstr[1] "%1$s réflexions au sujet de « %2$s »"
+
+#. translators: %s: Author display name.
+#: author-bio.php:36
+msgid "View all posts by %s"
+msgstr "Afficher tous les articles par %s"
+
+#: author-bio.php:12
+msgid "Published by"
+msgstr "Publié par"
+
+#. translators: Hidden accessibility text.
+#: archive.php:54 content-link.php:44 content-page.php:31 content.php:46
+#: image.php:66 index.php:51 search.php:49
+msgid "Page"
+msgstr "Page"
+
+#: archive.php:52 index.php:49 search.php:47
+msgid "Next page"
+msgstr "Page suivante"
+
+#: archive.php:51 index.php:48 search.php:46
+msgid "Previous page"
+msgstr "Page précédente"
+
+#: 404.php:21
+msgid "It looks like nothing was found at this location. Maybe try a search?"
+msgstr "Apparemment, rien n&rsquo;a été trouvé à cette adresse. Essayez avec recherche&nbsp;?"
+
+#: 404.php:17
+msgid "Oops! That page can&rsquo;t be found."
+msgstr "Oups&nbsp;! Cette page est introuvable."
+
+#. Author of the theme
+#, gp-priority: low
+msgid "the WordPress team"
+msgstr "L&rsquo;équipe WordPress"
+
+#. Theme URI of the theme
+#, gp-priority: low
+msgid "https://wordpress.org/themes/twentyfifteen/"
+msgstr "https://wordpress.org/themes/twentyfifteen/"
+
+#. Author URI of the theme
+#: footer.php:30
+#, gp-priority: low
+msgid "https://wordpress.org/"
+msgstr "https://wordpress.org/"

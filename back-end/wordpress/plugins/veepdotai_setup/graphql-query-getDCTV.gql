@@ -1,0 +1,18 @@
+query getDCTV {
+  domainContentTypeVals {
+    nodes {
+      id
+      key
+      short
+      long
+      keys {
+        nodes {
+          id
+          id1
+          id2
+          databaseId
+        }
+      }
+    }
+  }
+}

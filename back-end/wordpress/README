@@ -1,0 +1,106 @@
+# How to setup dev env in gitpod
+
+
+# Google configuration
+
+For the moment, only Google auth is configured (with local auth too). Configuring another oAuth provider should not be too hard but I hadn't have the case yet.
+
+Connect to WP and go to Login with Google in the Settings menu. You can then enter your information:
+* Client ID (https://console.developers.google.com/apis/dashboard)
+* Client secret
+
+To make google authentification work, update your auth in console.developer.google.com
+* Add 8001 and 3000 as authorized URI...
+
+# Wordpress, apache2 and ffmpeg installation 
+
+There is a file name setup-env.sh in the the-veep-factory/back-office/bin/ directory. It will:
+* install mysql and ffmpeg
+* update password plugin in database
+* import data backup
+* update wordpress admin passwd
+
+When setup-env.sh starts, it asks for the password you want to use for msqyl root and wordpress admin (it will be the same). It is only for development purpose. For production, make your own installation and follow security rules.
+
+A the end of the script, mysql and apache are started and should be ok. Go to /wp-admin/ and try to connect with the credentials you used while launching the setup-env.sh
+
+Don't forget to install and configure php for apache, it depends of installations.
+
+# WP configuration
+
+Create a user and set her/him all the permissions
+* veepdotai_manager
+* admin too
+
+# Veep Configuration in WP
+
+Currently, these are the only 2 supported AI engines. Adding a new one would not be very difficult but I haven't had the case yet.
+* OpenAI key: Indicate a key of your own
+* Mistral: Indicate a key of your own
+
+
+* demo user: Indicate demo (and don't forget to create the corresponding user)
+* ffmpeg: Indicate the right executable path (/usr/bin/ffmpeg)
+
+
+# Configure cors for graphql
+Useful in dev mode because your server is on 8001 (with gitpod) which creates a 8000... hostname, and your client (based on react) is on 3000 which creates a 3000... hostname. If you don't configure CORS, you will have errors because your will not be authorized to discuss with your server.
+
+The configuration is done in the simple-jwt-login plugin, not written by Veepdotai but by the awesome Nicu Micle (https://profiles.wordpress.org/nicu_m/).
+
+The configuration must be done in part in the following file. Or let's rather say I didn't succeed to configure the plugin in another way.
+So I update the following file:
+* src/Router.php
+
+And I tweak the configuration in WP in simple-jwt-login menu:
+* Access-Control-Allow-Origin: https://YOUR_SERVER_NAME for node js (so https://3000... with gitpod or ...:3000 if you are on your local machine)
+* Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS, HEAD
+* Access-Control-Allow-Headers: Authorization, Content-Type, Accept, Accept-Language, Content-Language, Client-Version, Client-Name
+
+To check everything is ok, go in inspect mode under your favorite browser then check in network tab you haven't any CORS errors. If you have, check the details and see the problem.
+
+# Wpgraphql configuration
+
+I use the wpgraphql plugin for wordpress which is awesome. Thank you to the awesome Jason Bahl (https://github.com/jasonbahl) for its wonderful job.
+
+I also used classical ReST but I aim at using only Wpgraphql to make things simpler. With cache to improve efficiency and security so people can't play any graphql request :-(
+
+I use WP in a certain way for certain reasons (...). To make it short, I use only DRAFT documents so they are hidden from users (in WP, published documents are public by default). I'm not completely confident with what I'm saying just now, so feel free to contact and fix me.
+
+Declare $connection_query_class in AppContext.php
+
+class AppContext {
+
+	/**
+	 * Stores the class to use for the connection query.
+	 *
+	 * @var WP_Query|null
+	 */
+	public $connection_query_class = null;
+
+Set post_status to draft by default in wpgraphql
+* src/Data/Connection/PostObjectConnectionResolver.php, line 174
+
+/**
+ * Set the post_status to "publish" by default
+ */
+//$query_args['post_status'] = 'publish';
+$query_args['post_status'] = 'draft';
+
+# Plugin configuration
+
+All the plugins must be activated.
+
+If you don't see plugins in extensions WP menu, check symbolic links are done and link to their corresponding counterparts in veep plugin directory, which is beside the htdocs directory. Why ? To have the veep code outside the wordpress source tree.
+
+# Usage
+
+Connect to /wp-admin/ and use google credentials.
+Connect to the 3000.../r?JWT= insteat of 8001 (useful for production)
+
+# Notes
+
+There is a bug I still have not fixed about the max_execution_time of request. On gitpod server for instance, it is configured to 30s which is short. It's ok for development and test but some times system hangs and the reason is just that!
+
+max_execution_time may be 30 s. on dev servers. Update or accept some request never finish
+

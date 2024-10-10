@@ -1,0 +1,10 @@
+{
+    "require": {
+        "ginsen/img-finder": "^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ImgFinder\\": "vendor/ginsen/img-finder/src/"
+        }
+    }
+}

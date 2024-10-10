@@ -1,0 +1,16 @@
+query searchAnyNodes {
+  posts(where: {orderby: {field: DATE, order: DESC}}) {
+    nodes {
+      id
+      databaseId
+      ... on Vcontent {
+        title
+        veepdotaiParent
+      }
+      ... on Post {
+        title
+        veepdotaiResource
+      }
+    }
+  }
+}
