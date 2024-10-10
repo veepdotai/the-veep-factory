@@ -24,9 +24,6 @@ require "vendor/autoload.php";
 require "class-veepdotai-dsl.php";
 
 function veepdotai_dsl() {
-    $output = Veepdotai_DSL::generate();
-
-    return json_decode($output->choices[0]->message->content);
 }
 
 //veepdotai_dsl();

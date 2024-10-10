@@ -1,5 +1,7 @@
 .local
 
+support
+
 wp-content/debug.log
 wp-content/wonolog
 wp-content/uploads
