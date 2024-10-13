@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Logger } from 'react-logger-lib'
 import { t } from 'i18next'
+import PubSub from 'pubsub-js'
 
 //import { Container } from 'react-bootstrap'
 import { useCookies } from 'react-cookie'
@@ -22,6 +23,8 @@ import { Form, } from "src/components/ui/shadcn/form"
 import { Tabs, TabsContent, TabsList, TabsTrigger, } from "src/components/ui/shadcn/tabs"
 import { Separator } from "src/components/ui/shadcn/separator"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, } from "src/components/ui/shadcn/card"
+import { UtilsGraphQLEditorialLine } from '../../../api/utils-graphql-editorial-line'
+import Loading from 'src/components/common/Loading'
 
 export default function EditorialLineForm() {
     const log = Logger.of(EditorialLineForm.name);
@@ -30,6 +33,8 @@ export default function EditorialLineForm() {
     const [cookies] = useCookies(['JWT']);
   
     const { toast } = useToast()
+
+    const [values, setValues] = useState({})
 
     const minChars = 2
 
@@ -94,22 +99,17 @@ export default function EditorialLineForm() {
         signature: z.string().min(minChars, {
             message: t("AtLeast", {length: minChars}),
         }).optional().or(z.literal('')),
-      })
-    
-    const form = useForm<z.infer<typeof FormSchema>>({
-      resolver: zodResolver(FormSchema),
-      defaultValues: {
-        "benefits": "I'm benefits 1",
-        "pains": "I'm pains 2",
-        "offers": "I'm offers 3",
-        "gender": "Male",
-        "frequency": "3",
-      },
     })
-
+    
     function onSubmit(data: z.infer<typeof FormSchema>) {
-      //alert('Submitting data...')
-      UtilsFormCommon.log.trace("Submitting data: " + JSON.stringify(data, null, 2));
+      let o = JSON.stringify(data, null, 2)
+      let q = UtilsGraphQLEditorialLine.create(graphqlURI, cookies,
+        "editorialLine",
+        o.replace(/"/g, "_G_").replace(/\n/g, "_EOL_"),
+      )
+
+      log.trace("GraphQL request: " + q);
+      log.trace("Submitting data: " + JSON.stringify(data, null, 2));
       toast({
         title: "You submitted the following values:",
         description: (
@@ -120,88 +120,112 @@ export default function EditorialLineForm() {
       })
     }
 
+    function updateForm(topic, message) {
+      log.trace("updateForm: message: " + JSON.stringify(message))
+      let result = JSON.parse(message.result).result
+      log.trace("updateForm: result2: " + result)
+      let currentValues = {}
+      
+      if (result) {
+        let o_string = result.replace(/_G_/g, '"').replace(/_EOL_/g, "\n")
+        log.trace("updateForm: o: " + o_string)
+        let o = JSON.parse(o_string)
+        log.trace("updateForm: o: " + JSON.stringify(o))
+        form.reset(o)
+        log.trace("updateForm: resetted form.")
+      }
+
+    }
+
     let cn = "text-sm font-bold"
     let defaultTabsContentLayout = "pl-5"
     let defaultCBB = {displayFormLabel: true, cnFormLabel: "w-[200px] text-right"}
 
+    let form = useForm<z.infer<typeof FormSchema>>({
+      resolver: zodResolver(FormSchema),
+      defaultValues: {}
+    })
+
     useEffect(() => {
+      PubSub.subscribe( "EDITORIAL_LINE_DATA_FETCHED", updateForm)
+      UtilsGraphQLEditorialLine.listOne(graphqlURI, cookies, "editorialLine")
     }, [])
 
     return (
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
 
-          <Tabs defaultValue="pitch">
+            <Tabs defaultValue="pitch">
 
-            <TabsList className="grid grid-cols-5">
-              <TabsTrigger className={cn} value="pitch">{t("Pitch")}</TabsTrigger>
-              <TabsTrigger className={cn} value="target">{t("Target")}</TabsTrigger>
-              <TabsTrigger className={cn} value="content">{t("Content")}</TabsTrigger>
-              <TabsTrigger className={cn} value="style">{t("Style")}</TabsTrigger>
-              <TabsTrigger className={cn} value="scheduling">{t("Scheduling")}</TabsTrigger>
-            </TabsList>
+              <TabsList className="grid grid-cols-5">
+                <TabsTrigger className={cn} value="pitch">{t("Pitch")}</TabsTrigger>
+                <TabsTrigger className={cn} value="target">{t("Target")}</TabsTrigger>
+                <TabsTrigger className={cn} value="content">{t("Content")}</TabsTrigger>
+                <TabsTrigger className={cn} value="style">{t("Style")}</TabsTrigger>
+                <TabsTrigger className={cn} value="scheduling">{t("Scheduling")}</TabsTrigger>
+              </TabsList>
 
-            <TabsContent value="pitch" className={defaultTabsContentLayout}>
-              {UFC.getFormField(form, "benefits", "textarea")}
-              {UFC.getFormField(form, "pains", "textarea")}
-              {UFC.getFormField(form, "solutions", "textarea")}
-              {UFC.getFormField(form, "offers", "textarea")}
-              {UFC.getFormField(form, "uniqueFeatures", "textarea")}
-            </TabsContent>
+              <TabsContent value="pitch" className={defaultTabsContentLayout}>
+                {UFC.getFormField(form, "benefits", "textarea")}
+                {UFC.getFormField(form, "pains", "textarea")}
+                {UFC.getFormField(form, "solutions", "textarea")}
+                {UFC.getFormField(form, "offers", "textarea")}
+                {UFC.getFormField(form, "uniqueFeatures", "textarea")}
+              </TabsContent>
 
-            <TabsContent value="target" className={defaultTabsContentLayout}>
-              {UFC.getFormField(form, "icp", "textarea")}
-              {UFC.getFormField(form, "buyerPersona", "textarea")}
-            </TabsContent>
+              <TabsContent value="target" className={defaultTabsContentLayout}>
+                {UFC.getFormField(form, "icp", "textarea")}
+                {UFC.getFormField(form, "buyerPersona", "textarea")}
+              </TabsContent>
 
-            <TabsContent value="content" className={defaultTabsContentLayout}>
-              {UFC.getFormField(form, "themes", "textarea")}
-              {UFC.getFormField(form, "roles", "textarea")}
+              <TabsContent value="content" className={defaultTabsContentLayout}>
+                {UFC.getFormField(form, "themes", "textarea")}
+                {UFC.getFormField(form, "roles", "textarea")}
 
-              <div class="flex items-center text-md font-bold text-black after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:after:border-neutral-600">
-                  {t("Misc")}
-              </div>
-              <div style={{ paddingLeft: "3rem"}}>
-                {UFC.getFormField(form, "gender", "combobox", "Male|Female|Neutral|NoMatter", defaultCBB)}
-                {UFC.getFormField(form, "language", "combobox", "fr-FR:fr(FR)|fr-CA:fr(CA)|en-UK:en(UK)|en-US:en(US)|sp|de", defaultCBB)}
-                {UFC.getFormField(form, "signature", "textarea")}
+                <div class="flex items-center text-md font-bold text-black after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:after:border-neutral-600">
+                    {t("Misc")}
                 </div>
-            </TabsContent>
+                <div style={{ paddingLeft: "3rem"}}>
+                  {UFC.getFormField(form, "gender", "combobox", "Male|Female|Neutral|NoMatter", defaultCBB)}
+                  {UFC.getFormField(form, "language", "combobox", "fr-FR:fr(FR)|fr-CA:fr(CA)|en-UK:en(UK)|en-US:en(US)|sp|de", defaultCBB)}
+                  {UFC.getFormField(form, "signature", "textarea")}
+                  </div>
+              </TabsContent>
 
-            <TabsContent value="style" className={defaultTabsContentLayout}>
-              <div class="flex items-center text-md font-bold text-black after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:after:border-neutral-600">
-                  {t("Style")}
-              </div>
-              <div style={{ paddingLeft: "3rem"}}>
-                {/*UFC.getFormField(form, "style", "select", "Friendly|Neutral|Professional|Solemn")*/}
+              <TabsContent value="style" className={defaultTabsContentLayout}>
+                <div class="flex items-center text-md font-bold text-black after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:after:border-neutral-600">
+                    {t("Style")}
+                </div>
+                <div style={{ paddingLeft: "3rem"}}>
+                  {/*UFC.getFormField(form, "style", "select", "Friendly|Neutral|Professional|Solemn")*/}
 
-                {UFC.getFormField(form, "vocabulary", "combobox", "Extended|Limited|Slang|Evolved|Common|Technical", defaultCBB)}
-                {UFC.getFormField(form, "syntax", "combobox", "Complex|Simple|LongAndFlowing|ShortAndSimple", defaultCBB)}
-                {UFC.getFormField(form, "pointOfView", "combobox", "Je|Tu|Il|Elle|Iel|Nous|Vous|Ils|Elles|Iels", defaultCBB)}
-                {UFC.getFormField(form, "tone", "combobox", "Cold|Formal|Unformal|Humorous|Serious|Solemn|Sarcastic|Warm", defaultCBB)}
-                {UFC.getFormField(form, "structure", "combobox", "para-expositif:Paragraph-Expositif", defaultCBB)}
-              </div>
+                  {UFC.getFormField(form, "vocabulary", "combobox", "Extended|Limited|Slang|Evolved|Common|Technical", defaultCBB)}
+                  {UFC.getFormField(form, "syntax", "combobox", "Complex|Simple|LongAndFlowing|ShortAndSimple", defaultCBB)}
+                  {UFC.getFormField(form, "pointOfView", "combobox", "Je|Tu|Il|Elle|Iel|Nous|Vous|Ils|Elles|Iels", defaultCBB)}
+                  {UFC.getFormField(form, "tone", "combobox", "Cold|Formal|Unformal|Humorous|Serious|Solemn|Sarcastic|Warm", defaultCBB)}
+                  {UFC.getFormField(form, "structure", "combobox", "para-expositif:Paragraph-Expositif", defaultCBB)}
+                </div>
 
-              <div class="pt-5 flex items-center text-md font-bold text-black after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:after:border-neutral-600">
-                  {t("Emojis")}
-              </div>
-              <div style={{ paddingLeft: "3rem"}}>
-                {UFC.getFormField(form, "emojis", "combobox", "1|2|3|4", defaultCBB)}
-                {UFC.getFormField(form, "emojisGranularity", "combobox", "para:Paragraph|sentence:Sentence", defaultCBB)}
-              </div>
-            </TabsContent>
+                <div class="pt-5 flex items-center text-md font-bold text-black after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:after:border-neutral-600">
+                    {t("Emojis")}
+                </div>
+                <div style={{ paddingLeft: "3rem"}}>
+                  {UFC.getFormField(form, "emojis", "combobox", "1|2|3|4", defaultCBB)}
+                  {UFC.getFormField(form, "emojisGranularity", "combobox", "para:Paragraph|sentence:Sentence", defaultCBB)}
+                </div>
+              </TabsContent>
 
-            <TabsContent value="scheduling" className={defaultTabsContentLayout}>
-              {UFC.getFormField(form, "frequency", "combobox", "1:1T|2:2T|3:3T|4:4T|5:5T|6:6T|7:7T|8:8T|9:9T|10:10T", defaultCBB)}
-              {UFC.getFormField(form, "frequencyGranularity", "combobox", "Day|Week|Fortnight|Month|Quarter|Half-Yeer|Year", defaultCBB)}
-              {UFC.getFormField(form, "framework", "combobox", "xofu:TOFU/MOFU/BOFU|AARRR", defaultCBB)}
-            </TabsContent>
-                
-          </Tabs>
+              <TabsContent value="scheduling" className={defaultTabsContentLayout}>
+                {UFC.getFormField(form, "frequency", "combobox", "1:1T|2:2T|3:3T|4:4T|5:5T|6:6T|7:7T|8:8T|9:9T|10:10T", defaultCBB)}
+                {UFC.getFormField(form, "frequencyGranularity", "combobox", "Day|Week|Fortnight|Month|Quarter|Half-Yeer|Year", defaultCBB)}
+                {UFC.getFormField(form, "framework", "combobox", "xofu:TOFU/MOFU/BOFU|AARRR", defaultCBB)}
+              </TabsContent>
+                  
+            </Tabs>
 
-          <Button type="submit">{t("Submit")}</Button>
-        </form>
-      </Form>
+            <Button type="submit">{t("Submit")}</Button>
+          </form>
+        </Form>
     )
 }
 

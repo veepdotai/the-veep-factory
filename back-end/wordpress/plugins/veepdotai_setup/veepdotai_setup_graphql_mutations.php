@@ -2,8 +2,6 @@
 
 namespace Veepdotai\Graphql\Mutations;
 
-//require '../veepdotai/admin/class-veepdotai-util.php';
-
 /**
  * @package Veepdotai\Graphql
  * @version 0.0.1
@@ -14,10 +12,12 @@ namespace Veepdotai\Graphql\Mutations;
 function register() {
 	register_remove_parent_operation();
 	register_get_usage_data();
+	register_list_data();
+	register_save_data();
 }
 
 function log( $msg ) {
-	\Veepdotai_Util::log( 'debug', $msg );
+	\Veepdotai_Util::log( 'debug', 'GraphQL Mutations: ' . $msg );
 }
 
 /**
@@ -108,7 +108,7 @@ function remove_vcontent_parent_and_children( $user_id, $parent_id ) {
   *   }
   *
   */
-  function register_get_usage_data() {
+function register_get_usage_data() {
 	register_graphql_mutation( 'getUsageData', [
 
 		'description' => __( 'Gets usage data from the monitoring tool', 'your-textdomain' ),
@@ -206,4 +206,149 @@ _EOM_;
 	curl_close($curl);
 
 	return $response;
+}
+
+function register_list_data() {
+	register_graphql_mutation( 'listData', [
+
+		'description' => __( 'Gets data (name => value)', 'your-textdomain' ),
+		'inputFields'         => [
+			'option' => [
+				'type' => 'String',
+				'description' => __( 'Object name', 'your-textdomain' ),
+			],
+
+		],
+	
+		# outputFields expects an array of fields that can be asked for in response to the mutation
+		# the resolve function is optional, but can be useful if the mutateAndPayload doesn't return an array
+		# with the same key(s) as the outputFields
+		'outputFields'        => [
+			'result' => [
+				'type' => 'String',
+				'description' => __( 'Result operation as a json object', 'your-textdomain' ),
+/*
+				'resolve' => function( $payload, $args, $context, $info ) {
+							   return isset( $payload['ids'] ) ? implode( ',', $payload[ 'ids' ]) : null;
+				}
+*/
+			]
+		],
+	
+		'mutateAndGetPayload' => function( $input, $context, $info ) {
+			$fn = "listData";
+			$pn = "veepdotai-";
+			$prompt_prefix = "ai-prompt-";
+	
+			$param_name = sanitize_text_field( $input['option'] );
+			$user = wp_get_current_user();
+			log( "$fn: user: " . print_r( $user, true) . "." );
+	
+			$option_name = $pn . $param_name;
+			log( "$fn: Setting option: $option_name = $option_value." );
+
+			$result = \Veepdotai_Util::get_option( $option_name );
+			log( "$fn: get_option: result: $result" );
+
+			$data = [];
+			if ( $result ) {
+				log( "$fn: result: true" );
+				$data = [
+					"user_id" => $user->user_login,
+					"result" => $result,
+				];
+			} else {
+				$data = [
+					"user_id" => $user->user_login,
+					"result" => false,
+				];
+			}
+	
+			return [
+				'result' => json_encode( $data ),
+			];
+		}
+	] );
+}
+
+function register_save_data() {
+	register_graphql_mutation( 'saveData', [
+
+		'description' => __( 'Saves data (name => value)', 'your-textdomain' ),
+		'inputFields'         => [
+			'option' => [
+				'type' => 'String',
+				'description' => __( 'Object name', 'your-textdomain' ),
+			],
+			'value' => [
+				'type' => 'String',
+				'description' => __( 'Object value', 'your-textdomain' ),
+			],
+			'oldName' => [
+				'type' => 'String',
+				'description' => __( 'Object old name', 'your-textdomain' ),
+			],
+
+		],
+	
+		# outputFields expects an array of fields that can be asked for in response to the mutation
+		# the resolve function is optional, but can be useful if the mutateAndPayload doesn't return an array
+		# with the same key(s) as the outputFields
+		'outputFields'        => [
+			'result' => [
+				'type' => 'String',
+				'description' => __( 'Result operation as a json object', 'your-textdomain' ),
+/*
+				'resolve' => function( $payload, $args, $context, $info ) {
+							   return isset( $payload['ids'] ) ? implode( ',', $payload[ 'ids' ]) : null;
+				}
+*/
+			]
+		],
+	
+		'mutateAndGetPayload' => function( $input, $context, $info ) {
+			$fn = "saveData";
+			$pn = "veepdotai-";
+			$prompt_prefix = "ai-prompt-";
+	
+			$param_name = sanitize_text_field( $input['option'] );
+			$option_value = sanitize_text_field( $input['value'] );
+			$oldName = sanitize_text_field( $input['oldName'] );
+			$old_name = $pn . $prompt_prefix . $oldName;         
+
+			log( "$fn: old_name: " . $old_name );
+	
+			$user = wp_get_current_user();
+			log( "$fn: user: " . print_r( $user, true) . "." );
+	
+			$option_name = $pn . $param_name;
+			log( "$fn: Setting option: $option_name = $option_value." );
+
+			$result = \Veepdotai_Util::set_option( $option_name, $option_value );
+			log( "$fn: set_option: result: $result" );
+
+			$data = [];
+			if ( $result ) {
+				log( "$fn: result: true" );
+				$data = [
+					"user_id" => $user->user_login,
+					"result" => true,
+				];
+			} else {
+				$data = [
+					"user_id" => $user->user_login,
+					"result" => false,
+				];
+			}
+	
+			if ( $old_name ) {
+				log( "debug", "calling V::delete_option: old_name: " . $old_name );
+				\Veepdotai_Util::delete_option( $old_name );
+			}
+
+			return [
+				'result' => json_encode( $data ),
+			];
+		}
+	] );
 }

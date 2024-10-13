@@ -78,6 +78,7 @@ export default function initAppJSLogs(level = "NONE") {
     localStorage.setItem('UtilsGraphQLPost', level);
     localStorage.setItem('UtilsGraphQLVcontent', level);
     localStorage.setItem('UtilsGraphQLMonitoring', level);
+    localStorage.setItem('UtilsGraphQLEditorialLine', level);
     localStorage.setItem('WaitForIt', 'OFF');
     
     /** Third-party params */
@@ -99,6 +100,7 @@ export default function initAppJSLogs(level = "NONE") {
     localStorage.setItem('UrlForm', level);
     localStorage.setItem('VocalForm', level);
     localStorage.setItem('UploadLib', level);
+    localStorage.setItem('EditorialLineForm', level);
 
     localStorage.setItem('getColumns', level);
     localStorage.setItem('UtilsFormCommon', level);

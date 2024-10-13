@@ -299,6 +299,7 @@ class Veepdotai_Util {
 		self::log( 'debug', 'Setting option: ' . $user_param_name . ' = ' . $value );
 
 		$res = update_option( $user_param_name, $value );
+		self::log( 'debug', 'Setting option result: ' . $res . '.' );
 		
 		if ( preg_match( '/transcription/', $param ) ) {
 			if ( ! get_option( $user_param_name ) ) {
@@ -307,7 +308,7 @@ class Veepdotai_Util {
 				self::log( 'debug', "Update option after binary conversion ? res = ${res}." );
 			}
 		}
-		self::log( 'debug', "Option has been set." );
+		self::log( 'debug', "Option has been set: " . $res . "." );
 
 		return $res;
 	}
