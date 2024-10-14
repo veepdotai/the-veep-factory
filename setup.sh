@@ -13,3 +13,4 @@ DB_PASSWORD=$INPUT_PASSWD
 
 v_generate_wp_configure > wp-config.php.generated && \
 	mv wp-config.php.generated back-end/wordpress/htdocs/wp-config.php
+

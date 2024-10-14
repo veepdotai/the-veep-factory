@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 SQL_DUMP_FILE=$ENV_SQL_DUMP_FILE
 
 v_read_pass() {
@@ -17,13 +16,17 @@ v_read_pass() {
 }
 
 v_installation() {
+	# Services installation
+	sudo apt-get update
+	sudo apt-get -y install apache2 php mysql-server ffmpeg
+	sudo add-apt-repository ppa:ondrej/apache2 -y
+	sudo apt-get update
+	sudo apt-get install libapache2-mod-php8.0
+	sudo a2enmod php8.0
+
 	# Apache Configuration
 	#export APACHE_DOCROOT_IN_REPO=../wordpress/htdocs
 	apachectl start
-
-	# MySQL server installation
-	sudo apt-get update
-	sudo apt-get -y install mysql-server ffmpeg
 
 	# MySQL post-installation
 	sudo chown mysql:gitpod /var/run/mysqld
