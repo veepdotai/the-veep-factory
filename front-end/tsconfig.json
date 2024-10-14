@@ -1,10 +1,13 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
-      "@/constants/*": ["./src/constants/*"],
-      "@/components/*": ["./src/components/ui/shadcn/*"],
-      "@/lib/utils.ts": ["./src/components/ui/shadcn/utils.ts"]
+      "@/*": ["*"],
+      "@/constants/*": ["src/constants/*"],
+      "@/components/ui/*": ["src/components/ui/shadcn/*"],
+      "@/components/plate-ui/*": ["src/components/plate-ui/*"],
+      "@/components/icons": ["src/components/plate-ui/icons.tsx"],
+      "@/lib/utils": ["src/components/ui/shadcn/utils"]
     },
     "lib": [
       "dom",
@@ -18,7 +21,7 @@
     "incremental": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
