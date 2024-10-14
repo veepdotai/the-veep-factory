@@ -5,9 +5,10 @@
       "@/*": ["*"],
       "@/constants/*": ["src/constants/*"],
       "@/components/ui/*": ["src/components/ui/shadcn/*"],
-      "@/components/plate-ui/*": ["src/components/plate-ui/*"],
-      "@/components/icons": ["src/components/plate-ui/icons.tsx"],
-      "@/lib/utils": ["src/components/ui/shadcn/utils"]
+      "@/components/plate-ui/*": ["src/components/ui/shadcn/plate-ui/*"],
+      "@/components/icons": ["src/components/ui/shadcn/plate-ui/icons.tsx"],
+      "@/lib/utils": ["src/components/ui/shadcn/utils"],
+      "@/hooks/*": ["src/components/ui/shadcn/hooks/*"]
     },
     "lib": [
       "dom",

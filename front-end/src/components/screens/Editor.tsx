@@ -44,7 +44,6 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import { BlockquoteElement } from '@/components/plate-ui/blockquote-element';
-//import { BlockquoteElement } from '@/components/plate-ui/blockquote-element';
 import { CodeBlockElement } from '@/components/plate-ui/code-block-element';
 import { CodeLineElement } from '@/components/plate-ui/code-line-element';
 import { CodeSyntaxLeaf } from '@/components/plate-ui/code-syntax-leaf';
@@ -213,7 +212,7 @@ export function PlateEditor() {
           [ExcalidrawPlugin.key]: ExcalidrawElement,
           [HorizontalRulePlugin.key]: HrElement,
           [ImagePlugin.key]: ImageElement,
-  //        [LinkPlugin.key]: LinkElement,
+//        [LinkPlugin.key]: LinkElement,
           [TogglePlugin.key]: ToggleElement,
           [ColumnPlugin.key]: ColumnGroupElement,
           [ColumnItemPlugin.key]: ColumnElement,
