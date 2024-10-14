@@ -5,7 +5,7 @@ import { useCookies } from "react-cookie";
 import { Logger } from "react-logger-lib";
 
 import Loading from "../../components/common/Loading";
-import { Constants } from "src/constants/Constants";
+import { Constants } from "@/constants/Constants";
 
 export default function Redirect() {
     const log = Logger.of(Redirect.name);

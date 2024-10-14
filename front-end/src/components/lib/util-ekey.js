@@ -1,6 +1,6 @@
 import { Logger } from 'react-logger-lib';
 
-export const EKeyLib = {
+const EKeyLib = {
     log: Logger.of("EKeyLib"),
 
 	encode: function(value) {
@@ -17,4 +17,4 @@ export const EKeyLib = {
 
 }
 
-module.exports = EKeyLib;
+export default EKeyLib;

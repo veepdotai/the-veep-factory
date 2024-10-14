@@ -1,9 +1,11 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
+      "src/*": ["src/*"],
       "@/constants/*": ["src/constants/*"],
-      "@/components/*": ["src/components/ui/shadcn/*"],
+      "@/components/*": ["src/components/*"],
+      "@/components/ui/*": ["src/components/ui/shadcn/*"],
       "@/lib/utils.ts": ["src/components/ui/shadcn/utils.ts"]
     }
   },
