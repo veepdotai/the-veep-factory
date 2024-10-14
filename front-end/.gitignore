@@ -19,6 +19,9 @@
 /.next/
 /out/
 
+# installation
+/yarn.lock
+
 # production
 /build
 
