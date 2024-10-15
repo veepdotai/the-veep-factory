@@ -102,7 +102,8 @@ export default function Result( props ) {
                     } else if ( "ai-section-edcal0-transcription" == option) {
                         setInitialContent(content);
                         //setContent(content.replace(/(\\r\\n|\\n)/g, "<br />"));
-                        setContent(content.replace(/\.([^0-9\.])/g, ".$1<br /><br />"));
+                        //setContent(content.replace(/\.\s+([^0-9\.])/g, ".$1<br /><br />"));
+                        setContent(content.replace(/(\.|\!|\?)\s+([A-Z])/g, "$1<br /><br />$2"));
                     } else {
                         setInitialContent(content);
                         setContent(content.replace(/(\r\n|\n)/g, "<br />"));
