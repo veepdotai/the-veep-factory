@@ -14,16 +14,20 @@ import EKeyLib from '../../lib/util-ekey';
 import { UtilsForm } from '../../lib/utils-form';
 
 import Content from './Content';
+import { Regex } from 'lucide-react';
 
 export default class MyContentDetailsUtils {
   static log = Logger.of(MyContentDetailsUtils.name);
 
-  static format(_content, _parse = false) {
+  static format(_content, _parse = false, needle = "(\\.|\\!|\\?)\\s+([A-Z])", replacement = "$1<br /><br />$2") {
     if (_content) {
+      // by default: _content.replace(/\.\s+/g, "<br /><br />");
+      let needleRe = new RegExp(`${needle}`, "g")
+      let r = _content.replace(needleRe, replacement)
       if (! _parse) {
-        return _content.replace(/\n/g, "<br />");
+        return r
       } else {
-        return parse(_content.replace(/\n/g, "<br />"));
+        return parse(r);
       }
     } else {
       return "";
@@ -163,12 +167,18 @@ export default class MyContentDetailsUtils {
   }
 
   static getTranscriptionContent(cid, data) {
+    let log = MyContentDetailsUtils.log
+
     let part = "Transcription";
     //let attrName = `veepdotai${part}`;
     let attrName = "veepdotaiTranscription";
     let title = t("Transcription");
+    log.trace("getTranscriptionContent: [no format]" + data[attrName] + ".")
+    log.trace("getTranscriptionContent: [format=true] => no html parsing" + MyContentDetailsUtils.format(data[attrName], true) + ".")
+    log.trace("getTranscriptionContent: [format=false] => html parsing" + MyContentDetailsUtils.format(data[attrName], false) + ".")
     return (
       <Content
+        className="h-full"
         contentId={cid}
         attrName={attrName}
         title={title}
@@ -184,10 +194,11 @@ export default class MyContentDetailsUtils {
     let title = t("Prompt");
     return (
       <Content
+        className="h-full"
         contentId={cid}
         attrName={attrName}
         title={title}
-        content={MyContentDetailsUtils.format(data[attrName], true)}
+        content={MyContentDetailsUtils.format(data[attrName], true, "\\n\\s+", "<br /><br />")}
       />
     )
 
