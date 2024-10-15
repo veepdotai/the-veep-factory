@@ -4,7 +4,6 @@ Veep.AI supports you in all phases of creating content or a document with AIs. I
 ## Video
 
 ### English version
-https://www.youtube.com/watch?v=e6Zw30R8CWU
 [![Veep 3.0 demo](https://img.youtube.com/vi/e6Zw30R8CWU/0.jpg)](https://www.youtube.com/watch?v=e6Zw30R8CWU)
 
 ### French version
