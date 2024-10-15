@@ -2,6 +2,12 @@
 Veep.AI supports you in all phases of creating content or a document with AIs. It is an open source “ChatGPT Canvas” type solution allowing you to create/edit long format content with any AI, and not just ChatGPT.
 
 ## Video
+
+### English version
+https://www.youtube.com/watch?v=e6Zw30R8CWU
+[![Veep 3.0 demo](https://img.youtube.com/vi/e6Zw30R8CWU/0.jpg)](https://www.youtube.com/watch?v=e6Zw30R8CWU)
+
+### French version
 [![Veep 3.0 demo](https://img.youtube.com/vi/dUvMOlhqoz4/0.jpg)](https://www.youtube.com/watch?v=dUvMOlhqoz4)
 
 ## Dashboard
