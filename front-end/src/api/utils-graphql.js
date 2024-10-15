@@ -4,6 +4,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 import { UtilsGraphQLPost } from './utils-graphql-post'
 import { UtilsGraphQLVcontent } from './utils-graphql-vcontent'
 import toast from 'react-hot-toast';
+import { Constants } from '../constants/Constants'
 
 // 'vcontent'|'post'
 let CONTENT_TYPE = 'vcontent'
@@ -162,8 +163,11 @@ export const UtilsGraphQL = {
 
 	
 	buildClauseQuery: function (authorId, _props, contentType = "vcontent") {
-		let nbMax = 10;
 		let log = UtilsGraphQL.log
+
+		//let nbMax = Constants.NB_MAX;
+		let nbMax = 100
+
 		//  let authorId = props.authorId;
 		let view = _props?.view;
 		let author = _props?.author;

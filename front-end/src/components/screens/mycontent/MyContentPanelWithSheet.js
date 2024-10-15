@@ -10,6 +10,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "src/components/ui/shadcn/sheet"
+import MyContentPanelWithSheet2panels from './MyContentPanelWithSheet2panels'
 
 import { t } from "i18next";
 
@@ -25,17 +26,20 @@ export default function MyContentPanelWithSheet( {side, id = null, info = null, 
 
   return (
     <>
-        {side()}
+        { /* Datatable */
+          side()
+        }
         {info ? 
             <>
-              <Sheet style={{width: "750px"}} open={open} onOpenChange={setOpen}>
-                <SheetContent className="sm:max-w-8xl">
+              {/*className="w-full" style={{width: "1024px"}}*/}
+              <Sheet open={open} onOpenChange={setOpen}>
+                <SheetContent className="sm:max-w-8xl w-full">
                   <SheetHeader>
                     <SheetTitle>{t("ContentDetails")}</SheetTitle>
                     <SheetDescription>
                     </SheetDescription>
                   </SheetHeader>
-                  {content(info.id)}
+                    <MyContentPanelWithSheet2panels id={id} info={info} content={content}/>
                   <SheetFooter>
                   </SheetFooter>
                 </SheetContent>

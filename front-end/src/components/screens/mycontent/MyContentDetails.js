@@ -29,6 +29,9 @@ import MyContentDetailsUtils from './MyContentDetailsUtils';
 import MyContentDetailsForDesktop from './MyContentDetailsForDesktop';
 import MyContentDetailsForMobile from './MyContentDetailsForMobile';
 
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup, } from "src/components/ui/shadcn/resizable"
+import { ScrollArea, ScrollBar } from "src/components/ui/shadcn/scroll-area"
+
 import { UtilsGraphQL } from 'src/api/utils-graphql.js'
 import { Constants } from "src/constants/Constants";
 
@@ -112,7 +115,7 @@ export default function MyContentDetails( { id }) {
     <Container className='mw-100 h-100 m-0 p-0'>
       {
         data && prompt && contentId && (
-          <Tabs className="justify-start" id="mycontent-details" defaultValue="sideBySide-content">
+            <>
               { ! isDesktop ?
                 <>
                   {MyContentDetailsForMobile.mobileMenu(prompt)}
@@ -122,34 +125,57 @@ export default function MyContentDetails( { id }) {
                 </>
               :
                 <>
-                  {MyContentDetailsForDesktop.desktopMenu(prompt)}
-                  <TabsContent id="details-content" className="h-100" value="content">
-                    {MyContentDetailsForDesktop.desktopMarkdownContent(selectedFormat, prompt, data, contentId)}
-                  </TabsContent>
-                  <TabsContent id="details-content-pdf" className="h-100" value="pdf-merged-content">
-                    {MyContentDetailsForDesktop.desktopPDFContent(selectedFormat, prompt, data, contentId)}
-                  </TabsContent>
+                  <ResizablePanelGroup direction="horizontal" className="h-full">
+                    <ResizablePanel className="h-full" style={{borderRight: "1px solid #eeefff"}} defaultSize={25}>
+                      <Tabs className="justify-start h-full" id="mycontent-chat" defaultValue="transcription">
+                        <ScrollArea className="w-100 whitespace-nowrap h-full">
+                          <ScrollBar orientation="vertical" />
+
+                          {MyContentDetailsForDesktop.desktopMenu(prompt, "side")}
+
+                          <TabsContent id="details-chat-prompt" className="h-full" value="metadata">
+                            {MyContentDetailsUtils.getPromptContent(contentId, mainNode)}
+                          </TabsContent>
+                          <TabsContent id="details-chat-transcription" className="h-full" value="transcription">
+                            {MyContentDetailsUtils.getTranscriptionContent(contentId, mainNode)}
+                          </TabsContent>
+                          <TabsContent id="details-chat-pipeline" className="h-full" value="pipeline">
+                            {MyContentDetailsUtils.getAllStepsOneByOne(prompt, data, contentId)}
+                          </TabsContent>
+                        </ScrollArea>
+                      </Tabs>
+                    </ResizablePanel>
+                    <ResizableHandle withHandle withHandleStyle={{ marginLeft: "-1px"}} withHandleClassName="bg-light" />
+                    <ResizablePanel defaultSize={74} className='h-full'>
+                      <Tabs className="justify-start h-full" id="mycontent-main" defaultValue="content">
+
+                        {MyContentDetailsForDesktop.desktopMenu(prompt, "main")}
+
+                        <TabsContent id="details-content-main" className="h-full" value="content">
+                          {MyContentDetailsForDesktop.desktopMarkdownContent(selectedFormat, prompt, data, contentId)}
+                        </TabsContent>
+                        <TabsContent id="details-content-pdf" className="h-full" value="pdf-merged-content">
+                          {MyContentDetailsForDesktop.desktopPDFContent(selectedFormat, prompt, data, contentId)}
+                        </TabsContent>
+                      </Tabs>
+                    </ResizablePanel>
+                  </ResizablePanelGroup>
                 </>
               }
 
+              {/*
               <TabsContent id="details-sideBySide-content" value="sideBySide-content">
                 <Row>
                   { MyContentDetailsUtils.getColumnsSelectors([1, 2, 3, 4, 6], setWidth) }
                 </Row>
-                <Row>
-                  { MyContentDetailsUtils.getSideBySideView(prompt, data, contentId, width) }
-                </Row>
               </TabsContent>
+              */}
 
-              {MyContentDetailsUtils.getAllStepsOneByOne(prompt, data, contentId)}
-
-              <TabsContent id="details-transcription" value="transcription">
-                    {MyContentDetailsUtils.getTranscriptionContent(contentId, mainNode)}
-              </TabsContent>
-
-              <TabsContent id="details-metadata" value="metadata">
-                    {MyContentDetailsUtils.getPromptContent(contentId, mainNode)}
-              </TabsContent>
+              {/*
+              <Row>
+                  {MyContentDetailsUtils.getAllStepsOneByOne(prompt, data, contentId)}
+              </Row>
+              */}
             {/*
             <Col className='' xs={12} lg={2} xl={2}>
               {getInput(t("SharedWithUsers"), 'users')}
@@ -157,7 +183,7 @@ export default function MyContentDetails( { id }) {
               <Button onClick={alert('NYI')}>{t("Save")}</Button>
             </Col>
             */}
-          </Tabs>
+          </>
         )
       }
     </Container>

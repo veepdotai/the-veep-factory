@@ -52,48 +52,67 @@ export default class MyContentDetailsForDesktop {
     return tabs
   }
 
-  static desktopMenuWithTabs(prompt) {
+  /**
+   * 
+   * @param {*} prompt 
+   * @returns The menus
+   */
+  static desktopMenuWithTabs(prompt, mode) {
     return (
-      <TabsList id="details-menu" variant="pills" className="flex justify-start w-100 mh-100">
-        <div>
-          <TabsTrigger id="details-menu-content" value="content">
-              <MyContentDetailsForDesktop.TT id="m1" title={t("MainContent")}>
-                {Icons.aggregatedView}
-              </MyContentDetailsForDesktop.TT>
-          </TabsTrigger>
-          <TabsTrigger id="details-menu-pdf" value="pdf-merged-content">
-              <MyContentDetailsForDesktop.TT id="m3" title={t("PDFMergedContent")}>
-                {Icons.pdf}
-              </MyContentDetailsForDesktop.TT>
-          </TabsTrigger>
-          <TabsTrigger id="details-menu-sideBySide-content" value="sideBySide-content">
-              <MyContentDetailsForDesktop.TT id="m2" title={t("SideBySideView")}>{Icons.comparedView}</MyContentDetailsForDesktop.TT>
-          </TabsTrigger>
-        </div>
+      <>
+        { mode === "side" ?
+          <TabsList id="details-menu-chat" variant="pills" className="">
+            <div>
+              <TabsTrigger id="details-menu-metadata" value="metadata">
+                <MyContentDetailsForDesktop.TT id="m-metadata" title={t("Metadata")}>
+                  {Icons.metadataView}
+                </MyContentDetailsForDesktop.TT>
+              </TabsTrigger>
+              <TabsTrigger id="details-menu-transcription" value="transcription">
+                <MyContentDetailsForDesktop.TT id="m-transcription" title={t("Transcription")}>
+                  {Icons.transcriptionView}
+                </MyContentDetailsForDesktop.TT>
+              </TabsTrigger>
+              <TabsTrigger id="details-menu-pipeline" value="pipeline">
+                <MyContentDetailsForDesktop.TT id="m-pipeline" title={t("Pipeline")}>
+                  {Icons.support}
+                </MyContentDetailsForDesktop.TT>
+              </TabsTrigger>
 
-        <div>
-          {MyContentDetailsForDesktop.getPromptsList(prompt)}
-        </div>
-
-        <div>
-          <TabsTrigger id="details-menu-transcription" value="transcription">
-            <MyContentDetailsForDesktop.TT id="m-transcription" title={t("Transcription")}>
-              {Icons.transcriptionView}
-            </MyContentDetailsForDesktop.TT>
-          </TabsTrigger>
-          <TabsTrigger id="details-menu-metadata" value="metadata">
-            <MyContentDetailsForDesktop.TT id="m-metadata" title={t("Metadata")}>
-              {Icons.metadataView}
-            </MyContentDetailsForDesktop.TT>
-          </TabsTrigger>
-        </div>
-
-      </TabsList>
+              {/*
+              <TabsTrigger id="details-menu-sideBySide-content" value="sideBySide-content">
+                  <MyContentDetailsForDesktop.TT id="m2" title={t("SideBySideView")}>{Icons.comparedView}</MyContentDetailsForDesktop.TT>
+              </TabsTrigger>
+              */}
+            </div>
+          </TabsList>
+        :
+          <TabsList id="details-menu-main" variant="pills" className="flex justify-start w-100 mh-100">
+            <div>
+              <TabsTrigger id="details-menu-content" value="content">
+                  <MyContentDetailsForDesktop.TT id="m1" title={t("MainContent")}>
+                    {Icons.aggregatedView}
+                  </MyContentDetailsForDesktop.TT>
+              </TabsTrigger>
+              <TabsTrigger id="details-menu-pdf" value="pdf-merged-content">
+                  <MyContentDetailsForDesktop.TT id="m3" title={t("PDFMergedContent")}>
+                    {Icons.pdf}
+                  </MyContentDetailsForDesktop.TT>
+              </TabsTrigger>
+              {/*
+              <TabsTrigger id="details-menu-sideBySide-content" value="sideBySide-content">
+                  <MyContentDetailsForDesktop.TT id="m2" title={t("SideBySideView")}>{Icons.comparedView}</MyContentDetailsForDesktop.TT>
+              </TabsTrigger>
+              */}
+            </div>
+          </TabsList>
+        }
+      </>
     )
   }
 
-  static desktopMenu(prompt) {
-    return MyContentDetailsForDesktop.desktopMenuWithTabs(prompt)
+  static desktopMenu(prompt, mode) {
+    return MyContentDetailsForDesktop.desktopMenuWithTabs(prompt, mode)
     //return MyContentDetailsUtils.desktopMenuWithTooltips()
   }
 

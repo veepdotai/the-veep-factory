@@ -331,20 +331,20 @@ export default function Content( {contentId, title, attrName = null, content = "
   return (
       <>
         {contentId ?
-          <div className="flex flex-1 flex-col">
+          <div className="flex flex-1 flex-col h-full">
               {/*getContentMenu()*/}
               {getContentBanner(author, date, email)}
               <Separator />
 
               { true ?
-                <ScrollArea className="w-100 h-[500px] whitespace-nowrap">
+                <ScrollArea className="w-100 whitespace-nowrap">
                   <ScrollBar orientation="vertical" />
-                  <div className="whitespace-pre-wrap p-4 text-sm max-vh-75">
+                  <div className="whitespace-pre-wrap p-4 text-sm h-full">
                       {content ? content : props.children}
                   </div>
                 </ScrollArea>
                 :
-                <div className="whitespace-pre-wrap p-4 text-sm max-vh-75">
+                <div className="whitespace-pre-wrap p-4 text-sm h-full">
                       {content ? content : props.children}
                   </div>
               }

@@ -70,35 +70,41 @@ export default function AllStepsOneByOneContent( { prompt, data, cid } ) {
           return (<></>)
         }
 
+        {/*<TabsContent value={instructions.label}>*/}
+        {/*</TabsContent>*/}
         return (
           <>
             { contentId ?
-              <TabsContent value={instructions.label}>
-                <Content
-                  //ref={refs.steps[i]}
-                  contentId={cid}
-                  attrName={attrName}
-                  title={title}
-                  raw={_content ?? ""}
-                  //content={parse(format(data[`veepdotaiPhase${i}Content`]))}
-                  //content={format(data[`veepdotaiPhase${i}Content`], true)}
-                  contentAsText={format(_content)}
-                  contentAsText2CRLF={_content}
-                  contentAsHtml={parse(format(_content))}
-                >
-                  { false ?
-                      <>
-                        <Markdown className={style.reactMarkdown} remarkPlugins={[remarkGfm]}>{_content}</Markdown>
-                      </>
-                    :
-                      <div className={style.reactMarkdown}>
-                        <EditorHome cid={cid} attrName={attrName} markdown={_content} contentEditableClassName={"details-" + md5(title)} />
+                  <>
+                    <div className='m-2 p-2 bg-slate-100 rounded-2'>
+                      <div className='flex'>
+                        <div className="you">You:</div>
+                        <div className='label'>[{instructions.label}]</div>
                       </div>
-                  }
-                </Content>
-              </TabsContent>
-          :
-            <></>
+
+                      <div className='prompt ps-2 text-sm text-wrap'>
+                        {instructions.prompt.split(/\n/).map(item => <p>{item}</p>)}
+                        {/*instructions.prompt.replace(/\n/g, "<br /><br />")*/}
+                      </div>
+                    </div>
+
+                    <div className='m-2 p-2 bg-slate-200 rounded-2'>
+                      <div className='d-inline'>
+                        <div className="ai">AI:</div>
+                      </div>
+                      <div className='prompt ps-2 text-sm text-wrap'>
+                        {/*<Markdown className={style.reactMarkdown} remarkPlugins={[remarkGfm]}>{_content.replace(/#+/g, "").replace(/\n/g, "<br /><br />")}</Markdown>*/}
+                        {_content ?
+                          _content.replace(/#+/g, "").split(/\n/).map(item => <p>{item}</p>)
+                        :
+                          t("NoContent")
+                          }
+                      </div>
+
+                    </div>
+                  </>
+              :
+                  <></>
           }
         </>
         )
