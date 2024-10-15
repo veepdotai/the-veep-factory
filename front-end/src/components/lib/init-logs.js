@@ -43,6 +43,7 @@ export default function initAppJSLogs(level = "NONE") {
     localStorage.setItem('MergedContent', level);
 
     localStorage.setItem('Editor', level);
+    localStorage.setItem('PlateEditor', level);
     localStorage.setItem('ReportData', level);
     localStorage.setItem('Credits', level);
     localStorage.setItem('Profile', level);

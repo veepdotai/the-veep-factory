@@ -12,6 +12,7 @@ import Veeplet from '../../../lib/class-veeplet'
 import EditorHome from '../../../common/mdxeditor/index';
 import Content from '../Content';
 import MyContentDetailsUtils from '../MyContentDetailsUtils';
+import { PlateEditor } from '../../../../components/screens/PlateEditor';
 
 export default class MergedContent {
     static log = Logger.of(MergedContent.name)
@@ -96,6 +97,52 @@ export default class MergedContent {
     }
 
     static getElement(prompt, data, cid, returnMarkdown = false) {
+      //let chain = [].concat(prompt.prompts.chain);
+
+      let output = <></>;
+      let _content = "";
+      let title = t("MainContent");
+      let attrName = "post_content";
+
+      try {
+
+        //if (chain) {
+          let _content = MergedContent.getContent(prompt, data)
+          if (returnMarkdown) {
+            return _content
+          } else {
+            output =
+              <Content
+                  contentId={cid}
+                  attrName={attrName}
+                  title={title}
+
+                  raw={_content}
+                  contentAsText={MergedContent.format(_content)}
+                  contentAsText2CRLF={_content}
+                  contentAsHtml={parse(MergedContent.format(_content))}
+                >
+                    { false ?
+                      <Markdown className={style.reactMarkdown} remarkPlugins={[remarkGfm]}>{_content}</Markdown>
+                    :
+                      <div className="">
+                        <PlateEditor mdContent={_content}>
+                        </PlateEditor>
+                        {/*<EditorHome attrName={attrName} markdown={_content} contentEditableClassName={"details-" + md5(title)} />*/}
+                      </div>      
+      
+                  }
+                </Content>
+            return output
+          }
+
+        //}
+      } catch (e) {
+        return <>No data</>
+      }
+    }
+
+    static getElement2(prompt, data, cid, returnMarkdown = false) {
       //let chain = [].concat(prompt.prompts.chain);
 
       let output = <></>;
