@@ -6,38 +6,38 @@ Veep.AI supports you in all phases of creating content or a document with AIs. I
 ## Application level (front-end)
 
 * Content creation
- * from voice: microphone or alreay recorded audios or videos
- * from file: pdf, txt, ms office (word, excel, powerpoint), libre office (writer, spreadsheet, impress)...)
- * from text: through copy'n past
- * from url: all (but javascript websites are not well supported)
+  * from voice: microphone or alreay recorded audios or videos
+  * from file: pdf, txt, ms office (word, excel, powerpoint), libre office (writer, spreadsheet, impress)...)
+  * from text: through copy'n past
+  * from url: all (but javascript websites are not well supported)
 * Prompt catalog
- * public one
- * personal one
+  * public one
+  * personal one
 * Prompt pipeline editor
- * OpenAI and Mistral AI models are available
- * Usual configuration parameters (prompt, role, temperature, penalty...)
+  * OpenAI and Mistral AI models are available
+  * Usual configuration parameters (prompt, role, temperature, penalty...)
 * Content and document list
- * Search field to filter by name
- * Sort by field
- * Rename, remove, read actions
+  * Search field to filter by name
+  * Sort by field
+  * Rename, remove, read actions
 * Details view based on Chat view and Content/Document view
- * Chat view
-  * Contains the result of the automatic chat session (the pipeline trace) 
-  * Contains also the transcription and the pipeline details when public
- * Content/Document view
-  * Writer actions: Structure (h1, h2... paragraph, blockquote, enumeration...), Formatting (bold, italic, underlien)
+  * Chat view
+    * Contains the result of the automatic chat session (the pipeline trace) 
+    * Contains also the transcription and the pipeline details when public
+  * Content/Document view
+    * Writer actions: Structure (h1, h2... paragraph, blockquote, enumeration...), Formatting (bold, italic, underlien)
 
 ## Back-end level
 
 * Wordpress. Used as a auth and storage system, not for its usual CMS capabilities. 
- * Email auth by default
- * Google auth preconfigured (you still must set you Google client ID and secret token)
- * GraphQL and ReST aware, but no public API has been configured. They are internal APIs only and are subject to change, use at your own risk
- * Credits management
+  * Email auth by default
+  * Google auth preconfigured (you still must set you Google client ID and secret token)
+  * GraphQL and ReST aware, but no public API has been configured. They are internal APIs only and are subject to change, use at your own risk
+  * Credits management
 
 * Monitoring
- * Influxdb: to store AI generations information (tokens in/out, results, AI model)
- * Grafana: to view and analyse usage at a user level, at the application level (all users agregated)
+  * Influxdb: to store AI generations information (tokens in/out, results, AI model)
+  * Grafana: to view and analyse usage at a user level, at the application level (all users agregated)
 
 # Roadmap
 
