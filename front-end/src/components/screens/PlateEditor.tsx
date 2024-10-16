@@ -91,7 +91,7 @@ import { withDraggables } from '@/components/plate-ui/with-draggables';
 import { EmojiInputElement } from '@/components/plate-ui/emoji-input-element';
 import { TooltipProvider } from '@/components/plate-ui/tooltip';
 
-export function PlateEditor( {mdContent, contentId, attrName} ) {
+export function PlateEditor( {input, contentId, attrName} ) {
   const log = Logger.of("PlaceEditor")
 
   const [content, setContent] = useState([])
@@ -273,12 +273,22 @@ export function PlateEditor( {mdContent, contentId, attrName} ) {
       return editor
   };
 
+  log.trace("input: " + input)
+
   let editor
-  useEffect(() =>{
+  useEffect(() => {
     editor = getEditor()
-    const value = editor.api.markdown.deserialize(mdContent);
-    log.trace("Editor: " + JSON.stringify(value))
-    setContent(value)
+    if (input) {
+      if (typeof input === "string" && input.startsWith("[{")) {
+        log.trace("input is not a string: " + input)
+        setContent(JSON.parse(input))
+      } else {
+        log.trace("input is a string: " + input)
+        const value = editor.api.markdown.deserialize(input);
+        log.trace("Editor: " + JSON.stringify(value))
+        setContent(value)
+      }
+    }
   }, [])
   
   return (

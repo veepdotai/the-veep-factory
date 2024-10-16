@@ -33,7 +33,8 @@ export default class MergedContent {
     static saveItPlease(contentId, attrName ) {
       let params = {
         cid: contentId,
-        content: localStorage.getItem("editor")
+        content: localStorage.getItem("editor"),
+        attrName: attrName
       }
       MergedContent.log.trace("saveItPlease: " + params.content)
       PubSub.publish(`MARKDOWN_CONTENT_${attrName}`, params)
@@ -138,7 +139,7 @@ export default class MergedContent {
                     :
                       <div className="p-0">
                         <Button onClick={() => MergedContent.saveItPlease(cid, attrName)}>Save</Button>
-                        <PlateEditor className="p-0" mdContent={_content} contentId={cid} attrName={attrName}>
+                        <PlateEditor className="p-0" input={_content} contentId={cid} attrName={attrName}>
                         </PlateEditor>
                         {/*<EditorHome attrName={attrName} markdown={_content} contentEditableClassName={"details-" + md5(title)} />*/}
                       </div>      

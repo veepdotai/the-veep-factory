@@ -25,6 +25,7 @@ import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "src/co
 import { Switch } from "src/components/ui/shadcn/switch"
 import { Calendar } from "src/components/ui/shadcn/calendar"
 import { Card, CardContent, CardHeader, CardTitle } from "src/components/ui/shadcn/card"
+import ContentCardActions from "./ContentCardActions"
 
 import { getService } from 'src/api/service-fetch';
 import { UtilsDom } from '../../lib/utils-dom';
@@ -47,57 +48,26 @@ export default function Content( {contentId, title, attrName = null, content = "
   }
 
   function remove() {
-    alert('NYI');
+    ContentCardActions.remove()
   }
 
   function copy() {
-    alert('NYI');
+    ContentCardActions.copy()
   }
 
   function publish() {
-    alert('NYI');
+    ContentCardActions.publish()
   }
 
-//function handleSave(contentId, attrName, className) {
   function handleSave(topic, params) {
-
-//    let contentId = params.contentId;
-//    let attrName = params.attrName;
-    let content = params.content;
-    let cid = params.cid;
-    log.trace(`cid: ${cid}`);
-
-    log.trace(`attrName: ${attrName}`);
-    log.trace(`content: ${content}`);
-
-    let conf = getService(cookies, "contents", contentId, "PATCH");
-    log.trace( "conf: " + JSON.stringify(conf));
-
-    //let content = document.getElementsByClassName(className)[0];
-
-    let fd = new FormData();
-    fd.append("contentId", contentId);
-    fd.append("attrName", attrName);
-    fd.append("content", content);
-    // Required ?
-    fd.append("veepdotaiContent", content);
-
-    //alert(`1: ${contentId} / ${attrName} : ${markdown}`);
-    axios.post(
-      conf.service,
-      fd,
-      {},
-      conf.options)
-    .then((res) => res.data)
-    .then((data) => {
-      if (data) {
-        toast.success(t("Saved") + `: ${contentId}`);
-        return true;
-      } else {
-        toast.error(t("NotSaved") + ` ${contentId}`);
-        return false;
-      }
+    log.trace("handleSave: " + JSON.stringify(params));
+    ContentCardActions.handleSave({
+      content: params.content,
+      contentId: params.cid,
+      attrName: params.attrName || "post_content",
+      conf: getService(cookies, "contents", params.cid, "PATCH"),
     })
+
   }
 
   // {...bodyAttrs && ''} 

@@ -14,6 +14,7 @@ import { getService } from 'src/api/service-fetch';
 import { Icons } from "src/constants/Icons";
 import { UtilsDom } from '../../lib/utils-dom';
 import MyContentDetailsActions from './MyContentDetailsActions';
+import ContentCardActions from "./ContentCardActions"
 
 export default function Content( {contentId, title, attrName = null, content = "", raw = "", contentStyle = {}, contentClassName = "", ...props} ) {
   const log = Logger.of(Content.name);
@@ -42,42 +43,13 @@ export default function Content( {contentId, title, attrName = null, content = "
     alert('NYI');
   }
 
-//function handleSave(contentId, attrName, className) {
   function handleSave(topic, params) {
-
-//    let contentId = params.contentId;
-//    let attrName = params.attrName;
-    let content = params.content;
-
-    log.trace(`contentId: ${contentId}`);
-    log.trace(`attrName: ${attrName}`);
-    log.trace(`content: ${content}`);
-
-    let conf = getService(cookies, "contents", contentId, "PATCH");
-    log.trace( "conf: " + JSON.stringify(conf));
-
-    //let content = document.getElementsByClassName(className)[0];
-
-    let fd = new FormData();
-    fd.append("contentId", contentId);
-    fd.append("attrName", attrName);
-    fd.append("content", content);
-
-    //alert(`1: ${contentId} / ${attrName} : ${markdown}`);
-    axios.post(
-      conf.service,
-      fd,
-      {},
-      conf.options)
-    .then((res) => res.data)
-    .then((data) => {
-      if (data) {
-        toast.success(t("Saved") + `: ${contentId}`);
-        return true;
-      } else {
-        toast.error(t("NotSaved") + ` ${contentId}`);
-        return false;
-      }
+    log.trace("handleSave: " + JSON.stringify(params));
+    ContentCardActions.handleSave({
+      content: params.content,
+      contentId: params.cid,
+      attrName: params.attrName || "post_content",
+      conf: getService(cookies, "contents", params.cid, "PATCH"),
     })
   }
 
