@@ -1,12 +1,5 @@
 "use client";
 
-/*
-import { serialize } from 'remark-plate';
-import { unified} from 'unified';
-import markdown from 'remark-parse';
-import slate from 'remark-plate';
-*/
-
 import { useEffect, useState } from 'react';
 import { Logger } from 'react-logger-lib';
 
@@ -14,6 +7,7 @@ import { withProps } from '@udecode/cn';
 import { createPlateEditor, Plate, ParagraphPlugin, PlateElement, PlateLeaf } from '@udecode/plate-common/react';
 import { BlockquotePlugin } from '@udecode/plate-block-quote/react';
 import { CodeBlockPlugin, CodeLinePlugin, CodeSyntaxPlugin } from '@udecode/plate-code-block/react';
+
 import { HeadingPlugin } from '@udecode/plate-heading/react';
 import { HorizontalRulePlugin } from '@udecode/plate-horizontal-rule/react';
 import { LinkPlugin } from '@udecode/plate-link/react';
@@ -26,7 +20,7 @@ import { ColumnPlugin, ColumnItemPlugin } from '@udecode/plate-layout/react';
 import { MentionPlugin, MentionInputPlugin } from '@udecode/plate-mention/react';
 import { TablePlugin, TableRowPlugin, TableCellPlugin, TableCellHeaderPlugin } from '@udecode/plate-table/react';
 import { DatePlugin } from '@udecode/plate-date/react';
-import { ItalicPlugin, UnderlinePlugin, StrikethroughPlugin, CodePlugin, SubscriptPlugin, SuperscriptPlugin } from '@udecode/plate-basic-marks/react';
+import { BoldPlugin, ItalicPlugin, UnderlinePlugin, StrikethroughPlugin, CodePlugin, SubscriptPlugin, SuperscriptPlugin } from '@udecode/plate-basic-marks/react';
 import { BaseFontColorPlugin, BaseFontBackgroundColorPlugin, BaseFontSizePlugin } from '@udecode/plate-font';
 import { HighlightPlugin } from '@udecode/plate-highlight/react';
 import { KbdPlugin } from '@udecode/plate-kbd/react';
@@ -52,6 +46,7 @@ import { JuicePlugin } from '@udecode/plate-juice';
 import { HEADING_KEYS } from '@udecode/plate-heading';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import Prism from 'prismjs';
 
 import { BlockquoteElement } from '@/components/plate-ui/blockquote-element';
 import { CodeBlockElement } from '@/components/plate-ui/code-block-element';
@@ -82,42 +77,41 @@ import { CommentsPopover } from '@/components/plate-ui/comments-popover';
 import { HighlightLeaf } from '@/components/plate-ui/highlight-leaf';
 import { KbdLeaf } from '@/components/plate-ui/kbd-leaf';
 import { Editor } from '@/components/plate-ui/editor';
-import { FixedToolbar } from '@/components/plate-ui/fixed-toolbar';
-import { FixedToolbarButtons } from '@/components/plate-ui/fixed-toolbar-buttons';
-import { FloatingToolbar } from '@/components/plate-ui/floating-toolbar';
-import { FloatingToolbarButtons } from '@/components/plate-ui/floating-toolbar-buttons';
+
+import { FixedToolbar } from '@/components/ui/veep/fixed-toolbar';
+import { FixedToolbarButtons } from '@/components/ui/veep/fixed-toolbar-buttons';
+import { FloatingToolbar } from '@/components/ui/veep/floating-toolbar';
+import { FloatingToolbarButtons } from '@/components/ui/veep/floating-toolbar-buttons';
+
+//import { PlaygroundFixedToolbarButtons } from '@/components/plate-ui/playground-fixed-toolbar-buttons';
+//import { PlaygroundFloatingToolbarButtons } from '@/components/plate-ui/playground-floating-toolbar-buttons';
+
 import { withPlaceholders } from '@/components/plate-ui/placeholder';
 import { withDraggables } from '@/components/plate-ui/with-draggables';
 import { EmojiInputElement } from '@/components/plate-ui/emoji-input-element';
 import { TooltipProvider } from '@/components/plate-ui/tooltip';
 
-export function PlateEditor( {mdContent} ) {
+export function PlateEditor( {mdContent, contentId, attrName} ) {
   const log = Logger.of("PlaceEditor")
 
   const [content, setContent] = useState([])
 
-  /*
-  async function getPlateData(mdContent) {
-    return await unified()
-      .use(markdown)
-      .use(slate)
-      .process("Heelo World")
-      .then((result) => setContent(result.data))
-  }
-  */
-
   function getEditor(_content = []) {
 
-    return createPlateEditor({
+    editor = createPlateEditor({
         plugins: [
           BlockquotePlugin,
-          CodeBlockPlugin,
+          CodeBlockPlugin.configure({
+            options: {
+              prism: Prism,
+            },
+          }),
           ParagraphPlugin,
           HeadingPlugin,
           HorizontalRulePlugin,
-    //      LinkPlugin.configure({
-    //        render: { afterEditable: () => <LinkFloatingToolbar /> },
-    //      }),
+          LinkPlugin.configure({
+            render: { afterEditable: () => <LinkFloatingToolbar /> },
+          }),
           ImagePlugin,
           CaptionPlugin.configure({
             options: { plugins: [ImagePlugin, MediaEmbedPlugin] },
@@ -131,6 +125,7 @@ export function PlateEditor( {mdContent} ) {
           MentionPlugin,
           TablePlugin,
           DatePlugin,
+          BoldPlugin,
           ItalicPlugin,
           UnderlinePlugin,
           StrikethroughPlugin,
@@ -237,7 +232,7 @@ export function PlateEditor( {mdContent} ) {
             [ExcalidrawPlugin.key]: ExcalidrawElement,
             [HorizontalRulePlugin.key]: HrElement,
             [ImagePlugin.key]: ImageElement,
-  //        [LinkPlugin.key]: LinkElement,
+            [LinkPlugin.key]: LinkElement,
             [TogglePlugin.key]: ToggleElement,
             [ColumnPlugin.key]: ColumnGroupElement,
             [ColumnItemPlugin.key]: ColumnElement,
@@ -263,6 +258,7 @@ export function PlateEditor( {mdContent} ) {
             [CodePlugin.key]: CodeLeaf,
             [CommentsPlugin.key]: CommentLeaf,
             [HighlightPlugin.key]: HighlightLeaf,
+            [BoldPlugin.key]: withProps(PlateLeaf, { as: 'b' }),
             [ItalicPlugin.key]: withProps(PlateLeaf, { as: 'em' }),
             [KbdPlugin.key]: KbdLeaf,
             [StrikethroughPlugin.key]: withProps(PlateLeaf, { as: 's' }),
@@ -271,13 +267,15 @@ export function PlateEditor( {mdContent} ) {
             [UnderlinePlugin.key]: withProps(PlateLeaf, { as: 'u' }),
           }))),
         },
-        value: content,
+        value: _content,
       })
+
+      return editor
   };
 
+  let editor
   useEffect(() =>{
-    let editor = getEditor()
-    log.trace("Editor: mdContent: " + JSON.stringify(mdContent))
+    editor = getEditor()
     const value = editor.api.markdown.deserialize(mdContent);
     log.trace("Editor: " + JSON.stringify(value))
     setContent(value)
@@ -287,19 +285,29 @@ export function PlateEditor( {mdContent} ) {
     <>
       { content ?
           <>
-            <DndProvider backend={HTML5Backend}>
-            <Plate editor={getEditor(content)}>
-              <FixedToolbar>
-                <FixedToolbarButtons />
-              </FixedToolbar>
-              
-              <Editor />
-              
-              <FloatingToolbar>
-                <FloatingToolbarButtons />
-              </FloatingToolbar>
-              <CommentsPopover />
-            </Plate>
+            <DndProvider className="p-0" backend={HTML5Backend}>
+              <Plate
+                editor={getEditor(content)} 
+                onChange={ value => {
+                  const content = JSON.stringify(value.value);
+                  localStorage.setItem("editor", content)
+                }}>
+                <FixedToolbar>
+                  {/*<PlaygroundFixedToolbarButtons />*/}
+                  <FixedToolbarButtons />
+                </FixedToolbar>
+                <Editor
+                  style={{margin: "6rem"}}
+                  className='focus-ring-none'
+                />
+                
+                <FloatingToolbar>
+                  {/*<PlaygroundFloatingToolbarButtons />*/}
+                  <FloatingToolbarButtons />
+                  {/*<FixedToolbarButtons />*/}
+                </FloatingToolbar>
+                <CommentsPopover />
+              </Plate>
             </DndProvider>
           </>
         :

@@ -34,18 +34,6 @@ export default class MyContentDetailsUtils {
     }
   }
 
-  static handleChange() {
-  }
-
-  static handleSave(ref, contentId, attrName, className) {
-
-    alert("Content: " + ref?.current?.getMarkdown())
-
-    log.trace(`contentId: ${contentId}`);
-    log.trace(`attrName: ${attrName}`);
-
-  }
-
   static getItem(data, i) {
     let log = MyContentDetailsUtils.log
     let result = null
@@ -80,10 +68,20 @@ export default class MyContentDetailsUtils {
           result = data[attrName]
         }
       } else {
-        if (! attrName) {
-          result = data.nodes[0].children.edges[i].node['content'];
+        if (i) {
+          log.trace(`i: ${i}: this is a child.`)
+          if (! attrName) {
+            result = data.nodes[0].children.edges[i].node['content'];
+          } else {
+            result = data.nodes[0].children.edges[i].node[attrName]
+          }
         } else {
-          result = data.nodes[0].children.edges[i].node[attrName]
+          log.trace(`getData: i: ${i}: this is the parent.`)
+          if (! attrName) {
+            result = data.nodes[0].content;
+          } else {
+            result = data.nodes[0][attrName]
+          }
         }
       }
 
@@ -202,13 +200,6 @@ export default class MyContentDetailsUtils {
       />
     )
 
-  }
-
-  static handleChange() {
-  }
-
-  static handleSelect(e) {
-    alert(`selected ${e}`);
   }
 
   static getInput(name, varName, params = null) {

@@ -13,7 +13,7 @@ import { TabsContent } from 'src/components/ui/shadcn/tabs'
 import EKeyLib from '../../../lib/util-ekey';
 
 import Veeplet from '../../../lib/class-veeplet'
-import EditorHome from '../../../common/mdxeditor/index';
+//import EditorHome from '../../../common/mdxeditor/index';
 import Content from '../Content';
 import MyContentDetailsUtils from '../MyContentDetailsUtils';
 

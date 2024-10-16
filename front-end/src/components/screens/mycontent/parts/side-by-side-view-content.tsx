@@ -8,7 +8,7 @@ import remarkGfm from 'remark-gfm';
 import EKeyLib from '../../../lib/util-ekey';
 
 import Veeplet from '../../../lib/class-veeplet'
-import EditorHome from '../../../common/mdxeditor/index';
+//import EditorHome from '../../../common/mdxeditor/index';
 import Content from '../Content';
 import MyContentDetailsUtils from '../MyContentDetailsUtils';
 
@@ -68,7 +68,9 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 6 } 
             { true ?
               <Markdown remarkPlugins={[remarkGfm]}>{_content}</Markdown>
               :
-              <EditorHome attrName={attrName} markdown={_content} contentEditableClassName={"details-" + md5(title)} />
+              <>
+              {/* Could be replaced by PlateEditor: <EditorHome attrName={attrName} markdown={_content} contentEditableClassName={"details-" + md5(title)} />*/}
+              </>
             }
             </Content>
           </Col>

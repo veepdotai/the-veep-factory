@@ -5,10 +5,15 @@
       "@/*": ["*"],
       "@/constants/*": ["src/constants/*"],
       "@/components/ui/*": ["src/components/ui/shadcn/*"],
+      "@/components/ui/veep/*": ["src/components/ui/veep/*"],
+      "@/components/context/*": ["src/components/ui/shadcn/context/*"],
       "@/components/plate-ui/*": ["src/components/ui/shadcn/plate-ui/*"],
       "@/components/icons": ["src/components/ui/shadcn/plate-ui/icons.tsx"],
       "@/lib/utils": ["src/components/ui/shadcn/utils"],
-      "@/hooks/*": ["src/components/ui/shadcn/hooks/*"]
+      "@/hooks/*": ["src/components/ui/shadcn/hooks/*"],
+      "@/registry/*": ["src/components/ui/shadcn/registry/*"],
+      "@/config/*": ["src/components/ui/shadcn/config/*"],
+      "@/plate/*": ["src/components/ui/shadcn/lib/plate/*"],
     },
     "lib": [
       "dom",

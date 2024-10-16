@@ -4,12 +4,13 @@ import { t } from 'i18next';
 import parse from 'html-react-parser';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import PubSub from "pubsub-js"
+import { Button } from "@/components/ui/button"
 
 import style from "./main.module.css"
-
 import EKeyLib from '../../../lib/util-ekey';
 import Veeplet from '../../../lib/class-veeplet'
-import EditorHome from '../../../common/mdxeditor/index';
+//import EditorHome from '../../../common/mdxeditor/index';
 import Content from '../Content';
 import MyContentDetailsUtils from '../MyContentDetailsUtils';
 import { PlateEditor } from '../../../../components/screens/PlateEditor';
@@ -29,6 +30,15 @@ export default class MergedContent {
         }
     }
 
+    static saveItPlease(contentId, attrName ) {
+      let params = {
+        cid: contentId,
+        content: localStorage.getItem("editor")
+      }
+      MergedContent.log.trace("saveItPlease: " + params.content)
+      PubSub.publish(`MARKDOWN_CONTENT_${attrName}`, params)
+    }
+
     static getContent(prompt, data) {
       let displayLabel = false;
 
@@ -46,6 +56,7 @@ export default class MergedContent {
 
       log.trace("getContent: chain is not null.");
 
+      // We try to get the merged data from the database
       let _content = MergedContent.format(MyContentDetailsUtils.getData(data, null, "content"));
       
       if (_content == "") {
@@ -125,8 +136,9 @@ export default class MergedContent {
                     { false ?
                       <Markdown className={style.reactMarkdown} remarkPlugins={[remarkGfm]}>{_content}</Markdown>
                     :
-                      <div className="">
-                        <PlateEditor mdContent={_content}>
+                      <div className="p-0">
+                        <Button onClick={() => MergedContent.saveItPlease(cid, attrName)}>Save</Button>
+                        <PlateEditor className="p-0" mdContent={_content} contentId={cid} attrName={attrName}>
                         </PlateEditor>
                         {/*<EditorHome attrName={attrName} markdown={_content} contentEditableClassName={"details-" + md5(title)} />*/}
                       </div>      
@@ -142,46 +154,4 @@ export default class MergedContent {
       }
     }
 
-    static getElement2(prompt, data, cid, returnMarkdown = false) {
-      //let chain = [].concat(prompt.prompts.chain);
-
-      let output = <></>;
-      let _content = "";
-      let title = t("MainContent");
-      let attrName = "post_content";
-
-      try {
-
-        //if (chain) {
-          let _content = MergedContent.getContent(prompt, data)
-          if (returnMarkdown) {
-            return _content
-          } else {
-            output =
-                <Content
-                  contentId={cid}
-                  attrName={attrName}
-                  title={title}
-
-                  raw={_content}
-                  contentAsText={MergedContent.format(_content)}
-                  contentAsText2CRLF={_content}
-                  contentAsHtml={parse(MergedContent.format(_content))}
-                >
-                    { false ?
-                      <Markdown className={style.reactMarkdown} remarkPlugins={[remarkGfm]}>{_content}</Markdown>
-                    :
-                      <div className={style.reactMarkdown}>
-                        <EditorHome attrName={attrName} markdown={_content} contentEditableClassName={"details-" + md5(title)} />
-                      </div>
-                  }
-                </Content>
-            return output
-          }
-
-        //}
-      } catch (e) {
-        return <>No data</>
-      }
-    }
   }
