@@ -90,7 +90,7 @@ export default class MyContentDetailsForDesktop {
           <TabsList id="details-menu-main" variant="pills" className="flex justify-start w-100 mh-100">
             <div>
               <TabsTrigger id="details-menu-content" value="content">
-                  <MyContentDetailsForDesktop.TT id="m1" title={t("MainContent")}>
+                  <MyContentDetailsForDesktop.TT id="m1" title={t("MainContent") + "_test"}>
                     {Icons.aggregatedView}
                   </MyContentDetailsForDesktop.TT>
               </TabsTrigger>

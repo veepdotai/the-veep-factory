@@ -13,7 +13,8 @@ import { Icons } from '@/components/icons';
 import { MarkToolbarButton } from '@/components/plate-ui/mark-toolbar-button';
 import { TurnIntoDropdownMenu } from '@/components/plate-ui/turn-into-dropdown-menu';
 
-import { FloatingMoreDropdownMenu } from './floating-toolbar-more-dropdown-menu';
+import { FloatingToolbarAIDropdownMenu } from './floating-toolbar-ai-dropdown-menu';
+import { FloatingToolbarMoreDropdownMenu } from './floating-toolbar-more-dropdown-menu';
 
 export function FloatingToolbarButtons() {
   const readOnly = useEditorReadOnly();
@@ -46,7 +47,8 @@ export function FloatingToolbarButtons() {
             <Icons.code />
           </MarkToolbarButton>
 
-          <FloatingMoreDropdownMenu />
+          <FloatingToolbarAIDropdownMenu />
+          <FloatingToolbarMoreDropdownMenu />
 
         </>
       )}

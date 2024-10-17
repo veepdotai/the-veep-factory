@@ -77,18 +77,18 @@ const items = [
          description: 'Table',
          icon: Icons.table,
       },
-      // {
-      //   value: 'ul',
-      //   label: 'Bulleted list',
-      //   description: 'Bulleted list',
-      //   icon: Icons.ul,
-      // },
-      // {
-      //   value: 'ol',
-      //   label: 'Numbered list',
-      //   description: 'Numbered list',
-      //   icon: Icons.ol,
-      // },
+      {
+         value: 'ul',
+         label: 'Bulleted list',
+         description: 'Bulleted list',
+         icon: Icons.ul,
+      },
+      {
+         value: 'ol',
+         label: 'Numbered list',
+         description: 'Numbered list',
+         icon: Icons.ol,
+      },
       {
         value: HorizontalRulePlugin.key,
         label: 'Divider',
@@ -98,6 +98,7 @@ const items = [
     ],
     label: 'Basic blocks',
   },
+  /*
   {
     label: 'Media',
     items: [
@@ -129,6 +130,7 @@ const items = [
       },
     ],
   },
+  */
   {
     label: 'Inline',
     items: [
@@ -210,6 +212,7 @@ export function InsertDropdownMenu(props: DropdownMenuProps) {
                         break;
                       }
                       */
+                      
                       default: {
                         insertEmptyElement(editor, type, {
                           nextBlock: true,

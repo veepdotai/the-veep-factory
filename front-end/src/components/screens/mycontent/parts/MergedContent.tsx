@@ -30,6 +30,7 @@ export default class MergedContent {
         }
     }
 
+    /* Should be stored in a util class for content mgt */
     static saveItPlease(contentId, attrName ) {
       let params = {
         cid: contentId,
@@ -128,7 +129,6 @@ export default class MergedContent {
                   contentId={cid}
                   attrName={attrName}
                   title={title}
-
                   raw={_content}
                   contentAsText={MergedContent.format(_content)}
                   contentAsText2CRLF={_content}
@@ -138,7 +138,6 @@ export default class MergedContent {
                       <Markdown className={style.reactMarkdown} remarkPlugins={[remarkGfm]}>{_content}</Markdown>
                     :
                       <div className="p-0">
-                        <Button onClick={() => MergedContent.saveItPlease(cid, attrName)}>Save</Button>
                         <PlateEditor className="p-0" input={_content} contentId={cid} attrName={attrName}>
                         </PlateEditor>
                         {/*<EditorHome attrName={attrName} markdown={_content} contentEditableClassName={"details-" + md5(title)} />*/}

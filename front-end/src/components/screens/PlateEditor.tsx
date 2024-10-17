@@ -91,11 +91,13 @@ import { withDraggables } from '@/components/plate-ui/with-draggables';
 import { EmojiInputElement } from '@/components/plate-ui/emoji-input-element';
 import { TooltipProvider } from '@/components/plate-ui/tooltip';
 
+import MergedContent from './mycontent/parts/MergedContent';
+
 export function PlateEditor( {input, contentId, attrName} ) {
   const log = Logger.of("PlaceEditor")
 
   const [content, setContent] = useState([])
-
+  
   function getEditor(_content = []) {
 
     editor = createPlateEditor({
@@ -291,6 +293,10 @@ export function PlateEditor( {input, contentId, attrName} ) {
     }
   }, [])
   
+  let operations = {
+    handleSave: () => MergedContent.saveItPlease(contentId, attrName)
+  }
+  
   return (
     <>
       { content ?
@@ -304,7 +310,7 @@ export function PlateEditor( {input, contentId, attrName} ) {
                 }}>
                 <FixedToolbar>
                   {/*<PlaygroundFixedToolbarButtons />*/}
-                  <FixedToolbarButtons />
+                  <FixedToolbarButtons operations={operations} />
                 </FixedToolbar>
                 <Editor
                   style={{margin: "6rem"}}

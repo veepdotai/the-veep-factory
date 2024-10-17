@@ -10,14 +10,18 @@ import {
 import { useEditorReadOnly } from '@udecode/plate-common/react';
 
 import { Icons } from '@/components/icons';
-
+import { Icons as MyIcons } from '@/src/constants/Icons';
 import { InsertDropdownMenu } from './insert-dropdown-menu';
 import { MarkToolbarButton } from '@/components/plate-ui/mark-toolbar-button';
 import { ModeDropdownMenu } from '@/components/plate-ui/mode-dropdown-menu';
 import { ToolbarGroup } from '@/components/plate-ui/toolbar';
 import { TurnIntoDropdownMenu } from '@/components/plate-ui/turn-into-dropdown-menu';
 
-export function FixedToolbarButtons() {
+import { Logger } from 'react-logger-lib';
+import { Button } from '../shadcn/button';
+
+export function FixedToolbarButtons( {operations} ) {
+  const log = Logger.of(FixedToolbarButtons.name)
   const readOnly = useEditorReadOnly();
 
   return (
@@ -30,6 +34,12 @@ export function FixedToolbarButtons() {
       >
         {!readOnly && (
           <>
+            <ToolbarGroup>
+              <Button onClick={operations.handleSave}>
+                {MyIcons.save}
+              </Button>
+            </ToolbarGroup>
+
             <ToolbarGroup noSeparator>
               <InsertDropdownMenu />
               <TurnIntoDropdownMenu />
@@ -58,9 +68,11 @@ export function FixedToolbarButtons() {
               >
                 <Icons.strikethrough />
               </MarkToolbarButton>
+              {/*
               <MarkToolbarButton nodeType={CodePlugin.key} tooltip="Code (⌘+E)">
                 <Icons.code />
               </MarkToolbarButton>
+              */}
             </ToolbarGroup>
           </>
         )}

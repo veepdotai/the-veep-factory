@@ -264,7 +264,7 @@ export default function Content( {contentId, title, attrName = null, content = "
     )
   }
   
-  function getContentBanner(author, date, email) {
+  function getContentBanner(title, author, date, email) {
     return (
       <div className="flex items-start p-4">
         <div className="flex items-start gap-4 text-sm">
@@ -303,18 +303,18 @@ export default function Content( {contentId, title, attrName = null, content = "
         {contentId ?
           <div className="flex flex-1 flex-col h-full">
               {/*getContentMenu()*/}
-              {getContentBanner(author, date, email)}
+              {getContentBanner(title, author, date, email)}
               <Separator />
 
               { true ?
                 <ScrollArea className="w-100 whitespace-nowrap">
                   <ScrollBar orientation="vertical" />
-                  <div className="whitespace-pre-wrap p-4 text-sm h-full">
+                  <div className="whitespace-pre-wrap text-sm h-full">
                       {content ? content : props.children}
                   </div>
                 </ScrollArea>
                 :
-                <div className="whitespace-pre-wrap p-4 text-sm h-full">
+                <div className="whitespace-pre-wrap text-sm h-full">
                       {content ? content : props.children}
                   </div>
               }

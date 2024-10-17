@@ -13,7 +13,7 @@ export const Icons = {
     copy:               <Md.MdCopyAll {...attr} />,
     delete:             <Md.MdDelete {...attr} />,
     star:               <Md.MdStar {...attr} />,
-    save:               <Md.MdSave {...attr} />,
+    save:               <Md.MdOutlineSave {...attr} />,
     volume:             <Md.MdVolumeUp {...attr} />,
     share:              <Md.MdOutlineIosShare {...attr} />,
     terminal:           <Md.MdTerminal {...attr} />,
