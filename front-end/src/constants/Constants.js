@@ -2,6 +2,7 @@
  *
  */
 export const Constants = {
+    PRODUCTION: process.env.NODE_ENV == "production" ? true : false,
     APP_URL: process.env.NEXT_PUBLIC_APP_URL ?? null,
     ROOT: process.env.NEXT_PUBLIC_ROOT ?? null,
     WORDPRESS_URL: process.env.NEXT_PUBLIC_WORDPRESS_URL ?? null,
