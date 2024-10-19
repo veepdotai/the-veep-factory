@@ -122,8 +122,13 @@ export default function EditorialLineForm() {
 
     function updateForm(topic, message) {
       log.trace("updateForm: message: " + JSON.stringify(message))
-      let result = JSON.parse(message.result).result
-      log.trace("updateForm: result2: " + result)
+      let result = ""
+      try {
+        result = JSON.parse(message?.result).result
+      } catch (e) {
+        log.trace("updateForm: " + e)
+      }
+      log.trace("updateForm: result: " + result)
       let currentValues = {}
       
       if (result) {

@@ -83,7 +83,7 @@ export default function AllStepsOneByOneContent( { prompt, data, cid } ) {
                       </div>
 
                       <div className='prompt ps-2 text-sm text-wrap'>
-                        {instructions.prompt.split(/\n/).map(item => <p>{item}</p>)}
+                        {instructions.prompt.split(/\n/).map((item, i) => <p key="{i}">{item}</p>)}
                         {/*instructions.prompt.replace(/\n/g, "<br /><br />")*/}
                       </div>
                     </div>
@@ -95,7 +95,7 @@ export default function AllStepsOneByOneContent( { prompt, data, cid } ) {
                       <div className='prompt ps-2 text-sm text-wrap'>
                         {/*<Markdown className={style.reactMarkdown} remarkPlugins={[remarkGfm]}>{_content.replace(/#+/g, "").replace(/\n/g, "<br /><br />")}</Markdown>*/}
                         {_content ?
-                          _content.replace(/#+/g, "").split(/\n/).map(item => <p>{item}</p>)
+                          _content.replace(/#+/g, "").split(/\n/).map((item, i) => <p key={i}>{item}</p>)
                         :
                           t("NoContent")
                           }

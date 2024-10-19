@@ -275,6 +275,15 @@ export function PlateEditor( {input, contentId, attrName} ) {
       return editor
   };
 
+  function updateContent(input) {
+    try {
+      setContent(JSON.parse(input))
+    } catch (e) {
+      log.trace("Exception while JSON parsing content.")
+      setContent([])
+    }
+  }
+
   log.trace("input: " + input)
 
   let editor
@@ -283,7 +292,7 @@ export function PlateEditor( {input, contentId, attrName} ) {
     if (input) {
       if (typeof input === "string" && input.startsWith("[{")) {
         log.trace("input is not a string: " + input)
-        setContent(JSON.parse(input))
+        updateContent(input)
       } else {
         log.trace("input is a string: " + input)
         const value = editor.api.markdown.deserialize(input);
@@ -294,7 +303,10 @@ export function PlateEditor( {input, contentId, attrName} ) {
   }, [])
   
   let operations = {
-    handleSave: () => MergedContent.saveItPlease(contentId, attrName)
+    handleSave: () =>{
+      updateContent(localStorage.getItem('editor'))
+      MergedContent.saveItPlease(contentId, attrName)
+    }
   }
   
   return (
