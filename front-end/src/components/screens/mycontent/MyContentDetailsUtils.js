@@ -68,14 +68,14 @@ export default class MyContentDetailsUtils {
           result = data[attrName]
         }
       } else {
-        if (i) {
+        if (i >= 0) { // i == 0 is a valid index
           log.trace(`i: ${i}: this is a child.`)
           if (! attrName) {
             result = data.nodes[0].children.edges[i].node['content'];
           } else {
             result = data.nodes[0].children.edges[i].node[attrName]
           }
-        } else {
+        } else { // i == null
           log.trace(`getData: i: ${i}: this is the parent.`)
           if (! attrName) {
             result = data.nodes[0].content;

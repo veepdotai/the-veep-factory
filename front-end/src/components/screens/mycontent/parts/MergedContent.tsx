@@ -78,8 +78,10 @@ export default class MergedContent {
             isEmpty = false
           }
         }
+      } else if (content == "") {
+        isEmpty = true;
       } else {
-        isEmpty = false
+        isEmpty = true;
       }
 
       log("isEmpty: " + isEmpty)
