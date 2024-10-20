@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-//    basePath: '/v/previous',
-//    assetPrefix: '/v/previous',
+    //basePath: '/v/241018-0409-5b42cf1e',
+    //assetPrefix: '/v/241018-0409-5b42cf1e',
     reactStrictMode: false,
     distDir: 'dist',
     output: 'export',

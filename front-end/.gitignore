@@ -3,6 +3,8 @@
 /.bin/
 /.env.*
 
+/versions/
+
 /dist/
 /dist.old/
 

@@ -35,8 +35,8 @@ function my_graphql_request_results( $response ) {
 add_filter('parse_query', 'my_parse_query' );
 function my_parse_query( $wp_query ) {
 	global $current_user;
-	//$wp_query->set( 'author', $current_user->id );
-	$wp_query->set( 'author', 2 );
+	$wp_query->set( 'author', $current_user->id );
+	//$wp_query->set( 'author', 2 );
 }
 
 add_filter( "the_title", "my_the_title", 10, 2 );
