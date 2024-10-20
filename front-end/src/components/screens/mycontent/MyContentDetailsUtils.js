@@ -54,12 +54,12 @@ export default class MyContentDetailsUtils {
   }
 
   static getData(data, i, attrName) {
-    let log = MyContentDetailsUtils.log
+    let log = (msg) => MyContentDetailsUtils.log.trace("getData: " + msg)
     let result = null
     try{
-      log.trace(`getData: data: ${JSON.stringify(data)}`)
-      log.trace(`getData: i: ${i}`)
-      log.trace(`getData: attrName: ${attrName}`)
+      log(`getData: data: ${JSON.stringify(data)}`)
+      log(`getData: i: ${i}`)
+      log(`getData: attrName: ${attrName}`)
 
       if (data?.__typename === 'post') {
         if (! attrName) {
@@ -68,27 +68,28 @@ export default class MyContentDetailsUtils {
           result = data[attrName]
         }
       } else {
-        if (i >= 0) { // i == 0 is a valid index
-          log.trace(`i: ${i}: this is a child.`)
-          if (! attrName) {
-            result = data.nodes[0].children.edges[i].node['content'];
-          } else {
-            result = data.nodes[0].children.edges[i].node[attrName]
-          }
-        } else { // i == null
-          log.trace(`getData: i: ${i}: this is the parent.`)
+        if ( i === null) {
+          log(`getData: i: ${i}: this is the parent.`)
           if (! attrName) {
             result = data.nodes[0].content;
           } else {
             result = data.nodes[0][attrName]
           }
+          log(`getData: parent's content: ${result}!`)
+        } else { // (i >= 0) { // i == 0 is a valid index
+          log(`i: ${i}: this is a child.`)
+          if (! attrName) {
+            result = data.nodes[0].children.edges[i].node['content'];
+          } else {
+            result = data.nodes[0].children.edges[i].node[attrName]
+          }
         }
       }
 
-      log.trace(`getData: result: ${result}`)
+      log(`getData: result: ${result}`)
 
     } catch (e) {
-      log.trace(`getData: exception: ${e}: attrName: ${attrName}.`)
+      log(`getData: exception: ${e}: attrName: ${attrName}.`)
       result = "";
     }
 

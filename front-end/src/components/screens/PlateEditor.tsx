@@ -279,7 +279,8 @@ export function PlateEditor( {input, contentId, attrName} ) {
     try {
       setContent(JSON.parse(input))
     } catch (e) {
-      log.trace("Exception while JSON parsing content.")
+      log.trace(e)
+      log.trace("Exception while parsing Plate/JSON content.")
       setContent([])
     }
   }
@@ -311,8 +312,7 @@ export function PlateEditor( {input, contentId, attrName} ) {
   
   return (
     <>
-      { content ?
-          <>
+          { content ?
             <DndProvider className="p-0" backend={HTML5Backend}>
               <Plate
                 editor={getEditor(content)} 
@@ -321,7 +321,6 @@ export function PlateEditor( {input, contentId, attrName} ) {
                   localStorage.setItem("editor", content)
                 }}>
                 <FixedToolbar>
-                  {/*<PlaygroundFixedToolbarButtons />*/}
                   <FixedToolbarButtons operations={operations} />
                 </FixedToolbar>
                 <Editor
@@ -330,17 +329,14 @@ export function PlateEditor( {input, contentId, attrName} ) {
                 />
                 
                 <FloatingToolbar>
-                  {/*<PlaygroundFloatingToolbarButtons />*/}
                   <FloatingToolbarButtons />
-                  {/*<FixedToolbarButtons />*/}
                 </FloatingToolbar>
                 <CommentsPopover />
               </Plate>
             </DndProvider>
-          </>
-        :
-        <>Waiting</>
-      }
+          :
+            <>Waiting</>
+        }
     </>
   )
 }

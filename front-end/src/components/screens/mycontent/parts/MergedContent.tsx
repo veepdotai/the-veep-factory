@@ -221,7 +221,7 @@ export default class MergedContent {
 
       // We try to get the merged data from the database
       let dbContent = MyContentDetailsUtils.getData(data, null, "content")
-      log("dbContent before formatting: " + dbContent)
+      log("dbContent before formatting: " + dbContent + "!")
 
       let _content = ""
       log(`content2.1: ${_content}`)

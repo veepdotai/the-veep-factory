@@ -119,8 +119,8 @@ export default class MyContentDetailsForDesktop {
   static desktopMarkdownContent(selectedFormat, prompt, data, contentId) {
     let log = MyContentDetailsForDesktop.log
     log.trace("desktopContent: prompt: " + JSON.stringify(prompt));
-    let content = MyContentDetailsUtils.getContent(prompt, data, contentId, true);
-    log.trace("desktopContent: content: " + JSON.stringify(content));
+    //let content = MyContentDetailsUtils.getContent(prompt, data, contentId, true);
+    //log.trace("desktopContent: content: " + JSON.stringify(content));
 
     return (
       <>
