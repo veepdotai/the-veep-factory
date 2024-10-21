@@ -3,6 +3,7 @@ import { gql } from '@apollo/client'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 import { UtilsGraphQLPost } from './utils-graphql-post'
 import { UtilsGraphQLVcontent } from './utils-graphql-vcontent'
+import { UtilsGraphQLClauseBuilder } from './utils-graphql-clause-builder'
 import toast from 'react-hot-toast';
 import { Constants } from '../constants/Constants'
 
@@ -39,7 +40,8 @@ export const UtilsGraphQL = {
 
 	list: function(graphqlURI, cookies, authorId, props, topic = null, msg = null) {
 
-		let q = UtilsGraphQL.buildClauseQuery(authorId, props);
+		//let q = UtilsGraphQL.buildClauseQuery(authorId, props);
+		let q = UtilsGraphQLClauseBuilder.buildClauseQuery(authorId, props);
 	
 		return UtilsGraphQL
 			.client(graphqlURI, cookies)
@@ -162,6 +164,7 @@ export const UtilsGraphQL = {
 	},
 
 	
+/*
 	buildClauseQuery: function (authorId, _props, contentType = "vcontent") {
 		let log = UtilsGraphQL.log
 
@@ -181,17 +184,26 @@ export const UtilsGraphQL = {
 		// authorId = 1;
 		// authorIn = [1, 2]
 		if (author && ! author.id) {
-		  author.id = authorId;
+			author = {
+				id: authorId,
+				in: `"${authorId}"`
+			};
 		};
 		
 		if (! author) {
-		  author = {id: authorId};
+		  	author = {
+				id: authorId,
+				in: `"${authorId}"`
+			};
 		}
 
-		//author = {id: 67};
+		author = {
+//			id: authorId,
+			in: `"${authorId}"`
+		};
 
 		let authorQueryTpl = (author = null) => {
-		  if (author && author.id) {
+		  if (author) {
 			return `
 				${author?.id ?    `, author: ${author.id}` : ""}
 				${author?.name ?  `, authorName: ${author.name}` : ""}
@@ -218,9 +230,10 @@ export const UtilsGraphQL = {
 			log.trace(`${view}: buildClauseQuery: dateQueryTpl: date: ${date}`);
 			try {
 			  let _date = {
-				year: date.replace(/^(\d{4}).*/,"$1"),
-				month: date.replace(/^\d{4}-(\d{2}).*/,"$1").replace(/^0/,""),
-				day: date.replace(/.*(\d{2})$/,"$1").replace(/^0/, ""),
+			  */
+//				//year: date.replace(/^(\d{4}).*/,"$1"),
+//				month: date.replace(/^\d{4}-(\d{2}).*/,"$1").replace(/^0/,""),
+/*				day: date.replace(/.*(\d{2})$/,"$1").replace(/^0/, ""),
 			  };
 			  return `,
 				  ${afterOrBefore}: {
@@ -324,7 +337,7 @@ export const UtilsGraphQL = {
 
 		return q;
 	},
-
+*/
 	listOne: function(graphqlURI, cookies, id, contentType = "vcontent") {
 		let log = UtilsGraphQL.log
 		let q = '';

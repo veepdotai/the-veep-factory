@@ -5,50 +5,50 @@ let CONTENT_TYPE = 'vcontent'
 
 //let cb = UtilsGraphQLClauseBuilder;
 export const UtilsGraphQLClauseBuilder = {
-	log: Logger.of("UtilsGraphQL"),
+	log: Logger.of("UtilsGraphQLClauseBuilder"),
 
 	buildClauseQuery: function (authorId, _props, contentType = "vcontent") {
+		let log = (msg) => UtilsGraphQLClauseBuilder.log.trace("UtilsGraphQLClauseBuilder" + msg)
 		//  let authorId = props.authorId;
 		let view = _props?.view;
 		let author = _props?.author;
 		let search = _props?.search;
 		let status = _props?.status;
 		let date = _props?.date;
-		UtilsGraphQL.log.trace(`buildClauseQuery: date: ${JSON.stringify(date)}`);
+		log(`date: ${JSON.stringify(date)}`);
+
 		let category = _props?.category;
 		let meta = _props?.meta;
 	
 		// authorId = 1;
 		// authorIn = [1, 2]
-		if (author && ! author.id) {
-		  author.id = authorId;
-		};
-		
-		if (! author) {
-		  author = {id: authorId};
+		if (! author) author = {}
+		if (authorId) {
+			author.id = authorId
+			author.in = `"${authorId}"`
 		}
-	
-		let authorQuery = buildAuthorQuery(author);
-		UtilsGraphQL.log.trace(`${view}: buildClauseQuery: authorQuery: ${authorQuery}`);    
+
+		let authorQuery = UtilsGraphQLClauseBuilder.buildAuthorQuery(author);
+		log(`${view}: authorQuery: ${authorQuery}`);    
 	
 		let statusQueryTpl = (status = null) => status ? `, status: ${status}` : "";
 		let statusQuery = statusQueryTpl(status);
-		UtilsGraphQL.log.trace(`${view}: buildClauseQuery: statusQuery: ${statusQuery}`);    
+		log(`${view}: statusQuery: ${statusQuery}`);    
 	
 		let searchQueryTpl = (search = null) => search ? `, search: "${search}"` : "";
 		let searchQuery = searchQueryTpl(search);
-		UtilsGraphQL.log.trace(`${view}: buildClauseQuery: searchQuery: ${searchQuery}`);
+		log(`${view}: searchQuery: ${searchQuery}`);
 		
-		let dateQuery = buildDateQuery();
+		let dateQuery = UtilsGraphQLClauseBuilder.buildDateQuery();
 
-		let intervalQuery = buildIntervalQuery(date);
-		UtilsGraphQL.log.trace(`${view}: buildClauseQuery: intervalQuery: ${intervalQuery}`);
+		let intervalQuery = UtilsGraphQLClauseBuilder.buildIntervalQueryTpl(date);
+		log(`${view}: intervalQuery: ${intervalQuery}`);
 	
-		let categoryQuery = buildCategoryQuery(category);
-		UtilsGraphQL.log.trace(`${view}: buildClauseQuery: categoryQuery: ${categoryQuery}`);
+		let categoryQuery = UtilsGraphQLClauseBuilder.buildCategoryQuery(category);
+		log(`${view}: categoryQuery: ${categoryQuery}`);
 	
-		let metaQuery = buildMetaQuery(meta);
-		UtilsGraphQL.log.trace(`${view}: buildClauseQuery: metaQuery: ${metaQuery}`);
+		let metaQuery = UtilsGraphQLClauseBuilder.buildMetaQuery(meta);
+		log(`${view}: metaQuery: ${metaQuery}`);
 	
 		let query = `
 		  ${authorQuery}
@@ -63,7 +63,7 @@ export const UtilsGraphQLClauseBuilder = {
 			query = query + ", parent: 0"
 		}
 		
-		UtilsGraphQL.log.trace(`buildClauseQuery: query: ${query}`);
+		log(`query: ${query}`);
 	
 		let contentTypes = contentType + 's';
 		let q = `query contents {
@@ -87,7 +87,7 @@ export const UtilsGraphQLClauseBuilder = {
 		  }
 		`
 
-		UtilsGraphQL.log.trace(`${view}: buildClauseQuery: graphqlQuery: q: ${q}`);
+		log(`${view}: graphqlQuery: q: ${q}`);
 
 		return q;
 	},
@@ -107,7 +107,7 @@ export const UtilsGraphQLClauseBuilder = {
 
 	buildDateQuery: function(date = null, afterOrBefore = "after") {
 		if (date) {
-		  UtilsGraphQL.log.trace(`${view}: buildClauseQuery: dateQueryTpl: date: ${date}`);
+		  UtilsGraphQLClauseBuilder.log.trace(`buildClauseQuery: dateQueryTpl: date: ${date}`);
 		  try {
 			let _date = {
 			  year: date.replace(/^(\d{4}).*/,"$1"),
@@ -130,7 +130,7 @@ export const UtilsGraphQLClauseBuilder = {
 	},
 
 	buildIntervalQueryTpl: function(date) {
-		UtilsGraphQL.log.trace(`${view}: buildClauseQuery: intervalQuery: date: ${JSON.stringify(date)}`);
+		UtilsGraphQLClauseBuilder.log.trace(`buildClauseQuery: intervalQuery: date: ${JSON.stringify(date)}`);
 		if (date && (date.after || date.before)) {
 		  return `dateQuery: {
 			  ${date.after ? dateQueryTpl(date.after) : ""}
@@ -151,7 +151,7 @@ export const UtilsGraphQLClauseBuilder = {
 	},
 
 	buildMetaQuery: function(meta) {
-		UtilsGraphQL.log.trace(`${view}: buildClauseQuery: metaQuery: meta: ${JSON.stringify(meta)}`);
+		UtilsGraphQLClauseBuilder.log.trace(`buildClauseQuery: metaQuery: meta: ${JSON.stringify(meta)}`);
 		if (meta) {
 		  return `metaQuery: {
 					metaArray: {
@@ -164,6 +164,5 @@ export const UtilsGraphQLClauseBuilder = {
 		  return "";
 		}
 	},
-
 
 }

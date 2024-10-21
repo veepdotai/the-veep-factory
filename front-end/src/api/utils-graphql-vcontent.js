@@ -7,7 +7,7 @@ export const UtilsGraphQLVcontent = {
 	listOneBis: function(id) {
 
 		let q = `query content {
-					vcontents(where: {parent: ${id}}) {
+					vcontents(where: {authorIn: "68", parent: ${id}}) {
 						nodes {
 							__typename
 							content(format: RAW)
@@ -27,7 +27,7 @@ export const UtilsGraphQLVcontent = {
 		// children (where: {orderby: {field: DATE, order: ASC}}) {
 		let q = `
 			query contents {
-				vcontents(first: 100, where: {id: ${id}}) {
+				vcontents(where: {authorIn: "68", id: ${id}}) {
 					nodes {
 						author {
 							node {
