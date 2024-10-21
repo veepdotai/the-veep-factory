@@ -246,7 +246,7 @@
   "NumberOfGenerationsDesc": "Showing the number of generations, complete or not",
   "NumberOfTokens": "# of tokens",
   "NumberOfTokensDesc": "Showing the number of tokens",
-  "BePatient": "First app loading may be a little slow, until 30 s. according your internet connection speed. But next ones will be quite fast. Please, be patient.",
+  "BePatient": "First app loading may take until 30 sec but next ones will be almost immediate. Please, be patient.",
   "YourActivity": "Your activity",
   "YourActivityDesc": "Showing # of generations and # of tokens related to time",
   "YourActivityFooter": " ",

@@ -248,7 +248,7 @@
   "NumberOfGenerationsDesc": "Affiche le nombre de générations, terminées ou non",
   "NumberOfTokens": "Nb de tokens",
   "NumberOfTokensDesc": "Affiche le nombre de tokens",
-  "BePatient": "Le premier chargement de l'application peut être un peu lent et prendre jusqu'à 30 s. selon la vitesse de votre connexion. Mais les prochains seront très rapides. Merci de patienter.",
+  "BePatient": "Le premier chargement de l'application peut prendre jusqu'à 30 s. mais les prochains seront quasi instantanés. Merci de patienter.",
   "YourActivity": "Votre activité",
   "YourActivityDesc": "Affiche le nombre de générations et de tokens en fonction du temps",
   "YourActivityFooter": " ",
