@@ -127,20 +127,20 @@ export default function MyContentDetails( { id }) {
                 <>
                   <ResizablePanelGroup direction="horizontal" className="h-full">
                     <ResizablePanel className="h-full" style={{borderRight: "1px solid #eeefff"}} defaultSize={25}>
-                      <Tabs className="justify-start h-full" id="mycontent-chat" defaultValue="transcription">
+                      <Tabs className="justify-start h-full" id="mycontent-chat" defaultValue="conversation">
                         <ScrollArea className="w-100 whitespace-nowrap h-full">
                           <ScrollBar orientation="vertical" />
 
                           {MyContentDetailsForDesktop.desktopMenu(prompt, "side")}
 
+                          <TabsContent id="details-chat-conversation" className="h-full" value="conversation">
+                            {MyContentDetailsUtils.getAllStepsOneByOne(prompt, data, contentId)}
+                          </TabsContent>
                           <TabsContent id="details-chat-prompt" className="h-full" value="metadata">
                             {MyContentDetailsUtils.getPromptContent(contentId, mainNode)}
                           </TabsContent>
                           <TabsContent id="details-chat-transcription" className="h-full" value="transcription">
                             {MyContentDetailsUtils.getTranscriptionContent(contentId, mainNode)}
-                          </TabsContent>
-                          <TabsContent id="details-chat-pipeline" className="h-full" value="pipeline">
-                            {MyContentDetailsUtils.getAllStepsOneByOne(prompt, data, contentId)}
                           </TabsContent>
                         </ScrollArea>
                       </Tabs>

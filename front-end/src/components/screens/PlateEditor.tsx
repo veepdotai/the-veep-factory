@@ -310,6 +310,10 @@ export function PlateEditor( {input, contentId, attrName} ) {
     }
   }
   
+  let editorWindowSpacing = {
+    padding: "2rem"
+  }
+
   return (
     <>
           { content ?
@@ -324,7 +328,7 @@ export function PlateEditor( {input, contentId, attrName} ) {
                   <FixedToolbarButtons operations={operations} />
                 </FixedToolbar>
                 <Editor
-                  style={{margin: "6rem"}}
+                  style={editorWindowSpacing}
                   className='focus-ring-none'
                 />
                 

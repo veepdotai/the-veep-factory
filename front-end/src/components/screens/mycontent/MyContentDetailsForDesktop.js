@@ -62,10 +62,10 @@ export default class MyContentDetailsForDesktop {
       <>
         { mode === "side" ?
           <TabsList id="details-menu-chat" variant="pills" className="">
-            <div>
-              <TabsTrigger id="details-menu-metadata" value="metadata">
-                <MyContentDetailsForDesktop.TT id="m-metadata" title={t("Metadata")}>
-                  {Icons.metadataView}
+            <div>            
+              <TabsTrigger id="details-menu-pipeline" value="pipeline">
+                <MyContentDetailsForDesktop.TT id="m-pipeline" title={t("Pipeline")}>
+                  {Icons.support}
                 </MyContentDetailsForDesktop.TT>
               </TabsTrigger>
               <TabsTrigger id="details-menu-transcription" value="transcription">
@@ -73,9 +73,9 @@ export default class MyContentDetailsForDesktop {
                   {Icons.transcriptionView}
                 </MyContentDetailsForDesktop.TT>
               </TabsTrigger>
-              <TabsTrigger id="details-menu-pipeline" value="pipeline">
-                <MyContentDetailsForDesktop.TT id="m-pipeline" title={t("Pipeline")}>
-                  {Icons.support}
+              <TabsTrigger id="details-menu-metadata" value="metadata">
+                <MyContentDetailsForDesktop.TT id="m-metadata" title={t("Metadata")}>
+                  {Icons.metadataView}
                 </MyContentDetailsForDesktop.TT>
               </TabsTrigger>
 

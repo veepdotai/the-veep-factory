@@ -12,6 +12,7 @@ import React from 'react';
 
 import type { DropdownMenuProps } from '@radix-ui/react-dropdown-menu';
 import { t } from 'i18next';
+import PubSub from 'pubsub-js'
 
 import { collapseSelection } from '@udecode/plate-common';
 import { focusEditor, useEditorRef } from '@udecode/plate-common/react';
@@ -34,14 +35,28 @@ export function FloatingToolbarAIDropdownMenu(props: DropdownMenuProps) {
   const editor = useEditorRef();
   const openState = useOpenState();
 
+  function showAlert(msg) {
+    PubSub.publish("PROMPT_DIALOG", {
+      title: t("AITitleDialog"),
+      description: t("AITitleDialogDesc"),
+      content: <div>
+        <p>{t("AIDialogLongDesc")}</p>
+        <p>{t("GoToDiscussion")} <a style={{color: "blue", textDecoration: "underline"}} target="_blank" href='https://github.com/veepdotai/the-veep-factory/discussions/24'>discussion</a></p>
+      </div>,
+      actions: [{
+          label: t("OK"),
+      }]
+    })
+  }
+
   const actions = [
-    { title: t("Improve"), icon: "save", action: () => alert('coucou')},
-    { title: t("Fix spelling and grammar"), icon: "save", action: () => alert('coucou')},
-    { title: t("Translate"), icon: "save", action: () => alert('coucou')},
-    { title: t("Make shorter"), icon: "save", action: () => alert('coucou')},
-    { title: t("Make longer"), icon: "save", action: () => alert('coucou')},
-    { title: t("Simplify"), icon: "save", action: () => alert('coucou')},
-    { title: t("Be more specific"), icon: "save", action: () => alert('coucou')},
+    { title: t("Improve"), icon: "save", action: () => showAlert("Improve")},
+    { title: t("FixSpellingGrammar"), icon: "save", action: () => showAlert()},
+    { title: t("Translate"), icon: "save", action: () => showAlert()},
+    { title: t("MakeShorter"), icon: "save", action: () => showAlert()},
+    { title: t("MakeLonger"), icon: "save", action: () => showAlert()},
+    { title: t("Simplify"), icon: "save", action: () => showAlert()},
+    { title: t("BeMoreSpecific"), icon: "save", action: () => showAlert()},
   ]
   
   return (

@@ -257,7 +257,17 @@
   "FilterContents": "Filter contents...",
   "CurrentContentsList": "Contents list",
   "WelcomeBack": "Welcome back",
-
+  "NYI": "Not Yet Implemented.",
+  "AITitleDialog": "AI Functions",
+  "AITitleDialogDesc": "Improve, translate, make shorter, make longer...",
+  "AIDialoLonggDesc": "Act on selected text, give some additional instructions?",
+  "Improve": "Improve",
+  "FixSpellingGrammar": "Fix spelling and grammar",
+  "Translate": "Translate",
+  "MakeShorter": "Make shorter",
+  "MakeLonger": "Make longer",
+  "BeMoreSpecific": "Be more specific",
+  "GoToDiscussion": "Go to the following discussion and tell us how you see this feature:",
   "Stop": "Stop"
 
 }

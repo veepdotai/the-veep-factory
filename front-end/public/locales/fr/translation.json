@@ -259,6 +259,17 @@
   "FilterContents": "Filtrer par contenu...",
   "CurrentContentsList": "Liste des contenus",
   "WelcomeBack": "Bienvenue",
+  "NYI": "Pas encore implémenté.",
+  "AITitleDialog": "Fonctions d'Intelligence Artificielle (IA)",
+  "AITitleDialogDesc": "Améliorer, traduire, faire plus court...",
+  "AIDialogLongDesc": "Agir sur le texte sélectionné ? Ajouter des instructions supplémentaires ?",
+  "Improve": "Améliorer",
+  "FixSpellingGrammar": "Corriger orthographe et grammaire",
+  "Translate": "Traduire",
+  "MakeShorter": "Faire plus court",
+  "MakeLonger": "Faire plus long",
+  "BeMoreSpecific": "Être plus spécifique",
+  "GoToDiscussion": "Allez voir la discussion suivante et dites-nous comment vous utiliseriez cette fonctionnalité :",
 
   "Stop": "Stop"
 

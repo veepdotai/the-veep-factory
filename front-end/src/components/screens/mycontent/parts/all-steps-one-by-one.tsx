@@ -70,29 +70,32 @@ export default function AllStepsOneByOneContent( { prompt, data, cid } ) {
           return (<></>)
         }
 
-        {/*<TabsContent value={instructions.label}>*/}
-        {/*</TabsContent>*/}
+        let chatCard = "ml-2 me-4 mt-2 mb-5 p-4 rounded-4"
+        let inputCN = `${chatCard} bg-slate-100`
+        let outputCN = `${chatCard} bg-slate-200`
+        let innerCN = "prompt ps-5 text-sm text-wrap"
+
         return (
           <>
             { contentId ?
                   <>
-                    <div className='m-2 p-2 bg-slate-100 rounded-2'>
+                    <div className={inputCN}>
                       <div className='flex'>
                         <div className="you">You:</div>
                         <div className='label'>[{instructions.label}]</div>
                       </div>
 
-                      <div className='prompt ps-2 text-sm text-wrap'>
+                      <div className={innerCN}>
                         {instructions.prompt.split(/\n/).map((item, i) => <p key="{i}">{item}</p>)}
                         {/*instructions.prompt.replace(/\n/g, "<br /><br />")*/}
                       </div>
                     </div>
 
-                    <div className='m-2 p-2 bg-slate-200 rounded-2'>
+                    <div className={outputCN}>
                       <div className='d-inline'>
                         <div className="ai">AI:</div>
                       </div>
-                      <div className='prompt ps-2 text-sm text-wrap'>
+                      <div className={innerCN}>
                         {/*<Markdown className={style.reactMarkdown} remarkPlugins={[remarkGfm]}>{_content.replace(/#+/g, "").replace(/\n/g, "<br /><br />")}</Markdown>*/}
                         {_content ?
                           _content.replace(/#+/g, "").split(/\n/).map((item, i) => <p key={i}>{item}</p>)

@@ -123,7 +123,6 @@ export default function FileSystemManager({
                 <Tooltip title="Create a new folder">
                   <IconButton
                     onClick={() => {
-                      alert('coucou');
                       setDirName("");
                       handleNewFolderModalOpen();
                     }}
