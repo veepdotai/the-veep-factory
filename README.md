@@ -58,13 +58,13 @@ Veep.AI supports you in all phases of creating content or a document with AIs. I
 ## Screenshots
 
 ### Dashboard
-![veep-3 0-dashboard](https://github.com/user-attachments/assets/8f3d106f-40e0-44a4-abc0-5c904be51aab)
+<img src="https://github.com/user-attachments/assets/8f3d106f-40e0-44a4-abc0-5c904be51aab" width="50%" />
 
 ### Pipeline
-![veep-1 0-create-pipeline](https://github.com/user-attachments/assets/5aba7f56-8088-4bc0-9e96-c02e7d5995ed)
+<img src="https://github.com/user-attachments/assets/5aba7f56-8088-4bc0-9e96-c02e7d5995ed" width="50%" />
 
 ### An assistant for everything, especially for all the corporate's departments
-![veep-2 0-create-choose](https://github.com/user-attachments/assets/f65ebd85-39d7-4617-84cb-85c2983c5df5)
+<img src="https://github.com/user-attachments/assets/f65ebd85-39d7-4617-84cb-85c2983c5df5" width="50%" />
 
 ### Content Creation
-![veep-1 0-create-input](https://github.com/user-attachments/assets/1bf1a04d-d094-4b08-a0da-7259dfcbf7b6)
+<img src="https://github.com/user-attachments/assets/1bf1a04d-d094-4b08-a0da-7259dfcbf7b6" width="50%" />
