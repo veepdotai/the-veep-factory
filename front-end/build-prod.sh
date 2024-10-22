@@ -22,6 +22,9 @@
 # local and remote installation.
 #
 
+TEST=$(command sshpass -v > test-command.txt | grep Usage test-command.txt)
+[ ! $TEST ] && sudo apt-get install sshpass
+
 set -e
 
 # hash code to use
@@ -42,7 +45,7 @@ main() {
     deploy_build
 
     # deploys the wp plugins
-    deploy_server
+#    deploy_server
 }
 
 init() {
@@ -54,9 +57,9 @@ init() {
     FRONT_DIR="$ROOT_DIR/front-end"
     BACK_DIR="$ROOT_DIR/back-end"
 
-    SERVER_LOCAL_DIR="$BACK_DIR/wordpress/htdocs"
-    SERVER_LOCAL_DIR="v"
-    mkdir -p "$SERVER_LOCAL_DIR/$SERVER_LOCAL_DIR"
+    SERVER_ROOT_DIR="$BACK_DIR/wordpress/htdocs"
+    SERVER_LOCAL_DIR="$SERVER_ROOT_DIR"
+    mkdir -p "$SERVER_LOCAL_DIR"
 
     SERVER_DIST_DIR="/vhosts/app.veep.ai/htdocs"
 
@@ -106,6 +109,7 @@ prepare_build() {
 build_app() {
     echo "Really builds the app"
     npm run build
+    cp -f $NEXT_CONFIG_JS_TPL_PATH $NEXT_CONFIG_JS_PATH
 }
 
 store_build() {
@@ -125,24 +129,32 @@ bye
 
 }
 
+# Usually, vendor doesn't need to be exported during deployemnt.
+# As there is no exclude flags in sftp, we move it to its parent
+# and rename it $parent-vendor
 deploy_server_pre() {
     local PLUGINS_DIR="$SERVER_LOCAL_DIR/wp-content/plugins"
     cd $PLUGINS_DIR
     for dir in $(ls -d veepdotai*); do
         echo Currently processing $dir plugin
-        mv $dir/vendor $dir-vendor
+        [ -d $dir/vendor ] && mv $dir/vendor $dir-vendor
+        echo Processed
     done
 }
 
-deploy_server_post) {
+# After deployment, we move and rename vendor dir back
+deploy_server_post() {
     local PLUGINS_DIR="$SERVER_LOCAL_DIR/wp-content/plugins"
     cd $PLUGINS_DIR
     for dir in $(ls -d veepdotai*); do
         echo Currently re-processing $dir plugin
-        mv $dir-vendor $dir/vendor
+        [ -d $dir-vendor ] && mv $dir-vendor $dir/vendor
+        echo Processed
     done
 }
 
+# We export all the veepdotai* plugin to the server
+# In a future version, we may use git-ftp
 deploy_server_veepdotai_plugins() {
 
     echo "Deploy build $TAG at... $(date '+%Y%m%d-%H%M')"
@@ -166,7 +178,9 @@ bye
 }
 
 deploy_server() {
+    echo "un"
     deploy_server_pre
+    echo "deux"
     deploy_server_veepdotai_plugins
     deploy_server_post
 }

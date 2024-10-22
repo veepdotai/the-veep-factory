@@ -25,27 +25,38 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                 <ComboboxWorkspaces />
                 <MenuItem itemKey="home" itemLabel={t("Dashboard")} />
 
-                {getMenuTitle(t("Configuration"))}
+                {getMenuTitle(t("Context"))}
                 <MenuItem itemKey="brand-voice" itemLabel={t("BrandVoice")} direction={direction} />
                 <MenuItem itemKey="editorial-line" itemLabel={t("EditorialLine")} direction={direction} />
-                <MenuItem itemKey="config-pdf" itemLabel={t("PDFConfig")} direction={direction} />
 
-                {getMenuTitle(t("Creation"))}
-                <MenuItem itemKey="contents" itemLabel={t("MyContents")} />
+                {getMenuTitle(t("Assistants"))}
                 {/*<MenuItem itemKey="add-content" itemLabel={t("DocModels")} direction={direction} />*/}
                 <MenuItem itemKey="add-content" itemLabel={t("AddContent")} direction={direction} />
 
+                {getMenuTitle(t("Contents"))}
+                <MenuItem itemKey="contents" itemLabel={t("MyContents")} />
+
+                {/*
                 {getMenuTitle(t("Publication"))}
                 <MenuItem itemKey="editorial-calendar" itemLabel={t("EditorialCal")} direction={direction} />
                 <MenuItem itemKey="pub-target" itemLabel={t("PubTarget")} direction={direction} />
+                */}
 
                 {getMenuTitle(t("Tools"))}
                 {/*<MenuItem itemKey="chat" itemLabel={t("Chat")} direction={direction} />*/}
                 <div className='ps-4'>{Icons.chat}
                     <a className="ps-2" target="_blank" href="https://chat.veep.ai">Chat</a>
                 </div>
-                
-                <MenuItem itemKey="support" itemLabel={t("Support")} direction={direction} />
+                <div className='pt-2 ps-4'>{Icons.support}
+                    <a className="ps-2" target="_blank" href="https://github.com/veepdotai/the-veep-factory">Support</a>
+                </div>
+
+                {getMenuTitle(t("Configuration"))}
+                <MenuItem itemKey="config-pdf" itemLabel={t("PDFConfig")} direction={direction} />
+
+                {/*
+                    <MenuItem itemKey="support" itemLabel={t("Support")} direction={direction} />
+                */}
 
                 { isManager ?
                     <>

@@ -246,7 +246,7 @@
   "NumberOfGenerationsDesc": "Showing the number of generations, complete or not",
   "NumberOfTokens": "# of tokens",
   "NumberOfTokensDesc": "Showing the number of tokens",
-  "BePatient": "First app loading may take until 30 sec but next ones will be almost immediate. Please, be patient.",
+  "BePatient": "First app loading may take until 30 sec. Please, be patient.",
   "YourActivity": "Your activity",
   "YourActivityDesc": "Showing # of generations and # of tokens related to time",
   "YourActivityFooter": " ",
@@ -268,6 +268,10 @@
   "MakeLonger": "Make longer",
   "BeMoreSpecific": "Be more specific",
   "GoToDiscussion": "Go to the following discussion and tell us how you see this feature:",
+  "Context": "Context",
+  "Assistants": "Assistants",
+  "Contents": "Contents",
+
   "Stop": "Stop"
 
 }
