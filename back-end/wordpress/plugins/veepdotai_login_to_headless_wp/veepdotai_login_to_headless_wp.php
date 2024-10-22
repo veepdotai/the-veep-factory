@@ -177,7 +177,7 @@ Class Veepdotai_Login {
 			//redirect_to may be empty...
 			//but finally, everybody is redirected to home_url()/app/
 			$redirect_to = $state->redirect_to;
-			$redirect_to = home_url() . "/app/";
+			$redirect_to = home_url() . "/v/app/";
 			$redirect_to = (strpos( $redirect_to, '?' ) === false
 								? $redirect_to . "?"
 								: $redirect_to . "&")
@@ -187,7 +187,7 @@ Class Veepdotai_Login {
 				$redirect_to = preg_replace("#(http.?)://([^/]*)/(.*)#", "$1://$2:3000/r?JWT=" . $veepdotai_jwt, $redirect_to);
 				self::log( "debug", "$fn: localhost: new redirect_to: " . $redirect_to);
 			} else {
-				$redirect_to = preg_replace("#(http.?)://([^/]*)/(.*)#", "$1://$2/r?JWT=" . $veepdotai_jwt, $redirect_to);				
+				$redirect_to = preg_replace("#(http.?)://([^/]*)/(.*)#", "$1://$2/v/app/r?JWT=" . $veepdotai_jwt, $redirect_to);				
 			}
 			
 			if ( isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], "scope" ) !== -1 ) {
