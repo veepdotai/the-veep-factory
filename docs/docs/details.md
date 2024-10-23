@@ -12,7 +12,7 @@ Ce document a été réalisé à l'aide des étapes suivantes :
 3. Ensuite une relecture rapide sera faite pour enlever les éléments redondants et donner plus de structure
 4. Enfin, une consolidaiton et un export PDF seront réalisés
 
-Les étapes 2, 3 et 4 seront automatisées par Veep à court terme.
+L'étape 1 est déjà automatisée par Veep. Les étapes 2, 3 et 4 seront automatisées par Veep à court terme.
 
 # Partie 1 : Le contexte
 
