@@ -3,6 +3,18 @@
  * @package Veepdotai
  * @version 0.0.1
  */
+
+add_action( 'template_redirect', 'redirect_to_app_on_404' );
+function redirect_to_app_on_404(){
+    if( is_user_logged_in() && is_404() ){
+		wp_redirect('https://app.veep.ai/v/app');
+		exit;
+    } else if (is_404()) {
+		wp_redirect('https://app.veep.ai/');
+		exit;
+	}
+}
+
 add_action( 'login_form', 'login_button', 10, 1 );
 function login_button() {
 	if ( isset( $custom_btn_text ) && $custom_btn_text ) {
@@ -27,7 +39,7 @@ function login_button() {
 	if ( strpos( home_url(), "localhost") !== false ) {
 		$url = home_url() . ":3000/?JWT=" . $jwt;
 	} else {
-		$url = home_url() . "/app/?JWT=" . $jwt;
+		$url = home_url() . "/v/app/?JWT=" . $jwt;
 	}
 	
 	?>
