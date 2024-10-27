@@ -7,7 +7,7 @@
 add_action( 'template_redirect', 'redirect_to_app_on_404' );
 function redirect_to_app_on_404(){
     if( is_user_logged_in() && is_404() ){
-		wp_redirect('https://app.veep.ai/v/app');
+		wp_redirect(home_url() . '/v/app');
 		exit;
     } else if (is_404()) {
 		wp_redirect('https://app.veep.ai/');
