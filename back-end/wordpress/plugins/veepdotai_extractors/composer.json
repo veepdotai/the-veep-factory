@@ -1,6 +1,0 @@
-{
-    "require": {
-        "html2text/html2text": "^4.3",
-        "smalot/pdfparser": "^2.8"
-    }
-}

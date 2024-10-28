@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkvoice_2_post_doc=self.webpackChunkvoice_2_post_doc||[]).push([[8773],{1183:e=>{e.exports=JSON.parse('{"tag":{"label":"features","permalink":"/tags/features","allTagsPath":"/tags","count":1,"items":[{"id":"features","title":"Features","description":"Is there a list of all the features?","permalink":"/features"}],"unlisted":false}}')}}]);

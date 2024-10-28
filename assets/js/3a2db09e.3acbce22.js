@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkvoice_2_post_doc=self.webpackChunkvoice_2_post_doc||[]).push([[8121],{8070:t=>{t.exports=JSON.parse('{"tags":[{"label":"content","permalink":"/blog/tags/content","count":1},{"label":"contentfactory","permalink":"/blog/tags/contentfactory","count":1}]}')}}]);

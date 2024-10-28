@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkvoice_2_post_doc=self.webpackChunkvoice_2_post_doc||[]).push([[7472],{5513:t=>{t.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"Et si on cr\xe9ait une \\"Content Factory\\" ?","permalink":"/blog/2024/03/14/content-factory-creation","unlisted":false,"date":"2024-03-14T00:00:00.000Z"}]}')}}]);

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkvoice_2_post_doc=self.webpackChunkvoice_2_post_doc||[]).push([[4432],{6276:t=>{t.exports=JSON.parse('{"tag":{"label":"start","permalink":"/tags/start","allTagsPath":"/tags","count":1,"items":[{"id":"getting-started","title":"Getting Started","description":"How to start","permalink":"/"}],"unlisted":false}}')}}]);
