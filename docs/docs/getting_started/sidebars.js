@@ -18,27 +18,15 @@ const sidebars = {
     'overview',
     {
       'Getting started': [
-        'getting_started/gs-overview',
-        {
-          'As User': [
-            'getting_started/gs-user-selects-generator',
-            'getting_started/gs-user-prepares-input',
-            'getting_started/gs-user-creates-artefact',
-            'getting_started/gs-user-edits-content',
-            'getting_started/gs-user-fills-context',
-            'getting_started/gs-user-publishes-content',
-            'getting_started/gs-user-exports-pdf-document',
-          ],
-        },
-        {
-          'As Expert': [
-            'getting_started/gs-expert-creates-assistant',
-            'getting_started/gs-expert-creates-catalog',
-            'getting_started/gs-expert-defines-context',
-            'getting_started/gs-expert-configures-AI',
-            'getting_started/gs-expert-configures-pdf-export',          
-          ]
-        }
+        'getting_started/getting-started',
+        'getting_started/gs-user-creates-content',
+        'getting_started/gs-user-edits-content',
+        'getting_started/gs-user-fills-context',
+        'getting_started/gs-user-publishes-content',
+        'getting_started/gs-expert-creates-assistant',
+        'getting_started/gs-expert-creates-catalog',
+        'getting_started/gs-expert-defines-context',
+        'getting_started/gs-expert-configures-AI',
       ]
     },
     {
