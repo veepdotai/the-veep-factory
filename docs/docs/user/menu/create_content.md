@@ -1,5 +1,19 @@
 ---
-sidebar_position: 30
+id: user-creation
+title: Content Creation & Assistants
+hide_table_of_contents: false
+pagination_label: Content Creation Through Assistants
+#custom_edit_url: https://github.com/facebook/docusaurus/edit/main/docs/api-doc-markdown.md
+description: How do I use an assistant?
+keywords:
+  - menu
+  - assistant
+tags: [assistant]
+#image: https://i.imgur.com/mErPwqL.png
+#slug: /myDoc
+last_update:
+  date: 10/27/2024
+  author: Jean-Christophe Kermagoret
 ---
 
 # Création de contenu

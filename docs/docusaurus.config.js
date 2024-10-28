@@ -13,26 +13,20 @@ const config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://app.veep.ai',
-  // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/support/',
-
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'veepdotai', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  url: 'https://docs.veep.ai',
+  baseUrl: '/',
+  //trailingSlash: true,  
+  organizationName: 'veepdotai',
+  projectName: 'the-veep-factory',
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
 
-  // Even if you don't use internationalization, you can use this field to set
-  // useful metadata like html lang. For example, if your site is Chinese, you
-  // may want to replace "en" with "zh-Hans".
   i18n: {
-    defaultLocale: 'fr',
-    locales: ['en', 'fr'],
+    defaultLocale: 'en',
+    locales: ['en'],
   },
+  deploymentBranch: 'gh-pages',
 
   markdown: {
     mermaid: true,
@@ -42,21 +36,15 @@ const config = {
   presets: [
     [
       'classic',
-      /** @type {import('@docusaurus/preset-classic').Options} */
       ({
+        //debug: true,
         docs: {
+          routeBasePath: '/',
+          breadcrumbs: true,
           sidebarPath: './sidebars.js',
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          // editUrl:
-            //'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
         },
         blog: {
           showReadingTime: true,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          //editUrl:
-            //'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -109,21 +97,21 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
+            title: 'Support',
             items: [
               {
-                label: 'Tutorial',
-                to: '/docs/intro',
+                label: 'Forums',
+                to: 'https://github.com/veepdotai/the-veep-factory/discussions',
+              },
+              {
+                label: 'Issues',
+                to: 'https://github.com/veepdotai/the-veep-factory/issues',
               },
             ],
           },
           {
             title: 'Community',
             items: [
-              {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/veepdotai',
-              },
               /*
               {
                 label: 'Discord',
@@ -131,8 +119,20 @@ const config = {
               },
               */
               {
+                label: 'LinkedIn (Veep.AI)',
+                href: 'https://www.linkedin.com/company/veepdotai/',
+              },
+              {
+                label: 'LinkedIn (Jean-Christophe)',
+                href: 'https://www.linkedin.com/in/jean-christophe-kermagoret/',
+              },
+              {
                 label: 'Twitter',
                 href: 'https://twitter.com/veepdotai',
+              },
+              {
+                label: 'Stack Overflow',
+                href: 'https://stackoverflow.com/questions/tagged/veepdotai',
               },
             ],
           },

@@ -1,5 +1,17 @@
 ---
-sidebar_position: 1
+slug: /
+id: getting-started
+title: Getting Started
+hide_table_of_contents: false
+#custom_edit_url: https://github.com/facebook/docusaurus/edit/main/docs/api-doc-markdown.md
+description: How to start
+keywords:
+  - start
+tags: [start]
+#image: https://i.imgur.com/mErPwqL.png
+last_update:
+  date: 10/27/2024
+  author: Jean-Christophe Kermagoret
 ---
 
 # Introduction
