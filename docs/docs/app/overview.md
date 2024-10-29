@@ -1,5 +1,5 @@
 ---
-id: overview
+id: part-overview
 title: Overview
 hide_table_of_contents: false
 pagination_label: App Overview

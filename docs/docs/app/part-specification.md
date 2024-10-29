@@ -1,6 +1,6 @@
 ---
-id: part-context
-title: Context
+id: part-specification
+title: Specification (Context)
 hide_table_of_contents: false
 pagination_label: Context
 #custom_edit_url: https://github.com/facebook/docusaurus/edit/main/docs/api-doc-markdown.md
@@ -19,7 +19,7 @@ last_update:
 
 ## Introduction
 
-Dans un monde où l'information circule à une vitesse fulgurante, la capacité à produire des contenus et des documents pertinents et engageants *rapidement* est devenue une nécessité pour toute organisation souhaitant maintenir sa visibilité, son influence ainsi que son image et son statut d'expert. L'intelligence artificielle (IA) émerge comme un outil puissant dans ce contexte, offrant des possibilités très intéressantes pour générer des textes adaptés à une variété de besoins, non seulement pour les services de communication/marketing mais égalementpour les sevices support ou de production/conseil. Toutefois, pour que ces contenus et documents atteignent leur plein potentiel, il est crucial de comprendre les mécanismes sous-jacents à la génération de texte par l'IA ainsi que l'importance d'un contexte bien défini.
+Dans un monde où l'information circule à une vitesse fulgurante, la capacité à produire des contenus et des documents pertinents et engageants *rapidement* est devenue une nécessité pour toute organisation souhaitant maintenir son image et son statut d'expert. L'intelligence artificielle (IA) émerge comme un outil puissant dans ce contexte, offrant des possibilités très intéressantes pour générer des textes adaptés à une variété de besoins, non seulement pour les services de communication/marketing mais égalementpour les sevices support ou de production/conseil. Toutefois, pour que ces contenus et documents atteignent leur plein potentiel, il est crucial de comprendre les mécanismes sous-jacents à la génération de texte par l'IA ainsi que l'importance d'un contexte bien défini.
 
 Mais comment l'IA apprend-elle à créer du contenu ? Et quel rôle joue exactement le contexte dans la pertinence et l'efficacité des textes produits ? Comment peut-on structurer efficacement le contexte pour optimiser la génération de contenu par l'IA ? Pour répondre à ces questions, nous explorerons les fondations de l'apprentissage de l'IA mais aussi la manière dont Veep structure le contexte afin de créer des contenu et des documents de manière fluide. Nous verrons également comment l'élaboration d'un style et d'une tonalité cohérente, ainsi que l'utilisation de frameworks stratégiques comme TOFU-MOFU-BOFU et AARRR, peuvent grandement améliorer la communication d'une organisation.
 

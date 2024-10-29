@@ -18,7 +18,7 @@ const sidebars = {
     'overview',
     {
       'Getting started': [
-        'getting_started/gs-overview',
+        'getting_started/gs-quickstart',
         {
           'As User': [
             'getting_started/gs-user-selects-generator',
@@ -43,9 +43,10 @@ const sidebars = {
     },
     {
       'What is Veep?': [
-        'app/overview',
-        'app/part-context',
-        'app/part-assistant',
+        'app/part-overview',
+        'app/part-specification',
+        'app/part-configuration-selection',
+        'app/part-generation',
         'app/part-edition',
         'app/part-publication',
       ]
