@@ -65,6 +65,7 @@ const config = {
         disableInDev: false,
       }
     ],
+    'docusaurus-plugin-image-zoom'
   ],
 
   themeConfig:
@@ -77,6 +78,16 @@ const config = {
         jsLoader: 'matomo.js',
       },
       image: 'img/docusaurus-social-card.jpg',
+      zoom: {
+        selector: '.markdown img, .mdx-pages img, img',
+        background: {
+          light: 'rgb(255, 255, 255)',
+          dark: 'rgb(50, 50, 50)'
+        },
+        config: {
+          // options you can specify via https://github.com/francoischalifour/medium-zoom#usage
+        }
+      },
       navbar: {
         title: 'Veep.AI Doc Site',
         logo: {
