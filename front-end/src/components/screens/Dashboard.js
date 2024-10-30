@@ -4,6 +4,8 @@ import { Logger } from 'react-logger-lib'
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
+import PubSub from 'pubsub-js'
+
 import { t } from 'i18next'
 import { Container } from 'react-bootstrap'
 import { useCookies } from 'react-cookie'
@@ -19,6 +21,11 @@ export default function Dashboard() {
 
     const graphqlURI = Constants.WORDPRESS_GRAPHQL_ENDPOINT;
     const [cookies] = useCookies(['JWT']);
+
+    function setDocumentationURL(href) {
+        log.trace("setDocumentationURL: href: " + href)
+        //PubSub.publish("COVER_DOCUMENTATION", href)
+    }
   
     function getCard({ title, description, name, href }) {
         return (
@@ -31,7 +38,8 @@ export default function Dashboard() {
                     {description}
                 </CardContent>
                 <CardFooter>
-                    <Button class="bg-black text-white rounded-md px-3 h-8">{name}</Button>
+                    {/*<Button onClick={() => setDocumentationURL(href)} class="bg-black text-white rounded-md px-3 h-8">{name}</Button>*/}
+                    <Button asChild><a className="button" target="_blank" href={href}>{name}</a></Button>
                 </CardFooter>
             </Card>
         )
@@ -49,13 +57,13 @@ export default function Dashboard() {
                         title: "Discover Veep Usage",
                         description: "Veep acts as an Authentic Content Factory.",
                         name: "Discover",
-                        href: "https://www.google.com"
+                        href: "https://docs.veep.ai/getting_started/gs-user-quickstart"
                     })}
                     {getCard({
                         title: "Tailor Veep to Your Business",
                         description: "Create content that's on-brand and uses your unique tone and voice.",
                         name: "Define Your Brand Voice",
-                        href: "https://www.google.com"
+                        href: "https://docs.veep.ai/getting_started/gs-user-overview"
                     })}
                 </div>
             </div>
@@ -65,19 +73,20 @@ export default function Dashboard() {
                 <div className="flex p-2">
                     {getCard({
                         title: "Discover Veep Configuration",
-                        description: "Veep can be configured to exactly suit your needs.",
+                        description: "Veep can be configured to create specific assistants' catalog.",
                         name: "Discover",
-                        href: "https://www.google.com"
+                        href: "https://docs.veep.ai/getting_started/gs-expert-quickstart"
                     })}
                     {getCard({
                         title: "Tailor Configuration",
-                        description: "Configure a creation pipeline.",
+                        description: "Configure an assistant (veeplet)",
                         name: "Configure",
-                        href: "https://www.google.com"
+                        href: "https://docs.veep.ai/getting_started/gs-expert-overview"
                     })}
                 </div>
             </div>
 
+            {/*
             <div className="p-4">
                 <div className="ps-3 font-bold">Get Started With Chat</div>
                 <div className="flex p-2">
@@ -95,6 +104,7 @@ export default function Dashboard() {
                     })}
                 </div>
             </div>
+            */}
         </div>
     )
 }

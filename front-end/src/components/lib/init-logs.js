@@ -32,6 +32,8 @@ export default function initAppJSLogs(level = "NONE") {
     localStorage.setItem('Footer', level);
 
     /** Functions */
+    localStorage.setItem('Cover', level);
+    localStorage.setItem('Dashboard', level);
     localStorage.setItem('MyContent', level);
     localStorage.setItem('MyContentDetails', level);
     localStorage.setItem('MyContentDetailsUtils', level);

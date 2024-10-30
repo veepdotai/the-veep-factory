@@ -47,11 +47,13 @@ export default HomePage
       en: {
         translation: {...en, ...enForm}
       },
+
       fr: {
         translation: {...fr, ...frForm},
       },
+
     },
   })
-  i18n.changeLanguage('fr');
+  i18n.changeLanguage('en');
 
 export default i18n;
