@@ -1,5 +1,7 @@
 # the-veep-factory
-Veep.AI supports you in all phases of creating content or a document with AIs. It is an open source “ChatGPT Canvas” type solution allowing you to create/edit long format content with any AI, and not just ChatGPT.
+Veep.AI is a solution to create content or a document, with AIs, in a guided way, not the ´chat way'.
+
+It is an open source “ChatGPT Canvas” type solution allowing you to create/edit long format content with any AI, and not just ChatGPT.
 
 # Features
 
