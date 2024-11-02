@@ -55,6 +55,7 @@ const sidebars = {
         'app/part-generation',
         'app/part-edition',
         'app/part-publication',
+//        'app/part-monitoring',
       ]
     },
     {
@@ -69,6 +70,26 @@ const sidebars = {
             'user/menu/user-creation'  
           ]
         }
+      ]
+    },
+    {
+      'Dev Documentation': [
+        'developer/dev-overview',
+        {
+          'Frontend': [
+            'developer/frontend/dev-frontend-overview',
+          ]
+        },
+        {
+          'Backend': [
+            'developer/backend/dev-backend-overview',
+            {
+              'Wordpress':[
+                'developer/backend/wordpress/dev-backend-wordpress-overview',
+              ]
+            }
+          ]
+        },
       ]
     },
     'features',

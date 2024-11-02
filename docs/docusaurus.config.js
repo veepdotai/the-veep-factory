@@ -59,9 +59,9 @@ const config = {
       '@docusaurus/plugin-ideal-image',
       {
         quality: 70,
-        max: 1030, // taille maximale de l'image redimensionnée.
+        max: 1400, // taille maximale de l'image redimensionnée.
         min: 640, // taille minimale de l'image redimensionnée. si l'originale est plus petite, utiliser cette taille.
-        steps: 2, // le nombre maximum d'images générées entre min et max (inclus)
+        steps: 4, // le nombre maximum d'images générées entre min et max (inclus)
         disableInDev: false,
       }
     ],
@@ -71,6 +71,7 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      customCss: ['./src/css/custom.css'],
       matomo: {
         matomoUrl: 'https://r.veep.ai/',
         siteId: '5',

@@ -11,23 +11,23 @@ keywords:
 tags: [app]
 #image: https://i.imgur.com/mErPwqL.png
 last_update:
-  date: 10/27/2024
+  date: 11/02/2024
   author: Jean-Christophe Kermagoret
+comment:
 ---
 
-Cette documentation est en cours de rédaction et présente les différents parties et fonctions de Veep :
+<div class="zoom">
 
-* Partie 1 : Le contexte
-* Partie 2 : Les assistants
-* Partie 3 : Edition et composition documentaire
-* Partie 4 : Export PDF et publication
+import Image from '@theme/IdealImage'
 
-Ce document a été réalisé à l'aide des étapes suivantes :
+<Image alt="Veep Architecture Overview" img={require('../images/veep-schema-architecture-2.0-en.png')} />
 
-1. ~~Il a d'abord été généré à partir d'un vocal de 30 minutes se répartissant sur chacune des parties.~~
-2. ~~Puis une première agrégation a été faite pour obtenir le document actuel.~~
-3. ~~Ensuite une relecture rapide a été faite pour corriger les erreurs grossières, enlever les éléments redondants et donner plus de structure~~
-4. Enfin, une consolidation et un export PDF seront réalisés
+</div>
 
-L'étape 1 est déjà initiée par Veep. Les étapes 2, 3 et 4 seront automatisées par Veep à court terme.
-
+Veep aims at helping users to create artefacts (contents and documents). To achieve this goal, it structures creation in 6 main phases:
+* Specification: to give context and make generation more relevant
+* Configuration/Selection: to configure or use assistants catalog according your role
+* Execution: to process the assistant and generate draft
+* Edition: to read, fix and finalize the artefact
+* Export/Publication: to export (in PDF) and publish the artefact
+<!-- Monitoring2: some elements drive your bill and need to be managed (AI usage, storage, bandwith...) -->

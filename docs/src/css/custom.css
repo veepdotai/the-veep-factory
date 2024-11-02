@@ -28,3 +28,33 @@
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
+
+.menu__caret:before {
+  background: var(--ifm-menu-link-sublist-icon) 50%/1rem 1rem;
+}
+
+.menu__link--sublist-caret:after {
+  background: var(--ifm-menu-link-sublist-icon) 50%/1rem 1rem;
+}
+
+.menu__link,
+.menu__link-item {
+  color: black;
+  font-size: 1rem;
+  font-weight: 350;
+}
+
+.w10 { margin: auto; width: 10%; }
+.w20 { width: 20%; }
+.w30 { width: 30%; }
+.w40 { width: 40%; }
+.w50 { width: 50%; }
+.w60 { width: 60%; }
+.w70 { margin: auto; width: 70%; }
+.w80 { width: 80%; }
+.w90 { width: 90%; }
+.w100 { width: 100%; }
+
+.screenshot {
+  border: 1px solid black;
+}
