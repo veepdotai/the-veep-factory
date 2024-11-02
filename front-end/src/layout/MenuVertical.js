@@ -8,8 +8,102 @@ import LogoWithLink from "src/components/LogoWithLink";
 import ComboboxWorkspaces from "src/components/ui/ComboboxWorkspaces";
 import { Icons } from '@/constants/Icons';
 
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, } from "@/components/ui/accordion"
+
 export default function MenuVertical( {direction, isManager, profile} ) {
     const log = Logger.of(MenuVertical.name);
+
+    function getMenuItem(key, label, direction = null) {
+        return (
+            <MenuItem itemKey={key} itemLabel={label} direction={direction} />
+        )
+    }
+
+    function getMenu(view) {
+        let commonMenuDefinition = [
+            ['contents', t("MyContents")],
+            ['assistant', t("CreateAssistant")],
+            ['add-content', t("CreateContent")],
+            ['digitalTwin', t("MyDigitalTwin")],
+        ]
+        let salesMenuDefinition = [
+            ['dpt-communication', t('Communication')],
+            ['dpt-marketing', t('Marketing')],
+            ['dpt-sales', t('Sales')],
+        ]
+        let productionMenuDefinition = [
+            ['dpt-management', t('Management')],
+            ['dpt-production', t('Production')],
+            ['dpt-quality', t('Quality')],
+            ['dpt-RandD', t('RandD')],
+            ['', t('')],
+        ]
+        let supportMenuDefinition = [
+            ['dpt-finance', t('Finance')],
+            ['dpt-HR', t('HR')],
+            ['dpt-IT', t('IT')],
+            ['dpt-logistics', t('Logistics')],
+            ['dpt-procurement', t('Procurement')],
+        ]
+
+        if('byDpt' === view) {
+            return(
+                <>
+                    {getMenuTitle(t("AIAssistants"))}
+                    {commonMenuDefinition.map(row => <MenuItem itemKey={row[0]} itemLabel={row[1]} direction={direction} /> )}
+                    <Accordion type="single" collapsible className="ms-4">
+                    {getAccordionItem("function-support", t("SupportFunction"),
+                        <>
+                            {salesMenuDefinition.map(row => <MenuItem itemKey={row[0]} itemLabel={row[1]} direction={direction} /> )}
+                        </>
+                    )}
+                    {getAccordionItem("function-production", t("ProductionFunction"),
+                        <>
+                            {productionMenuDefinition.map(row => <MenuItem itemKey={row[0]} itemLabel={row[1]} direction={direction} /> )}
+                        </>
+                    )}
+                    {getAccordionItem("function-sales", t("SalesFunction"),
+                        <>
+                            {supportMenuDefinition.map(row => <MenuItem itemKey={row[0]} itemLabel={row[1]} direction={direction} /> )}
+                        </>
+                    )}
+    
+                    </Accordion>
+                </>
+            )
+        } else {
+            return(
+                <>
+                    {getMenuTitle(t("Creation"))}
+                    <MenuItem itemKey="contents" itemLabel={t("MyContents")} />
+                    {/*<MenuItem itemKey="add-content" itemLabel={t("DocModels")} direction={direction} />*/}
+                    <MenuItem itemKey="add-content" itemLabel={t("AddContent")} direction={direction} />
+                </>
+            )
+        }
+    }
+    
+    function getMenuTitle(title) {
+        return (
+            <div className='d-inline fw-bold'>
+                {title}
+            </div>
+        )
+    }
+       
+    function getAccordionItem(value, trigger, content) {
+        return (
+            <AccordionItem value={value}>
+                <AccordionTrigger className="">
+                    <div className="d-flex d-inline align-text-middle">
+                        <div className="me-2">{Icons[value]}</div>
+                        <div className="text-left">{trigger}</div>
+                    </div>
+                </AccordionTrigger>
+                <AccordionContent>{content}</AccordionContent>
+            </AccordionItem>
+        )
+    }
 
     return (
         <Nav id="menu" className="min-vh-100 mt-2 text-white" variant={direction == "vertical" ? "pills" : "underline"}>
@@ -29,18 +123,7 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                 <MenuItem itemKey="brand-voice" itemLabel={t("BrandVoice")} direction={direction} />
                 <MenuItem itemKey="editorial-line" itemLabel={t("EditorialLine")} direction={direction} />
 
-                {getMenuTitle(t("Assistants"))}
-                {/*<MenuItem itemKey="add-content" itemLabel={t("DocModels")} direction={direction} />*/}
-                <MenuItem itemKey="add-content" itemLabel={t("AddContent")} direction={direction} />
-
-                {getMenuTitle(t("Contents"))}
-                <MenuItem itemKey="contents" itemLabel={t("MyContents")} />
-
-                {/*
-                {getMenuTitle(t("Publication"))}
-                <MenuItem itemKey="editorial-calendar" itemLabel={t("EditorialCal")} direction={direction} />
-                <MenuItem itemKey="pub-target" itemLabel={t("PubTarget")} direction={direction} />
-                */}
+                {getMenu('byDpt')}
 
                 {getMenuTitle(t("Tools"))}
                 {/*<MenuItem itemKey="chat" itemLabel={t("Chat")} direction={direction} />*/}
@@ -79,10 +162,3 @@ export default function MenuVertical( {direction, isManager, profile} ) {
     )
 }
 
-function getMenuTitle(title) {
-    return (
-        <div className='d-inline fw-bold'>
-            {title}
-        </div>
-    )
-}

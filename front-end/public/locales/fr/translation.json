@@ -248,7 +248,7 @@
   "NumberOfGenerationsDesc": "Affiche le nombre de générations, terminées ou non",
   "NumberOfTokens": "Nb de tokens",
   "NumberOfTokensDesc": "Affiche le nombre de tokens",
-  "BePatient": "Le premier chargement de l'application peut prendre jusqu'à 30 s. Merci de patienter.",
+  "BePatient": "Le chargement de l'application peut prendre quelques secondes. Merci de patienter.",
   "YourActivity": "Votre activité",
   "YourActivityDesc": "Affiche le nombre de générations et de tokens en fonction du temps",
   "YourActivityFooter": " ",
@@ -272,7 +272,25 @@
   "GoToDiscussion": "Allez voir la discussion suivante et dites-nous comment vous utiliseriez cette fonctionnalité :",
   "Context": "Contexte",
   "Assistants": "Assistants",
+  "AIAssistants": "Assistants IA",
   "Contents": "Contenus",
+
+  "ProductionFunction": "Fonctions Production",
+  "SalesFunction": "Fonctions Ventes",
+  "SupportFunction": "Fonctions Support",
+
+  "CreateAssistant": "Créer un assistant",
+  "CreateContent": "Créer un contenu",
+  "MyDigitalTwin": "Mon jumeau digital",
+  "Communication": "Communication",
+  "Finance": "Finance",
+  "HR": "RH",
+  "Logistics": "Logistique",
+  "Management": "Gestion",
+  "Marketing": "Marketing",
+  "Procurement": "Appro.",
+  "Production": "Production",
+  "R&D": "R&D",
 
   "Stop": "Stop"
 

@@ -36,8 +36,113 @@
   "uniqueFeaturesLabel": "Competitive Advantages",
   "uniqueFeaturesDesc": "Provide your unique characteristics, features and describe them succinctly with meaningful words. Be specific, avoid generic, grandiose terms that are vague and do not provide any information.",
   "uniqueFeaturesPlaceHolder": "We are the only ones to...",
-  
-  "AtLeast": "Must be at least {{length}} chars.",
+
+  "icpLabel": "Ideal Customer Profile (ICP)",
+  "icpDesc": "Specify and detail the top 3 company profiles you target. The more focused and specialized, the more effective the prospecting.",
+  "icpPlaceHolder": "Established SMEs, with numerous clients where human value is fundamental. It's primarily about people.",
+
+  "buyerPersonaLabel": "Buyer Persona",
+  "buyerPersonaDesc": "Specify and detail the top 3 buyer personas you target. The more focused and specialized, the more effective the prospecting.",
+  "buyerPersonaPlaceHolder": "Marketing Project Manager",
+
+  "themesLabel": "Themes",
+  "themesDesc": "Specify the themes you wish to address",
+  "themesPlaceHolder": "The use of AI in businesses to enhance competitiveness, content factories in business",
+
+  "rolesLabel": "Roles",
+  "rolesDesc": "Specify and detail the roles available for content generation.",
+  "rolesPlaceHolder": "Select a role",
+
+  "styleLabel": "Style",
+  "styleDesc": "A writing style is often recognizable by the unique combination of these elements and how an author uses them to convey a story, an argument, or an idea.",
+  "stylePlaceHolder": "Select a style",
+
+  "vocabularyLabel": "Vocabulary",
+  "vocabularyDesc": "The use of specific words, their complexity, the range of the lexicon, and the use of jargon or slang greatly contribute to defining a writing style. Some authors may prefer simple and direct language, while others opt for more sophisticated or technical terms.",
+  "vocabularyPlaceHolder": "Select the type of vocabulary.",
+
+  "syntaxLabel": "Syntax",
+  "syntaxDesc": "This includes sentence length, the complexity of sentence construction, the use of short and incisive sentences or, on the contrary, long and fluid sentences. Syntax also influences the reading rhythm and how ideas are assembled.",
+  "syntaxPlaceHolder": "Select a syntax",
+
+  "toneLabel": "Tone",
+  "toneDesc": "The tone reflects the author's attitude towards the subject and the readers. It can be formal, informal, humorous, serious, sarcastic, etc. The tone adds emotional color to the text and helps establish a connection with the reader.",
+  "tonePlaceHolder": "Select a tone",
+
+  "pointOfViewLabel": "Point of View",
+  "pointOfViewDesc": "The perspective from which a story is told influences the writing style. Choosing between the first person, second person, or third person, omniscient or limited, changes how the story is presented and received.",
+  "pointOfViewPlaceHolder": "Select the point of view.",
+
+  "structureLabel": "Structure",
+  "structureDesc": "The way a text is organized can define a writing style. This includes not only the general structure of a work (e.g., chronological, non-linear, flashback) but also the structure of paragraphs and chapters. The consistency and clarity of the structure contribute to the author's stylistic signature.",
+  "structurePlaceHolder": "Select the structure.",
+
+  "genderLabel": "Gender",
+  "genderDesc": "Optionally indicate if you are addressing a particular gender",
+  "genderPlaceHolder": "Select a gender",
+  "genderSearch": "Search a gender",
+
+  "languageLabel": "Language",
+  "languageDesc": "Choose the publication language.",
+  "languagePlaceHolder": "Select a language",
+  "languageSearch": "Search a language",
+
+  "emojisLabel": "Nb emojis",
+  "emojisDesc": "Number of emojis per paragraph",
+  "emojisPlaceHolder": "Select a number of emojis",
+  "emojisSearch": "Search a number of emojis",
+
+  "emojisGranularityLabel": "Emoji Level",
+  "emojisGranularityDesc": "Level of emoji appearance.",
+  "emojisGranularityPlaceHolder": "Select the level of emoji appearance",
+  "emojisGranularitySearch": "Search the level of appearance",
+
+  "Paragraph": "Paragraph",
+  "Sentence": "Sentence",
+
+  "frequencyLabel": "Frequency",
+  "frequencyDesc": "Number of publications",
+  "frequencyPlaceHolder": "Select a frequency",
+  "frequencySearch": "Search a frequency",
+
+  "1T": "Once",
+  "2T": "Twice",
+  "3T": "Three times",
+  "4T": "Four times",
+  "5T": "Five times",
+  "6T": "Six times",
+  "7T": "Seven times",
+  "8T": "Eight times",
+  "9T": "Nine times",
+  "10T": "Ten times",
+
+  "frequencyGranularityLabel": "Type of Frequency",
+  "frequencyGranularityDesc": "Type of frequency (daily, weekly, biweekly...",
+  "frequencyGranularityPlaceHolder": "Select a type of frequency",
+  "frequencyGranularitySearch": "Search a type of frequency",
+
+  "Day": "Day",
+  "Week": "Week",
+  "Fortnight": "Fortnight",
+  "Month": "Month",
+  "Quarter": "Quarter",
+  "Half-Year": "Semi-annual",
+  "Year": "Year",
+
+  "frameworkLabel": "Tactic",
+  "frameworkDesc": "TOFU/MOFU/BOFU (Top/Middle/Bottom Of the Funnel) or AARRR (Acquisition, Activation, Retention, Recommendation, Revenue)",
+  "frameworkPlaceHolder": "Select a tactic",
+  "frameworkSearch": "Search a tactic",
+
+  "signatureLabel": "Signature",
+  "signatureDesc": "Write the signature that you want to appear at the bottom of your messages.",
+  "signaturePlaceHolder": "Select a signature",
+  "signatureSearch": "Search a signature",
+
+  "AtLeast": "Content too short. Must have at least {{length}} characters.",
+  "AtMost": "Content too long. Must have no more than {{length}} characters.",
+
+  "NoMatter": "Indifferent",
 
   "Stop": "Stop"
 }

@@ -246,7 +246,7 @@
   "NumberOfGenerationsDesc": "Showing the number of generations, complete or not",
   "NumberOfTokens": "# of tokens",
   "NumberOfTokensDesc": "Showing the number of tokens",
-  "BePatient": "First app loading may take until 30 sec. Please, be patient.",
+  "BePatient": "App loading may take a few sec. Please be patient.",
   "YourActivity": "Your activity",
   "YourActivityDesc": "Showing # of generations and # of tokens related to time",
   "YourActivityFooter": " ",
@@ -270,7 +270,25 @@
   "GoToDiscussion": "Go to the following discussion and tell us how you see this feature:",
   "Context": "Context",
   "Assistants": "Assistants",
+  "AIAssistants": "AI Assistants",
   "Contents": "Contents",
+
+  "ProductionFunction": "Production Functions",
+  "SalesFunction": "Sales Functions",
+  "SupportFunction": "Support Functions",
+  
+  "CreateAssistant": "Create Assistant",
+  "CreateContent": "Create Content",
+  "MyDigitalTwin": "My Digital Twin",
+  "Communication": "Communication",
+  "Finance": "Finance",
+  "HR": "HR",
+  "Logistics": "Logistics",
+  "Management": "Management",
+  "Marketing": "Marketing",
+  "Procurement": "Procurement",
+  "Production": "Production",
+  "R&D": "R&D",
 
   "Stop": "Stop"
 

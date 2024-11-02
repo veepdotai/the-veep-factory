@@ -1,6 +1,17 @@
 import * as Md from "react-icons/md";
 import { GiOrganigram } from "react-icons/gi"
 import { IoNewspaperOutline } from "react-icons/io5"
+import { TbRobot } from "react-icons/tb";
+import { BsTruck } from "react-icons/bs";
+import { FcManager } from "react-icons/fc";
+import { GrUserWorker } from "react-icons/gr";
+import { TbTargetArrow } from "react-icons/tb";
+import { GiMoneyStack } from "react-icons/gi";
+import { FcSalesPerformance } from "react-icons/fc";
+import { HiMiniMagnifyingGlass } from "react-icons/hi2";
+import { FaComputer, FaIndustry } from "react-icons/fa6";
+import { LiaIndustrySolid } from "react-icons/lia";
+import { GoLaw } from "react-icons/go";
 
 //import * as Icon from "react-icons/fc";
 
@@ -68,4 +79,27 @@ export const Icons = {
     "config-veeplet":   <Md.MdOutlineDisplaySettings {...attr} />,
     workspace:          <GiOrganigram {...attr} />,
 //    exit:               <Icon.MdLogout {...attr} />,
+
+    // Organization
+    assistant:          <TbRobot {...attr} />,
+    digitalTwin:        <Md.MdOutlineChildCare {...attr} />,
+
+    "function-support":     <Md.MdOutlineSupportAgent {...attr} />,
+    "function-production":  <LiaIndustrySolid {...attr} />,
+    "function-sales":       <FcSalesPerformance {...attr} />,
+       
+    "dpt-communication":    <Md.MdKeyboardVoice {...attr} />,
+    "dpt-finance":          <GiMoneyStack {...attr} />,
+    "dpt-HR":               <Md.MdPeopleOutline {...attr} />,
+    "dpt-IT":               <FaComputer {...attr} />,
+    "dpt-legal":            <GoLaw {...attr} />,
+    "dpt-logistics":        <BsTruck {...attr} />,
+    "dpt-management":       <FcManager {...attr} />,
+    "dpt-marketing":        <TbTargetArrow {...attr} />,
+    "dpt-procurement":      <Md.MdOutlineProductionQuantityLimits {...attr} />,
+    "dpt-production":       <GrUserWorker {...attr} />,
+    "dpt-quality":          <HiMiniMagnifyingGlass {...attr} />,
+    "dpt-RandD":            <Md.MdOutlineScience {...attr} />,
+    "dpt-sales":            <FcSalesPerformance {...attr} />,
+
 }
