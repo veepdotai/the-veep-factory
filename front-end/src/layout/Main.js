@@ -8,7 +8,8 @@ import Logs from "src/components/Logs";
 //import Test from "src/components/Test";
 
 import MyContent from "src/components/screens/mycontent/MyContent";
-import BrandVoice from "src/components/screens/BrandVoice";
+import BrandVoiceForm from "src/components/screens/forms/BrandVoiceForm";
+import PDFExportForm from "src/components/screens/forms/PDFExportForm";
 import PubTarget from "src/components/screens/PubTarget";
 import EditorialLine from "src/components/screens/EditorialLine";
 import EditorialCalendar from "src/components/screens/EditorialCalendar";
@@ -77,13 +78,19 @@ export default function Main({credits, current}) {
         <Tab.Pane eventKey="brand-voice">
           <ScreenHeading name="brand-voice" title={t("BrandVoiceTitle")} subtitle={t("BrandVoiceSubtitle")} />
           <Container className='p-2'>
-            <BrandVoice />
+            <BrandVoiceForm />
           </Container>
         </Tab.Pane>
         <Tab.Pane eventKey="editorial-line">
           <ScreenHeading name="editorial-line" title={t("EditorialLineTitle")} subtitle={t("EditorialLineSubtitle")} />
           <Container className='p-2'>
             <EditorialLine />
+          </Container>
+        </Tab.Pane>
+        <Tab.Pane eventKey="pdf-export">
+          <ScreenHeading name="pdf-export" title={t("EditorialLineTitle")} subtitle={t("PDFExportSubtitle")} />
+          <Container className='p-2'>
+            <PDFExportForm />
           </Container>
         </Tab.Pane>
         <Tab.Pane eventKey="pub-target">

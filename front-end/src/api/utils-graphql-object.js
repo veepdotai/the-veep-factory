@@ -5,11 +5,11 @@ import { UtilsGraphQL } from './utils-graphql'
 
 import toast from 'react-hot-toast';
 
-export const UtilsGraphQLEditorialLine = {
-	log: Logger.of("UtilsGraphQLEditorialLine"),
+export const UtilsGraphQLObject = {
+	log: Logger.of("UtilsGraphQLObject"),
 
-	listOne: function(graphqlURI, cookies, name) {
-		let log = UtilsGraphQLEditorialLine.log
+	listOne: function(graphqlURI, cookies, name, topic) {
+		let log = UtilsGraphQLObject.log
 		let q = `
 			mutation list {
 				listData(input: { option: "${name}" }) {
@@ -32,12 +32,12 @@ export const UtilsGraphQLEditorialLine = {
 					"status": 200,
 					"result": data
 				}
-				PubSub.publish("EDITORIAL_LINE_DATA_FETCHED", r);
+				PubSub.publish(topic, r);
 				return r
 			}).catch((e) => {
 				log.trace(`list: error while fetching data. Exception: ${e}`);
-				let r = { "status": 500, "error": e, "msg": `Exception while creating Editorial Line: ${e}`}
-				PubSub.publish("EDITORIAL_LINE_DATA_FETCHED", r);
+				let r = { "status": 500, "error": e, "msg": `Exception while creating ${name}: ${e}`}
+				PubSub.publish(topic, r);
 				return r
 			})
 
@@ -52,8 +52,8 @@ export const UtilsGraphQLEditorialLine = {
 	 * @param {*} oldName The name of the old option in case of a rename
 	 * @returns 
 	 */
-	create: function(graphqlURI, cookies, name, value, oldName = null) {
-		let log = UtilsGraphQLEditorialLine.log
+	create: function(graphqlURI, cookies, name, value, topic, oldName = null) {
+		let log = UtilsGraphQLObject.log
 		//saveData(input: { option: "${name}", value: "${value}" ${oldName ? `, "oldName": "${oldName}"`: "" }) {
 		//log.trace(`create: before: query: ${q}`)
 		let q = `
@@ -77,12 +77,12 @@ export const UtilsGraphQLEditorialLine = {
 					"status": 200,
 					"result": data
 				}
-				PubSub.publish("EDITORIAL_LINE_DATA_UPDATED", r);
+				PubSub.publish(topic, r);
 				return r
 			}).catch((e) => {
 				log.trace(`create: error while creating data. Exception: ${e}`);
-				let r = { "status": 500, "error": e, "msg": `Exception while creating Editorial Line: ${e}`}
-				PubSub.publish("EDITORIAL_LINE_DATA_UPDATED", r);
+				let r = { "status": 500, "error": e, "msg": `Exception while creating ${name}: ${e}`}
+				PubSub.publish(topic, r);
 				return r
 			})
 	

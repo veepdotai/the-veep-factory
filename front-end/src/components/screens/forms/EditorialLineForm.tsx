@@ -3,27 +3,21 @@ import { Logger } from 'react-logger-lib'
 import { t } from 'i18next'
 import PubSub from 'pubsub-js'
 
-//import { Container } from 'react-bootstrap'
 import { useCookies } from 'react-cookie'
 
 import { Constants } from 'src/constants/Constants'
-import { UtilsGraphQL } from "src/api/utils-graphql"
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { UtilsFormCommon as UFC, UtilsFormCommon } from '../../lib/utils-form-common'
+import { UtilsFormCommon as UFC } from '../../lib/utils-form-common'
 
 import { useToast } from "src/components/ui/shadcn/hooks/use-toast"
-import { ToastAction } from "src/components/ui/shadcn/toast"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, } from "src/components/ui/shadcn/accordion"
 import { Button } from "src/components/ui/shadcn/button"
 import { Form, } from "src/components/ui/shadcn/form"
 import { Tabs, TabsContent, TabsList, TabsTrigger, } from "src/components/ui/shadcn/tabs"
-import { Separator } from "src/components/ui/shadcn/separator"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, } from "src/components/ui/shadcn/card"
-import { UtilsGraphQLEditorialLine } from '../../../api/utils-graphql-editorial-line'
+import { UtilsGraphQLObject } from '../../../api/utils-graphql-object'
 import Loading from 'src/components/common/Loading'
 
 export default function EditorialLineForm() {
@@ -34,113 +28,38 @@ export default function EditorialLineForm() {
   
     const { toast } = useToast()
 
-    const [values, setValues] = useState({})
+    const name = "editorialLine"
+    const topic = "EDITORIAL_LINE_DATA_FETCHED"
+
+    function getConstraints(minChars = 1) {
+      return z.string().min(minChars, {message: t("AtLeast", {length: minChars}),}).optional().or(z.literal(''))
+    }
 
     const minChars = 2
-
     const FormSchema = z.object({
-        benefits: z.string().min(minChars, {
-          message: t("AtLeast", {length: minChars}),
-        }).optional().or(z.literal('')),
-        pains: z.string().min(minChars, {
-            message: t("AtLeast", {length: minChars}),
-        }).optional().or(z.literal('')),
-        solutions: z.string().min(minChars, {
-            message: t("AtLeast", {length: minChars}),
-        }).optional().or(z.literal('')),
-        offers: z.string().min(minChars, {
-            message: t("AtLeast", {length: minChars}),
-        }).optional().or(z.literal('')),
-        uniqueFeatures: z.string().min(minChars, {
-            message: t("AtLeast", {length: minChars}),
-        }).optional().or(z.literal('')),
+        benefits: getConstraints(minChars),
+        pains: getConstraints(minChars),
+        solutions: getConstraints(minChars),
+        offers: getConstraints(minChars),
+        uniqueFeatures: getConstraints(minChars),
 
-        icp: z.string().min(minChars, {
-          message: t("AtLeast", {length: minChars}),
-        }).optional().or(z.literal('')),
-        buyerPersona: z.string().min(minChars, {
-            message: t("AtLeast", {length: minChars}),
-        }).optional().or(z.literal('')),
+        icp: getConstraints(minChars),
+        buyerPersona: getConstraints(minChars),
 
-        themes: z.string().min(minChars, {
-            message: t("AtLeast", {length: minChars}),
-        }).optional().or(z.literal('')),
-        roles: z.string().min(minChars, {
-            message: t("AtLeast", {length: minChars}),
-        }).optional().or(z.literal('')),
+        themes: getConstraints(minChars),
+        roles: getConstraints(minChars),
 
-        style: z.string().min(minChars, {
-            message: t("AtLeast", {length: minChars}),
-        }).optional().or(z.literal('')),
-        tone: z.string().min(minChars, {
-            message: t("AtLeast", {length: minChars}),
-        }).optional().or(z.literal('')),
-        gender: z.string().min(minChars, {
-            message: t("AtLeast", {length: minChars}),
-        }).optional().or(z.literal('')),
-        language: z.string().min(minChars, {
-            message: t("AtLeast", {length: minChars}),
-        }).optional().or(z.literal('')),
-        emojis: z.string().min(1, {
-          message: t("AtLeast", {length: 1}),
-        }).optional().or(z.literal('')),
-        emojisGranularity: z.string().min(minChars, {
-            message: t("AtLeast", {length: minChars}),
-        }).optional().or(z.literal('')),
-        frequency: z.string().min(1, {
-          message: t("AtLeast", {length: 1}),
-        }).optional().or(z.literal('')),
-        frequencyGranularity: z.string().min(1, {
-            message: t("AtLeast", {length: 1}),
-        }).optional().or(z.literal('')),
-        framework: z.string().min(minChars, {
-            message: t("AtLeast", {length: minChars}),
-        }).optional().or(z.literal('')),
-        signature: z.string().min(minChars, {
-            message: t("AtLeast", {length: minChars}),
-        }).optional().or(z.literal('')),
+        style: getConstraints(minChars),
+        tone: getConstraints(minChars),
+        gender: getConstraints(minChars),
+        language: getConstraints(minChars),
+        emojis: getConstraints(1),
+        emojisGranularity: getConstraints(minChars),
+        frequency: getConstraints(1),
+        frequencyGranularity: getConstraints(1),
+        framework: getConstraints(minChars),
+        signature: getConstraints(minChars),
     })
-    
-    function onSubmit(data: z.infer<typeof FormSchema>) {
-      let o = JSON.stringify(data, null, 2)
-      let q = UtilsGraphQLEditorialLine.create(graphqlURI, cookies,
-        "editorialLine",
-        o.replace(/"/g, "_G_").replace(/\n/g, "_EOL_"),
-      )
-
-      log.trace("GraphQL request: " + q);
-      log.trace("Submitting data: " + JSON.stringify(data, null, 2));
-      toast({
-        title: "You submitted the following values:",
-        description: (
-          <div className="mt-2 w-[500px] rounded-md">
-            <code className="text-xs">{JSON.stringify(data, null, 2)}</code>
-          </div>
-        ),
-      })
-    }
-
-    function updateForm(topic, message) {
-      log.trace("updateForm: message: " + JSON.stringify(message))
-      let result = ""
-      try {
-        result = JSON.parse(message?.result).result
-      } catch (e) {
-        log.trace("updateForm: " + e)
-      }
-      log.trace("updateForm: result: " + result)
-      let currentValues = {}
-      
-      if (result) {
-        let o_string = result.replace(/_G_/g, '"').replace(/_EOL_/g, "\n")
-        log.trace("updateForm: o: " + o_string)
-        let o = JSON.parse(o_string)
-        log.trace("updateForm: o: " + JSON.stringify(o))
-        form.reset(o)
-        log.trace("updateForm: resetted form.")
-      }
-
-    }
 
     let cn = "text-sm font-bold"
     let defaultTabsContentLayout = "pl-5"
@@ -151,9 +70,18 @@ export default function EditorialLineForm() {
       defaultValues: {}
     })
 
+    function updateForm(topic, message) {
+      return UFC.updateForm(form, topic, message)
+    }
+
+    //function onSubmit(data: z.infer<typeof FormSchema>) {
+    function onSubmit(data) {
+        return UFC.onSubmit(graphqlURI, cookies, name, topic, data, toast)
+    }
+
     useEffect(() => {
-      PubSub.subscribe( "EDITORIAL_LINE_DATA_FETCHED", updateForm)
-      UtilsGraphQLEditorialLine.listOne(graphqlURI, cookies, "editorialLine")
+      PubSub.subscribe(topic, updateForm)
+      UtilsGraphQLObject.listOne(graphqlURI, cookies, name, topic)
     }, [])
 
     return (

@@ -36,7 +36,7 @@ export default class PdfParams {
             companyName="", 
             companyImage="./assets/images/nothing.png", 
             backgroundImage="./assets/images/nothing.png",
-            backgroundImageCover="./assets/images/bg-gradient-default.png", 
+            backgroundImageCover="./assets/images/bg-default-gradient.png", 
 
             author=t("DefaultAuthor"),
             version="1.0.0",

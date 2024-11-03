@@ -136,18 +136,17 @@ class ConfigPanel extends React.Component {
     this.content = newContent
   }
 
-  presentationPanel(){
+  presentationPanel() {
     return(
       <div>
-          <h2> Fond de la page de garde :</h2>
+          <h2>Fond de la page de garde :</h2>
           <div class="flex">
-            <Input type="file" onChange={(choisit) => {this.paramActuel.backgroundImgCover = URL.createObjectURL(choisit.target.files[0])}}/>          
+            <Input type="file"
+              onChange={(choisit) => {this.paramActuel.backgroundImgCover = URL.createObjectURL(choisit.target.files[0])}}/>          
             <Button variant="ghost" className='mt-1 mx-1 px-0 h-9 w-9' onClick={() => {
                 this.paramActuel.backgroundImgCover = "./assets/images/nothing.png"
-            }}>
-                {icones.trash}
-            </Button>          
-            <Button variant="ghost" className='mt-1 mx-1 px-0 h-9 w-9' onClick={() => {this.handleCompile()}}> {icones.refresh} </Button>
+            }}>{icones.trash}</Button>          
+            <Button variant="ghost" className='mt-1 mx-1 px-0 h-9 w-9' onClick={() => {this.handleCompile()}}>{icones.refresh} </Button>
           </div>
           <div>
             <ContentDynamicDisplay pages={this.content} handleChange={this.handleContentChange} startingPage={this.paramActuel.toc ? 2 : 1 } />
@@ -158,15 +157,15 @@ class ConfigPanel extends React.Component {
     )
   }
 
-  cssPanel(){
+  cssPanel() {
     return(
       <div className='w-full h-full'>
         <div className='flex'>
           <Input type="file" className='my-1 mx-1' onChange={this.handleCSSFileChange}></Input>
-          <Button variant="ghost" className='mx-1 px-0 h-9 w-9' onClick={() => {this.paramActuel.setFormat(this.paramActuel.format), this.cssActuel = this.paramActuel.getStyleString() ,this.handleCompile(0)}}> {icones.reset} </Button>
-          <Button variant="ghost" className='mx-1 px-0 h-9 w-9' onClick={() => {this.handleCSSTextChange(this.cssActuel), this.handleCompile()}}> {icones.refresh} </Button>
+          <Button variant="ghost" className='mx-1 px-0 h-9 w-9' onClick={() => {this.paramActuel.setFormat(this.paramActuel.format), this.cssActuel = this.paramActuel.getStyleString(), this.handleCompile(0)}}>{icones.reset} </Button>
+          <Button variant="ghost" className='mx-1 px-0 h-9 w-9' onClick={() => {this.handleCSSTextChange(this.cssActuel), this.handleCompile()}}>{icones.refresh}</Button>
         </div>
-        <AceEditor placeholder='Écriver votre CSS ici : ' value={this.cssActuel} width='100%' height='100%' mode="css" onChange={(newValue) => {this.cssActuel = newValue}} setOptions={{enableLiveAutocompletion: true, showLineNumbers: true,}}/>
+        <AceEditor placeholder='Écrivez votre CSS ici : ' value={this.cssActuel} width='100%' height='100%' mode="css" onChange={(newValue) => {this.cssActuel = newValue}} setOptions={{enableLiveAutocompletion: true, showLineNumbers: true,}}/>
       </div>
     )
   }

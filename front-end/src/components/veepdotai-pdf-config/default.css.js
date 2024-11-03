@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     textAlign: 'center',
     marginVertical: 20,
+    color: 'white'
     //backgroundColor: "red",
   },
 
@@ -89,6 +90,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     //marginHorizontal: 'auto',
     marginVertical: 20,
+    color: 'white'
     //backgroundColor: "orange",
   },
 
@@ -287,12 +289,14 @@ const styles = StyleSheet.create({
     left: 250,
     width: 325,
     fontSize: 12,
+    color: 'white'
     //backgroundColor: "blue",
   },
   
   metadataLine: {
     flexDirection: "row",
-    borderLeft: "1px grey solid",
+    paddingLeft: "5px",
+    borderLeft: "3px white solid",
     //backgroundColor: "orange",
   },
 

@@ -33,13 +33,32 @@ class PDFPanel extends React.Component {
     }
 
     /**
-         * Translate the content (either markdown or JSON) in an object -> a list of pages. Each page has a nnumber, a title, and a list of content. The content can be a string (paragraph) or a list containing a subtitle and its content. The content of a subtitle can be another subtitle
-         * When using a correct Json, a page will only have one subtitle and this subtitle will have a String content. This format allows less options but is better to convey info for LinkedIn PDFs
+         * Translate the content (either markdown or JSON) in an object
+         * -> a list of pages. Each page has a nnumber, a title, and a list of
+         * content. The content can be a string (paragraph) or a list 
+         * containing a subtitle and its content. The content of a subtitle can 
+         * be another subtitle
          * 
-         * example of a page (obtained using Markdown) : [page number, title of page, [content, [subtitle, content], [subtitle, [subtitle, content]]], background-image, content image, content image CSS ]
-         * example of a page (obtained using JSON) : [page number, title of page, [[subtitle, content]], background-image, content image, content image CSS ]
+         * When using a correct Json, a page will only have one subtitle and 
+         * this subtitle will have a String content. This format allows less 
+         * options but is better to convey info for LinkedIn PDFs
+         * 
+         * example of a page (obtained using Markdown) :
+         * [
+         *  page number,
+         *  title of page,
+         *  [
+         *    content,
+         *      [subtitle, content],
+         *      [subtitle, [subtitle, content]]
+         *    ],
+         *  background-image,
+         *  content image,
+         *  content image CSS
+         * ]
+         * 
          * @param {String} content 
-         * @returns The content in the correct way to be understand by the PDF renderer
+         * @returns The content in the correct way to be understood by the PDF renderer
          */
     translateContent(content){
       let res = []
@@ -47,7 +66,13 @@ class PDFPanel extends React.Component {
           //JSON
           let temp = JSON.parse(content)
           for (let i = 0; i < temp.slides.length; i++){
-            res.push([temp.slides[i].number, temp.slides[i].title, [[temp.slides[i].subTitle, temp.slides[i].summary]], "./images/nothing.png", "./images/nothing.png", null])
+            res.push([
+              temp.slides[i].number,
+              temp.slides[i].title,
+              [[temp.slides[i].subTitle, temp.slides[i].summary]],
+              "./images/nothing.png",
+              "./images/nothing.png",
+              null])
           }
         }
         catch{
@@ -82,7 +107,13 @@ class PDFPanel extends React.Component {
                 break
               }
             }
-            res.push([i, temp[titleIndex[i]].slice(start),this.generateMarkdownTranslation(temp[titleIndex[i]], temp.slice(titleIndex[i])) ,"./images/nothing.png", "./images/nothing.png", null])
+            res.push([
+              i,
+              temp[titleIndex[i]].slice(start),
+              this.generateMarkdownTranslation(temp[titleIndex[i]], temp.slice(titleIndex[i])),
+              "./images/nothing.png",
+              "./images/nothing.png",
+              null])
           }
 
         }

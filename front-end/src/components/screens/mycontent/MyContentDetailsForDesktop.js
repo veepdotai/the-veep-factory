@@ -79,11 +79,9 @@ export default class MyContentDetailsForDesktop {
                 </MyContentDetailsForDesktop.TT>
               </TabsTrigger>
 
-              {/*
               <TabsTrigger id="details-menu-sideBySide-content" value="sideBySide-content">
                   <MyContentDetailsForDesktop.TT id="m2" title={t("SideBySideView")}>{Icons.comparedView}</MyContentDetailsForDesktop.TT>
               </TabsTrigger>
-              */}
             </div>
           </TabsList>
         :
@@ -99,11 +97,9 @@ export default class MyContentDetailsForDesktop {
                     {Icons.pdf}
                   </MyContentDetailsForDesktop.TT>
               </TabsTrigger>
-              {/*
               <TabsTrigger id="details-menu-sideBySide-content" value="sideBySide-content">
                   <MyContentDetailsForDesktop.TT id="m2" title={t("SideBySideView")}>{Icons.comparedView}</MyContentDetailsForDesktop.TT>
               </TabsTrigger>
-              */}
             </div>
           </TabsList>
         }
@@ -142,10 +138,15 @@ export default class MyContentDetailsForDesktop {
 
 export function PDFViewer( {content} ) {
 
+  let role = "admin";
+  let hasConfigCapabilities = role === "admin" ? true : false;
   const [pdfContent, setPdfContent] = useState(content);
 
   return(
-    <PDFPanel content={pdfContent} />
+
+    <PDFPanel
+      content={pdfContent}
+      displayConfigPanel={hasConfigCapabilities} />
   )
 
 }

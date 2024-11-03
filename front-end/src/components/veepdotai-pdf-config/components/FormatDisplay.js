@@ -1,4 +1,4 @@
-import React from 'react'
+import {useState} from 'react'
 import { t } from 'i18next'
 
 import {RadioGroup, RadioGroupItem} from 'src/components/ui/shadcn/radio-group';
@@ -16,57 +16,30 @@ import {
   DropdownMenuTrigger,
 } from "src/components/ui/shadcn/dropdown-menu"
 
-export default class formatDisplay extends React.Component {
+export default function FormatDisplay(props) {
 
-    constructor(props){
-        super(props)
+    const [state, setState] = useState({format : props.baseValue})
 
-        this.state = {format : this.props.baseValue}
-        this.handleChange = this.handleChange.bind(this)
+    function handleChange(value){
+      setState({format : value})
+      handleChange(value)
     }
 
-    handleChange(choisit){
-      this.setState({format : choisit})
-      this.props.handleChange(choisit)
-    }
+    return (
+      <>
+        <Label>{t("DocumentFormatSelector")}</Label>
+        <DropdownMenu modal={false}>
+          <DropdownMenuTrigger asChild> 
+            <Button variant="ghost" className=''>{state.format}</Button>
+          </DropdownMenuTrigger>
 
-    render () {
-        return (
-          <>
-            <Label>{t("DocumentFormatSelector")}</Label>
-            <DropdownMenu modal={false}>
-              <DropdownMenuTrigger asChild> 
-                <Button variant="ghost" className=''>{this.state.format}</Button>
-              </DropdownMenuTrigger>
-
-              <DropdownMenuContent>
-                <DropdownMenuRadioGroup defaultValue={this.state.format} onValueChange={(value) => {this.handleChange(value)}}>
-                  <DropdownMenuRadioItem value="A4">A4</DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="linkedin">LinkedIn</DropdownMenuRadioItem>
-                </DropdownMenuRadioGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </>
-        )
-    }
+          <DropdownMenuContent>
+            <DropdownMenuRadioGroup defaultValue={state.format} onValueChange={(value) => {handleChange(value)}}>
+              <DropdownMenuRadioItem value="A4"><img className="h-[30px] rounded" src="/assets/images/gradients/9055ff-13e2da.png" />A4</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="linkedin">LinkedIn</DropdownMenuRadioItem>
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </>
+    )
 }
-
-/*
-            <div className='flex h-[50%]'>
-                  <RadioGroup id="format" defaultValue={this.baseValue}>
-                    <Label htmlFor='format'>Format du document : </Label>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="A4" id="A4" onClick={() => {
-                        this.handleChange("A4")
-                      }} />
-                      <Label htmlFor="A4">A4</Label>
-
-                      <RadioGroupItem value="linkedin" id="linkedin" onClick={() => {
-                        this.handleChange("linkedin")
-                      }} />
-                      <Label htmlFor="linkedin">LinkedIn</Label>
-                    </div>
-
-                  </RadioGroup>
-            </div>
-*/

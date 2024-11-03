@@ -1,0 +1,30 @@
+{
+  "logoLabel": "Logo",
+  "logoPlaceHolder": "Logo",
+  "logoDesc": "",
+
+  "backgroundImageLabel": "Arrière-plan",
+  "backgroundImagePlaceHolder": "",
+  "backgroundImageDesc": "",
+
+  "titleLabel": "Titre",
+  "titlePlaceHolder": "",
+  "titleDesc": "",
+
+  "subtitleLabel": "Sous-titre",
+  "subtitlePlaceHolder": "",
+  "subtitleDesc": "",
+
+  "cssLabel": "CSS",
+  "cssPlaceHolder": "",
+  "cssDesc": "",
+
+  "organizationNameLabel": "Organisation",
+  "organizationNamePlaceHolder": "",
+  "organizationNameDesc": "",
+
+  "authorLabel": "Auteur",
+  "authorPlaceHolder": "",
+  "authorDesc": ""
+
+}

@@ -4,36 +4,18 @@ import LanguageDetector from 'i18next-browser-languagedetector'
 
 import fr from '/public/locales/fr/translation.json'
 import frForm from '/public/locales/fr/translationForm.json'
+import frPDFExportForm from '/public/locales/fr/translationPDFExportForm.json'
 
 import en from '/public/locales/en/translation.json'
 import enForm from '/public/locales/en/translationForm.json'
+import enPDFExportForm from '/public/locales/en/translationPDFExportForm.json'
 
-// This is a simple i18n configuration with English and French translations.
-// You can find the translations in web/src/locales/{language}.json
-// see: https://react.i18next.com
-// Here's an example of how to use it in your components, pages or layouts:
 /*
-import { useTranslation } from 'react-i18next'
-
-const HomePage = () => {
+  import { useTranslation } from 'react-i18next'
   const { t, i18n } = useTranslation()
-  return (
-    <>
-      <h1>{t('HomePage.title')}</h1>
-      <button onClick={() => i18n.changeLanguage('fr')}>fr</button>
-      <button onClick={() => i18n.changeLanguage('en')}>en</button>
-      <p>
-        {t('HomePage.info')} <code>./web/src/pages/HomePage/HomePage.js</code>
-      </p>
-      <p>
-        {t('HomePage.route')} <code>home</code>, {t('HomePage.link')}`
-        <Link to={routes.home()}>Home</Link>`
-      </p>
-    </>
-  )
-}
 
-export default HomePage
+  <button onClick={() => i18n.changeLanguage('fr')}>fr</button>
+  <button onClick={() => i18n.changeLanguage('en')}>en</button>
 */
 
   i18n
@@ -45,11 +27,11 @@ export default HomePage
     fallbackLng: 'en',
     resources: {
       en: {
-        translation: {...en, ...enForm}
+        translation: {...en, ...enForm, ...enPDFExportForm}
       },
 
       fr: {
-        translation: {...fr, ...frForm},
+        translation: {...fr, ...frForm, ...frPDFExportForm},
       },
 
     },

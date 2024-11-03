@@ -75,6 +75,7 @@ export const Icons = {
     metadataView:       <Md.MdOutlineSchema {...attr} />,
     transcriptionView:  <Md.MdOutlineTranscribe {...attr} />,
     PDFView:            <Md.MdPictureAsPdf {...attr} />,
+    "pdf-export":       <Md.MdPictureAsPdf {...attr} />,
     "config-pdf":       <Md.MdPictureAsPdf {...attr} />,
     "config-veeplet":   <Md.MdOutlineDisplaySettings {...attr} />,
     workspace:          <GiOrganigram {...attr} />,

@@ -122,6 +122,7 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                 {getMenuTitle(t("Context"))}
                 <MenuItem itemKey="brand-voice" itemLabel={t("BrandVoice")} direction={direction} />
                 <MenuItem itemKey="editorial-line" itemLabel={t("EditorialLine")} direction={direction} />
+                <MenuItem itemKey="pdf-export" itemLabel={t("PDFExport")} direction={direction} />
 
                 {getMenu('byDpt')}
 

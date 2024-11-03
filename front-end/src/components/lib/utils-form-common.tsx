@@ -12,9 +12,65 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { Popover, PopoverContent, PopoverTrigger, } from "src/components/ui/shadcn/popover"
 import { Input } from "src/components/ui/shadcn/input"
 import { Textarea } from "src/components/ui/shadcn/textarea"
+import { UtilsGraphQLObject } from '@/src/api/utils-graphql-object'
 
 export const UtilsFormCommon = {
     log: Logger.of("UtilsFormCommon"),
+
+    //onSubmit: function(graphqlURI, cookies, name, topic, data: z.infer<typeof FormSchema>) {
+    onSubmit: function(graphqlURI, cookies, name, topic, data, toast) {
+        let log = (msg) => UtilsFormCommon.log.trace("onSubmit: " + msg)
+        let o = JSON.stringify(data, null, 2)
+        let q = UtilsGraphQLObject.create(graphqlURI, cookies,
+          name,
+          o.replace(/"/g, "_G_").replace(/\n/g, "_EOL_"),
+          topic,
+        )
+  
+        log("GraphQL request: " + q)
+        log("Submitting data: " + JSON.stringify(data, null, 2))
+
+        toast({
+          title: "You submitted the following values:",
+          description: (
+            <div className="mt-2 w-[500px] rounded-md">
+              <code className="text-xs">{JSON.stringify(data, null, 2)}</code>
+            </div>
+          ),
+        })
+    },
+  
+    updateForm: function(form, topic, message) {
+        let log = (msg) => UtilsFormCommon.log.trace("updateForm: " + msg)
+
+        log("message: " + JSON.stringify(message))
+        let result = ""
+        try {
+            result = JSON.parse(message?.result).result
+        } catch (e) {
+            log("e: " + e)
+        }
+        log("result: " + result)
+        let currentValues = {}
+        
+        if (result && typeof result === "string" && result != "") {
+            let o_string = ""
+            try {
+                o_string = result.replace(/_G_/g, '"').replace(/_EOL_/g, "\n")
+            } catch(e) {
+                alert("e: " + e)
+
+                o_string = ""
+            }
+
+            //let o_string = result.replace(/_G_/g, '"').replace(/_EOL_/g, "\n")
+            log("o: " + o_string)
+            let o = JSON.parse(o_string)
+            log("o: " + JSON.stringify(o))
+            form.reset(o)
+            log("resetted form.")
+        }
+    },
 
     getFieldType: function(form, field, fieldName, fieldType = "input", fieldValues = "", fieldOptions) {
         UtilsFormCommon.log.trace(`field content: ${JSON.stringify(field)}`);
