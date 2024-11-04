@@ -1,12 +1,4 @@
 {
-  "logoLabel": "Logo",
-  "logoPlaceHolder": "Logo",
-  "logoDesc": "",
-
-  "backgroundImageLabel": "Arrière-plan",
-  "backgroundImagePlaceHolder": "",
-  "backgroundImageDesc": "",
-
   "titleLabel": "Titre",
   "titlePlaceHolder": "",
   "titleDesc": "",
@@ -15,16 +7,39 @@
   "subtitlePlaceHolder": "",
   "subtitleDesc": "",
 
-  "cssLabel": "CSS",
-  "cssPlaceHolder": "",
-  "cssDesc": "",
-
   "organizationNameLabel": "Organisation",
   "organizationNamePlaceHolder": "",
   "organizationNameDesc": "",
 
   "authorLabel": "Auteur",
   "authorPlaceHolder": "",
-  "authorDesc": ""
+  "authorDesc": "",
 
+  "displayHeaderLabel": "Afficher en-tête",
+  "displayHeaderPlaceHolder": "",
+  "displayHeaderDesc": "",
+  
+  "displayFooterLabel": "Afficher pied de page",
+  "displayFooterPlaceHolder": "",
+  "displayFooterDesc": "",
+  
+  "displayTOCLabel": "Afficher table des matières",
+  "displayTOCPlaceHolder": "",
+  "displayTOCDesc": "",
+  
+  "displayBreakOnPageLabel": "Afficher les sauts de page",
+  "displayBreakOnPagePlaceHolder": "",
+  "displayBreakOnPageDesc": "",
+  
+  "logoLabel": "Logo",
+  "logoPlaceHolder": "",
+  "logoDesc": "",
+
+  "backgroundImageLabel": "Arrière-plan",
+  "backgroundImagePlaceHolder": "",
+  "backgroundImageDesc": "",
+
+  "cssLabel": "CSS",
+  "cssPlaceHolder": "",
+  "cssDesc": ""
 }

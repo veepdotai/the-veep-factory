@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils"
 
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons"
 import { Button } from "src/components/ui/shadcn/button"
+import { Checkbox } from "src/components/ui/shadcn/checkbox"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage,} from "src/components/ui/shadcn/form"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue,} from "src/components/ui/shadcn/select"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, } from "src/components/ui/shadcn/command"
@@ -73,7 +74,8 @@ export const UtilsFormCommon = {
     },
 
     getFieldType: function(form, field, fieldName, fieldType = "input", fieldValues = "", fieldOptions) {
-        UtilsFormCommon.log.trace(`field content: ${JSON.stringify(field)}`);
+        let log = (msg) => UtilsFormCommon.log.trace(`getFieldType: ${msg}`);
+        log(JSON.stringify(field))
         let lcn = fieldOptions?.cn || "" 
         if (fieldType === "input") {
             return <Input className={cn} placeholder={t(fieldName + "PlaceHolder")} {...field} />
@@ -107,6 +109,84 @@ export const UtilsFormCommon = {
                     </SelectContent>
                 </Select>
             )
+        } else if (fieldType === "checkbox") {
+            let items = [
+                {id: "displayHeader", label: t("displayHeaderLabel")},
+                {id: "displayFooter", label: t("displayFooterLabel")},
+                {id: "displayTOC", label: t("displayTOCLabel")},
+                {id: "displayBreakBeforePage", label: t("displayBreakBeforePageLabel")},
+            ]
+            let f = <FormField
+                control={form.control}
+                name="items"
+                render={() => (
+                    <FormItem>
+                        <div className="mb-4">
+                            <FormLabel className="text-base">Sidebar</FormLabel>
+                            <FormDescription>
+                            Select the items you want to display in the sidebar.
+                            </FormDescription>
+                        </div>
+                        {items.map((item) => (
+                            <FormField
+                                key={item.id}
+                                control={form.control}
+                                name="displays"
+                                render={({field}) => {
+                                    log(`fields: ${JSON.stringify(field)}`)
+                                    return (
+                                        <FormItem
+                                            key={item.id}
+                                            className="flex flex-row items-start space-x-3 space-y-0"
+                                        >
+                                            <FormControl>
+                                                <Checkbox
+                                                    checked={field.value?.includes(item.id)}
+                                                    onCheckedChange={(checked) => {
+                                                        if (checked) {
+                                                            if (field.value) {
+                                                                field.onChange([...field.value, item.id])  
+                                                            } else {
+                                                                field.onChange([item.id])
+                                                            }
+                                                        } else {
+                                                            field.onChange(
+                                                                field.value?.filter(
+                                                                    (value) => value !== item.id
+                                                                )
+                                                            )
+                                                        }
+                                                    }}
+                                                />
+                                            </FormControl>
+                                            <FormLabel className="font-normal">
+                                                {item.label}
+                                            </FormLabel>
+                                        </FormItem>
+                                    )
+                                }}
+                            />
+                        ))}
+                        <FormMessage />
+                    </FormItem>
+                )}
+            />
+
+            /*
+            return(
+                <div className="flex items-center space-x-2">
+                    <Checkbox id={fieldName} onValueChange={field.onChange} />
+                    <label htmlFor={fieldName} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                        {t(fieldName + "Label")}
+                    </label>
+                    <p className="text-sm text-muted-foreground">
+                        {t(fieldName + "PlaceHolder")}
+                    </p>
+                </div>
+            )
+            */
+
+            return f
         } else if (fieldType === "combobox") {
             lcn = lcn || "w-[300px]"
             let values = fieldValues?.split('|') || [];
@@ -172,7 +252,7 @@ export const UtilsFormCommon = {
 
     getFormField: function(form, fieldName, fieldType = "input", fieldValues = null, fieldOptions = {}) {
         let fo = fieldOptions
-        if (fieldType === "combobox") {
+        if (fieldType === "combobox" || fieldType === "checkbox") {
             fo.displayFormLabel = fo.displayFormLabel || false
         } else {
             fo.displayFormLabel = fo.displayFormLabel || true

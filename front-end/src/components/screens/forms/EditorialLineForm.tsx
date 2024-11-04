@@ -49,8 +49,12 @@ export default function EditorialLineForm() {
         themes: getConstraints(minChars),
         roles: getConstraints(minChars),
 
-        style: getConstraints(minChars),
+        vocabulary: getConstraints(minChars),
+        syntax: getConstraints(minChars),
+        pointOfView: getConstraints(minChars),
         tone: getConstraints(minChars),
+        structure: getConstraints(minChars),
+
         gender: getConstraints(minChars),
         language: getConstraints(minChars),
         emojis: getConstraints(1),

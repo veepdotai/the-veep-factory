@@ -38,13 +38,25 @@ export default function PDFExportForm() {
 
     const minChars = 2
     const FormSchema = z.object({
-      logo: getConstraints(minChars),
-      backgroundImage: getConstraints(minChars),
       title: getConstraints(minChars),
       subtitle: getConstraints(minChars),
-      css: getConstraints(minChars),
       organizationName: getConstraints(minChars),
       author: getConstraints(minChars),
+
+      displays: z.array(z.string()).refine((value) => value.some((item) => item), {
+        message: "You have to select at least one item.",
+      }),
+
+      /*
+      displayHeader: getConstraints(minChars),
+      displayTOC: getConstraints(minChars),
+      displayPageOnBreak: getConstraints(minChars),
+      displayFooter: getConstraints(minChars),
+      */
+
+      logo: getConstraints(minChars),
+      backgroundImage: getConstraints(minChars),
+      css: getConstraints(minChars),
     })
 
     let cn = "text-sm font-bold"
@@ -53,7 +65,9 @@ export default function PDFExportForm() {
 
     let form = useForm<z.infer<typeof FormSchema>>({
       resolver: zodResolver(FormSchema),
-      defaultValues: {}
+      defaultValues: {
+        displays: []
+      }
     })
 
     function updateForm(topic, message) {
@@ -74,25 +88,26 @@ export default function PDFExportForm() {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
 
-            <Tabs defaultValue="presentation">
+            <Tabs defaultValue="metadata">
 
               <TabsList className="grid grid-cols-5">
-                <TabsTrigger className={cn} value="presentation">{t("Presentation")}</TabsTrigger>
+                <TabsTrigger className={cn} value="metadata">{t("Metadata")}</TabsTrigger>
                 <TabsTrigger className={cn} value="display">{t("Display")}</TabsTrigger>
                 <TabsTrigger className={cn} value="css">{t("CSS")}</TabsTrigger>
               </TabsList>
 
-              <TabsContent value="presentation" className={defaultTabsContentLayout}>
-                {UFC.getFormField(form, "logo", "input")}
-              </TabsContent>
-
-              <TabsContent value="display" className={defaultTabsContentLayout}>
-                {UFC.getFormField(form, "logo", "input")}
-                {UFC.getFormField(form, "backgroundImage", "input")}
+              <TabsContent value="metadata" className={defaultTabsContentLayout}>
                 {UFC.getFormField(form, "title", "input")}
                 {UFC.getFormField(form, "subtitle", "input")}
                 {UFC.getFormField(form, "organizationName", "input")}
                 {UFC.getFormField(form, "author", "input")}
+              </TabsContent>
+
+              <TabsContent value="display" className={defaultTabsContentLayout}>
+                {UFC.getFormField(form, "displays", "checkbox")}
+
+                {UFC.getFormField(form, "logo", "input")}
+                {UFC.getFormField(form, "backgroundImage", "input")}
               </TabsContent>
 
               <TabsContent value="css" className={defaultTabsContentLayout}>

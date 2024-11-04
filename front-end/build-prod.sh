@@ -23,7 +23,11 @@
 #
 
 TEST=$(command sshpass -v > test-command.txt | grep Usage test-command.txt)
-[ ! $TEST ] && sudo apt-get install sshpass
+if [ -z "$TEST" ]; then
+    sudo apt-get install sshpass
+else
+    echo "sshpass is already installed"
+fi
 
 set -e
 
@@ -37,12 +41,15 @@ ARGS=$1
 main() {
     echo "Executing Main"
     init
-    
-    # build = prepare + build + store
-    build
+    if [ -z "$ARGS" ]; then        
+        # build = prepare + build + store
+        build
 
-    # deploys only the js app
-    deploy_build
+        # deploys only the js app
+        deploy_build
+    else
+        deploy_build
+    fi
 
     # deploys the wp plugins
 #    deploy_server

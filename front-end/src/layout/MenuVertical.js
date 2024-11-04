@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { Col, Nav, Stack } from 'react-bootstrap';
 import { Logger } from 'react-logger-lib';
 import { t } from 'i18next';
@@ -12,6 +14,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, } from "@
 
 export default function MenuVertical( {direction, isManager, profile} ) {
     const log = Logger.of(MenuVertical.name);
+
+    const [view, setView] = useState('byDpt')
 
     function getMenuItem(key, label, direction = null) {
         return (
@@ -46,12 +50,11 @@ export default function MenuVertical( {direction, isManager, profile} ) {
             ['dpt-procurement', t('Procurement')],
         ]
 
-        if('byDpt' === view) {
-            return(
-                <>
-                    {getMenuTitle(t("AIAssistants"))}
-                    {commonMenuDefinition.map(row => <MenuItem itemKey={row[0]} itemLabel={row[1]} direction={direction} /> )}
-                    <Accordion type="single" collapsible className="ms-4">
+        return(
+            <>
+                {commonMenuDefinition.map(row => <MenuItem itemKey={row[0]} itemLabel={row[1]} direction={direction} /> )}
+
+                <Accordion type="single" collapsible className="ms-4">
                     {getAccordionItem("function-support", t("SupportFunction"),
                         <>
                             {salesMenuDefinition.map(row => <MenuItem itemKey={row[0]} itemLabel={row[1]} direction={direction} /> )}
@@ -67,20 +70,9 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                             {supportMenuDefinition.map(row => <MenuItem itemKey={row[0]} itemLabel={row[1]} direction={direction} /> )}
                         </>
                     )}
-    
-                    </Accordion>
-                </>
-            )
-        } else {
-            return(
-                <>
-                    {getMenuTitle(t("Creation"))}
-                    <MenuItem itemKey="contents" itemLabel={t("MyContents")} />
-                    {/*<MenuItem itemKey="add-content" itemLabel={t("DocModels")} direction={direction} />*/}
-                    <MenuItem itemKey="add-content" itemLabel={t("AddContent")} direction={direction} />
-                </>
-            )
-        }
+                </Accordion>
+            </>
+        )
     }
     
     function getMenuTitle(title) {
@@ -112,44 +104,76 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                     <LogoWithLink />
                 </div>
 
-                {/*<MenuItem itemKey="add-content-wizard" itemLabel={t("AddContent")} innerCN=" bg-secondary text-white border border-2" outerCN="mb-2" direction={direction} />*/}
-                {/*<MenuItem itemKey="add-content" itemLabel={t("AddContent")} innerCN="border border-2" outerCN="mb-2" direction={direction} />*/}
+                <Accordion defaultValue="first">
 
-                {getMenuTitle(t("Teamspaces"))}
-                <ComboboxWorkspaces />
-                <MenuItem itemKey="home" itemLabel={t("Dashboard")} />
+                    {/*<MenuItem itemKey="add-content-wizard" itemLabel={t("AddContent")} innerCN=" bg-secondary text-white border border-2" outerCN="mb-2" direction={direction} />*/}
+                    {/*<MenuItem itemKey="add-content" itemLabel={t("AddContent")} innerCN="border border-2" outerCN="mb-2" direction={direction} />*/}
 
-                {getMenuTitle(t("Context"))}
-                <MenuItem itemKey="brand-voice" itemLabel={t("BrandVoice")} direction={direction} />
-                <MenuItem itemKey="editorial-line" itemLabel={t("EditorialLine")} direction={direction} />
-                <MenuItem itemKey="pdf-export" itemLabel={t("PDFExport")} direction={direction} />
+                    {getAccordionItem("first", "Home",
+                        <>
+                            {getMenuTitle(t("Teamspaces"))}
+                            <ComboboxWorkspaces />
+                            <MenuItem itemKey="home" itemLabel={t("Dashboard")} />                                                    
+                        </>
+                    )}
 
-                {getMenu('byDpt')}
+                    {getAccordionItem("context", getMenuTitle(t("Context")),
+                        <>
+                            <MenuItem itemKey="brand-voice" itemLabel={t("BrandVoice")} direction={direction} />
+                            <MenuItem itemKey="editorial-line" itemLabel={t("EditorialLine")} direction={direction} />
+                            <MenuItem itemKey="pdf-export" itemLabel={t("PDFExport")} direction={direction} />
+                        </>
+                    )}
 
-                {getMenuTitle(t("Tools"))}
-                {/*<MenuItem itemKey="chat" itemLabel={t("Chat")} direction={direction} />*/}
-                <div className='ps-4'>{Icons.chat}
-                    <a className="ps-2" target="_blank" href="https://chat.veep.ai">Chat</a>
-                </div>
-                <div className='pt-2 ps-4'>{Icons.support}
-                    <a className="ps-2" target="_blank" href="https://github.com/veepdotai/the-veep-factory">Support</a>
-                </div>
+                    { 'byDpt' === view ?
+                            <>
+                                {getAccordionItem("content", getMenuTitle(t("AIAssistants")),
+                                    getMenu('byDpt')
+                                )}
+                            </>
+                        :
+                            <>
+                                {getAccordionItem("content", getMenuTitle(t("Creation")),
+                                    <>
+                                        <MenuItem itemKey="contents" itemLabel={t("MyContents")} />
+                                        {/*<MenuItem itemKey="add-content" itemLabel={t("DocModels")} direction={direction} />*/}
+                                        <MenuItem itemKey="add-content" itemLabel={t("AddContent")} direction={direction} />
+                                    </>
+                                )}
+                            </>
+                    }
 
-                {getMenuTitle(t("Configuration"))}
-                <MenuItem itemKey="config-pdf" itemLabel={t("PDFConfig")} direction={direction} />
+                    {getAccordionItem("tools", getMenuTitle(t("Tools")),
+                        <>
+                            {/*<MenuItem itemKey="chat" itemLabel={t("Chat")} direction={direction} />*/}
+                            <div className='ps-4'>{Icons.chat}
+                                <a className="ps-2" target="_blank" href="https://chat.veep.ai">Chat</a>
+                            </div>
+                            <div className='pt-2 ps-4'>{Icons.support}
+                                <a className="ps-2" target="_blank" href="https://github.com/veepdotai/the-veep-factory">Support</a>
+                            </div>
+                        </>
+                    )}
 
-                {/*
-                    <MenuItem itemKey="support" itemLabel={t("Support")} direction={direction} />
-                */}
+                    {getAccordionItem("configuration", getMenuTitle(t("Configuration")),
+                        <>
+                            <MenuItem itemKey="config-pdf" itemLabel={t("PDFConfig")} direction={direction} />
+                            {/*<MenuItem itemKey="support" itemLabel={t("Support")} direction={direction} />*/}
+                        </>
+                    )}
 
-                { isManager ?
-                    <>
-                        {getMenuTitle(t("Administration"))}
-                        <MenuItem itemKey="infos" itemLabel={t("Infos")} direction={direction} />
-                    </>
-                    :
-                    <></>
-                }
+                    { isManager ?
+                        <>
+                            {getAccordionItem("administration", getMenuTitle(t("Administration")),
+                                <>
+                                    <MenuItem itemKey="infos" itemLabel={t("Infos")} direction={direction} />
+                                </>
+                            )}
+                        </>
+                        :
+                        <></>
+                    }
+                </Accordion>
 
                 { profile ?
                     <>
