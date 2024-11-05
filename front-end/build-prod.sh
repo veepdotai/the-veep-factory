@@ -53,6 +53,8 @@ main() {
 
     # deploys the wp plugins
 #    deploy_server
+
+    echo "The server has been pusblished: $APP_HOST/v/$TAG"
 }
 
 init() {
