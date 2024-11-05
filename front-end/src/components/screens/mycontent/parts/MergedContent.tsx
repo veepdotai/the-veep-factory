@@ -267,7 +267,7 @@ export default class MergedContent {
                     { false ?
                       <Markdown className={style.reactMarkdown} remarkPlugins={[remarkGfm]}>{_content}</Markdown>
                     :
-                      <div className="p-0">
+                      <div className="p-0 bg-neutral-100">
                         <PlateEditor className="p-0" input={_content} contentId={cid} attrName={attrName}>
                         </PlateEditor>
                         {/*<EditorHome attrName={attrName} markdown={_content} contentEditableClassName={"details-" + md5(title)} />*/}

@@ -10,12 +10,35 @@ const styles = StyleSheet.create({
    */
   firstPage: {
     flexDirection: 'column',
-    paddingTop: 35,
+    paddingTop: 100,
     paddingBottom: 65,
   },
 
+  docTitle: {
+    //position: "absolute",
+    //width: "100%",
+    //top: 150,
+    fontSize: 30,
+    fontWeight:900,
+    fontFamily:"Helvetica-Bold",
+    textAlign:"left",
+    marginLeft:50,
+    marginVertical: 20,
+    color: 'white'
+  },
+
+  docSubTitle: {
+    //position: "absolute",
+    //width: "100%",
+    //top: 200,
+    fontSize: 24,
+    textAlign:"left",
+    marginLeft:50,
+    color: 'white'
+  },
+
   featuredImage: {
-    top: 350,
+    top: 175,
     textAlign: 'center',
     marginHorizontal: 'auto',
     width: '30%',
@@ -30,6 +53,7 @@ const styles = StyleSheet.create({
     marginBottom: 150,
   },
 
+  // Page 2
   tocPage: {
     flexDirection: 'column',
     paddingTop: 35,
@@ -60,7 +84,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     //paddingTop: 35,
     //paddingBottom: 65,
-    paddingHorizontal: 50,
+    paddingHorizontal: 100,
   },
 
   header: {
@@ -69,29 +93,6 @@ const styles = StyleSheet.create({
     borderBottom: 1,
     borderColor: 'grey',
     //backgroundColor: 'lightgrey',
-  },
-
-  title: {
-    //position: "absolute",
-    //width: "100%",
-    //top: 150,
-    fontSize: 30,
-    textAlign: 'center',
-    marginVertical: 20,
-    color: 'white'
-    //backgroundColor: "red",
-  },
-
-  subTitle: {
-    //position: "absolute",
-    //width: "100%",
-    //top: 200,
-    fontSize: 24,
-    textAlign: 'center',
-    //marginHorizontal: 'auto',
-    marginVertical: 20,
-    color: 'white'
-    //backgroundColor: "orange",
   },
 
   text: {
@@ -116,6 +117,7 @@ const styles = StyleSheet.create({
     bottom: 0,
 
     margin: 10,
+    marginTop: 30,
     padding: 10,
 
     fontSize: 12,
@@ -145,7 +147,7 @@ const styles = StyleSheet.create({
     //backgroundColor: 'red',
   },
 
- companyBackgroundImage: {    
+  companyBackgroundImage: {    
     position: 'absolute',
     top: 0,
     left : 0,
@@ -164,6 +166,27 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
 
+  // Metadata Utilities
+  metadataBlock: {
+    position: "absolute",
+    bottom: 100,
+    left: 50,
+    width: 325,
+    fontSize: 12,
+    color: 'white'
+    //backgroundColor: "blue",
+  },
+  
+  metadataLine: {
+    flexDirection: "row",
+    paddingLeft: "5px",
+    borderLeftStyle: "solid",
+    borderLeftColor: "white",
+    borderLeftWidth: "2px",
+    
+    //backgroundColor: "orange",
+  },
+  
   lastPage: {
     flexDirection: 'column',
     paddingTop: 35,
@@ -176,25 +199,30 @@ const styles = StyleSheet.create({
     color: 'grey',
   },
 
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
   /**
    * Text styles
    */
+
+  title: {
+    fontSize: 30,
+    fontWeight:900,
+    fontFamily:"Helvetica-Bold",
+    textAlign:"left",
+    marginLeft:0,
+    marginVertical: 20,
+    color: 'black'
+  },
+
+  subTitle: {
+    //position: "absolute",
+    //width: "100%",
+    //top: 200,
+    fontSize: 24,
+    textAlign:"left",
+    marginLeft:0,
+    color: 'black'
+  },
+
   title1: {
     fontSize: 24,
     textAlign: 'left',
@@ -280,24 +308,6 @@ const styles = StyleSheet.create({
   container: {
       flexDirection: 'row',
       marginBottom: 10,
-  },
-
-  // Metadata Utilities
-  metadataBlock: {
-    position: "absolute",
-    bottom: 100,
-    left: 250,
-    width: 325,
-    fontSize: 12,
-    color: 'white'
-    //backgroundColor: "blue",
-  },
-  
-  metadataLine: {
-    flexDirection: "row",
-    paddingLeft: "5px",
-    borderLeft: "3px white solid",
-    //backgroundColor: "orange",
   },
 
   /**

@@ -60,123 +60,138 @@ class PDFPanel extends React.Component {
          * @param {String} content 
          * @returns The content in the correct way to be understood by the PDF renderer
          */
-    translateContent(content){
-      let res = []
-        try{
-          //JSON
-          let temp = JSON.parse(content)
-          for (let i = 0; i < temp.slides.length; i++){
-            res.push([
-              temp.slides[i].number,
-              temp.slides[i].title,
-              [[temp.slides[i].subTitle, temp.slides[i].summary]],
+        handleJSONContent(content) {
+          let res = []
+          let all = JSON.parse(content)
+          for (let i = 0; i < all.slides.length; i++){
+              res.push([
+              all.slides[i].number,
+              all.slides[i].title,
+              [[all.slides[i].subTitle, all.slides[i].summary]],
               "./images/nothing.png",
               "./images/nothing.png",
               null])
           }
-        }
-        catch{
-          //markdown
-
-          //The markdown is divided using newLines
-          //It is possible that it does not work if there is no blank line in between every separate title / subtitle/ paragraph
-          let temp = content.split(/(?:[^\S\n]*\n){1,}\s*/)
-
-          //Checking for every level 1 titles which will be used as reference points
-          let titleIndex = []
-          for (let i = 0; i < temp.length; i ++){
-            if (this.checkMarkdownLevel(temp[i]) == 1){
-              titleIndex.push(i)
-            }else if (temp[i] == ""){
-              temp[i] = " "
-            }
-          }
-
-          //If there isn't lvl 1 title at all or there is none within the first 10 linebreaks
-          if (titleIndex.length == 0 || titleIndex[0] > 10){
-            titleIndex.unshift(0)
-            temp.unshift(' ')
-          }
-
-          //loop to every title : get rid of the # and every space before the title, then generating content and pushing the result page
-          for (let i = 0; i < titleIndex.length; i++){
-            let start = 0
-            for (let j = 0; j < temp[titleIndex[i]].length; j++){
-              if (temp[titleIndex[i]][j] != " " && temp[titleIndex[i]][j] != "#"){
-                start = j
-                break
-              }
-            }
-            res.push([
-              i,
-              temp[titleIndex[i]].slice(start),
-              this.generateMarkdownTranslation(temp[titleIndex[i]], temp.slice(titleIndex[i])),
-              "./images/nothing.png",
-              "./images/nothing.png",
-              null])
-          }
-
-        }
-        return res
-    }
-
-    /**
-     * 
-     * @param {String} node The current title we want to prepare
-     * @param {Array} other The following markdown content
-     * @returns 
-     */
-    generateMarkdownTranslation(node, other){
-      let res = []
-      //checking every following content
-      for (let i = 1; i < other.length; i ++){
-
-        //next content is a subtitle that can't be in the current subtitle -> stop adding content
-        if (this.checkMarkdownLevel(other[i]) <= this.checkMarkdownLevel(node) && this.checkMarkdownLevel(other[i]) > 0 ){
+      
           return res
         }
-
-        // next content is just text
-        else if (this.checkMarkdownLevel(other[i]) == 0){
-          res.push(other[i])
+      
+        handleMarkdown(content) {
+          //The markdown is divided using newLines
+          //It is possible that it does not work if there is no blank line in between every separate title / subtitle/ paragraph
+          let lines = content.split(/(?:[^\S\n]*\n){1,}\s*/)
+      
+          //Checking for every level 1 titles which will be used as reference points
+          function getTitleIndexes(self, lines) {
+              let titleIndexes = []
+              for (let i = 0; i < lines.length; i ++){
+                  let line = lines[i]
+                  if (self.getMarkdownLevel(line) == 1){
+                      titleIndexes.push(i)
+                  } else if (line == ""){
+                      line = " "
+                  }
+              }
+      
+              return titleIndexes
+          }
+      
+          let titleIndexes = getTitleIndexes(this, lines)
+          // If there isn't lvl 1 title at all or there is none within the first 10 linebreaks
+          // And so?
+          if (titleIndexes.length == 0 || titleIndexes[0] > 10){
+              titleIndexes.unshift(0)
+              lines.unshift(' ')
+          }
+      
+          let res = []
+      
+          // Loop to every title: get rid of the # and every space before the title, then generating content and pushing the result page
+          for (let i = 0; i < titleIndexes.length; i++){
+              let currentTitleIndex = titleIndexes[i]
+              let currentMarkdownTitle = lines[currentTitleIndex] 
+              let currentTitle = currentMarkdownTitle.replace(/^#+\s*/, "")
+      /*
+              for (let j = 0; j < lines[currentTitleIndex].length; j++){
+              if (lines[currentTitleIndex][j] != " " && lines[currentTitleIndex][j] != "#"){
+                  start = j
+                  break
+              }
+              }
+      */
+              res.push([
+                  i,
+                  currentTitle,
+                  this.generateMarkdownTranslation(currentMarkdownTitle, lines.slice(currentTitleIndex)),
+                  "./images/nothing.png",
+                  "./images/nothing.png",
+                  null
+              ])
+          }
+      
+          return res
+      
         }
-
-        //next content is subtitle -> recursion
-        else {
-          //get rid of the # before the subtitle
-          let start = 0
-          for (let j = 1; j < other[i].length; j++){
-            if (other[i][j] != " " && other[i][j] != "#"){
-              start = j
-              break
+      
+        translateContent(content) {
+          let res = []
+          try {
+              res = this.handleJSONContent(content)
+          } catch (e) {
+              res = this.handleMarkdown(content)
+          }
+      
+          return res
+        }
+      
+        /**
+         * 
+         * @param {String} title The current title we want to prepare
+         * @param {Array} lines The following markdown content
+         * @returns 
+         */
+        generateMarkdownTranslation(markdownTitle, lines) {
+          let res = []
+          //checking every following content
+          for (let i = 1; i < lines.length; i ++){
+            let line = lines[i]
+            let isHigherTitle = this.getMarkdownLevel(line) > 0 && this.getMarkdownLevel(line) <= this.getMarkdownLevel(markdownTitle) 
+            if (isHigherTitle) {
+              // Next content is a higher title => a subtitle that can't be in the current subtitle -> stop adding content
+              return res
+            } else if (this.getMarkdownLevel(line) == 0) {
+              // Next content is just a para
+              res.push(line)
+            } else {
+              //next content is subtitle -> recursion
+              //get rid of the # before the subtitle
+              let title = line.replace(/#+\s*/, "")      
+              let sub = [title]
+              sub = sub.concat(this.generateMarkdownTranslation(line, lines.slice(i)))
+              i = i + sub.length - 1
+              res.push(sub)
             }
           }
-
-          let sub = [other[i].slice(start)]
-          sub = sub.concat(this.generateMarkdownTranslation(other[i], other.slice(i)))
-          i += sub.length -1
-          res.push(sub)
-        }
+          return res
       }
-      return res
-    }
-
-    /**
-     * Checks the markdown level of a string (number of importance, 0 being just a paragraph, 1 being a level 1 title, 2 being a level 2 title, etc...)
-     * @param {String} string 
-     * @returns the level of importance of the string in a markdown
-     */
-    checkMarkdownLevel(string){
-      let level = 0
-      for (let i = 0; i < string.length; i ++){
-        if (string[i] != '#' && string[i] != ' ' || (string[i] == ' ' && level > 0)){
-          break
-        }else if (string[i] == '#'){
-          level += 1
-        }
+      
+      /**
+       * Gets the markdown level of a string
+       * 
+       * @param {String} string 
+       * @returns the level of importance of the string in a markdown (o => paragraph, 1 => title1, 2 => title2...)
+       */
+      getMarkdownLevel(string){
+          let level = 0
+          for (let i = 0; i < string.length; i ++){
+            if (string[i] != '#' && string[i] != ' ' || (string[i] == ' ' && level > 0)){
+              break
+            } else if (string[i] == '#'){
+              level += 1
+            }
+          }
+          return level
       }
-      return level
-    }
 
 
     /**

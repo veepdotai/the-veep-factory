@@ -76,8 +76,8 @@ export function PDFDocument(props) {
     return (
       <Page style={data.styles.firstPage} bookmark={t("CoverPage")} size={data.dimensions}>
         
-        {getInlineContent("title", "title")}
-        {getInlineContent("subTitle", "subTitle")}
+        {getInlineContent("title", "docTitle")}
+        {getInlineContent("subTitle", "docSubTitle")}
 
         <Image style={data.styles.featuredImage} src={data.featuredImage} />
 
@@ -89,7 +89,8 @@ export function PDFDocument(props) {
         </View>
 
         {data.backgroundImageCover == "./assets/images/nothing.png" ? background(data.backgroundImage) : background(data.backgroundImageCover)}
-        {footer()}
+
+        {/*footer()*/}
       </Page>
     )
   }
@@ -101,7 +102,7 @@ export function PDFDocument(props) {
   function toc() {
     let titles = []
 
-    content.map( (page) => {
+    content.map((page) => {
       titles.push(page[1])
     })
 
@@ -113,9 +114,9 @@ export function PDFDocument(props) {
               <Text style={data.styles.contentTableTitle}>{t("TOC")}</Text>
 
               <View style={data.styles.contentTableLinks}>
-                {titles.map((_title, i) => {
+                {titles.map((title, i) => {
                   return (
-                    <Link style={data.styles.link} src={"#" + (i+1)}>{_title}</Link>
+                    <Link style={data.styles.link} src={"#" + (i+1)}>{title}</Link>
                     )
                   })}
               </View>
@@ -130,8 +131,11 @@ export function PDFDocument(props) {
   }
 
   /**
-   * Creates and returns every content pages, depending on whether a new page should be started at the beginning of a new section of the PDF
-   * -> we either render a new page for every title, or a new view inside of a page which contains every title.
+   * Creates and returns every content pages, depending on whether a new page 
+   * should be started at the beginning of a new section of the PDF
+   * -> we either render a new page for every title, or a new view inside of a 
+   * page which contains every title.
+   * 
    * @returns the content of the pdf
    */
   function contentPages() {
@@ -149,7 +153,7 @@ export function PDFDocument(props) {
                   if (typeof(subtitle) == "string"){
                     return (<Text style={data.styles.text}>{subtitle}</Text>)
                   }else {
-                    return displaySubtitle(subtitle)
+                    return displaySubtitle(1, subtitle)
                   }
                 })}
                 {page[4] != "./assets/images/nothing.png" ? (<Image src={page[4]} style={page[5] != null ? page[5].image : data.styles.imageContent} />) : (console.log())}
@@ -170,7 +174,17 @@ export function PDFDocument(props) {
               return (
                 <View id={page[0]}>
                   <Text style={data.styles.title}>{page[1]}</Text>
-                  {page[2].map((subtitle) => {if (typeof(subtitle) == "string") {return (<Text style={data.styles.text}>{subtitle}</Text>)} else {return displaySubtitle(subtitle)}})}
+                  {
+                    page[2].map((subtitle) => {
+                      if (typeof(subtitle) == "string") {
+                        return (
+                          <Text style={data.styles.text}>{subtitle}</Text>
+                        )
+                      } else {
+                        return displaySubtitle(1, subtitle)
+                      }
+                    })
+                  }
                   {page[4] != "./assets/images/nothing.png" ? (<Image src={page[4]} style={page[5] != null ? page[5].image : data.styles.imageContent} />) : (console.log())}
                 </View>
               )
@@ -187,21 +201,33 @@ export function PDFDocument(props) {
 
 
   /**
-   * Returns the subtitle and its generated content, which can be another subtitle. The function is recursive : if the content is a subtitle (array) -> calls itself again else the content is a string -> renders the string and return
+   * Returns the subtitle and its generated content, which can be another
+   * subtitle. The function is recursive :
+   * if the content is a subtitle (array) then calls itself again else
+   * the content is string -> renders the string and returns
+   * 
    * @param {Array} subtitle an array which contains the subtitle and the content associated to it, which can be another subtitle [Subtitle-String, Content]
    * @returns The subtitle and its content
    */
-  function displaySubtitle(subtitle) {
+  function displaySubtitle(i, subtitle) {
       return (
         <>
-          <Text style={data.styles.subTitle}>{subtitle[0]}</Text>
-          <>{typeof(subtitle[1]) == "string" ? <Text style={data.styles.text}>{subtitle[1]}</Text> : <>{displaySubtitle(subtitle[1])}</> }</>
+          {/*<Text style={data.styles.subTitle}>{subtitle[0]}</Text>*/}
+          <Text style={data.styles['title' + i]}>{subtitle[0]}</Text>
+          <>{
+            typeof(subtitle[1]) == "string"
+              ? <Text style={data.styles.text}>{subtitle[1]}</Text>
+              : <>{displaySubtitle(i + 1, subtitle[1])}</>
+            }
+          </>
         </>
       )
   }
 
   /**
-   * Renders a last page according to its number and the data contained in the parameter props
+   * Renders a last page according to its number and the data contained in the
+   * parameter props
+   * 
    * @param {Int} number 
    * @returns The rendered last page
    */
@@ -213,7 +239,7 @@ export function PDFDocument(props) {
         <Text style={data.styles.title}>{data.backCover[number][3]}</Text>
         <Text style={data.styles.backPageContent}>{data.backCover[number][2]}</Text>
         {background(data.backCover[number][1])}
-        {footer()}
+        {/*footer()*/}
       </Page>
     )
   }

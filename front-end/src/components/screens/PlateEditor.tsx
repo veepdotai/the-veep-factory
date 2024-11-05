@@ -317,19 +317,21 @@ export function PlateEditor( {input, contentId, attrName} ) {
   return (
     <>
           { content ?
-            <DndProvider className="p-0" backend={HTML5Backend}>
+            <DndProvider className="" backend={HTML5Backend}>
               <Plate
                 editor={getEditor(content)} 
                 onChange={ value => {
                   const content = JSON.stringify(value.value);
                   localStorage.setItem("editor", content)
-                }}>
+                }}
+                className='dis_focus:ring-0 dis_focus:ring-offset-0'
+                >
                 <FixedToolbar>
                   <FixedToolbarButtons operations={operations} />
                 </FixedToolbar>
                 <Editor
                   style={editorWindowSpacing}
-                  className='focus-ring-none'
+                  className='mx-auto mt-2 w-[800px] rounded-none focus-visible:ring-none focus-visible:ring-1 focus-visible:ring-offset-0'
                 />
                 
                 <FloatingToolbar>

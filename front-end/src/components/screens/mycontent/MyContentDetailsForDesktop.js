@@ -5,6 +5,11 @@ import { Logger } from 'react-logger-lib';
 import md5 from 'js-md5';
 import { t } from 'i18next';
 
+import { createPlateEditor } from '@udecode/plate-common/react';
+import { MarkdownPlugin } from '@udecode/plate-markdown';
+import { HeadingPlugin } from '@udecode/plate-heading/react';
+
+
 import { Separator } from "src/components/ui/shadcn/separator"
 import { ToggleGroup, ToggleGroupItem } from "src/components/ui/shadcn/toggle-group"
 import { Popover, PopoverContent, PopoverTrigger } from 'src/components/ui/shadcn/popover'
@@ -125,11 +130,34 @@ export default class MyContentDetailsForDesktop {
     )
   }
 
+  /**
+   * If content is CRT format then convert it to markdown
+   * 
+   * @param {*} selectedFormat 
+   * @param {*} prompt 
+   * @param {*} data 
+   * @param {*} contentId 
+   * @returns 
+   */
   static desktopPDFContent(selectedFormat, prompt, data, contentId) {
-    let log = MyContentDetailsForDesktop.log
-    log.trace("desktopContent: prompt: " + JSON.stringify(prompt));
+    let log = (msg) => MyContentDetailsForDesktop.log.trace("desktopPDFContent: " + msg)
+    log("prompt: " + JSON.stringify(prompt));
     let content = MyContentDetailsUtils.getContent(prompt, data, contentId, true);
-    log.trace("desktopContent: content: " + JSON.stringify(content));
+
+    if (content.startsWith('[{')) {
+      log("Content is in CRT format: " + content[0])
+      const editor = createPlateEditor({ 
+        value: JSON.parse(content),
+        plugins: [
+          HeadingPlugin,
+          MarkdownPlugin,
+        ],
+      });
+      
+      content = editor.api.markdown.serialize();      
+    }
+
+    log("content: " + JSON.stringify(content));
 
     return (<PDFViewer content={content} />)
   }

@@ -203,9 +203,9 @@ export default class PdfParams {
                 result += cssString[i]
                 result += "\""
                 inQuote = false
-            } else if (inQuote && cssString[i] == "-"){
-                result += cssString[i+1].toUpperCase()
-                i += 1
+//            } else if (inQuote && cssString[i] == "-"){
+//                result += cssString[i+1].toUpperCase()
+//                i += 1
             } else if (cssString[i] == "{" && cssString[i-1] != ":"){
                 result += ":{"
             } else if (cssString[i] == ";"){
