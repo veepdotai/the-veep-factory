@@ -70,29 +70,22 @@ function ReportData( {...props} ) {
           let ps = TOML.parse(o.veepdotaiPrompt?.replace(/#EOL#/g, "\n"));
 
           let r = {}
-          /*
-          {
-            "id": o.postId || o.databaseId,
-            "test": "jck",
-            "date": o.date ? o.date.replace(/T/, " ").replace(/\.*$/, "") : "",
-        //          "author": o.author.node.firstName,
-            "title": o.title,
-            "uri": o.uri,
-            "type": ps?.metadata?.name + ' v' + ps?.metadata?.version
-          }
-            */
 
           //r = o
           r.id = o.postId || o.databaseId
           //r.date = o.date?.replace(/T/, " ").replace(/\.*$/, "") ?? ""
           r.date = o.date ? o.date.replace(/T/, " ").replace(/\.*$/, "") : ""
           r.givenName = o.author ? o.author?.node?.firstName + " " + o.author?.node?.lastName : ""
-            //o.test = "bonjour"
           r.title = o.title
           r.uri = o.uri
           //r.status = o.categories.edges[0].node.name
           //r.status = o.categories?.edges[0].node.name
           r.type = ps?.metadata?.name + ' v' + ps?.metadata?.version
+          r.type = ps?.metadata?.name + ' v' + ps?.metadata?.version
+          
+          r.domain = (o.veepdotaiDomain || ps?.metadata?.classification?.group)?.trim()
+          r.category = (o.veepdotaiCategory || ps?.metadata?.classification?.category)?.trim()
+          r.artefactType = (o.veepdotaiArtefactType || ps?.metadata?.classification?.subCategory)?.trim()
 
           return r
 

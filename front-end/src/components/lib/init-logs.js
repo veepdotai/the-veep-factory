@@ -79,6 +79,7 @@ export default function initAppJSLogs(level = "NONE") {
     localStorage.setItem('ThirdPartiesDataProvider', level);
     localStorage.setItem('UtilsGraphQL', level);
     localStorage.setItem('UtilsGraphQLPost', level);
+    localStorage.setItem('UtilsGraphQLClauseBuilder', level);
     localStorage.setItem('UtilsGraphQLVcontent', level);
     localStorage.setItem('UtilsGraphQLMonitoring', level);
     localStorage.setItem('UtilsGraphQLEditorialLine', level);

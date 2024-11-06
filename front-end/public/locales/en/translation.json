@@ -290,6 +290,12 @@
   "Production": "Production",
   "R&D": "R&D",
 
+  "NextBtnText": "Next",
+  "PrevBtnText": "Previous",
+  "DoneBtnText": "Done",
+
+  "Of": "of",
+
   "Stop": "Stop"
 
 }

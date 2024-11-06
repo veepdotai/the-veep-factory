@@ -24,52 +24,67 @@ export default function MenuVertical( {direction, isManager, profile} ) {
     }
 
     function getMenu(view) {
-        let commonMenuDefinition = [
-            ['contents', t("MyContents")],
-            ['assistant', t("CreateAssistant")],
-            ['add-content', t("CreateContent")],
-            ['digitalTwin', t("MyDigitalTwin")],
-        ]
-        let salesMenuDefinition = [
-            ['dpt-communication', t('Communication')],
-            ['dpt-marketing', t('Marketing')],
-            ['dpt-sales', t('Sales')],
-        ]
-        let productionMenuDefinition = [
-            ['dpt-management', t('Management')],
-            ['dpt-production', t('Production')],
-            ['dpt-quality', t('Quality')],
-            ['dpt-RandD', t('RandD')],
-            ['', t('')],
-        ]
-        let supportMenuDefinition = [
-            ['dpt-finance', t('Finance')],
-            ['dpt-HR', t('HR')],
-            ['dpt-IT', t('IT')],
-            ['dpt-logistics', t('Logistics')],
-            ['dpt-procurement', t('Procurement')],
+        let menuDefinition = [
+            {
+                id: "common",
+                title: "",
+                items: [
+                    {id: 'contents', label: t("MyContents")},
+                    {id: 'assistant', label: t("CreateAssistant")},
+                    {id: 'add-content', label: t("CreateContent")},
+                    {id: 'digitalTwin', label: t("MyDigitalTwin")},
+                    {id: 'separator', label: ""},        
+                ]
+            },
+            {
+                id: "function-sales",
+                title: t("SalesFunction"),
+                items: [
+                    {id: 'dpt-communication', label: t('Communication')},
+                    {id: 'dpt-marketing', label: t('Marketing')},
+                    {id: 'dpt-sales', label: t('Sales')},
+                ]
+            },
+            {
+                id: "function-production",
+                title: t("ProductionConsultingFunction"),
+                items: [
+                    {id: 'dpt-management', label: t('Management')},
+                    {id: 'dpt-production', label: t('Production')},
+                    {id: 'dpt-consulting', label: t('Consulting')},
+                    {id: 'dpt-quality', label: t('Quality')},
+                    {id: 'dpt-randr', label: t('RandD')},
+                ]
+            },
+            {
+                id: "function-support",
+                title: t("SupportFunction"),
+                items: [
+                    {id: 'dpt-finance', label: t('Finance')},
+                    {id: 'dpt-hr', label: t('HR')},
+                    {id: 'dpt-it', label: t('IT')},
+                    {id: 'dpt-logistics', label: t('Logistics')},
+                    {id: 'dpt-procurement', label: t('Procurement')},
+                ]
+            },
         ]
 
         return(
             <>
-                {commonMenuDefinition.map(row => <MenuItem itemKey={row[0]} itemLabel={row[1]} direction={direction} /> )}
-
                 <Accordion type="single" collapsible className="ms-4">
-                    {getAccordionItem("function-support", t("SupportFunction"),
-                        <>
-                            {salesMenuDefinition.map(row => <MenuItem itemKey={row[0]} itemLabel={row[1]} direction={direction} /> )}
-                        </>
-                    )}
-                    {getAccordionItem("function-production", t("ProductionFunction"),
-                        <>
-                            {productionMenuDefinition.map(row => <MenuItem itemKey={row[0]} itemLabel={row[1]} direction={direction} /> )}
-                        </>
-                    )}
-                    {getAccordionItem("function-sales", t("SalesFunction"),
-                        <>
-                            {supportMenuDefinition.map(row => <MenuItem itemKey={row[0]} itemLabel={row[1]} direction={direction} /> )}
-                        </>
-                    )}
+                    {
+                        menuDefinition.map((menu) => {
+                            if (menu.title == "") {
+                                return menu.items.map(row => row.id == "separator" ? <hr /> : <MenuItem itemKey={row.id} itemLabel={row.label} direction={direction} /> )
+                            } else {
+                                return getAccordionItem(menu.id, menu.title,
+                                    <>
+                                        {menu.items.map(row => row.id == "separator" ? <hr /> : <MenuItem itemKey={row.id} itemLabel={row.label} direction={direction} /> )}
+                                    </>
+                                )       
+                            }
+                        })
+                    }
                 </Accordion>
             </>
         )

@@ -292,6 +292,12 @@
   "Production": "Production",
   "R&D": "R&D",
 
+  "NextBtnText": "Suivant",
+  "PrevBtnText": "Précédent",
+  "DoneBtnText": "Terminé",
+
+  "Of": "de",
+
   "Stop": "Stop"
 
 }
