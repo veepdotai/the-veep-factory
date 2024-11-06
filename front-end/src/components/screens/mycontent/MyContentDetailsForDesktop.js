@@ -159,7 +159,9 @@ export default class MyContentDetailsForDesktop {
 
     log("content: " + JSON.stringify(content));
 
-    return (<PDFViewer content={content} />)
+    return (
+        <PDFViewer content={content} />
+    )
   }
 
 }

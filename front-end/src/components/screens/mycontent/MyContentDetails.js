@@ -157,6 +157,12 @@ export default function MyContentDetails( { id }) {
                         <TabsContent id="details-content-pdf" className="h-full" value="pdf-merged-content">
                           {MyContentDetailsForDesktop.desktopPDFContent(selectedFormat, prompt, data, contentId)}
                         </TabsContent>
+                        <TabsContent id="details-sideBySide-content" value="sideBySide-content">
+                          {MyContentDetailsUtils.getColumnsSelectors([1, 2, 3, 4, 6], setWidth)}
+                          <Row className="px-4">
+                            {MyContentDetailsUtils.getSideBySideView(prompt, data, contentId, width)}                          
+                          </Row>
+                        </TabsContent>
                       </Tabs>
                     </ResizablePanel>
                   </ResizablePanelGroup>
