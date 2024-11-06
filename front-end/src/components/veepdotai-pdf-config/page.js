@@ -1,16 +1,12 @@
 'use client'
 
 import React from 'react';
-import MyDocument from './components/MyDocument';
-import dynamic from 'next/dynamic';
 
 import ConfigPanel from './components/ConfigPanel';
 
 import {ResizableHandle, ResizablePanel, ResizablePanelGroup} from 'src/components/ui/shadcn/resizable';
 import PdfParams from './components/PdfParams';
 import PDF from './components/PDF';
-import formatDisplay from './components/FormatDisplay';
-import next from 'next';
 
 //const PDFDownloadLink = dynamic(() => import('@react-pdf/renderer').then(mod => mod.PDFDownloadLink), { ssr: false });
  
@@ -77,11 +73,13 @@ class PDFPanel extends React.Component {
         }
       
         handleMarkdown(content) {
-          //The markdown is divided using newLines
-          //It is possible that it does not work if there is no blank line in between every separate title / subtitle/ paragraph
+          // The markdown is divided using newLines
+          // It is possible that it does not work if there is no blank line
+          // in between every separate title / subtitle/ paragraph
           let lines = content.split(/(?:[^\S\n]*\n){1,}\s*/)
       
-          //Checking for every level 1 titles which will be used as reference points
+          // Checking for every level 1 titles which will be used as
+          // reference points
           function getTitleIndexes(self, lines) {
               let titleIndexes = []
               for (let i = 0; i < lines.length; i ++){
@@ -97,7 +95,8 @@ class PDFPanel extends React.Component {
           }
       
           let titleIndexes = getTitleIndexes(this, lines)
-          // If there isn't lvl 1 title at all or there is none within the first 10 linebreaks
+          // If there isn't lvl 1 title at all or there is none within the // 
+          // first 10 linebreaks
           // And so?
           if (titleIndexes.length == 0 || titleIndexes[0] > 10){
               titleIndexes.unshift(0)
@@ -106,19 +105,12 @@ class PDFPanel extends React.Component {
       
           let res = []
       
-          // Loop to every title: get rid of the # and every space before the title, then generating content and pushing the result page
+          // Loop to every title: get rid of the # and every space before
+          // the title, then generating content and pushing the result page
           for (let i = 0; i < titleIndexes.length; i++){
               let currentTitleIndex = titleIndexes[i]
               let currentMarkdownTitle = lines[currentTitleIndex] 
               let currentTitle = currentMarkdownTitle.replace(/^#+\s*/, "")
-      /*
-              for (let j = 0; j < lines[currentTitleIndex].length; j++){
-              if (lines[currentTitleIndex][j] != " " && lines[currentTitleIndex][j] != "#"){
-                  start = j
-                  break
-              }
-              }
-      */
               res.push([
                   i,
                   currentTitle,
@@ -157,14 +149,15 @@ class PDFPanel extends React.Component {
             let line = lines[i]
             let isHigherTitle = this.getMarkdownLevel(line) > 0 && this.getMarkdownLevel(line) <= this.getMarkdownLevel(markdownTitle) 
             if (isHigherTitle) {
-              // Next content is a higher title => a subtitle that can't be in the current subtitle -> stop adding content
+              // Next content is a higher title => a subtitle that can't be
+              // in the current subtitle -> stop adding content
               return res
             } else if (this.getMarkdownLevel(line) == 0) {
               // Next content is just a para
               res.push(line)
             } else {
-              //next content is subtitle -> recursion
-              //get rid of the # before the subtitle
+              // Next content is subtitle -> recursion
+              // get rid of the # before the subtitle
               let title = line.replace(/#+\s*/, "")      
               let sub = [title]
               sub = sub.concat(this.generateMarkdownTranslation(line, lines.slice(i)))

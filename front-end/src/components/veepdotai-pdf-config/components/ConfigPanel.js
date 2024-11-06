@@ -1,10 +1,10 @@
+import React from 'react';
 //On utilise shadcn.ui pour faire le panneau
 import  {ResizableHandle, ResizablePanel, ResizablePanelGroup } from 'src/components/ui/shadcn/resizable';
 import { Input } from 'src/components/ui/shadcn/input';
 import { Button } from "src/components/ui/shadcn/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "src/components/ui/shadcn/tabs";
 
-import React from 'react';
 import FormatDisplay from './FormatDisplay';
 import PdfParams from './PdfParams';
 import TitleDisplay from './TitleDisplay';
@@ -16,13 +16,8 @@ import "ace-builds/src-noconflict/ext-inline_autocomplete";
 
 import icones from '../icons'
 
-
-
 import { StyleSheet } from "@react-pdf/renderer";
-import styles from '../default.css';
 import BackCoverDynamicDisplay from './BackCoverDynamicDisplay';
-import { Checkbox } from 'src/components/ui/shadcn/checkbox';
-import { Label } from 'src/components/ui/shadcn/label';
 import ContentDynamicDisplay from './ContentDynamicDisplay';
 
 
@@ -46,20 +41,20 @@ class ConfigPanel extends React.Component {
     this.handleCompile = this.handleCompile.bind(this)
 
     this.content = props.content
-    this.paramActuel = props.parameter
-    this.cssActuel = this.paramActuel.getStyleString()
+    this.param = props.parameter
+    this.cssActuel = this.param.getStyleString()
   }
 
   handleCompile (step=1) {
-    this.paramActuel.refreshDate()
-    this.paramActuel.littleIncrementVersion(step)
-    this.props.handleCompilePDF(this.paramActuel, this.content)
+    this.param.refreshDate()
+    this.param.littleIncrementVersion(step)
+    this.props.handleCompilePDF(this.param, this.content)
   }
 
   handleCSSTextChange(newValue){
     try{
-      this.paramActuel.styles = StyleSheet.create(JSON.parse(this.paramActuel.translateCSStoJSON(newValue)))
-      this.cssActuel = this.paramActuel.getStyleString()
+      this.param.styles = StyleSheet.create(JSON.parse(this.param.translateCSStoJSON(newValue)))
+      this.cssActuel = this.param.getStyleString()
       this.handleCompile(0)
     }
     catch(erreur){
@@ -70,15 +65,15 @@ class ConfigPanel extends React.Component {
   async handleCSSFileChange (event){
     const file = event.target.files[0];
     if (!(file instanceof Blob)){
-        this.paramActuel.styles = StyleSheet.create()
+        this.param.styles = StyleSheet.create()
         return
     }
     const reader = new FileReader();
 
     reader.onload = () => {
       // Récupération du contenu du fichier CSS et changement des paramètres
-      this.paramActuel.styles = StyleSheet.create(JSON.parse(this.paramActuel.translateCSStoJSON(reader.result)))
-      this.cssActuel = this.paramActuel.getStyleString()
+      this.param.styles = StyleSheet.create(JSON.parse(this.param.translateCSStoJSON(reader.result)))
+      this.cssActuel = this.param.getStyleString()
       this.handleCompile(0)
     };
 
@@ -91,44 +86,44 @@ class ConfigPanel extends React.Component {
   } 
 
   handleFormatChange(newFormat) {
-    this.paramActuel.setFormat(newFormat)
-    this.cssActuel = this.paramActuel.getStyleString()
+    this.param.setFormat(newFormat)
+    this.cssActuel = this.param.getStyleString()
     this.forceUpdate()
   }
   
   handleTitleChange(newTitle){
-    this.paramActuel.title = newTitle
+    this.param.title = newTitle
   }
 
   handleNameChange(newName){
-    this.paramActuel.companyName = newName
+    this.param.companyName = newName
   }
 
   handleLogoChange(newImg){
-    this.paramActuel.companyImg = newImg
+    this.param.companyImg = newImg
   }
 
   handleBackgroundChange(newImg){
-    this.paramActuel.backgroundImg = newImg
+    this.param.backgroundImg = newImg
   }
 
   handleSubtitleChange(newSubtitle){
-    this.paramActuel.subTitle = newSubtitle
+    this.param.subTitle = newSubtitle
   }
 
   handleAuthorChange(newAuthor){
-    this.paramActuel.author = newAuthor
+    this.param.author = newAuthor
   }
 
   handleLayoutChange(newHeader, newFooter, newNewPage, newToc){
-    this.paramActuel.displayHeader = newHeader
-    this.paramActuel.displayFooter = newFooter
-    this.paramActuel.newPage = newNewPage
-    this.paramActuel.toc = newToc
+    this.param.displayHeader = newHeader
+    this.param.displayFooter = newFooter
+    this.param.newPage = newNewPage
+    this.param.toc = newToc
   }
 
   handleBackCoverChange(newCover){
-    this.paramActuel.backCover = newCover
+    this.param.backCover = newCover
     this.forceUpdate()
   }
 
@@ -142,16 +137,16 @@ class ConfigPanel extends React.Component {
           <h2>Fond de la page de garde :</h2>
           <div class="flex">
             <Input type="file"
-              onChange={(choisit) => {this.paramActuel.backgroundImgCover = URL.createObjectURL(choisit.target.files[0])}}/>          
+              onChange={(item) => {this.param.backgroundImgCover = URL.createObjectURL(item.target.files[0])}}/>          
             <Button variant="ghost" className='mt-1 mx-1 px-0 h-9 w-9' onClick={() => {
-                this.paramActuel.backgroundImgCover = "./assets/images/nothing.png"
+                this.param.backgroundImgCover = "./assets/images/nothing.png"
             }}>{icones.trash}</Button>          
             <Button variant="ghost" className='mt-1 mx-1 px-0 h-9 w-9' onClick={() => {this.handleCompile()}}>{icones.refresh} </Button>
           </div>
           <div>
-            <ContentDynamicDisplay pages={this.content} handleChange={this.handleContentChange} startingPage={this.paramActuel.toc ? 2 : 1 } />
+            <ContentDynamicDisplay pages={this.content} handleChange={this.handleContentChange} startingPage={this.param.toc ? 2 : 1 } />
             <div className='flex flex-grow-0 h-px mx-5 my-1 bg-gray-400' />
-            <BackCoverDynamicDisplay pages={this.paramActuel.backCover} handleChange={this.handleBackCoverChange}/>
+            <BackCoverDynamicDisplay pages={this.param.backCover} handleChange={this.handleBackCoverChange}/>
           </div>
       </div>
     )
@@ -162,7 +157,7 @@ class ConfigPanel extends React.Component {
       <div className='w-full h-full'>
         <div className='flex'>
           <Input type="file" className='my-1 mx-1' onChange={this.handleCSSFileChange}></Input>
-          <Button variant="ghost" className='mx-1 px-0 h-9 w-9' onClick={() => {this.paramActuel.setFormat(this.paramActuel.format), this.cssActuel = this.paramActuel.getStyleString(), this.handleCompile(0)}}>{icones.reset} </Button>
+          <Button variant="ghost" className='mx-1 px-0 h-9 w-9' onClick={() => {this.param.setFormat(this.param.format), this.cssActuel = this.param.getStyleString(), this.handleCompile(0)}}>{icones.reset} </Button>
           <Button variant="ghost" className='mx-1 px-0 h-9 w-9' onClick={() => {this.handleCSSTextChange(this.cssActuel), this.handleCompile()}}>{icones.refresh}</Button>
         </div>
         <AceEditor placeholder='Écrivez votre CSS ici : ' value={this.cssActuel} width='100%' height='100%' mode="css" onChange={(newValue) => {this.cssActuel = newValue}} setOptions={{enableLiveAutocompletion: true, showLineNumbers: true,}}/>
@@ -180,18 +175,18 @@ class ConfigPanel extends React.Component {
               <div className="mx-2">
                 <TitleDisplay 
                   handleChangeTitle={this.handleTitleChange}
-                  defaultTitle={this.paramActuel.title}
+                  defaultTitle={this.param.title}
                   handleChangeSubtitle={this.handleSubtitleChange}
-                  defaultSubtitle={this.paramActuel.subTitle}
+                  defaultSubtitle={this.param.subTitle}
                   handleChangeName={this.handleNameChange}
-                  defaultName={this.paramActuel.companyName}
+                  defaultName={this.param.companyName}
                   handleChangeAuthor={this.handleAuthorChange}
-                  defaultAuthor={this.paramActuel.author}
+                  defaultAuthor={this.param.author}
                 />
               </div>
 
               <div>
-                <FormatDisplay baseValue={this.paramActuel.format} handleChange={this.handleFormatChange}/>
+                <FormatDisplay baseValue={this.param.format} handleChange={this.handleFormatChange}/>
                 <LayoutDisplay  handleChange={this.handleLayoutChange} />
               </div>
 
@@ -210,7 +205,7 @@ class ConfigPanel extends React.Component {
     return (
       <Tabs defaultValue="layout" className='flex flex-col h-full'>
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger onClick={this.handleCompile} value="presentation">Présentation</TabsTrigger>
+          {/*<TabsTrigger onClick={this.handleCompile} value="presentation">Présentation</TabsTrigger>*/}
           <TabsTrigger onClick={this.handleCompile} value="layout">Affichage</TabsTrigger>
           <TabsTrigger onClick={this.handleCompile} value="css">CSS</TabsTrigger>
         </TabsList>

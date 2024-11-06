@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     paddingBottom: 65,
   },
 
-  docTitle: {
+  title: {
     //position: "absolute",
     //width: "100%",
     //top: 150,
@@ -27,10 +27,7 @@ const styles = StyleSheet.create({
     color: 'white'
   },
 
-  docSubTitle: {
-    //position: "absolute",
-    //width: "100%",
-    //top: 200,
+  subTitle: {
     fontSize: 24,
     textAlign:"left",
     marginLeft:50,
@@ -202,66 +199,46 @@ const styles = StyleSheet.create({
   /**
    * Text styles
    */
-
-  title: {
-    fontSize: 30,
+  title1: {
+    fontSize: 16,
     fontWeight:900,
     fontFamily:"Helvetica-Bold",
-    textAlign:"left",
-    marginLeft:0,
-    marginVertical: 20,
-    color: 'black'
-  },
-
-  subTitle: {
-    //position: "absolute",
-    //width: "100%",
-    //top: 200,
-    fontSize: 24,
-    textAlign:"left",
-    marginLeft:0,
-    color: 'black'
-  },
-
-  title1: {
-    fontSize: 24,
     textAlign: 'left',
     marginVertical: 20,
     //backgroundColor: "yellow",
   },
 
   title2: {
-    fontSize: 22,
+    fontSize: 14,
     textAlign: 'left',
-
     marginVertical: 20,
     //backgroundColor: "red",
   },
 
   title3: {
-    fontSize: 20,
+    fontSize: 12,
     marginVertical: 20,
     //backgroundColor: "blue",
   },
 
   title4: {
-    fontSize: 18,
+    fontSize: 12,
     marginVertical: 20,
     //backgroundColor: "violet",    
   },
 
   title5: {
-    fontSize: 16,
+    fontSize: 12,
     marginVertical: 20,
   },
 
   title6: {
-    fontSize: 14,
+    fontSize: 12,
     marginVertical: 20,
   },
 
   link: {
-    fontSize: 14,
+    fontSize: 12,
     color: 'black',
     marginBottom: 10,
   },
@@ -272,8 +249,6 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginBottom: 10,
   },
-
-
 
   centeredText: {
     marginVertical: 'auto',

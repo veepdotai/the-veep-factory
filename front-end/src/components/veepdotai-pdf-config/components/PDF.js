@@ -76,8 +76,8 @@ export function PDFDocument(props) {
     return (
       <Page style={data.styles.firstPage} bookmark={t("CoverPage")} size={data.dimensions}>
         
-        {getInlineContent("title", "docTitle")}
-        {getInlineContent("subTitle", "docSubTitle")}
+        {getInlineContent("title", "title")}
+        {getInlineContent("subTitle", "subTitle")}
 
         <Image style={data.styles.featuredImage} src={data.featuredImage} />
 
@@ -148,7 +148,7 @@ export function PDFDocument(props) {
             return (
               <Page style={data.styles.contentPage} id={page[0]} bookmark={t("Content")} size={data.dimensions}>
                 {header()}
-                <Text style={data.styles.title}>{page[1]}</Text>
+                <Text style={data.styles.title1}>{page[1]}</Text>
                 {page[2].map((subtitle) => {
                   if (typeof(subtitle) == "string"){
                     return (<Text style={data.styles.text}>{subtitle}</Text>)
@@ -164,16 +164,15 @@ export function PDFDocument(props) {
           })}
         </>
       )
-    }
-    //Without a new page every new title
-    else if (content.length > 0) {
+    } else if (content.length > 0) {
+      //Without a new page every new title
       return (
           <Page style={data.styles.contentPage} id={"content"} bookmark={t("Content")} size={data.dimensions}>
             {header()}
             {content.map( function(page) {
               return (
                 <View id={page[0]}>
-                  <Text style={data.styles.title}>{page[1]}</Text>
+                  <Text style={data.styles.title1}>{page[1]}</Text>
                   {
                     page[2].map((subtitle) => {
                       if (typeof(subtitle) == "string") {

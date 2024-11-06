@@ -157,7 +157,10 @@ export default class MergedContent {
           let sectionContent = MyContentDetailsUtils.getData(data, j, "");
           log(`sectionContent: ${sectionContent}`)
 
-          if (options?.displayLabel) {
+          let hasTitle = 0 <= sectionContent.search(/^\s{0,3}#/)
+          log(`sectionContent: hasTitle: ${hasTitle}`)
+
+          if (options?.displayLabel || ! hasTitle) {
             content += (`# ${label}\n\n${sectionContent}\n\n`);
           } else {
             content += (`${sectionContent}\n\n`);
@@ -176,12 +179,14 @@ export default class MergedContent {
       let log = (msg) => MergedContent.log.trace("getContentPart: " + msg)
 
       let defaultChain = Veeplet.getChainAsArray(prompt.prompts.chain);
+//      let defaultOutput = Veeplet.getOutputAsArray(prompt.prompts.output);
       log(`prompt.prompts.chain: ${JSON.stringify(defaultChain)}.`);
 
       //let chain = ["P.1", "Intro", "P.2"];
       //let chain = Veeplet.getChainAsArray("P.1, P.2, Intro");
       //let chain = Veeplet.getChainAsArray(["P.1", "P.2", "Intro"]);
       let chain = Veeplet.getChainAsArray(defaultChain);
+//      let output = Veeplet.getOutputAsArray(defaultChain);
       log(`chain: ${JSON.stringify(chain)}.`);
       log("chain is not null.");
 
