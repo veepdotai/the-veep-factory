@@ -287,7 +287,7 @@ export default function Prompt( { definition, setDisplay } ) {
                                 <IconPickerItem value={definition?.bodyIconName} size={82} color="#000" />
                             </div>
                             */}
-                            <div style={getStyles("absolute", 3)} className='mb-2 overflow-scroll text-overflow-ellipsis'> 
+                            <div style={getStyles("absolute", 3)} className='mb-2 overflow-hidden /*overflow-scroll*/ text-overflow-ellipsis'> 
                                 {definition.description}
                             </div>                            
                         </div>
