@@ -203,6 +203,7 @@ class PostObjectConnectionResolver extends AbstractConnectionResolver {
 		if ( ! empty( $this->args['where'] ) ) {
 			$input_fields = $this->sanitize_input_fields( $this->args['where'] );
 		}
+		//error_log("where: " . print_r( $input_fields, true) . "\n", 3, "/tmp/input_fields.log" );
 
 		/**
 		 * If the post_type is "attachment" set the default "post_status" $query_arg to "inherit"

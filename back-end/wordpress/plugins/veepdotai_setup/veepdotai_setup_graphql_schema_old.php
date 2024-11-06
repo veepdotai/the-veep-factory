@@ -33,6 +33,7 @@ function register_schema_transition() {
 	register_IContent();
 	register_VContent();
 	register_MetadataFields('Vcontent');
+	register_Taxonomies();
 }
 
 function register_Icontent() {
@@ -67,6 +68,19 @@ function register_Icontent() {
 			return get_post_type_object( $node->post_type )->graphql_single_name ?: 'Icontent';
 		}
 	]);
+}
+
+function register_Taxonomies() {
+	register_taxonomy( 'doc_tag', 'Vcontents', [
+		'labels'  => [
+		  'menu_name' => __( 'Document Tags', 'your-textdomain' ), //@see https://developer.wordpress.org/themes/functionality/internationalization/
+		],
+		'show_in_graphql' => true,
+		'hierarchical' => true,
+		'graphql_single_name' => 'documentTag',
+		'graphql_plural_name' => 'documentTags',
+	]);
+
 }
 
 function register_Vcontent() {
@@ -185,6 +199,49 @@ function register_MetadataFields( $baseType ) {
 			return ! empty( $value ) ? $value : '';
 	   }
 	]);
+
+	register_graphql_field( $baseType, 'veepdotaiSubtitle', [ 'type' => 'String',
+	   'resolve' => function( $post ) {
+			$value = get_post_meta( $post->ID, "veepdotaiSubtitle", true );
+			return ! empty( $value ) ? $value : '';
+	   }
+	]);
+
+	register_graphql_field( $baseType, 'veepdotaiDomain', [ 'type' => 'String',
+	'resolve' => function( $post ) {
+		$value = get_post_meta( $post->ID, "veepdotaiDomain", true );
+		return ! empty( $value ) ? $value : '';
+		}
+	]);
+
+	register_graphql_field( $baseType, 'veepdotaiSubDomain', [ 'type' => 'String',
+		'resolve' => function( $post ) {
+			$value = get_post_meta( $post->ID, "veepdotaiSubDomain", true );
+			return ! empty( $value ) ? $value : '';
+		}
+	]);
+
+	register_graphql_field( $baseType, 'veepdotaiCategory', [ 'type' => 'String',
+		'resolve' => function( $post ) {
+			$value = get_post_meta( $post->ID, "veepdotaiCategory", true );
+			return ! empty( $value ) ? $value : '';
+		}
+	]);
+
+	register_graphql_field( $baseType, 'veepdotaiSubCategory', [ 'type' => 'String',
+		'resolve' => function( $post ) {
+			$value = get_post_meta( $post->ID, "veepdotaiSubCategory", true );
+			return ! empty( $value ) ? $value : '';
+		}
+	]);
+
+	register_graphql_field( $baseType, 'veepdotaiArtefactType', [ 'type' => 'String',
+	'resolve' => function( $post ) {
+		$value = get_post_meta( $post->ID, "veepdotaiArtefactType", true );
+		return ! empty( $value ) ? $value : '';
+	}
+]);
+
 }
 
 function register_schema_old() {

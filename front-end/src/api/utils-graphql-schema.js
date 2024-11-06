@@ -9,4 +9,7 @@ export const contentSchema = z.object({
 	title: z.string(),
 	uri: z.string(),
 	veepdotaiPrompt: z.string().optional(),
+	veepdotaiDomain: z.string().optional(),
+	veepdotaiCategory: z.string().optional(),
+	veepdotaiArtefactType: z.string().optional(),
 });

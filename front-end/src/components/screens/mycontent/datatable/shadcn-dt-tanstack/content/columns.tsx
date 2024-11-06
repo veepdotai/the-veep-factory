@@ -187,6 +187,9 @@ export default function getColumns(operations): ColumnDef<Data>[] {
       getColumnMetadata({name: "date", title: t("Date"), width: "150px", onClick: operations.onShow}),
       getColumnMetadata({name: "type", title: t("Type"), width: "200px", onClick: operations.onShow}),
       getColumnMetadata({name: "givenName", title: t("Author"), width: "150px", onClick: operations.onShow}),
+      getColumnMetadata({name: "domain", title: t("Domain"), width: "150px", onClick: operations.onShow}),
+      getColumnMetadata({name: "category", title: t("Category"), width: "150px", onClick: operations.onShow}),
+      getColumnMetadata({name: "artefactType", title: t("ArtefactType"), width: "150px", onClick: operations.onShow}),
       //getId(),
       getActions(operations),
   ]

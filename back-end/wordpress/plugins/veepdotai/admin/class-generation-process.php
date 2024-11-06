@@ -385,17 +385,29 @@ class Generation_Process {
 
         $root_string = Veepdotai_Util::get_option($chain_id);
         $veeplet = self::analyze_prompt( $root_string );
-        $content_type = $veeplet[ 'metadata' ][ 'name' ];
         if ( ! $veeplet ) {
+            // Mayday
+            // Error
             $content_type = "default";
+            exit;
         }
+        $content_type = $veeplet[ 'metadata' ][ 'name' ];
+
+        $domain = $veeplet[ 'metadata' ][ 'classification' ][ 'group' ]??"Tmp";
+        $category = $veeplet[ 'metadata' ][ 'classification' ][ 'category' ]??"Tmp";
+        $artefact_type = $veeplet[ 'metadata' ][ 'classification' ][ 'subCategory' ]??"Generated";
 
         $meta_input = array(
             'veepdotaiInputType' => $metadata[ 'input_type' ],
             'veepdotaiTranscription' => $metadata[ 'transcription' ],
             'veepdotaiResource' => $metadata[ 'source' ],
             'veepdotaiPrompt' => preg_replace("/#EOL#/s", "\n", $root_string),
-            'veepdotaiLastStepDone' => "Transcription"
+            'veepdotaiLastStepDone' => "Transcription",
+            'veepdotaiInputType' => $metadata[ 'input_type' ],
+
+            'veepdotaiDomain' => $domain,
+            'veepdotaiCategory' => $category,
+            'veepdotaiArtefactType' => $artefact_type,
         );
 
 //        self::log("Transcription: " . $transcription);

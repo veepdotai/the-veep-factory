@@ -1,4 +1,5 @@
 import { Logger } from 'react-logger-lib'
+import { UtilsGraphQL } from './utils-graphql'
 
 // 'vcontent'|'post'
 let CONTENT_TYPE = 'vcontent'
@@ -8,14 +9,16 @@ export const UtilsGraphQLClauseBuilder = {
 	log: Logger.of("UtilsGraphQLClauseBuilder"),
 
 	buildClauseQuery: function (authorId, _props, contentType = "vcontent") {
-		let log = (msg) => UtilsGraphQLClauseBuilder.log.trace("UtilsGraphQLClauseBuilder" + msg)
+		let log = (msg) => UtilsGraphQLClauseBuilder.log.trace("UtilsGraphQLClauseBuilder: " + msg)
 		//  let authorId = props.authorId;
-		let view = _props?.view;
-		let author = _props?.author;
-		let search = _props?.search;
-		let status = _props?.status;
-		let date = _props?.date;
-		log(`date: ${JSON.stringify(date)}`);
+		let view = _props?.view
+		let author = _props?.author
+		let search = _props?.search
+		let status = _props?.status
+		let date = _props?.date
+		let afterOrBefore = _props?.afterOrBefore
+		let interval = {after: _props?.afterDate, before: _props?.beforeDate}
+		log(`date: ${JSON.stringify(date)}`)
 
 		let category = _props?.category;
 		let meta = _props?.meta;
@@ -39,9 +42,9 @@ export const UtilsGraphQLClauseBuilder = {
 		let searchQuery = searchQueryTpl(search);
 		log(`${view}: searchQuery: ${searchQuery}`);
 		
-		let dateQuery = UtilsGraphQLClauseBuilder.buildDateQuery();
+		let dateQuery = UtilsGraphQLClauseBuilder.buildDateQuery(date, afterOrBefore);
 
-		let intervalQuery = UtilsGraphQLClauseBuilder.buildIntervalQueryTpl(date);
+		let intervalQuery = UtilsGraphQLClauseBuilder.buildIntervalQueryTpl(interval);
 		log(`${view}: intervalQuery: ${intervalQuery}`);
 	
 		let categoryQuery = UtilsGraphQLClauseBuilder.buildCategoryQuery(category);
@@ -51,13 +54,15 @@ export const UtilsGraphQLClauseBuilder = {
 		log(`${view}: metaQuery: ${metaQuery}`);
 	
 		let query = `
-		  ${authorQuery}
-		  ${statusQuery}
-		  ${searchQuery}
-		  ${categoryQuery}
-		  ${intervalQuery}
-		  ${metaQuery}
+			${authorQuery}
+			${statusQuery}
+			${searchQuery}
+			${dateQuery}
+			${intervalQuery}
+			${categoryQuery}
+			${metaQuery}
 		`;
+
 
 		if (contentType === 'vcontent') {
 			query = query + ", parent: 0"
@@ -82,6 +87,9 @@ export const UtilsGraphQLClauseBuilder = {
 				title
 				uri
 				veepdotaiPrompt
+				veepdotaiDomain
+				veepdotaiCategory
+				veepdotaiArtefactType
 			  }
 			}
 		  }
@@ -107,7 +115,7 @@ export const UtilsGraphQLClauseBuilder = {
 
 	buildDateQuery: function(date = null, afterOrBefore = "after") {
 		if (date) {
-		  UtilsGraphQLClauseBuilder.log.trace(`buildClauseQuery: dateQueryTpl: date: ${date}`);
+		  UtilsGraphQLClauseBuilder.log.trace(`buildClauseQuery: date: ${date}`);
 		  try {
 			let _date = {
 			  year: date.replace(/^(\d{4}).*/,"$1"),
@@ -129,12 +137,15 @@ export const UtilsGraphQLClauseBuilder = {
 		}
 	},
 
-	buildIntervalQueryTpl: function(date) {
-		UtilsGraphQLClauseBuilder.log.trace(`buildClauseQuery: intervalQuery: date: ${JSON.stringify(date)}`);
-		if (date && (date.after || date.before)) {
+	buildIntervalQueryTpl: function(interval) {
+		let dateQueryTpl = UtilsGraphQLClauseBuilder.buildDateQuery
+		UtilsGraphQLClauseBuilder.log.trace(`buildClauseQuery: intervalQuery: date: ${JSON.stringify(interval)}`);
+		let after = interval?.after
+		let before = interval?.before
+		if (interval && (after || before)) {
 		  return `dateQuery: {
-			  ${date.after ? dateQueryTpl(date.after) : ""}
-			  ${date.before ? dateQueryTpl(date.before, ", before") : ""} 
+			  ${after ? dateQueryTpl(after) : ""}
+			  ${before ? dateQueryTpl(before, ", before") : ""} 
 		  }`
 		} else {
 		  return "";
