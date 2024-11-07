@@ -228,7 +228,7 @@ class Veepdotai {
 		} else if ( strpos( home_url(), "ws-eu116") !== false ) {
 			$url = str_replace("8001", "3000", home_url()) . "/r?JWT=" . $jwt;
 		} else {
-			$url = home_url() . "/app/r?JWT=" . $jwt;
+			$url = home_url() . "/v/app/r?JWT=" . $jwt;
 			//$app_url = home_url() . "/app/r?JWT=" . $app_jwt;
 		}
 
