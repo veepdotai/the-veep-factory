@@ -268,12 +268,13 @@
   "MakeLonger": "Make longer",
   "BeMoreSpecific": "Be more specific",
   "GoToDiscussion": "Go to the following discussion and tell us how you see this feature:",
-  "Context": "Context",
+  "Context": "Context (beta)",
   "Assistants": "Assistants",
   "AIAssistants": "AI Assistants",
   "Contents": "Contents",
 
   "ProductionFunction": "Production Functions",
+  "ProductionConsultingServicesFunction": "Prod./Cons./Serv. Functions",
   "SalesFunction": "Sales Functions",
   "SupportFunction": "Support Functions",
   
@@ -288,7 +289,10 @@
   "Marketing": "Marketing",
   "Procurement": "Procurement",
   "Production": "Production",
-  "R&D": "R&D",
+  "Consulting": "Consulting",
+  "Service": "Service",
+  "Services": "Services",
+  "RandD": "R&D",
 
   "NextBtnText": "Next",
   "PrevBtnText": "Previous",
