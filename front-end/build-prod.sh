@@ -42,6 +42,7 @@ main() {
     echo "Executing Main"
     init
     if [ -z "$ARGS" ]; then        
+	echo "No parameters provided"
         # build = prepare + build + store
         build
 

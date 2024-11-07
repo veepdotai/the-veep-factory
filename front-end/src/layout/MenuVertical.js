@@ -1,14 +1,15 @@
 import { useState } from 'react';
 
-import { Col, Nav, Stack } from 'react-bootstrap';
-import { Logger } from 'react-logger-lib';
-import { t } from 'i18next';
+import { Col, Nav, Stack } from 'react-bootstrap'
+import { Logger } from 'react-logger-lib'
+import { t } from 'i18next'
 
-import MenuOptions from './MenuOptions';
-import MenuItem from './MenuItems/MenuItem';
-import LogoWithLink from "src/components/LogoWithLink";
-import ComboboxWorkspaces from "src/components/ui/ComboboxWorkspaces";
-import { Icons } from '@/constants/Icons';
+import { UtilsMenu } from 'src/components/lib/utils-menu'
+import MenuOptions from './MenuOptions'
+import MenuItem from './MenuItems/MenuItem'
+import LogoWithLink from "src/components/LogoWithLink"
+import ComboboxWorkspaces from "src/components/ui/ComboboxWorkspaces"
+import { Icons } from '@/constants/Icons'
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, } from "@/components/ui/accordion"
 
@@ -24,50 +25,7 @@ export default function MenuVertical( {direction, isManager, profile} ) {
     }
 
     function getMenu(view) {
-        let menuDefinition = [
-            {
-                id: "common",
-                title: "",
-                items: [
-                    {id: 'contents', label: t("MyContents")},
-                    {id: 'assistant', label: t("CreateAssistant")},
-                    {id: 'add-content', label: t("CreateContent")},
-                    {id: 'digitalTwin', label: t("MyDigitalTwin")},
-                    {id: 'separator', label: ""},        
-                ]
-            },
-            {
-                id: "function-sales",
-                title: t("SalesFunction"),
-                items: [
-                    {id: 'dpt-communication', label: t('Communication')},
-                    {id: 'dpt-marketing', label: t('Marketing')},
-                    {id: 'dpt-sales', label: t('Sales')},
-                ]
-            },
-            {
-                id: "function-production",
-                title: t("ProductionConsultingFunction"),
-                items: [
-                    {id: 'dpt-management', label: t('Management')},
-                    {id: 'dpt-production', label: t('Production')},
-                    {id: 'dpt-consulting', label: t('Consulting')},
-                    {id: 'dpt-quality', label: t('Quality')},
-                    {id: 'dpt-randr', label: t('RandD')},
-                ]
-            },
-            {
-                id: "function-support",
-                title: t("SupportFunction"),
-                items: [
-                    {id: 'dpt-finance', label: t('Finance')},
-                    {id: 'dpt-hr', label: t('HR')},
-                    {id: 'dpt-it', label: t('IT')},
-                    {id: 'dpt-logistics', label: t('Logistics')},
-                    {id: 'dpt-procurement', label: t('Procurement')},
-                ]
-            },
-        ]
+        let menuDefinition = UtilsMenu.getMainContentMenu()
 
         return(
             <>

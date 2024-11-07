@@ -39,7 +39,13 @@ export default function Tour( props ) {
     function handleClick() {
         let tourDriver = driver({
             showProgress: true,  // Because everyone loves progress bars!
-            steps: getTour(props.name)
+            steps: getTour(props.name),
+            stageRadius: 20,
+            progressText: `{{current}} ${t("Of")} {{total}}`,
+            nextBtnText: t("NextBtnText"),
+            prevBtnText: t("PrevBtnText"),
+            doneBtnText: t("DoneBtnText"),
+            popoverClass: "popoverTourClass"
         });
 
         tourDriver.drive();

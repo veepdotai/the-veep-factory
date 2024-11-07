@@ -31,6 +31,8 @@ import { ScreenHeading } from "src/components/common/Heading";
 
 import Schema from "src/components/schemas/Schema";
 import Playground from "src/components/ffmpeg/Playground";
+import { UtilsMenu } from 'src/components/lib/utils-menu';
+import { interval } from 'date-fns';
 
 //export default function App() {
 export default function Main({credits, current}) {
@@ -48,23 +50,15 @@ export default function Main({credits, current}) {
             <AddContentWizard />
           </Container>
         </Tab.Pane>
+        {/*
         <Tab.Pane eventKey="contents">
           <ScreenHeading name="contents" title={t("MyContentsTitle")} subtitle={t("MyContentsSubtitle")} />
           <Container className='p-0'>
             <MyContent view={t("RecentActivity")} status="DRAFT" afterDate="2024-06-01" beforeDate="2024-12-31" />
           </Container>
         </Tab.Pane>
-        <Tab.Pane eventKey="dpt-communication">
-          <ScreenHeading name="contents" title={t("DPT-Communication")} subtitle={t("MyContentsSubtitle")} />
-          <Container className='p-0'>
-            {/*<AddContentWizard />*/}
-            {/*}
-            <CardSelector />
-            <Home credits={credits} current={current} />
-            */}
-            <MyContent view={t("RecentActivity")} status="DRAFT" meta={{compare: "LIKE", key: "veepdotaiDomain", value: "Business"}} />
-          </Container>
-        </Tab.Pane>
+        */}
+        {UtilsMenu.convertMainContentMenu2Sections()}
         <Tab.Pane eventKey="config-pdf">
           <ScreenHeading name="config-pdf" title={t("ConfigPDF")} subtitle={t("ConfigPDFSubtitle")} />
           <Container className='p-0'>
