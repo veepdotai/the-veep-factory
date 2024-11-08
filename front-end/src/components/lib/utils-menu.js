@@ -8,6 +8,32 @@ import MyContent from "src/components/screens/mycontent/MyContent";
 export const UtilsMenu = {
   log: Logger.of("Menu"),
 
+  getGenericMenu: function() {
+    let menuDefinition = [{
+        id: "common",
+        title: "",
+        items: [
+            {
+              id: 'digitalTwin', label: t("MyDigitalTwin"),
+              query: {
+                view: t("RecentActivities"), status: "DRAFT", interval: {after: "2024-11-01", before: "2024-11-30"}
+              }
+            },
+            //{id: 'assistant', label: t("CreateAssistant")},
+            {id: 'add-content', dontcreate: true, label: t("CreateContent")},
+            {
+              id: 'contents', label: t("MyContents"),
+              query: {
+                view: t("AllContents"), status: "DRAFT"
+              }
+            },
+            {id: 'separator', label: ""},        
+        ]
+    }]
+
+    return menuDefinition
+  },
+
   getMainContentMenu: function() {
       function rest(name) {
         return  {
@@ -16,34 +42,7 @@ export const UtilsMenu = {
         }
       }
 
-      /*
-        {id: 'dpt-communication', label: t('Communication'), query: { view: t("Communication"), status: "DRAFT", meta: {value: "Communication", compare: "LIKE", key: "veepdotaiCategory"}}},
-        {id: 'dpt-marketing', label: t('Marketing'), query: { view: t("Marketing"), status: "DRAFT", meta: {value: "Marketing", compare: "LIKE", key: "veepdotaiCategory"}}},
-        {id: 'dpt-sales', label: t('Sales'), query: { view: t("Sales"), status: "DRAFT", meta: {value: "Sales", compare: "LIKE", key: "veepdotaiCategory"}}}
-      */
-
       let menuDefinition = [
-        {
-            id: "common",
-            title: "",
-            items: [
-                {
-                  id: 'contents', label: t("MyContents"),
-                  query: {
-                    view: t("AllContents"), status: "DRAFT"
-                  }
-                },
-                //{id: 'assistant', label: t("CreateAssistant")},
-                {id: 'add-content', dontcreate: true, label: t("CreateContent")},
-                {
-                  id: 'digitalTwin', label: t("MyDigitalTwin"),
-                  query: {
-                    view: t("RecentActivity"), status: "DRAFT", interval: {after: "2024-11-01", before: "2024-11-30"}
-                  }
-                },
-                {id: 'separator', label: ""},        
-            ]
-        },
         {
             id: "function-sales",
             title: t("SalesFunction"),
@@ -60,9 +59,9 @@ export const UtilsMenu = {
                 {id: 'dpt-management', ...rest("Management")},
                 {id: 'dpt-production', ...rest("Production")},
                 {id: 'dpt-consulting', ...rest("Consulting")},
-                {id: 'dpt-services', ...rest("Services")},
+                {id: 'dpt-service', ...rest("Service")},
                 {id: 'dpt-quality', ...rest("Quality")},
-                {id: 'dpt-randr', ...rest("RandD")},
+                {id: 'dpt-randd', ...rest("RandD")},
             ]
         },
         {
@@ -81,8 +80,7 @@ export const UtilsMenu = {
     return menuDefinition
   },
 
-  convertMainContentMenu2Sections: function() {
-    let menuDefinition = UtilsMenu.getMainContentMenu()
+  createPaneFromMenuItem: function(menuDefinition) {
     let tab = menuDefinition.map((menu) => {
         let panes = menu.items.map((row) => {
           if (! row?.dontcreate) { 

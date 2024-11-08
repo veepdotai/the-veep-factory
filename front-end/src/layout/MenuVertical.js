@@ -24,9 +24,7 @@ export default function MenuVertical( {direction, isManager, profile} ) {
         )
     }
 
-    function getMenu(view) {
-        let menuDefinition = UtilsMenu.getMainContentMenu()
-
+    function getMenu(view, menuDefinition) {
         return(
             <>
                 <Accordion type="single" collapsible className="ms-4">
@@ -75,20 +73,30 @@ export default function MenuVertical( {direction, isManager, profile} ) {
             <Stack direction={direction} gap={1} className="col-md-12 mx-auto">
                 <div className='float-end'>
                     <LogoWithLink />
+                    <ComboboxWorkspaces />
                 </div>
 
-                <Accordion defaultValue="first">
+                <Accordion defaultValue="home">
 
                     {/*<MenuItem itemKey="add-content-wizard" itemLabel={t("AddContent")} innerCN=" bg-secondary text-white border border-2" outerCN="mb-2" direction={direction} />*/}
                     {/*<MenuItem itemKey="add-content" itemLabel={t("AddContent")} innerCN="border border-2" outerCN="mb-2" direction={direction} />*/}
 
-                    {getAccordionItem("first", "Home",
+                    { 'byDpt' === view ?
+                            <>
+                                {getAccordionItem("home", getMenuTitle(t("Dashboard")),
+                                    getMenu('byDpt', UtilsMenu.getGenericMenu())
+                                )}
+                            </>
+                        :
                         <>
-                            {getMenuTitle(t("Teamspaces"))}
-                            <ComboboxWorkspaces />
-                            <MenuItem itemKey="home" itemLabel={t("Dashboard")} />                                                    
+                        {getAccordionItem("home", getMenuTitle(t("Home")),
+                            <>
+                                {/*getMenuTitle(t("Teamspaces"))*/}
+                                <MenuItem itemKey="home" itemLabel={t("Dashboard")} />                                                    
+                            </>
+                        )}
                         </>
-                    )}
+                    }
 
                     {getAccordionItem("context", getMenuTitle(t("Context")),
                         <>
@@ -101,7 +109,7 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                     { 'byDpt' === view ?
                             <>
                                 {getAccordionItem("content", getMenuTitle(t("AIAssistants")),
-                                    getMenu('byDpt')
+                                    getMenu('byDpt', UtilsMenu.getMainContentMenu())
                                 )}
                             </>
                         :

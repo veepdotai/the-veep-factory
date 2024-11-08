@@ -54,11 +54,12 @@ export default function Main({credits, current}) {
         <Tab.Pane eventKey="contents">
           <ScreenHeading name="contents" title={t("MyContentsTitle")} subtitle={t("MyContentsSubtitle")} />
           <Container className='p-0'>
-            <MyContent view={t("RecentActivity")} status="DRAFT" afterDate="2024-06-01" beforeDate="2024-12-31" />
+            <MyContent view={t("RecentActivity")} status="DRAFT" interval={{after: "2024-07-01", before: "2024-12-31"}} />
           </Container>
         </Tab.Pane>
         */}
-        {UtilsMenu.convertMainContentMenu2Sections()}
+        {UtilsMenu.createPaneFromMenuItem(UtilsMenu.getGenericMenu())}
+        {UtilsMenu.createPaneFromMenuItem(UtilsMenu.getMainContentMenu())}
         <Tab.Pane eventKey="config-pdf">
           <ScreenHeading name="config-pdf" title={t("ConfigPDF")} subtitle={t("ConfigPDFSubtitle")} />
           <Container className='p-0'>

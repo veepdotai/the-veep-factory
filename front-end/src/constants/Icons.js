@@ -3,7 +3,7 @@ import { GiOrganigram } from "react-icons/gi"
 import { IoNewspaperOutline } from "react-icons/io5"
 import { TbRobot } from "react-icons/tb";
 import { BsTruck } from "react-icons/bs";
-import { FcManager } from "react-icons/fc";
+import { FcManager, FcVoicePresentation, FcBusinesswoman } from "react-icons/fc";
 import { GrUserWorker } from "react-icons/gr";
 import { TbTargetArrow } from "react-icons/tb";
 import { GiMoneyStack } from "react-icons/gi";
@@ -91,16 +91,18 @@ export const Icons = {
        
     "dpt-communication":    <Md.MdKeyboardVoice {...attr} />,
     "dpt-finance":          <GiMoneyStack {...attr} />,
-    "dpt-HR":               <Md.MdPeopleOutline {...attr} />,
-    "dpt-IT":               <FaComputer {...attr} />,
+    "dpt-hr":               <Md.MdPeopleOutline {...attr} />,
+    "dpt-it":               <FaComputer {...attr} />,
     "dpt-legal":            <GoLaw {...attr} />,
     "dpt-logistics":        <BsTruck {...attr} />,
     "dpt-management":       <FcManager {...attr} />,
     "dpt-marketing":        <TbTargetArrow {...attr} />,
     "dpt-procurement":      <Md.MdOutlineProductionQuantityLimits {...attr} />,
+    "dpt-consulting":       <FcVoicePresentation {...attr} />,
     "dpt-production":       <GrUserWorker {...attr} />,
+    "dpt-service":          <FcBusinesswoman {...attr} />,
     "dpt-quality":          <HiMiniMagnifyingGlass {...attr} />,
-    "dpt-RandD":            <Md.MdOutlineScience {...attr} />,
+    "dpt-randd":            <Md.MdOutlineScience {...attr} />,
     "dpt-sales":            <FcSalesPerformance {...attr} />,
 
 }
