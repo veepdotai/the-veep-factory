@@ -6,6 +6,7 @@ import { UtilsGraphQLVcontent } from './utils-graphql-vcontent'
 import { UtilsGraphQLClauseBuilder } from './utils-graphql-clause-builder'
 import toast from 'react-hot-toast';
 import { Constants } from '../constants/Constants'
+import { UtilsDataConverter } from '../components/lib/utils-data-converter'
 
 // 'vcontent'|'post'
 let CONTENT_TYPE = 'vcontent'
@@ -49,10 +50,8 @@ export const UtilsGraphQL = {
 			}).then((data) => {
 				UtilsGraphQL.log.info('URI: ' + graphqlURI);
 				UtilsGraphQL.log.trace(`list: data: ${JSON.stringify(data)}`)
-		
-				// code should auto adapt to contents
-				let contents = data.data.posts ? data.data.posts : data.data.vcontents;
-				let nodes = contents.nodes;
+
+				let nodes = UtilsDataConverter.convertGqlToGqlVContents(data)
 				UtilsGraphQL.log.trace(`list: data: ${JSON.stringify(nodes)}`)
 				return nodes
 			}).catch((e) => {

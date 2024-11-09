@@ -3,13 +3,13 @@ import { Logger } from 'react-logger-lib';
 import { Container, Modal, Button, Row, Col } from 'react-bootstrap';
 import { useCookies } from 'react-cookie';
 import PubSub from 'pubsub-js';
-import TOML from '@iarna/toml';
 import { useMediaQuery } from 'usehooks-ts';
 import toast from 'react-hot-toast';
 import { t } from 'i18next';
 
 import { Constants } from "src/constants/Constants";
 import { UtilsGraphQL } from 'src/api/utils-graphql.js';
+import { UtilsDataConverter } from 'src/components/lib/utils-data-converter.js'
 
 import DataTableBase from '../../common/DataTableBase.js';
 import MyContentDetails from './MyContentDetails.js';
@@ -64,33 +64,10 @@ function ReportData( {...props} ) {
       .list(graphqlURI, cookies, authorId, props)
       .then((data) => {
         log.trace(`getData: data: ${JSON.stringify(data)}`)
-        let r = data.map((o) => {
-          log.trace(`getData: data.map: o: ${JSON.stringify(o)}`)
 
-          let ps = TOML.parse(o.veepdotaiPrompt?.replace(/#EOL#/g, "\n"));
-
-          let r = {}
-
-          //r = o
-          r.id = o.postId || o.databaseId
-          //r.date = o.date?.replace(/T/, " ").replace(/\.*$/, "") ?? ""
-          r.date = o.date ? o.date.replace(/T/, " ").replace(/\.*$/, "") : ""
-          r.givenName = o.author ? o.author?.node?.firstName + " " + o.author?.node?.lastName : ""
-          r.title = o.title
-          r.uri = o.uri
-          //r.status = o.categories.edges[0].node.name
-          //r.status = o.categories?.edges[0].node.name
-          r.type = ps?.metadata?.name + ' v' + ps?.metadata?.version
-          r.type = ps?.metadata?.name + ' v' + ps?.metadata?.version
-          
-          r.domain = (o.veepdotaiDomain || ps?.metadata?.classification?.group)?.trim()
-          r.category = (o.veepdotaiCategory || ps?.metadata?.classification?.category)?.trim()
-          r.artefactType = (o.veepdotaiArtefactType || ps?.metadata?.classification?.subCategory)?.trim()
-
-          return r
-
-        })
+        let r = UtilsDataConverter.convertGqlVContentsToVO(data)
         log.trace("data: " + JSON.stringify(r));
+        
         setData(r)
       }).catch((e) => {
         log.trace(`getData: the following exception "${e}" has been raised while trying to get some data with the following parameters: authorId: ${authorId}, props: ${JSON.stringify(props)}`)
