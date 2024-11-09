@@ -83,6 +83,7 @@ export default function initAppJSLogs(level = "NONE") {
     localStorage.setItem('UtilsGraphQLVcontent', level);
     localStorage.setItem('UtilsGraphQLMonitoring', level);
     localStorage.setItem('UtilsGraphQLEditorialLine', level);
+    localStorage.setItem('UtilsDataConverter', level);
     localStorage.setItem('WaitForIt', 'OFF');
     
     /** Third-party params */

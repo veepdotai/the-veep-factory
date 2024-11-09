@@ -50,15 +50,9 @@ export default function Main({credits, current}) {
             <AddContentWizard />
           </Container>
         </Tab.Pane>
-        {/*
-        <Tab.Pane eventKey="contents">
-          <ScreenHeading name="contents" title={t("MyContentsTitle")} subtitle={t("MyContentsSubtitle")} />
-          <Container className='p-0'>
-            <MyContent view={t("RecentActivity")} status="DRAFT" interval={{after: "2024-07-01", before: "2024-12-31"}} />
-          </Container>
-        </Tab.Pane>
-        */}
+
         {UtilsMenu.createPaneFromMenuItem(UtilsMenu.getGenericMenu())}
+
         {UtilsMenu.createPaneFromMenuItem(UtilsMenu.getMainContentMenu())}
         <Tab.Pane eventKey="config-pdf">
           <ScreenHeading name="config-pdf" title={t("ConfigPDF")} subtitle={t("ConfigPDFSubtitle")} />
@@ -94,7 +88,7 @@ export default function Main({credits, current}) {
           </Container>
         </Tab.Pane>
         <Tab.Pane eventKey="pdf-export">
-          <ScreenHeading name="pdf-export" title={t("EditorialLineTitle")} subtitle={t("PDFExportSubtitle")} />
+          <ScreenHeading name="pdf-export" title={t("PDFExportTitle")} subtitle={t("PDFExportSubtitle")} />
           <Container className='p-2'>
             <PDFExportForm />
           </Container>
