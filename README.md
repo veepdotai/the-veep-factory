@@ -1,7 +1,7 @@
 # the-veep-factory
-Veep.AI is a solution to create content or a document, with AIs, in a guided way, not the ´chat way'.
+the-veep-factory (TVF or Veep.AI) is a solution to create complex contents or documents, with AIs, in a guided way, not the ´chat way'. Chat way requires prompting skillness when you want to create complex documents (I mean, not only to create one single post linkein). TVF provides AI functions users can directly use to create advanced documents. 
 
-It is an open source “ChatGPT Canvas” type solution allowing you to create/edit long format content with any AI, and not just ChatGPT.
+Veep.AI is an open source “ChatGPT Canvas” type solution allowing you to create/edit long format content with any AI, and not just ChatGPT.
 
 # Features
 
@@ -11,7 +11,7 @@ It is an open source “ChatGPT Canvas” type solution allowing you to create/e
   * from voice: microphone or alreay recorded audios or videos
   * from file: pdf, txt, ms office (word, excel, powerpoint), libre office (writer, spreadsheet, impress)...)
   * from text: through copy'n past
-  * from url: all (but javascript websites are not well supported)
+  * from url: all (but javascript websites are not supported)
 * Prompt catalog
   * public one
   * personal one
