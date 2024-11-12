@@ -17,7 +17,7 @@ export const UtilsGraphQLClauseBuilder = {
 		let status = _props?.status
 		let date = _props?.date
 		let afterOrBefore = _props?.afterOrBefore
-		let interval = {after: _props?.afterDate, before: _props?.beforeDate}
+		let interval = {after: _props?.interval}
 		log(`date: ${JSON.stringify(date)}`)
 
 		let category = _props?.category;

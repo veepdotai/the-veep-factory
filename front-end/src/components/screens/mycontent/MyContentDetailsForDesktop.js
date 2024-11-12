@@ -15,9 +15,8 @@ import { ToggleGroup, ToggleGroupItem } from "src/components/ui/shadcn/toggle-gr
 import { Popover, PopoverContent, PopoverTrigger } from 'src/components/ui/shadcn/popover'
 import { Tabs, TabsList, TabsTrigger } from "src/components/ui/shadcn/tabs"
 
-//import PDF from '../../export/pdf/PDF.js';
-
-import PDFPanel from '../../veepdotai-pdf-config/page.js'
+import PDFPanel from 'src/components/veepdotai-pdf-config/PDFPanel'
+import PDFParams from 'src/components/veepdotai-pdf-config/components/PDFParams';
 
 import { Icons } from "src/constants/Icons";
 import EKeyLib from '../../lib/util-ekey';
@@ -26,6 +25,7 @@ import Veeplet from '../../lib/class-veeplet'
 
 import MyContentDetailsUtils from './MyContentDetailsUtils'
 import Content from './Content';
+import { UtilsDataConverter } from '../../lib/utils-data-converter';
 
 export default class MyContentDetailsForDesktop {
   static log = Logger.of(MyContentDetailsForDesktop.name);
@@ -142,40 +142,45 @@ export default class MyContentDetailsForDesktop {
   static desktopPDFContent(selectedFormat, prompt, data, contentId) {
     let log = (msg) => MyContentDetailsForDesktop.log.trace("desktopPDFContent: " + msg)
     log("prompt: " + JSON.stringify(prompt));
+    log("data: " + JSON.stringify(data));
+
     let content = MyContentDetailsUtils.getContent(prompt, data, contentId, true);
 
     if (content.startsWith('[{')) {
       log("Content is in CRT format: " + content[0])
-      const editor = createPlateEditor({ 
-        value: JSON.parse(content),
-        plugins: [
-          HeadingPlugin,
-          MarkdownPlugin,
-        ],
-      });
-      
+      const editor = createPlateEditor({ value: JSON.parse(content), plugins: [MarkdownPlugin] });      
       content = editor.api.markdown.serialize();      
     }
 
     log("content: " + JSON.stringify(content));
 
     return (
-        <PDFViewer content={content} />
+        <PDFViewer content={content} data={data} />
     )
   }
 
 }
 
-export function PDFViewer( {content} ) {
+export function PDFViewer( {content, data} ) {
+  let log = Logger.of(PDFViewer.name);
+
+  log.trace("data: " + JSON.stringify(data))
 
   let role = "admin";
   let hasConfigCapabilities = role === "admin" ? true : false;
   const [pdfContent, setPdfContent] = useState(content);
 
+  let vo = UtilsDataConverter.convertGqlVContentsToVO(data.nodes)
+  vo = vo[0]
+  vo.author = vo.givenName
+
+  log.trace("vo: " + JSON.stringify(vo))
+
   return(
 
     <PDFPanel
-      content={pdfContent}
+      initContent={pdfContent}
+      initParams={new PDFParams(vo)}
       displayConfigPanel={hasConfigCapabilities} />
   )
 

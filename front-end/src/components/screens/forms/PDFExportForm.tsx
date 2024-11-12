@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Logger } from 'react-logger-lib'
-import { t } from 'i18next'
 import PubSub from 'pubsub-js'
+import { t } from 'i18next'
 
 import { useCookies } from 'react-cookie'
 
@@ -21,7 +21,7 @@ import { UtilsGraphQLObject } from '../../../api/utils-graphql-object'
 
 import Loading from 'src/components/common/Loading'
 
-export default function PDFExportForm() {
+export default function PDFExportForm( {params} ) {
     const log = Logger.of(PDFExportForm.name);
 
     const graphqlURI = Constants.WORDPRESS_GRAPHQL_ENDPOINT;
@@ -44,15 +44,8 @@ export default function PDFExportForm() {
       author: getConstraints(minChars),
 
       displays: z.array(z.string()).refine((value) => value.some((item) => item), {
-        message: "You have to select at least one item.",
+        message: t("SelectOnItem"),
       }),
-
-      /*
-      displayHeader: getConstraints(minChars),
-      displayTOC: getConstraints(minChars),
-      displayPageOnBreak: getConstraints(minChars),
-      displayFooter: getConstraints(minChars),
-      */
 
       logo: getConstraints(minChars),
       backgroundImage: getConstraints(minChars),
@@ -66,7 +59,19 @@ export default function PDFExportForm() {
     let form = useForm<z.infer<typeof FormSchema>>({
       resolver: zodResolver(FormSchema),
       defaultValues: {
-        displays: []
+        title: params?.title,
+        subtitle: params?.subtitle,
+        organizationName: params?.organizationName,
+        author: params?.author,
+  
+//        displays: z.array(z.string()).refine((value) => value.some((item) => item), {
+//          message: t("SelectOneItem"),
+//        }),
+        displays: [],
+
+        logo: params?.logo,
+        backgroundImage: params?.backgroundImage,
+        css: params?.css  
       }
     })
 
@@ -76,6 +81,14 @@ export default function PDFExportForm() {
 
     //function onSubmit(data: z.infer<typeof FormSchema>) {
     function onSubmit(data) {
+        // Merge export form data and params
+        alert(`onSubmit:`)
+        log.trace(`onSubmit:`)
+        log.trace(`onSubmit: data: ${JSON.stringify(data)}`)
+
+        let newParams = {...params, ...data}
+        log.trace(`onSubmit: newParams: ${JSON.stringify(newParams)}`)
+        PubSub.publish("INFOS_PANEL_UPDATED", newParams)
         return UFC.onSubmit(graphqlURI, cookies, name, topic, data, toast)
     }
 

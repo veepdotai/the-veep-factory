@@ -1,7 +1,7 @@
 import { Input } from 'src/components/ui/shadcn/input';
 import { Button } from "src/components/ui/shadcn/button";
 import { useEffect, useRef, useState } from 'react'
-import icones from '../icons'
+import icones from '../../../icons'
 
 
 const BackCoverDisplay = (props) => {

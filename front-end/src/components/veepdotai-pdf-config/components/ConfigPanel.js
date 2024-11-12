@@ -1,15 +1,17 @@
 import React from 'react';
 //On utilise shadcn.ui pour faire le panneau
+import { t } from "i18next"
+
 import  {ResizableHandle, ResizablePanel, ResizablePanelGroup } from 'src/components/ui/shadcn/resizable';
 import { Input } from 'src/components/ui/shadcn/input';
 import { Button } from "src/components/ui/shadcn/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "src/components/ui/shadcn/tabs";
 
-import FormatDisplay from './FormatDisplay';
-import PdfParams from './PdfParams';
-import TitleDisplay from './TitleDisplay';
-import ImageDisplay from './ImageDisplay';
-import LayoutDisplay from './LayoutDisplay';
+import FormatDisplay from './forms/configuration/FormatDisplay';
+import PDFParams from './PDFParams';
+import TitleDisplay from './forms/configuration/TitleDisplay';
+import ImageDisplay from './forms/configuration/ImageDisplay';
+import LayoutDisplay from './forms/configuration/LayoutDisplay';
 import AceEditor from 'react-ace';
 import "ace-builds/src-noconflict/mode-css";
 import "ace-builds/src-noconflict/ext-inline_autocomplete";
@@ -17,8 +19,8 @@ import "ace-builds/src-noconflict/ext-inline_autocomplete";
 import icones from '../icons'
 
 import { StyleSheet } from "@react-pdf/renderer";
-import BackCoverDynamicDisplay from './BackCoverDynamicDisplay';
-import ContentDynamicDisplay from './ContentDynamicDisplay';
+import BackCoverDynamicDisplay from './forms/carrousel/BackCoverDynamicDisplay';
+import ContentDynamicDisplay from './forms/carrousel/ContentDynamicDisplay';
 
 
 class ConfigPanel extends React.Component {
@@ -47,7 +49,7 @@ class ConfigPanel extends React.Component {
 
   handleCompile (step=1) {
     this.param.refreshDate()
-    this.param.littleIncrementVersion(step)
+    //this.param.littleIncrementVersion(step)
     this.props.handleCompilePDF(this.param, this.content)
   }
 
@@ -165,11 +167,9 @@ class ConfigPanel extends React.Component {
     )
   }
 
-  layoutPanel(){
+  metadataPanel(){
     return (
       <div>
-            <ImageDisplay handleChangeLogo={this.handleLogoChange} handleChangeBack={this.handleBackgroundChange}/>
-            
             <div className='flex items-start'>
               
               <div className="mx-2">
@@ -184,12 +184,26 @@ class ConfigPanel extends React.Component {
                   defaultAuthor={this.param.author}
                 />
               </div>
+            </div>
+
+            <div className="list-item items-center justify-center p-2 my-3">
+              <Button className='px-0 h-9 w-9' onClick={() => {this.handleCompile()}}> {icones.refresh} </Button>
+            </div>
+        </div>
+    )
+  }
+
+  layoutPanel(){
+    return (
+      <div>            
+            <div className='flex items-start'>
 
               <div>
                 <FormatDisplay baseValue={this.param.format} handleChange={this.handleFormatChange}/>
                 <LayoutDisplay  handleChange={this.handleLayoutChange} />
               </div>
 
+              <ImageDisplay handleChangeLogo={this.handleLogoChange} handleChangeBack={this.handleBackgroundChange}/>
 
             </div>
 
@@ -206,12 +220,17 @@ class ConfigPanel extends React.Component {
       <Tabs defaultValue="layout" className='flex flex-col h-full'>
         <TabsList className="grid w-full grid-cols-3">
           {/*<TabsTrigger onClick={this.handleCompile} value="presentation">Présentation</TabsTrigger>*/}
-          <TabsTrigger onClick={this.handleCompile} value="layout">Affichage</TabsTrigger>
-          <TabsTrigger onClick={this.handleCompile} value="css">CSS</TabsTrigger>
+          <TabsTrigger onClick={this.handleCompile} value="metadata">{t("Metadata")}</TabsTrigger>
+          <TabsTrigger onClick={this.handleCompile} value="layout">{t("Display")}</TabsTrigger>
+          <TabsTrigger onClick={this.handleCompile} value="css">{t("CSS")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="presentation" className='flex-grow data-[state=inactive]:hidden' forceMount>
           {this.presentationPanel()}
+        </TabsContent>
+
+        <TabsContent value="metadata" className='flex-grow data-[state=inactive]:hidden' forceMount>
+          {this.metadataPanel()}
         </TabsContent>
 
         <TabsContent value="layout" className='flex-grow data-[state=inactive]:hidden' forceMount>

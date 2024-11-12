@@ -4,9 +4,9 @@ import { Logger } from 'react-logger-lib';
 import stylesA4 from '../default.css';
 import stylesLinkedin from '../defaultLinkedin.css';
 
-const log = Logger.of("PdfParams");
+const log = Logger.of("PDFParams");
 
-export default class PdfParams {
+export default class PDFParams {
     
     /**
      * 
@@ -27,60 +27,36 @@ export default class PdfParams {
      * @param {Boolean} displayFooter boolean to know if the footer will be displayed
      * @param {StyleSheet} stylesheet sheet of css styles to use
      */
-    constructor (
-            title="", 
-            subTitle="", 
+    constructor (params) {
+        log.trace("constructor: params: " + JSON.stringify(params))
 
-            format="A4",
+        this.title = params?.title
+        this.subTitle = params?.subTitle
 
-            companyName="", 
-            companyImage="./assets/images/nothing.png", 
-            backgroundImage="./assets/images/nothing.png",
-            backgroundImageCover="./assets/images/bg-gradient-default.png", 
+        this.styles = params?.stylesheet || ""
+        log.trace("styles: " + JSON.stringify(this.styles))
+        this.stylesheet= params?.stylesheet || stylesA4
 
-            author=t("DefaultAuthor"),
-            version="1.0.0",
-            date=moment().format("DD/MM/YYYY"),
-            footer=t("DefaultFooterContent"),
-            backCover=[[1, "./assets/images/nothing.png",
-            t("DefaultBackCoverContent"),
-            t("DefaultBackCoverTitle")]],
+        this.format = params?.format || "A4"
+        this.setFormat(this.format)
 
-            newPage=true,
-            toc=true,
-
-            displayHeader=true,
-            displayFooter=true,
-
-            stylesheet=stylesA4
-        ){
-        this.title = title
-        this.subTitle = subTitle
-
-        this.styles = stylesheet
-        //log.trace("styles: " + JSON.stringify(this.styles))
-        console.log("styles: " + JSON.stringify(this.styles))
-
-        this.format = format
-        this.setFormat(format)
-
-        this.companyName = companyName
-        this.companyImg = companyImage
-        this.backgroundImg = backgroundImage
-        this.backgroundImgCover = backgroundImageCover
+        this.companyName = params?.companyName || t("DefaultCompanyName")
+        this.companyImg = params?.companyImage || "./assets/images/nothing.png"
+        this.backgroundImg = params?.backgroundImage || "./assets/images/nothing.png"
+        this.backgroundImgCover = params?.backgroundImageCover || "./assets/images/gradients/ff0076-590fb7.png"
         
-        this.backCover = backCover
+        this.backCover = params?.backCover || [[1, "./assets/images/gradients/ff0076-590fb7.png", t("DefaultBackCoverContent"), t("DefaultBackCoverTitle")]]
 
-        this.newPage = newPage
-        this.toc=toc
+        this.newPage = params?.newPage || true
+        this.toc = params?.toc || true
 
-        this.author = author
-        this.version = version
-        this.date = date
-        this.footer = footer
+        this.author = params?.author || t("DefaultAuthor") 
+        this.version = params?.version  || t("DefaultVersionNumber") || "1.0.0"
+        this.date = params?.date || moment().format("DD/MM/YYYY")
+        this.footer = params?.footer || t("DefaultFooterContent")
 
-        this.displayHeader = displayHeader
-        this.displayFooter = displayFooter
+        this.displayHeader = params?.displayHeader || true
+        this.displayFooter = params?.displayFooter || true
     }
 
     /**
@@ -111,7 +87,7 @@ export default class PdfParams {
 
     /**
      * 
-     * @returns {Array} array containing the position of the dots in the string indicationg the version of the document.
+     * @returns {Array} array containing the position of the dots in the string indicating the version of the document.
      */
     findDotVersion(){
         let first = 1
@@ -131,28 +107,28 @@ export default class PdfParams {
     }
 
     /**
-     * Adds the step to the smallest part of the version of the PDF
-     * @param {Int} step the number of versions we want to add
+     * Increments patch version of the generated document
+     * @param {Int} step the step to add
      */
-    littleIncrementVersion(step = 1) {
+    incrementPatchVersion(step = 1) {
         let dotPosition = this.findDotVersion()
         this.version = this.version.substring(0, dotPosition[1]) + "." + (parseInt(this.version.substring(dotPosition[1]+1)) +step)
     }
 
     /**
-     * Adds the step to the middle part of the version of the PDF
-     * @param {Int} step the number of versions we want to add
+     * Increments minor version of the generated document
+     * @param {Int} step the step to add
      */
-    mediumIncrementVersion(step = 1) {
+    incrementMinorVersion(step = 1) {
         let dotPosition = this.findDotVersion()
         this.version = this.version.substring(0, dotPosition[0]) + "." + (parseInt(this.version.substring(dotPosition[0]+1)) +step) + ".0"
     }
 
     /**
-     * Adds the step to the biggest part of the version of the PDF
-     * @param {Int} step the number of versions we want to add
+     * Increments major version of the generated document
+     * @param {Int} step the step to add
      */
-    bigIncrementVersion(step = 1) {
+    incrementMajorVersion(step = 1) {
         let dotPosition = this.findDotVersion()
         this.version = (parseInt(this.version.substring(0, dotPosition[0])) + step) + ".0.0"
     }

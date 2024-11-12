@@ -98,8 +98,10 @@ export default function initVeepdotaiApp(setCookie, setDone) {
             // There is a JWT in the request. Store it in a cookie
             log.trace("App: connected with JWT param")
 
-            // We reload the page to get rid of the JWT parameter which could be stolen to connect
-            // on the behalf of the user. Ideally, this JWT should be a very short one (10s, 30s, 1 min max?).
+            // We reload the page to get rid of the JWT parameter which 
+            // could be stolen to connect on the behalf of the user.
+            // Ideally, this JWT should be a very short one (10s, 30s,
+            // 1 min max?).
             setCookie('JWT', cookie.JWT, {
                 path: '/',
                 maxAge: 60*60*24
@@ -146,6 +148,6 @@ export default function initVeepdotaiApp(setCookie, setDone) {
     initAnalytics(Constants.ANALYTICS_JS_CONTAINER);
     initCookies(window.location.search, setCookie, setDone);
     initListeners(window);
-    initAppJSLogs(Constants.PRODUCTION ? 'NONE': 'TRACE');
+    initAppJSLogs(Constants.PRODUCTION ? 'NONE': 'NONE');
     initConstants(window);
 }

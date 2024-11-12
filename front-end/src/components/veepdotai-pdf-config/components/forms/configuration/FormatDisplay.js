@@ -13,6 +13,7 @@ import {
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
+  
   DropdownMenuTrigger,
 } from "src/components/ui/shadcn/dropdown-menu"
 
@@ -35,7 +36,7 @@ export default function FormatDisplay(props) {
 
           <DropdownMenuContent>
             <DropdownMenuRadioGroup defaultValue={state.format} onValueChange={(value) => {handleChange(value)}}>
-              <DropdownMenuRadioItem value="A4"><img className="h-[30px] rounded" src="/assets/images/gradients/9055ff-13e2da.png" />A4</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="A4"><img className="h-[30px] rounded" src="./assets/images/gradients/9055ff-13e2da.png" />A4</DropdownMenuRadioItem>
               <DropdownMenuRadioItem value="linkedin">LinkedIn</DropdownMenuRadioItem>
             </DropdownMenuRadioGroup>
           </DropdownMenuContent>

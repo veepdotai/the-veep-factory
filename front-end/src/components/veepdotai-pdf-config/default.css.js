@@ -312,7 +312,7 @@ const styles = StyleSheet.create({
   backgroundImageContainer: {
       width: '100%',
       // pb d'ajustement de la hauteur : un fit-content ne fonctionne pas et pourtant on aimerait que le container s'ajuste à la hauteur de l'image
-      height: '50%', 
+      height: '100%', 
   },
 
   backgroundImage: {
@@ -321,7 +321,7 @@ const styles = StyleSheet.create({
       top: 0,
       zIndex: -1,
       width: '100%',
-      height: 'auto',
+      height: '100%',
   },
 
   fullBackgroundImage: {
@@ -334,7 +334,7 @@ const styles = StyleSheet.create({
 
   fullBackgroundImageContainer: {
       width: '100%',
-      height: '88%',
+      height: '100%',
   },
 
   imageInPara: {

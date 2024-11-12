@@ -1,4 +1,6 @@
 {
+  "SelectOneItem": "You have to select at least one item",
+
   "titleLabel": "Titre",
   "titlePlaceHolder": "",
   "titleDesc": "",
@@ -14,6 +16,9 @@
   "authorLabel": "Auteur",
   "authorPlaceHolder": "",
   "authorDesc": "",
+
+  "DisplayOptionsLabel": "Display options",
+  "DisplayOptionsDesc": "Select options you want to enable",
 
   "displayHeaderLabel": "Afficher en-tête",
   "displayHeaderPlaceHolder": "",

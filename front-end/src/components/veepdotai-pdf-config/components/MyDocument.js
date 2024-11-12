@@ -5,16 +5,16 @@ import React from 'react';
 const MyDocument = (props) => {
     return (
         <Document>
-            <Page style={styles.page} bookmark={"Page de couverture"} size={props.parameter.dimensions} title={props.parameter.title}>
-                <Text style={styles.pdfTitle}>{props.parameter.title}</Text>
+            <Page style={styles.page} bookmark={"Page de couverture"} size={props.params.dimensions} title={props.params.title}>
+                <Text style={styles.pdfTitle}>{props.params.title}</Text>
 
                 <Text style={styles.company}>
-                    {props.parameter.companyName}
+                    {props.params.companyName}
                 </Text>
 
                 <Image
                     style={styles.featuredImage}
-                    src={props.parameter.companyImg}
+                    src={props.params.companyImg}
                 />
 
                 <Text
@@ -26,7 +26,7 @@ const MyDocument = (props) => {
                 />
             </Page>
 
-            <Page style={styles.page} bookmark={"Sommaire"} size={props.parameter.dimensions}>
+            <Page style={styles.page} bookmark={"Sommaire"} size={props.params.dimensions}>
                 <Text style={styles.title}>Sommaire</Text>
                 
                 <View style={styles.contentTable}>
@@ -40,12 +40,12 @@ const MyDocument = (props) => {
                 </View>
             </Page>
 
-            <Page style={styles.page} bookmark={"Contenu"} size={props.parameter.dimensions}>
+            <Page style={styles.page} bookmark={"Contenu"} size={props.params.dimensions}>
             
                 <View id='header' style={styles.header} fixed>
                     <Image
                         style={styles.image}
-                        src={props.parameter.companyImg}
+                        src={props.params.companyImg}
                     />
                 </View>
                 
@@ -147,12 +147,12 @@ const MyDocument = (props) => {
 
 
                 <View id='footer' style={styles.footerContainer} fixed>
-                    <Image style={styles.footerImage} src={props.parameter.backgroundImg}/>
+                    <Image style={styles.footerImage} src={props.params.backgroundImg}/>
                 </View>
 
             </Page>
 
-            <Page style={styles.page} bookmark={"Page de garde" } size={props.parameter.dimensions}>
+            <Page style={styles.page} bookmark={"Page de garde" } size={props.params.dimensions}>
                 <Text style={styles.backPageContent}>
                     PDF généré par Veep.ai
                 </Text>

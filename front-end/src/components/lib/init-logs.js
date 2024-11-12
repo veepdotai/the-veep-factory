@@ -57,7 +57,11 @@ export default function initAppJSLogs(level = "NONE") {
       localStorage.setItem('PromptActions', level);
       localStorage.setItem('PromptDetails', level);
     localStorage.setItem('PDF', level);
+      localStorage.setItem('PDFExportForm', level);
+      localStorage.setItem('PDFViewer', level);
       localStorage.setItem('PDFDocument', level);
+      localStorage.setItem('PDFParams', level);
+      localStorage.setItem('PDFPanel', level);
     localStorage.setItem('GenericForm', level);
     localStorage.setItem('Heading', level);
     localStorage.setItem('Home', level);
@@ -85,9 +89,6 @@ export default function initAppJSLogs(level = "NONE") {
     localStorage.setItem('UtilsGraphQLEditorialLine', level);
     localStorage.setItem('UtilsDataConverter', level);
     localStorage.setItem('WaitForIt', 'OFF');
-    
-    /** Third-party params */
-    localStorage.setItem('PdfParams', level);
     
     /** Pickers */
     localStorage.setItem('PromptForm', level);

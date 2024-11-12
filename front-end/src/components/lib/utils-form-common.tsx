@@ -122,10 +122,8 @@ export const UtilsFormCommon = {
                 render={() => (
                     <FormItem>
                         <div className="mb-4">
-                            <FormLabel className="text-base">Sidebar</FormLabel>
-                            <FormDescription>
-                            Select the items you want to display in the sidebar.
-                            </FormDescription>
+                            <FormLabel className="text-base">{t("DisplayOptionsLabel")}</FormLabel>
+                            <FormDescription>{t("DisplayOptionsDesc")}</FormDescription>
                         </div>
                         {items.map((item) => (
                             <FormField
@@ -141,7 +139,7 @@ export const UtilsFormCommon = {
                                         >
                                             <FormControl>
                                                 <Checkbox
-                                                    checked={field.value?.includes(item.id)}
+                                                    checked={field.value.includes(item.id)}
                                                     onCheckedChange={(checked) => {
                                                         if (checked) {
                                                             if (field.value) {
