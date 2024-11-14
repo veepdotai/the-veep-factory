@@ -1,7 +1,7 @@
-import { ButtonGroup, Button, Col, Container, Nav, Row, Tab, NavDropdown, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { Logger } from 'react-logger-lib';
-import { t } from 'i18next';
-import parse from 'html-react-parser';
+import { ButtonGroup, Button, Col, Row } from 'react-bootstrap'
+import { Logger } from 'react-logger-lib'
+import { t } from 'i18next'
+import parse from 'html-react-parser'
 
 import { ToggleGroup, ToggleGroupItem } from "src/components/ui/shadcn/toggle-group"
 import { Popover, PopoverContent, PopoverTrigger } from 'src/components/ui/shadcn/popover'
@@ -10,24 +10,26 @@ import MergedContent from './parts/MergedContent'
 import AllStepsOneByOneContent from './parts/all-steps-one-by-one'
 import SideBySideViewContent from './parts/side-by-side-view-content'
 
-import EKeyLib from '../../lib/util-ekey';
-import { UtilsForm } from '../../lib/utils-form';
+import EKeyLib from '../../lib/util-ekey'
+import { UtilsForm } from '../../lib/utils-form'
 
-import Content from './Content';
-import { Regex } from 'lucide-react';
+import Content from './Content'
 
 export default class MyContentDetailsUtils {
   static log = Logger.of(MyContentDetailsUtils.name);
 
-  static format(_content, _parse = false, needle = "(\\.|\\!|\\?)\\s+([A-Z])", replacement = "$1<br /><br />$2") {
-    if (_content) {
+//  static format(_content, _parse = false, needle = "(\\.|\\!|\\?)\\s+([A-Z])", replacement = "$1<br /><br />$2") {
+  static format(_content, _parse = false, needle = "(\\.|\\!|\\?)\\s+([A-Z])", replacement = "$1\n\n$2") {
+      if (_content) {
       // by default: _content.replace(/\.\s+/g, "<br /><br />");
       let needleRe = new RegExp(`${needle}`, "g")
       let r = _content.replace(needleRe, replacement)
       if (! _parse) {
         return r
       } else {
-        return parse(r);
+        let r = _content.replace(/(<br\s+\/>)+/g, "\n\n")
+        return r
+        //return parse(r);
       }
     } else {
       return "";
@@ -168,23 +170,25 @@ export default class MyContentDetailsUtils {
   static getTranscriptionContent(cid, data) {
     let log = MyContentDetailsUtils.log
 
-    let part = "Transcription";
-    //let attrName = `veepdotai${part}`;
-    let attrName = "veepdotaiTranscription";
+    let part = "Transcription"
+    //let attrName = `veepdotai${part}`
+    let attrName = "veepdotaiTranscription"
+    let content = data[attrName]
+
     let title = t("Transcription");
-    log.trace("getTranscriptionContent: [no format]" + data[attrName] + ".")
-    log.trace("getTranscriptionContent: [format=true] => no html parsing" + MyContentDetailsUtils.format(data[attrName], true) + ".")
-    log.trace("getTranscriptionContent: [format=false] => html parsing" + MyContentDetailsUtils.format(data[attrName], false) + ".")
+    log.trace("getTranscriptionContent: [no format]" + content + ".")
+    log.trace("getTranscriptionContent: [format=true] => no html parsing" + MyContentDetailsUtils.format(content, true) + ".")
+    log.trace("getTranscriptionContent: [format=false] => html parsing" + MyContentDetailsUtils.format(content, false) + ".")
+    
     return (
       <Content
         className="h-full"
         contentId={cid}
         attrName={attrName}
         title={title}
-        content={MyContentDetailsUtils.format(data[attrName], true)}
+        content={MyContentDetailsUtils.format(content, true)}
       />
     )
-
   }
 
   static getPromptContent(cid, data) {

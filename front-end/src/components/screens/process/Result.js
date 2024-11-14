@@ -6,6 +6,7 @@ import { t } from 'i18next';
 import { useCookies } from 'react-cookie';
 import parse from 'html-react-parser';
 import Typewriter from 'typewriter-effect';
+import toast from 'react-hot-toast';
 
 import PubSub from 'pubsub-js';
 
@@ -13,7 +14,8 @@ import { getService } from '../../../api/service-fetch';
 
 import styles from '../../catalog/AllCards.module.css';
 import ResultActions from './ResultActions';
-import toast from 'react-hot-toast';
+import { PlateEditor } from '../../../components/screens/PlateEditor'
+import MergedContent from '../mycontent/parts/MergedContent';
 
 export default function Result( props ) {
     const log = Logger.of(Result.name);
@@ -177,7 +179,7 @@ export default function Result( props ) {
                             :
                             <></>
                         }
-                        <ResultActions content={initialContent} />
+                        {/*<ResultActions content={initialContent} />*/}
                     </div>
                     <div id={elementId}>
                         {content == "" ?
@@ -204,8 +206,18 @@ export default function Result( props ) {
                                 />
                             :
                                 <>
-                                    {parse(content)}
-                                    {/*<Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>*/}
+                                { true ?
+                                        <div className="p-0 w-full">
+                                            <PlateEditor view="Basic" className="p-0" input={MergedContent.format(content, true)} cn="w-full">
+                                            </PlateEditor>
+                                        </div>      
+                                    :
+                                        <>
+                                            {parse(content)}
+                                            {/*<Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>*/}
+                                        </>
+
+                                }
                                 </>
                         }
                     </div>

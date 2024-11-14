@@ -11,7 +11,7 @@ import { useEditorReadOnly } from '@udecode/plate-common/react';
 
 import { Icons } from '@/components/icons';
 import { Icons as MyIcons } from '@/src/constants/Icons';
-import { InsertDropdownMenu } from './insert-dropdown-menu';
+import { InsertMenu } from './insert-dropdown-menu';
 import { MarkToolbarButton } from '@/components/plate-ui/mark-toolbar-button';
 import { ModeDropdownMenu } from '@/components/plate-ui/mode-dropdown-menu';
 import { ToolbarGroup } from '@/components/plate-ui/toolbar';
@@ -20,7 +20,7 @@ import { TurnIntoDropdownMenu } from '@/components/plate-ui/turn-into-dropdown-m
 import { Logger } from 'react-logger-lib';
 import { Button } from '../shadcn/button';
 
-export function FixedToolbarButtons( {view = "Basic", operations} ) {
+export function FixedToolbarButtons( {view = "Advanced", operations} ) {
   const log = Logger.of(FixedToolbarButtons.name)
   const readOnly = useEditorReadOnly();
 
@@ -41,10 +41,13 @@ export function FixedToolbarButtons( {view = "Basic", operations} ) {
             </ToolbarGroup>
 
             <ToolbarGroup noSeparator>
-              <InsertDropdownMenu />
+            {/*
+              <InsertMenu view={view} />
               <TurnIntoDropdownMenu />
+            */}
             </ToolbarGroup>
 
+            {/*
             <ToolbarGroup>
               <MarkToolbarButton nodeType={BoldPlugin.key} tooltip="Bold (⌘+B)">
                 <Icons.bold />
@@ -68,20 +71,20 @@ export function FixedToolbarButtons( {view = "Basic", operations} ) {
               >
                 <Icons.strikethrough />
               </MarkToolbarButton>
-              {/*
               <MarkToolbarButton nodeType={CodePlugin.key} tooltip="Code (⌘+E)">
                 <Icons.code />
               </MarkToolbarButton>
-              */}
             </ToolbarGroup>
+              */}
           </>
         )}
 
         <div className="grow" />
-
+        {/*
         <ToolbarGroup noSeparator>
           <ModeDropdownMenu />
         </ToolbarGroup>
+        */}
       </div>
     </div>
   );

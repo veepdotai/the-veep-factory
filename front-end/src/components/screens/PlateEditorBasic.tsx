@@ -7,66 +7,81 @@ import { t } from 'i18next'
 import { withProps } from '@udecode/cn';
 import { createPlateEditor, Plate, ParagraphPlugin, PlateElement, PlateLeaf } from '@udecode/plate-common/react';
 import { BlockquotePlugin } from '@udecode/plate-block-quote/react';
-import { CodeBlockPlugin, CodeLinePlugin, CodeSyntaxPlugin } from '@udecode/plate-code-block/react';
+//import { CodeBlockPlugin, CodeLinePlugin, CodeSyntaxPlugin } from '@udecode/plate-code-block/react';
 
 import { HeadingPlugin } from '@udecode/plate-heading/react';
-import { HorizontalRulePlugin } from '@udecode/plate-horizontal-rule/react';
+//import { HorizontalRulePlugin } from '@udecode/plate-horizontal-rule/react';
 import { LinkPlugin } from '@udecode/plate-link/react';
+import { ListPlugin, BulletedListPlugin, NumberedListPlugin, ListItemPlugin } from '@udecode/plate-list/react';
+import { BoldPlugin, ItalicPlugin, UnderlinePlugin, StrikethroughPlugin, SubscriptPlugin, SuperscriptPlugin } from '@udecode/plate-basic-marks/react';
+//import { CodePlugin } from '@udecode/plate-basic-marks/react';
+import { BaseFontColorPlugin, BaseFontBackgroundColorPlugin, BaseFontSizePlugin } from '@udecode/plate-font';
+import { BaseAlignPlugin } from '@udecode/plate-alignment';
+import { BaseLineHeightPlugin } from '@udecode/plate-line-height';
+import { IndentPlugin } from '@udecode/plate-indent/react';
+import { IndentListPlugin } from '@udecode/plate-indent-list/react';
+import { AutoformatPlugin } from '@udecode/plate-autoformat/react';
+import { BlockSelectionPlugin } from '@udecode/plate-selection/react';
+import { DndPlugin } from '@udecode/plate-dnd';
+
+import { ExitBreakPlugin, SoftBreakPlugin } from '@udecode/plate-break/react';
+import { NodeIdPlugin } from '@udecode/plate-node-id';
+import { ResetNodePlugin } from '@udecode/plate-reset-node/react';
+import { DeletePlugin } from '@udecode/plate-select';
+import { TrailingBlockPlugin } from '@udecode/plate-trailing-block';
+import { MarkdownPlugin } from '@udecode/plate-markdown';
+import { HEADING_KEYS } from '@udecode/plate-heading';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
+import { ParagraphElement } from '@/components/plate-ui/paragraph-element';
+import { HeadingElement } from '@/components/plate-ui/heading-element';
+import { BlockquoteElement } from '@/components/plate-ui/blockquote-element';
+import { ListElement } from '@/components/plate-ui/list-element';
+import { LinkElement } from '@/components/plate-ui/link-element';
+import { LinkFloatingToolbar } from '@/components/plate-ui/link-floating-toolbar';
+import { JuicePlugin } from '@udecode/plate-juice';
+
+/*
 import { ImagePlugin, MediaEmbedPlugin } from '@udecode/plate-media/react';
 import { CaptionPlugin } from '@udecode/plate-caption/react';
-import { TodoListPlugin, ListPlugin, BulletedListPlugin, NumberedListPlugin, ListItemPlugin } from '@udecode/plate-list/react';
+import { TodoListPlugin } from '@udecode/plate-list/react';
 import { ExcalidrawPlugin } from '@udecode/plate-excalidraw/react';
 import { TogglePlugin } from '@udecode/plate-toggle/react';
 import { ColumnPlugin, ColumnItemPlugin } from '@udecode/plate-layout/react';
 import { MentionPlugin, MentionInputPlugin } from '@udecode/plate-mention/react';
 import { TablePlugin, TableRowPlugin, TableCellPlugin, TableCellHeaderPlugin } from '@udecode/plate-table/react';
 import { DatePlugin } from '@udecode/plate-date/react';
-import { BoldPlugin, ItalicPlugin, UnderlinePlugin, StrikethroughPlugin, CodePlugin, SubscriptPlugin, SuperscriptPlugin } from '@udecode/plate-basic-marks/react';
-import { BaseFontColorPlugin, BaseFontBackgroundColorPlugin, BaseFontSizePlugin } from '@udecode/plate-font';
+
 import { HighlightPlugin } from '@udecode/plate-highlight/react';
 import { KbdPlugin } from '@udecode/plate-kbd/react';
-import { BaseAlignPlugin } from '@udecode/plate-alignment';
-import { IndentPlugin } from '@udecode/plate-indent/react';
-import { IndentListPlugin } from '@udecode/plate-indent-list/react';
-import { BaseLineHeightPlugin } from '@udecode/plate-line-height';
-import { AutoformatPlugin } from '@udecode/plate-autoformat/react';
-import { BlockSelectionPlugin } from '@udecode/plate-selection/react';
-import { DndPlugin } from '@udecode/plate-dnd';
 import { EmojiPlugin } from '@udecode/plate-emoji/react';
-import { ExitBreakPlugin, SoftBreakPlugin } from '@udecode/plate-break/react';
-import { NodeIdPlugin } from '@udecode/plate-node-id';
-import { ResetNodePlugin } from '@udecode/plate-reset-node/react';
-import { DeletePlugin } from '@udecode/plate-select';
+
 import { TabbablePlugin } from '@udecode/plate-tabbable/react';
-import { TrailingBlockPlugin } from '@udecode/plate-trailing-block';
 import { CommentsPlugin } from '@udecode/plate-comments/react';
 import { DocxPlugin } from '@udecode/plate-docx';
 import { CsvPlugin } from '@udecode/plate-csv';
-import { MarkdownPlugin } from '@udecode/plate-markdown';
-import { JuicePlugin } from '@udecode/plate-juice';
-import { HEADING_KEYS } from '@udecode/plate-heading';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import Prism from 'prismjs';
+*/
 
-import { BlockquoteElement } from '@/components/plate-ui/blockquote-element';
+/*
+import Prism from 'prismjs';
 import { CodeBlockElement } from '@/components/plate-ui/code-block-element';
 import { CodeLineElement } from '@/components/plate-ui/code-line-element';
 import { CodeSyntaxLeaf } from '@/components/plate-ui/code-syntax-leaf';
+
 import { ExcalidrawElement } from '@/components/plate-ui/excalidraw-element';
 import { HrElement } from '@/components/plate-ui/hr-element';
+
 import { ImageElement } from '@/components/plate-ui/image-element';
-import { LinkElement } from '@/components/plate-ui/link-element';
-import { LinkFloatingToolbar } from '@/components/plate-ui/link-floating-toolbar';
+import { MediaEmbedElement } from '@/components/plate-ui/media-embed-element';
+
 import { ToggleElement } from '@/components/plate-ui/toggle-element';
 import { ColumnGroupElement } from '@/components/plate-ui/column-group-element';
 import { ColumnElement } from '@/components/plate-ui/column-element';
-import { HeadingElement } from '@/components/plate-ui/heading-element';
-import { ListElement } from '@/components/plate-ui/list-element';
-import { MediaEmbedElement } from '@/components/plate-ui/media-embed-element';
+
 import { MentionElement } from '@/components/plate-ui/mention-element';
 import { MentionInputElement } from '@/components/plate-ui/mention-input-element';
-import { ParagraphElement } from '@/components/plate-ui/paragraph-element';
+
 import { TableElement } from '@/components/plate-ui/table-element';
 import { TableRowElement } from '@/components/plate-ui/table-row-element';
 import { TableCellElement, TableCellHeaderElement } from '@/components/plate-ui/table-cell-element';
@@ -77,15 +92,11 @@ import { CommentLeaf } from '@/components/plate-ui/comment-leaf';
 import { CommentsPopover } from '@/components/plate-ui/comments-popover';
 import { HighlightLeaf } from '@/components/plate-ui/highlight-leaf';
 import { KbdLeaf } from '@/components/plate-ui/kbd-leaf';
+*/
+
 import { Editor } from '@/components/plate-ui/editor';
 
-import { FixedToolbar } from '@/components/ui/veep/fixed-toolbar';
-import { FixedToolbarButtons } from '@/components/ui/veep/fixed-toolbar-buttons';
-import { FloatingToolbar } from '@/components/ui/veep/floating-toolbar';
-import { FloatingToolbarButtons } from '@/components/ui/veep/floating-toolbar-buttons';
-
-//import { PlaygroundFixedToolbarButtons } from '@/components/plate-ui/playground-fixed-toolbar-buttons';
-//import { PlaygroundFloatingToolbarButtons } from '@/components/plate-ui/playground-floating-toolbar-buttons';
+import { MyFixedToolbar, MyFloatingToolbar } from './PlateEditorToolbars';
 
 import { withPlaceholders } from '@/components/plate-ui/placeholder';
 import { withDraggables } from '@/components/plate-ui/with-draggables';
@@ -93,15 +104,14 @@ import { EmojiInputElement } from '@/components/plate-ui/emoji-input-element';
 import { TooltipProvider } from '@/components/plate-ui/tooltip';
 
 import MergedContent from './mycontent/parts/MergedContent';
-import { Utils } from 'src/components/lib/utils'
 
 /**
  * 
  * @param (String | String[]) input provided as markdown or CRT. If markdown then converted in CRT 
  * @returns Plate editor with provided plugins
  */
-export function PlateEditor( {input, contentId = null, attrName = null, cn = "w-[800px]"} ) {
-  const log = Logger.of("PlaceEditor")
+export function PlateEditorBasic( {input, contentId = null, attrName = null, cn = "w-[800px]"} ) {
+  const log = Logger.of("PlateEditorBasic")
 
   const [content, setContent] = useState([])
   
@@ -110,49 +120,23 @@ export function PlateEditor( {input, contentId = null, attrName = null, cn = "w-
     editor = createPlateEditor({
         plugins: [
           BlockquotePlugin,
-          CodeBlockPlugin.configure({
-            options: {
-              prism: Prism,
-            },
-          }),
           ParagraphPlugin,
           HeadingPlugin,
-          HorizontalRulePlugin,
-          LinkPlugin.configure({
-            render: { afterEditable: () => <LinkFloatingToolbar /> },
-          }),
-          ImagePlugin,
-          CaptionPlugin.configure({
-            options: { plugins: [ImagePlugin, MediaEmbedPlugin] },
-          }),
-          TodoListPlugin,
-          ExcalidrawPlugin,
-          TogglePlugin,
-          ColumnPlugin,
           ListPlugin,
-          MediaEmbedPlugin,
-          MentionPlugin,
-          TablePlugin,
-          DatePlugin,
           BoldPlugin,
           ItalicPlugin,
           UnderlinePlugin,
           StrikethroughPlugin,
-          CodePlugin,
           SubscriptPlugin,
           SuperscriptPlugin,
+          LinkPlugin.configure({
+            render: { afterEditable: () => <LinkFloatingToolbar /> },
+          }),
+
           BaseFontColorPlugin,
           BaseFontBackgroundColorPlugin,
           BaseFontSizePlugin,
-          HighlightPlugin,
-          KbdPlugin,
           BaseAlignPlugin.configure({
-            inject: { targetPlugins: ['p', 'h1', 'h2', 'h3'] },
-          }),
-          IndentPlugin.configure({
-            inject: { targetPlugins: ['p', 'h1', 'h2', 'h3'] },
-          }),
-          IndentListPlugin.configure({
             inject: { targetPlugins: ['p', 'h1', 'h2', 'h3'] },
           }),
           BaseLineHeightPlugin.configure({
@@ -163,6 +147,12 @@ export function PlateEditor( {input, contentId = null, attrName = null, cn = "w-
               },
               targetPlugins: ['p', 'h1', 'h2', 'h3'],
             },
+          }),
+          IndentPlugin.configure({
+            inject: { targetPlugins: ['p', 'h1', 'h2', 'h3'] },
+          }),
+          IndentListPlugin.configure({
+            inject: { targetPlugins: ['p', 'h1', 'h2', 'h3'] },
           }),
           AutoformatPlugin.configure({
             options: {
@@ -176,7 +166,6 @@ export function PlateEditor( {input, contentId = null, attrName = null, cn = "w-
           DndPlugin.configure({
               options: { enableScroller: true },
           }),
-          EmojiPlugin,
           ExitBreakPlugin.configure({
             options: {
               rules: [
@@ -209,6 +198,35 @@ export function PlateEditor( {input, contentId = null, attrName = null, cn = "w-
             },
           }),
           DeletePlugin,
+          TrailingBlockPlugin.configure({
+            options: { type: 'p' },
+          }),
+          MarkdownPlugin,
+          JuicePlugin,
+
+/*
+          HorizontalRulePlugin,
+          ImagePlugin,
+          CaptionPlugin.configure({
+            options: { plugins: [ImagePlugin, MediaEmbedPlugin] },
+          }),
+          MediaEmbedPlugin,
+          TodoListPlugin,
+          ExcalidrawPlugin,
+          TogglePlugin,
+          ColumnPlugin,
+          MentionPlugin,
+          TablePlugin,
+          DatePlugin,
+          HighlightPlugin,
+          KbdPlugin,
+          EmojiPlugin,
+          CodePlugin,
+          CodeBlockPlugin.configure({
+            options: {
+              prism: Prism,
+            },
+          }),
           SoftBreakPlugin.configure({
             options: {
               rules: [
@@ -223,28 +241,14 @@ export function PlateEditor( {input, contentId = null, attrName = null, cn = "w-
             },
           }),
           TabbablePlugin,
-          TrailingBlockPlugin.configure({
-            options: { type: 'p' },
-          }),
           CommentsPlugin,
           DocxPlugin,
           CsvPlugin,
-          MarkdownPlugin,
-          JuicePlugin,
+*/
         ],
         override: {
           components: withDraggables(withPlaceholders(({
-            [BlockquotePlugin.key]: BlockquoteElement,
-            [CodeBlockPlugin.key]: CodeBlockElement,
-            [CodeLinePlugin.key]: CodeLineElement,
-            [CodeSyntaxPlugin.key]: CodeSyntaxLeaf,
-            [ExcalidrawPlugin.key]: ExcalidrawElement,
-            [HorizontalRulePlugin.key]: HrElement,
-            [ImagePlugin.key]: ImageElement,
-            [LinkPlugin.key]: LinkElement,
-            [TogglePlugin.key]: ToggleElement,
-            [ColumnPlugin.key]: ColumnGroupElement,
-            [ColumnItemPlugin.key]: ColumnElement,
+            [ParagraphPlugin.key]: ParagraphElement,
             [HEADING_KEYS.h1]: withProps(HeadingElement, { variant: 'h1' }),
             [HEADING_KEYS.h2]: withProps(HeadingElement, { variant: 'h2' }),
             [HEADING_KEYS.h3]: withProps(HeadingElement, { variant: 'h3' }),
@@ -253,27 +257,45 @@ export function PlateEditor( {input, contentId = null, attrName = null, cn = "w-
             [HEADING_KEYS.h6]: withProps(HeadingElement, { variant: 'h6' }),
             [BulletedListPlugin.key]: withProps(ListElement, { variant: 'ul' }),
             [NumberedListPlugin.key]: withProps(ListElement, { variant: 'ol' }),
+            [BlockquotePlugin.key]: BlockquoteElement,
+            [LinkPlugin.key]: LinkElement,
             [ListItemPlugin.key]: withProps(PlateElement, { as: 'li' }),
+            [BoldPlugin.key]: withProps(PlateLeaf, { as: 'b' }),
+            [ItalicPlugin.key]: withProps(PlateLeaf, { as: 'em' }),
+            [StrikethroughPlugin.key]: withProps(PlateLeaf, { as: 's' }),
+            [SubscriptPlugin.key]: withProps(PlateLeaf, { as: 'sub' }),
+            [SuperscriptPlugin.key]: withProps(PlateLeaf, { as: 'sup' }),
+            [UnderlinePlugin.key]: withProps(PlateLeaf, { as: 'u' }),
+/*
+            [KbdPlugin.key]: KbdLeaf,
+            [CodeBlockPlugin.key]: CodeBlockElement,
+            [CodeLinePlugin.key]: CodeLineElement,
+            [CodeSyntaxPlugin.key]: CodeSyntaxLeaf,
+            [ExcalidrawPlugin.key]: ExcalidrawElement,
+            [HorizontalRulePlugin.key]: HrElement,
+
+            [ImagePlugin.key]: ImageElement,
             [MediaEmbedPlugin.key]: MediaEmbedElement,
+
+            [ColumnPlugin.key]: ColumnGroupElement,
+            [ColumnItemPlugin.key]: ColumnElement,
+
             [MentionPlugin.key]: MentionElement,
             [MentionInputPlugin.key]: MentionInputElement,
-            [ParagraphPlugin.key]: ParagraphElement,
+
             [TablePlugin.key]: TableElement,
             [TableRowPlugin.key]: TableRowElement,
             [TableCellPlugin.key]: TableCellElement,
             [TableCellHeaderPlugin.key]: TableCellHeaderElement,
+
+            [TogglePlugin.key]: ToggleElement,
             [TodoListPlugin.key]: TodoListElement,
             [DatePlugin.key]: DateElement,
             [CodePlugin.key]: CodeLeaf,
             [CommentsPlugin.key]: CommentLeaf,
             [HighlightPlugin.key]: HighlightLeaf,
-            [BoldPlugin.key]: withProps(PlateLeaf, { as: 'b' }),
-            [ItalicPlugin.key]: withProps(PlateLeaf, { as: 'em' }),
-            [KbdPlugin.key]: KbdLeaf,
-            [StrikethroughPlugin.key]: withProps(PlateLeaf, { as: 's' }),
-            [SubscriptPlugin.key]: withProps(PlateLeaf, { as: 'sub' }),
-            [SuperscriptPlugin.key]: withProps(PlateLeaf, { as: 'sup' }),
-            [UnderlinePlugin.key]: withProps(PlateLeaf, { as: 'u' }),
+*/
+
           }))),
         },
         value: _content,
@@ -313,13 +335,12 @@ export function PlateEditor( {input, contentId = null, attrName = null, cn = "w-
   let operations = {
     handleSave: () =>{
       updateContent(localStorage.getItem('editor'))
-      let plateContentAsString = Utils.convertDoubleQuotesToQuotesInJSON(localStorage.getItem("editor"))
-      MergedContent.saveItPlease(contentId, attrName, plateContentAsString)
+      MergedContent.saveItPlease(contentId, attrName)
     }
   }
   
   let editorWindowSpacing = {
-    padding: "2rem"
+    //padding: "2rem"
   }
 
   return (
@@ -334,21 +355,21 @@ export function PlateEditor( {input, contentId = null, attrName = null, cn = "w-
                 }}
                 className='dis_focus:ring-0 dis_focus:ring-offset-0'
               >
-                <FixedToolbar>
-                  <FixedToolbarButtons operations={operations} />
-                </FixedToolbar>
+
+                <MyFixedToolbar view="Basic" operations={operations} />
+
                 <Editor
                   style={editorWindowSpacing}
-                  className="mx-auto mt-2 {cn} rounded-none focus-visible:ring-none focus-visible:ring-1 focus-visible:ring-offset-0"
+                  className="{cn} mx-auto mt-2 rounded-none focus-visible:ring-none focus-visible:ring-1 focus-visible:ring-offset-0"
                 />
-                
-              <FloatingToolbar>
-                <FloatingToolbarButtons />
-              </FloatingToolbar>
+
+                <MyFloatingToolbar view="Basic" />
+
+              {/*
               <CommentsPopover />
+              */}
             </Plate>
-          </DndProvider>
-        :
+          </DndProvider>        :
           <>{t("Loading...")}</>
       }
     </>

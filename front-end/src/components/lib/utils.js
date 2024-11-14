@@ -52,5 +52,12 @@ export const Utils = {
 			this.log.trace('JWT Payload (false): ' + payload?.exp);
 			return false;
 		}
+	},
+
+	/**
+	 * jsonString may be malformed.
+	 */
+	convertDoubleQuotesToQuotesInJSON: function(jsonString) {
+		return jsonString.replace(/(?<![:\[,{])\\*"(?!\s*[,:\]}])/g, "'")
 	}
 }

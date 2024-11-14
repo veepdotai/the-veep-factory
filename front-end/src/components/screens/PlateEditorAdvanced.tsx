@@ -93,14 +93,13 @@ import { EmojiInputElement } from '@/components/plate-ui/emoji-input-element';
 import { TooltipProvider } from '@/components/plate-ui/tooltip';
 
 import MergedContent from './mycontent/parts/MergedContent';
-import { Utils } from 'src/components/lib/utils'
 
 /**
  * 
  * @param (String | String[]) input provided as markdown or CRT. If markdown then converted in CRT 
  * @returns Plate editor with provided plugins
  */
-export function PlateEditor( {input, contentId = null, attrName = null, cn = "w-[800px]"} ) {
+export function PlateEditorAdvanced( {input, contentId = null, attrName = null, cn = "w-full"} ) {
   const log = Logger.of("PlaceEditor")
 
   const [content, setContent] = useState([])
@@ -313,8 +312,7 @@ export function PlateEditor( {input, contentId = null, attrName = null, cn = "w-
   let operations = {
     handleSave: () =>{
       updateContent(localStorage.getItem('editor'))
-      let plateContentAsString = Utils.convertDoubleQuotesToQuotesInJSON(localStorage.getItem("editor"))
-      MergedContent.saveItPlease(contentId, attrName, plateContentAsString)
+      MergedContent.saveItPlease(contentId, attrName)
     }
   }
   
@@ -339,7 +337,7 @@ export function PlateEditor( {input, contentId = null, attrName = null, cn = "w-
                 </FixedToolbar>
                 <Editor
                   style={editorWindowSpacing}
-                  className="mx-auto mt-2 {cn} rounded-none focus-visible:ring-none focus-visible:ring-1 focus-visible:ring-offset-0"
+                  className=" {cn} mx-auto mt-2 rounded-none focus-visible:ring-none focus-visible:ring-1 focus-visible:ring-offset-0"
                 />
                 
               <FloatingToolbar>

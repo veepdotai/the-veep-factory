@@ -1,0 +1,31 @@
+"use client";
+
+import { useEffect, useState } from 'react';
+import { Logger } from 'react-logger-lib';
+import { t } from 'i18next'
+
+import { PlateEditorBasic } from './PlateEditorBasic'
+import { PlateEditorAdvanced } from './PlateEditorAdvanced'
+
+export function PlateEditor( {view = "Basic", input, contentId = null, attrName = null, cn = "w-[800px]"} ) {
+  const log = Logger.of("PlateEditor")
+
+  const props =  {
+    view: view,
+    input: input,
+    contentId: contentId,
+    attrName: attrName,
+    cn: cn
+  }
+
+  return (
+    <>
+    {
+      view == "Basic" ?
+        <PlateEditorBasic {...props} />
+          :
+        <PlateEditorAdvanced {...props}/>
+      }
+    </>
+  )
+}

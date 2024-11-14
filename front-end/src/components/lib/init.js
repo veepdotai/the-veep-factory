@@ -148,6 +148,7 @@ export default function initVeepdotaiApp(setCookie, setDone) {
     initAnalytics(Constants.ANALYTICS_JS_CONTAINER);
     initCookies(window.location.search, setCookie, setDone);
     initListeners(window);
-    initAppJSLogs(Constants.PRODUCTION ? 'NONE': 'NONE');
+    //initAppJSLogs(Constants.PRODUCTION ? 'NONE': 'NONE');
+    initAppJSLogs(Constants.PRODUCTION ? 'NONE': 'TRACE');
     initConstants(window);
 }

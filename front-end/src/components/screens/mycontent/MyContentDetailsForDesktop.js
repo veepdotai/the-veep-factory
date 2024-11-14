@@ -20,6 +20,7 @@ import PDFParams from 'src/components/veepdotai-pdf-config/components/PDFParams'
 
 import { Icons } from "src/constants/Icons";
 import EKeyLib from '../../lib/util-ekey';
+import { Utils } from '../../lib/utils';
 import { UtilsForm } from '../../lib/utils-form';
 import Veeplet from '../../lib/class-veeplet'
 
@@ -84,9 +85,11 @@ export default class MyContentDetailsForDesktop {
                 </MyContentDetailsForDesktop.TT>
               </TabsTrigger>
 
+              {/*
               <TabsTrigger id="details-menu-sideBySide-content" value="sideBySide-content">
                   <MyContentDetailsForDesktop.TT id="m2" title={t("SideBySideView")}>{Icons.comparedView}</MyContentDetailsForDesktop.TT>
               </TabsTrigger>
+              */}
             </div>
           </TabsList>
         :
@@ -148,11 +151,14 @@ export default class MyContentDetailsForDesktop {
 
     if (content.startsWith('[{')) {
       log("Content is in CRT format: " + content[0])
+      content = Utils.convertDoubleQuotesToQuotesInJSON(content)
+      log("content after \" replacement with ': content: " + content);
+
       const editor = createPlateEditor({ value: JSON.parse(content), plugins: [MarkdownPlugin] });      
       content = editor.api.markdown.serialize();      
     }
 
-    log("content: " + JSON.stringify(content));
+    log("content is now json: " + JSON.stringify(content));
 
     return (
         <PDFViewer content={content} data={data} />

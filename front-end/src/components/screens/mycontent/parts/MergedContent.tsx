@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 
 import style from "./main.module.css"
 import EKeyLib from '../../../lib/util-ekey';
+import { Utils } from '../../../lib/utils';
 import Veeplet from '../../../lib/class-veeplet'
 //import EditorHome from '../../../common/mdxeditor/index';
 import Content from '../Content';
@@ -22,11 +23,14 @@ export default class MergedContent {
       let log = MergedContent.log
       if (_content) {
         if (! _parse) {
-          let r = _content.replace(/\n/g, "<br />");
+          let r = _content.replace(/\n/g, "<br />")
           log.trace("parse: false | content: " + r)
           return r
         } else {
-          let r = parse(_content.replace(/\n/g, "<br />"));
+          //let r = parse(_content.replace(/\n/g, "<br />"))
+          let r = _content.replace(/(<br\s+\/>)+/g, "\n\n")
+          //r = "Trois\nDeux\nUn\n" 
+          
           log.trace("parse: true | content: " + r)
           return r 
         }
@@ -39,7 +43,7 @@ export default class MergedContent {
     static saveItPlease(contentId, attrName ) {
       let params = {
         cid: contentId,
-        content: localStorage.getItem("editor"),
+        content: Utils.convertDoubleQuotesToQuotesInJSON(localStorage.getItem("editor")),
         attrName: attrName
       }
       MergedContent.log.trace("saveItPlease: " + params.content)
@@ -273,9 +277,8 @@ export default class MergedContent {
                       <Markdown className={style.reactMarkdown} remarkPlugins={[remarkGfm]}>{_content}</Markdown>
                     :
                       <div className="p-0 bg-neutral-100">
-                        <PlateEditor className="p-0" input={_content} contentId={cid} attrName={attrName}>
+                        <PlateEditor className="p-0" view="Advanced" input={_content} contentId={cid} attrName={attrName}>
                         </PlateEditor>
-                        {/*<EditorHome attrName={attrName} markdown={_content} contentEditableClassName={"details-" + md5(title)} />*/}
                       </div>      
       
                   }

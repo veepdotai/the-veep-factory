@@ -74,6 +74,7 @@ const items = [
 const defaultItem = items.find((item) => item.value === ParagraphPlugin.key)!;
 
 export function TurnIntoDropdownMenu(props: DropdownMenuProps) {
+
   const value: string = useEditorSelector((editor) => {
     let initialNodeType: string = ParagraphPlugin.key;
     let allNodesMatchInitialNodeType = false;
