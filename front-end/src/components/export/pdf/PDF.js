@@ -304,7 +304,7 @@ export function PDF( props ) {
           <PDFDocument
             content={props.content}
             title={props.title || "Veep.AI"}
-            subTitle={props.subTitle || "Compte rendu" }
+            subTitle={props.subtitle || "Compte rendu" }
             featuredImage={props.featuredImage || "./assets/images/veep.png" }
           />
       </PDFViewer>

@@ -48,7 +48,7 @@ export function PDFDocument({content, params}) {
 
   let data = {
     title: params?.title,
-    subTitle: params?.subTitle,
+    subTitle: params?.subTitle || params?.subtitle,
     featuredImage: params?.companyImg,
     author: params?.author,
     version: params?.version,

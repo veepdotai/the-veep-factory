@@ -31,7 +31,7 @@ export default class PDFParams {
         log.trace("constructor: params: " + JSON.stringify(params))
 
         this.title = params?.title
-        this.subTitle = params?.subTitle
+        this.subTitle = params?.subTitle || params?.subtitle
 
         this.styles = params?.stylesheet || ""
         log.trace("styles: " + JSON.stringify(this.styles))

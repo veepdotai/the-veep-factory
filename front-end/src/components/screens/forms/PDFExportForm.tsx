@@ -82,7 +82,6 @@ export default function PDFExportForm( {params} ) {
     //function onSubmit(data: z.infer<typeof FormSchema>) {
     function onSubmit(data) {
         // Merge export form data and params
-        alert(`onSubmit:`)
         log.trace(`onSubmit:`)
         log.trace(`onSubmit: data: ${JSON.stringify(data)}`)
 

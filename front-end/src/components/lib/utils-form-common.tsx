@@ -32,11 +32,9 @@ export const UtilsFormCommon = {
         log("Submitting data: " + JSON.stringify(data, null, 2))
 
         toast({
-          title: "You submitted the following values:",
+          title: t("Status"),
           description: (
-            <div className="mt-2 w-[500px] rounded-md">
-              <code className="text-xs">{JSON.stringify(data, null, 2)}</code>
-            </div>
+            <div className="mt-2 w-[500px] rounded-md">{t("DataUpdated")}</div>
           ),
         })
     },
