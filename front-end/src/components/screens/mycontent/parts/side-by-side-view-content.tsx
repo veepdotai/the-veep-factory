@@ -11,6 +11,7 @@ import Veeplet from '../../../lib/class-veeplet'
 //import EditorHome from '../../../common/mdxeditor/index';
 import Content from '../Content';
 import MyContentDetailsUtils from '../MyContentDetailsUtils';
+import { PlateEditor } from '../../PlateEditor';
 
 export default function SideBySideViewContent( { prompt, data, cid, width = 6 } ) {
     const log = Logger.of(SideBySideViewContent.name)
@@ -38,25 +39,28 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 6 } 
         //let title = t(`Phase ${i}: `+ prompt.prompts[row].label);
         let title = '';
         let attrName = '';
-        let _content = '';
+        let node = {};
         try {
           title = prompt.prompts[promptId].label;
           if (title.indexOf("STOP") >= 0) return (<></>);
   
           //let attrName = `veepdotaiPhase${promptId}Content`;
-          attrName = `veepdotaiPhase${i}Content`;
-          attrName = "content"
+          //attrName = `veepdotaiPhase${i}Content`;
+          //attrName = "content"
           //let _content = format(data[attrName]);
           //_content = data[attrName];
-          _content = MyContentDetailsUtils.getData(data, i, attrName);
+          node = MyContentDetailsUtils.getData(data, i, attrName);
         } catch (e) {
           return (<></>)
         }
 
+        let _content = node?.content ? node.content : node
+        let lcid = node?.cid ? node.cid : cid
+
         return (
           <Col className='p-1 h-100' xs={12} lg={width}>
             <Content
-              contentId={cid}
+              contentId={lcid}
               attrName={attrName}
               title={title}
               
@@ -65,11 +69,15 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 6 } 
               contentAsText2CRLF={_content}
               contentAsHtml={parse(format(_content))}
             >
-            { true ?
+            { false ?
               <Markdown remarkPlugins={[remarkGfm]}>{_content}</Markdown>
               :
               <>
               {/* Could be replaced by PlateEditor: <EditorHome attrName={attrName} markdown={_content} contentEditableClassName={"details-" + md5(title)} />*/}
+                <div className="p-0 bg-neutral-100">
+                  <PlateEditor className="p-0" view="Advanced" input={_content} contentId={lcid} attrName={attrName}>
+                  </PlateEditor>
+                </div>      
               </>
             }
             </Content>

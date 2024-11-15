@@ -282,6 +282,14 @@ export function PlateEditor( {input, contentId = null, attrName = null, cn = "w-
       return editor
   };
 
+  function getEditorContent(cid) {
+    return localStorage.getItem(`veep-editor-${cid}`)
+  }
+
+  function setEditorContent(cid, content) {
+    return localStorage.setItem(`veep-editor-${cid}`, content)
+  }
+
   function updateContent(input) {
     try {
       setContent(JSON.parse(input))
@@ -312,8 +320,8 @@ export function PlateEditor( {input, contentId = null, attrName = null, cn = "w-
   
   let operations = {
     handleSave: () =>{
-      updateContent(localStorage.getItem('editor'))
-      let plateContentAsString = Utils.convertDoubleQuotesToQuotesInJSON(localStorage.getItem("editor"))
+      updateContent(getEditorContent(contentId))
+      let plateContentAsString = Utils.convertDoubleQuotesToQuotesInJSON(getEditorContent(contentId))
       MergedContent.saveItPlease(contentId, attrName, plateContentAsString)
     }
   }
@@ -330,7 +338,7 @@ export function PlateEditor( {input, contentId = null, attrName = null, cn = "w-
                 editor={getEditor(content)} 
                 onChange={ value => {
                   const content = JSON.stringify(value.value);
-                  localStorage.setItem("editor", content)
+                  setEditorContent(contentId, content)
                 }}
                 className='dis_focus:ring-0 dis_focus:ring-offset-0'
               >

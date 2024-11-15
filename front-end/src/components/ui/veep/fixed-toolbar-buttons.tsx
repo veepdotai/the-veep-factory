@@ -1,4 +1,5 @@
 import React from 'react';
+import { Logger } from 'react-logger-lib';
 
 import {
   BoldPlugin,
@@ -11,13 +12,13 @@ import { useEditorReadOnly } from '@udecode/plate-common/react';
 
 import { Icons } from '@/components/icons';
 import { Icons as MyIcons } from '@/src/constants/Icons';
-import { InsertDropdownMenu } from './insert-dropdown-menu';
 import { MarkToolbarButton } from '@/components/plate-ui/mark-toolbar-button';
-import { ModeDropdownMenu } from '@/components/plate-ui/mode-dropdown-menu';
 import { ToolbarGroup } from '@/components/plate-ui/toolbar';
 import { TurnIntoDropdownMenu } from '@/components/plate-ui/turn-into-dropdown-menu';
 
-import { Logger } from 'react-logger-lib';
+import { InsertDropdownMenu } from './insert-dropdown-menu';
+import { ModeDropdownMenu } from './mode-dropdown-menu';
+
 import { Button } from '../shadcn/button';
 
 export function FixedToolbarButtons( {view = "Basic", operations} ) {
@@ -35,7 +36,7 @@ export function FixedToolbarButtons( {view = "Basic", operations} ) {
         {!readOnly && (
           <>
             <ToolbarGroup>
-              <Button onClick={operations.handleSave}>
+              <Button className="border-none bg-white text-black" onClick={operations.handleSave}>
                 {MyIcons.save}
               </Button>
             </ToolbarGroup>
