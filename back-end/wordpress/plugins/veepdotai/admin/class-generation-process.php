@@ -53,14 +53,19 @@ class Generation_Process {
         Veepdotai_Util::log_step_finished( $user_log_file, $user_run_file, $pid, $topic);
     }
 
-    public static function log_step_finished2( $pid, $topic) {
+    public static function log_step_finished2( $pid, $topic, $msg = "") {
         self::error_log( $topic . "FINISHED_");
-        Veepdotai_Util::log_step_finished( self::get_ulf(), self::get_urf( $pid ), $pid, $topic);
+        Veepdotai_Util::log_step_finished( self::get_ulf(), self::get_urf( $pid ), $pid, $topic, $msg);
     }
 
-    public static function log_step_paused2( $pid, $topic) {
+    public static function log_step_paused2( $pid, $topic, $msg = "") {
         self::error_log( $topic . "PAUSED_");
-        Veepdotai_Util::log_step_paused( self::get_ulf(), self::get_urf( $pid ), $pid, $topic);
+        Veepdotai_Util::log_step_paused( self::get_ulf(), self::get_urf( $pid ), $pid, $topic, $msg);
+    }
+
+    public static function log_step_continued2( $pid, $topic, $msg = "") {
+        self::error_log( $topic . "CONTINUED_");
+        Veepdotai_Util::log_step_continued( self::get_ulf(), self::get_urf( $pid ), $pid, $topic, $msg);
     }
 
     public static function get_duration( $start ) {
@@ -163,7 +168,7 @@ class Generation_Process {
         $content_id = self::save_metadata( $metadata, $chain_id );
         self::log( __METHOD__ . ": post id after creation: id: " . $content_id );
 
-        self::log_step_finished2( $pid, "_TRANSCRIPTION_");
+        self::log_step_finished2( $pid, "_TRANSCRIPTION_", "cid:${content_id}");
         return $content_id;
     }
 
@@ -234,7 +239,7 @@ class Generation_Process {
         $lsd = $meta[ "veepdotaiLastStepDone" ][0] ?? "";
         self::log( __METHOD__ . ": lsd: " . $lsd );
         if ( $lsd == "Transcription" ) {
-            self::log_step_paused2( $pid, "_CONTENT_GENERATION_");
+            self::log_step_paused2( $pid, "_CONTENT_GENERATION_", "cid:${content_id}");
             self::update_last_step_done( "TranscriptionChecked", $content_id );
             self::log( __METHOD__ . ": write_transcription_details: content_id: " . $content_id);
             do_action("write_transcription_details", $user, $content_id);
@@ -268,6 +273,7 @@ class Generation_Process {
         $chain = Veepdotai_Util::get_chain( $prompts['chain'] );
 
         $result = "";
+        $new_content_id = $content_id;
         for( $i = 0; $i < count( $chain ); $i++) {
             $label = $chain[$i];
             $label_encoded = Veepdotai_Util::encode_prompt_id( $label );
@@ -297,24 +303,22 @@ class Generation_Process {
                 }
 
                 if ( $prompt == "STOP" ) {
-                    self::log_step_paused2( $pid, "_CONTENT_GENERATION_");
+                    self::log_step_paused2( $pid, "_CONTENT_GENERATION_", "cid:${new_content_id}");
                     //self::update_last_step_done( $chain[$i + 1], $content_id );
                     self::update_last_step_done( $i + 1, $content_id );
                     self::log( __METHOD__ . ": please pause!");
                     return $content_id;
+                } else {
+                    self::log_step_continued2( $pid, "_CONTENT_GENERATION_", "cid:${new_content_id}");
                 }
 
                 self::log( __METHOD__ . ": phase ${i}/${label}/${label_encoded} step is going to be done.");
 
             }
 
-            //$res = self::generate($pid, $instructions, "_PHASE${i}_GENERATION_", "ai-section-edcal1-phase${i}");
-            //$res = self::generate($pid, $veeplet, $instructions, "_PHASE${i}_GENERATION_", "ai-section-edcal1-phase${i}");
-            $res = self::generate($pid, $veeplet, $instructions, "_PHASE${label_encoded}_GENERATION_", "ai-section-edcal1-phase${label_encoded}");
-            $content = $res->choices[0]->message->content;
-
-            //$content_id = self::save_generation( $content_id, "", $result, $content, $res, "veepdotaiPhase", $i);
-            $new_content_id = self::save_generation( $content_id, "", $result, $content, $res, "veepdotaiPhase", $i, $label_encoded);
+            $new_content_id = self::generate($content_id, $pid, $veeplet, $instructions, "_PHASE${label_encoded}_GENERATION_", "ai-section-edcal1-phase${label_encoded}", $result, $i, $label_encoded);
+//            $content = $res->choices[0]->message->content;
+//            $new_content_id = self::save_generation( $content_id, "", $result, $content, $res, "veepdotaiPhase", $i, $label_encoded);
 
             self::log( __METHOD__ . ": write_generation_details - content_id: {$new_content_id}" );
             do_action( "write_generation_details", $user, $new_content_id );
@@ -436,7 +440,7 @@ class Generation_Process {
      * topic is label_encoded
      */
     //public static function generate( $pid, $instructions, $topic, $option ) {
-    public static function generate( $pid, $veeplet, $instructions, $topic, $option ) {
+    public static function generate( $content_id, $pid, $veeplet, $instructions, $topic, $option, $result, $id, $label_encoded ) {
         /**
          * Process generation
          */
@@ -451,11 +455,14 @@ class Generation_Process {
         //Veepdotai_Util::save_extracted_data( $data, $key );
         Veepdotai_Util::set_option( $option, $content );
 
-        self::log_step_finished2( $pid, $topic);
+        $new_content_id = self::save_generation( $content_id, "", $result, $content, $res, "veepdotaiPhase", $i, $label_encoded);
+
+        self::log_step_finished2( $pid, $topic, "cid:${new_content_id}");
         self::log( __METHOD__ . ": generated data: topic: $topic: " . Veepdotai_Util::get_options( $option ));
         self::log( __METHOD__ . ": duration: " . self::get_duration( $start ) );
 
-        return $res;
+        //return $res;
+        return $new_content_id;
     }
 
     /**

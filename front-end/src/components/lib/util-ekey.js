@@ -1,5 +1,9 @@
 import { Logger } from 'react-logger-lib';
 
+/**
+ * Available chars in base 64 are [0-9a-zA-Z+/] but + and / are not allowed
+ * *in propertie name so it might give a bug.
+ */
 const EKeyLib = {
     log: Logger.of("EKeyLib"),
 

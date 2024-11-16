@@ -169,8 +169,6 @@ class Veepdotai_Posts_REST_Controller extends WP_REST_Controller {
         Veepdotai_Util::log( 'debug', "veepdotai-ai-input-stream: " . $request['veepdotai-ai-input-stream']);
         Veepdotai_Util::log( 'debug', "veepdotai-ai-input-file: " . $request['veepdotai-ai-input-file']);
 
-        //Veepdotai_Util::log( 'debug', "veepdotai-ai-input-file: " . $request['veepdotai-ai-input-file']);
-
         $user = wp_get_current_user();
         self::log( "debug", 'User: ' . print_r( $user, true));
 

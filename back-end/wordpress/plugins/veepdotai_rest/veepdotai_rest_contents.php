@@ -2,6 +2,15 @@
 
 class Veepdotai_Contents_REST_Controller extends WP_REST_Controller {
 
+    public static function log( $msg, $data = null, $msg_type = 3, $file = "/tmp/wordpress.log" ) {
+		$root = "Veepdotai_Contents_REST_Controller";
+        Veepdotai_Util::log( 'debug', "$root: Contents: " . $msg
+                                . ($data ? print_r($data, true) : '')
+//                                ,$msg_type,
+//                                $file
+                            );
+	}
+
     // Here initialize our namespace and resource name.
     public function __construct() {
         $this->namespace     = 'veepdotai_rest/v1';
@@ -127,17 +136,28 @@ class Veepdotai_Contents_REST_Controller extends WP_REST_Controller {
         //$content = sanitize_text_field( $request['content'] );
         $content = sanitize_textarea_field( $request['content'] );
         $attr_name = sanitize_text_field( $request['attrName'] );
+        $custom = sanitize_text_field( $request['custom'] );
+        $label_encoded = preg_replace("/labelEncoded:(.*)/", "$1", $custom );
+        self::log( "label_encoded: ${label_encoded}" );
 
         if ( ! $attr_name ) {
             // update all the post.
             die("Not implemented.");
-        } else if ( $attr_name == "post_content") {
+        } else if ( $attr_name == "post_content" ) {
             $post_array = array(
                 "ID" => $id,
                 "post_content" => $content,
             );
             $output = wp_update_post( $post_array );
-        } else if ( $attr_name == "veepdotaiContent") {
+
+            if ( $label_encoded == "transcription" ) {
+                Veepdotai_Util::set_option( "ai-section-edcal0-${label_encoded}", $content );
+            } else if ( $label_encoded ) {
+                Veepdotai_Util::set_option( "ai-section-edcal1-phase${label_encoded}", $content );       
+            }
+
+        } else if ( $attr_name == "veepdotaiContent" ) {
+            // Is it used anymore?            
             $post_array = array(
                 "ID" => $id,
                 "post_content" => $content,

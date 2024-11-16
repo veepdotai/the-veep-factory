@@ -60,11 +60,12 @@ export default function Content( {contentId, title, attrName = null, content = "
   }
 
   function handleSave(topic, params) {
-    log.trace("handleSave: " + JSON.stringify(params));
+    log.trace(`handleSave: topic: ${topic} / params: ${JSON.stringify(params)}`);
     ContentCardActions.handleSave({
       content: params.content,
       contentId: params.cid,
       attrName: params.attrName || "post_content",
+      custom: params.custom,
       conf: getService(cookies, "contents", params.cid, "PATCH"),
     })
 
@@ -290,7 +291,10 @@ export default function Content( {contentId, title, attrName = null, content = "
   }
 
   useEffect(() => {
+    log.trace(`useEffect: Unsubscribing MARKDOWN_CONTENT_${attrName}`)
     PubSub.unsubscribe(`MARKDOWN_CONTENT_${attrName}`);
+
+    log.trace(`useEffect: Subscribing MARKDOWN_CONTENT_${attrName}`)
     PubSub.subscribe(`MARKDOWN_CONTENT_${attrName}`, handleSave);
   }, [])
 

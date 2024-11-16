@@ -1231,6 +1231,14 @@ class Veepdotai_Util {
 //        file_put_contents( $user_run_file, "$key - ${topic}PAUSED_${msg}\n", FILE_APPEND);
     }
 
+	public static function log_step_continued( $user_log_file, $user_run_file, $pid, $topic, $msg = '') {
+        $key = self::get_date() . ' ' . $pid;
+		error_log("$key - ${topic}CONITNUED${msg}\n", 3, $user_log_file);
+		error_log("$key - ${topic}CONTINUED_${msg}\n", 3, $user_run_file);
+//        file_put_contents( $user_log_file, "$key - ${topic}PAUSED${msg}\n", FILE_APPEND);
+//        file_put_contents( $user_run_file, "$key - ${topic}PAUSED_${msg}\n", FILE_APPEND);
+    }
+
 	public static function log_step_error( $user_log_file, $user_run_file, $pid, $topic, $msg = '') {
         $key = self::get_date() . ' ' . $pid;
 		error_log("$key - ${topic}ERROR${msg}\n", 3, $user_log_file);

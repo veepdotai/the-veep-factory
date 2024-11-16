@@ -20,13 +20,14 @@ export default class MergedContent {
     static log = Logger.of(MergedContent.name)
 
     /* Should be stored in a util class for content mgt */
-    static saveItPlease(cid, attrName, content) {
+    static saveItPlease(cid, attrName, content, custom = null) {
       let params = {
         cid: cid,
         content: content,
-        attrName: attrName
+        attrName: attrName,
+        custom: custom
       }
-      MergedContent.log.trace(`saveItPlease: ${params}`)
+      MergedContent.log.trace(`saveItPlease: ${JSON.stringify(params)}`)
       PubSub.publish(`MARKDOWN_CONTENT_${attrName}`, params)
     }
 
@@ -249,7 +250,7 @@ export default class MergedContent {
                       <Markdown className={style.reactMarkdown} remarkPlugins={[remarkGfm]}>{_content}</Markdown>
                     :
                       <div className="p-0 bg-neutral-100">
-                        <PlateEditor className="p-0" view="Advanced" input={_content} contentId={cid} attrName={attrName}>
+                        <PlateEditor className="p-0" view="Advanced" input={_content} contentId={cid} attrName={attrName} cn="w-[800px]">
                         </PlateEditor>
                       </div>      
       

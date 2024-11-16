@@ -24,6 +24,7 @@ const ContentCardActions = {
     log.trace(`contentId: ${params.contentId}`);
     log.trace(`attrName: ${params.attrName}`);
     log.trace(`content: ${params.content}`);
+    log.trace(`custom: ${params.custom}`);
 
     let conf = params.conf
     log.trace( "conf: " + JSON.stringify(conf));
@@ -32,6 +33,7 @@ const ContentCardActions = {
     fd.append("contentId", params.contentId);
     fd.append("attrName", params.attrName);
     fd.append("content", params.content);
+    fd.append("custom", params.custom);
 
     axios.post(
       conf.service,

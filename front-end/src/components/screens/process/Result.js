@@ -11,8 +11,9 @@ import toast from 'react-hot-toast';
 import PubSub from 'pubsub-js';
 
 import { getService } from '../../../api/service-fetch';
-
+import { Utils } from 'src/components/lib/utils'
 import styles from '../../catalog/AllCards.module.css';
+import Content from '../../screens/mycontent/Content';
 import ResultActions from './ResultActions';
 import { PlateEditor } from '../../../components/screens/PlateEditor'
 import MergedContent from '../mycontent/parts/MergedContent';
@@ -25,6 +26,7 @@ export default function Result( props ) {
     const _topic = props.topic;
     //const current = props.current;
     const duration = props.duration || 60;
+    const [contentId, setContentId] = useState()
 
     const defaultValues = {
         state: {
@@ -35,23 +37,18 @@ export default function Result( props ) {
         waiting: false
     };
 
-    function reset(topic, data) {
-        setContent(defaultValues.state.content);
-        setCopied(defaultValues.state.copied);
-        setWaiting(defaultValues.waiting)
-    }
+    const elementId = option + "-progressiveContent"
+    const [cookies] = useCookies('JWT')
+    const [state, setState] = useState(defaultValues.state)
 
-    const elementId = option + "-progressiveContent";
-    const [cookies] = useCookies('JWT');
-    const [state, setState] = useState(defaultValues.state);
+    const [content, setContent] = useState('')
+    const [current, setCurrent] = useState(props.current)
+    const [labelEncoded, setLabelEncoded] = useState(null)
+    const [initialContent, setInitialContent] = useState('')
+    const [copied, setCopied] = useState(false)
+    const [waiting, setWaiting] = useState(true)
 
-    const [content, setContent] = useState('');
-    const [current, setCurrent] = useState(props.current);
-    const [initialContent, setInitialContent] = useState('');
-    const [copied, setCopied] = useState(false);
-    const [waiting, setWaiting] = useState(true);
-
-    const [resumeButton, setResumeButton] = useState(false);
+    const [resumeButton, setResumeButton] = useState(false)
 
     /**
      * Gets the data from the server each time a certain type of message is received.
@@ -66,7 +63,8 @@ export default function Result( props ) {
         fetch(conf.service, {...conf.options, "mode": "cors"})
             .then((res) => res.json())
             .then((data) => {
-                log.info("getDataFetch: Data: " + JSON.stringify(data));
+                log.info("getData: fetch: Data: " + JSON.stringify(data));
+                log.info("getData: fetch: Current: " + current);
 
                 let content = "";
                 if (option.match(/^prefix:/)) {
@@ -100,15 +98,17 @@ export default function Result( props ) {
                         PubSub.publish("_ERROR_TRANSCRIPTION_IS_EMPTY", null);
                         setContent(t("TranscriptionIsEmpty"));
                         toast.error(t("TranscriptionIsEmpty."), {id: "emptyTranscription"});
-                        //PubSub.publish("_CONTENT_GENERATION_FINISHED_", null);
                     } else if ( "ai-section-edcal0-transcription" == option) {
                         setInitialContent(content);
-                        //setContent(content.replace(/(\\r\\n|\\n)/g, "<br />"));
-                        //setContent(content.replace(/\.\s+([^0-9\.])/g, ".$1<br /><br />"));
                         setContent(content.replace(/(\.|\!|\?)\s+([A-Z])/g, "$1<br /><br />$2"));
+                        setLabelEncoded("transcription")
                     } else {
+                        // It is another generation step
                         setInitialContent(content);
                         setContent(content.replace(/(\r\n|\n)/g, "<br />"));
+                        let labelEncoded = topic.replace(/.*PHASE([0-9a-zA-Z+/]*)_.*/, "$1")
+                        log.trace("getData: fetch: labelEncoded: " + labelEncoded);
+                        setLabelEncoded(labelEncoded)
                     }
                     PubSub.publish("_CONTENT_", content);
                 }
@@ -116,24 +116,55 @@ export default function Result( props ) {
                 if (resume) {
                     setResumeButton(true);
                 }
-            })
-            .catch((e) => {
+            }).catch((e) => {
                 log.trace(`Catched error: ${JSON.stringify(e)}`)
             })
     }
 
-    function pause(topic, msg) {
-        getData(topic, msg, true);
-        // No need to tell it again
-        //PubSub.publish( "_CONTENT_GENERATION_PAUSED", null);
+    function reset(topic, data) {
+        setContent(defaultValues.state.content);
+        setCopied(defaultValues.state.copied);
+        setWaiting(defaultValues.waiting)
     }
 
-    /*
-    function resume() {
-        alert('Resume: Post continue');
-        PubSub.publish( "_CONTENT_GENERATION_RESUMED_")
+    function started(topic, msg) {
+        log.trace(`started: ${JSON.stringify(msg)}`)
+
+        return wait(topic, msg)
     }
-    */
+
+    function finished(topic, msg) {
+        log.trace(`finished: topic: ${topic} / ${JSON.stringify(msg)}`)
+        updateContentId(msg)
+
+        return getData(topic, msg)
+    }
+
+    function continued(topic, msg) {
+        log.trace(`continued: ${JSON.stringify(msg)}`)
+        updateContentId(msg)
+    }
+
+    function paused(topic, msg) {
+        log.trace(`paused: ${JSON.stringify(msg)}`)
+
+        updateContentId(msg)
+        getData(topic, msg, true);
+    }
+
+    function updateContentId(msg) {
+        log.trace(`updateContentId: msg: ${msg}`)
+        let cid = msg.replace(/.*_cid:(\d*)$/, "$1")
+        log.trace(`updateContentId: cid: ${cid}`)
+        setContentId(cid)
+        return cid
+    }
+
+    function wait(topic, data) {
+        setWaiting(true);
+    }
+
+
     function createHtmlContent() {
         return (
             <p>
@@ -142,25 +173,25 @@ export default function Result( props ) {
         )
     }
 
-    function wait(topic, data) {
-        setWaiting(true);
-    }
-
     useEffect(() => {
         log.info('Subscribing to RESET');
         PubSub.subscribe("RESET", reset);
 
         log.info('Subscribing to ' + _topic + "STARTED_");
-        PubSub.subscribe(_topic + "STARTED_", wait);
+        PubSub.subscribe(_topic + "STARTED_", started);
 
         // When a step is finished, we get the data generated during this step
         log.info('Subscribing to ' + _topic + "FINISHED_");
-        PubSub.subscribe(_topic + "FINISHED_", getData);
+        PubSub.subscribe(_topic + "FINISHED_", finished);
+
+        // Step in pause is continued. It just means generation continues
+        log.info('Subscribing to ' + _topic + "CONTINUED_");
+        PubSub.subscribe(_topic + "CONTINUED_", continued);
 
         // Step in pause is finished. It just means user must
         // give some information before continuing and resuming the step.
         log.info('Subscribing to ' + _topic + "PAUSED_");
-        PubSub.subscribe(_topic + "PAUSED_", pause);
+        PubSub.subscribe(_topic + "PAUSED_", paused);
 
         log.info('Subscribing to ' + _topic + "ERROR_");
         PubSub.subscribe(_topic + "ERROR_", getData);
@@ -207,10 +238,21 @@ export default function Result( props ) {
                             :
                                 <>
                                 { true ?
-                                        <div className="p-0 w-full">
-                                            <PlateEditor view="Basic" className="p-0" input={MergedContent.format(content, true)} cn="w-full">
-                                            </PlateEditor>
-                                        </div>      
+                                        <Content
+                                            className="h-full"
+                                            contentId={contentId}
+                                            attrName="post_content"
+                                            title=""
+                                            content=""
+                                        >
+                              
+                                            <div className="p-0 w-full">
+                                                <PlateEditor
+                                                    custom={labelEncoded ? `labelEncoded:${labelEncoded}` : ""}
+                                                    view="Basic" className="p-0" attrName="post_content" contentId={contentId} input={Utils.format(content, true)} cn="w-full">
+                                                </PlateEditor>
+                                            </div>      
+                                        </Content>
                                     :
                                         <>
                                             {parse(content)}

@@ -40,6 +40,7 @@ export default function initAppJSLogs(level = "NONE") {
     localStorage.setItem('MyContentDetailsForDesktop', level);
     localStorage.setItem('MyContentDetailsForMobile', level);
     localStorage.setItem('Content', level);
+    localStorage.setItem('ContentCard', level);
     
     localStorage.setItem('MainContent', level);
     localStorage.setItem('MergedContent', level);

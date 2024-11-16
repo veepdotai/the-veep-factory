@@ -100,7 +100,7 @@ import { Utils } from 'src/components/lib/utils'
  * @param (String | String[]) input provided as markdown or CRT. If markdown then converted in CRT 
  * @returns Plate editor with provided plugins
  */
-export function PlateEditor( {input, contentId = null, attrName = null, cn = "w-[800px]"} ) {
+export function PlateEditor( {input, contentId = null, attrName = null, custom = null, cn = "w-full"} ) {
   const log = Logger.of("PlaceEditor")
 
   const [content, setContent] = useState([])
@@ -322,7 +322,7 @@ export function PlateEditor( {input, contentId = null, attrName = null, cn = "w-
     handleSave: () =>{
       updateContent(getEditorContent(contentId))
       let plateContentAsString = Utils.convertDoubleQuotesToQuotesInJSON(getEditorContent(contentId))
-      MergedContent.saveItPlease(contentId, attrName, plateContentAsString)
+      MergedContent.saveItPlease(contentId, attrName, plateContentAsString, custom)
     }
   }
   
@@ -347,7 +347,7 @@ export function PlateEditor( {input, contentId = null, attrName = null, cn = "w-
                 </FixedToolbar>
                 <Editor
                   style={editorWindowSpacing}
-                  className="mx-auto mt-2 {cn} rounded-none focus-visible:ring-none focus-visible:ring-1 focus-visible:ring-offset-0"
+                  className={`${cn} mx-auto mt-2 rounded-none focus-visible:ring-none focus-visible:ring-1 focus-visible:ring-offset-0`}
                 />
                 
               <FloatingToolbar>

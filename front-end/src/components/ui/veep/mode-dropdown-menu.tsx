@@ -18,8 +18,8 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
   useOpenState,
-} from './dropdown-menu';
-import { ToolbarButton } from './toolbar';
+} from '@/components/ui/plate-ui/dropdown-menu';
+import { ToolbarButton } from '@/components/ui/plate-ui/toolbar';
 
 export function ModeDropdownMenu(props: DropdownMenuProps) {
   const editor = useEditorRef();

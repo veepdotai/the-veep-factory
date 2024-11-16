@@ -2,6 +2,7 @@ import { Constants } from 'src/constants/Constants';
 import { Logger } from 'react-logger-lib';
 import { createPlateEditor } from '@udecode/plate-common/react';
 import { MarkdownPlugin } from '@udecode/plate-markdown';
+import { t } from 'i18next';
 
 export const Utils = {
 	log: Logger.of("Utils"),
@@ -92,7 +93,15 @@ export const Utils = {
 			content = Utils.convertDoubleQuotesToQuotesInJSON(content)
 			log("content after \" replacement with ': content: " + content);
 	  
-			const editor = createPlateEditor({ value: JSON.parse(content), plugins: [MarkdownPlugin] });      
+			let content_o = []
+			try {
+				content_o = JSON.parse(content)
+			} catch (e) {
+				log(e)
+				log("Can't convert json_string in js object")
+				content_o = [{"children":[{"text":t("ErrorWhileSavingMainContent")}],"type":"p"}]
+			}
+			const editor = createPlateEditor({ value: content_o, plugins: [MarkdownPlugin] });      
 			content = editor.api.markdown.serialize();      
 		}
 		// else it is text, assumong it is markdown
