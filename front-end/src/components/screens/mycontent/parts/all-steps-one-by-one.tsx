@@ -3,18 +3,12 @@ import { Logger } from 'react-logger-lib';
 import md5 from 'js-md5';
 import { t } from 'i18next';
 import parse from 'html-react-parser';
-import Markdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 
-import style from "./main.module.css"
-
-import { TabsContent } from 'src/components/ui/shadcn/tabs'
+import { Utils } from '@/src/components/lib/utils';
 
 import EKeyLib from '../../../lib/util-ekey';
-
 import Veeplet from '../../../lib/class-veeplet'
 //import EditorHome from '../../../common/mdxeditor/index';
-import Content from '../Content';
 import MyContentDetailsUtils from '../MyContentDetailsUtils';
 
 export default function AllStepsOneByOneContent( { prompt, data, cid } ) {
@@ -23,6 +17,7 @@ export default function AllStepsOneByOneContent( { prompt, data, cid } ) {
     const [contentId, setContentId] = useState(cid);
 
     function format(_content, _parse = false) {
+      return Utils.format(_content, _parse)
         if (_content) {
           if (! _parse) {
             return _content.replace(/\n/g, "<br />");
@@ -58,7 +53,8 @@ export default function AllStepsOneByOneContent( { prompt, data, cid } ) {
   
           //let attrName = `veepdotaiPhase${promptId}Content`;
           //attrName = `veepdotaiPhase${i}Content`;
-          attrName = 'veepdotaiContent';
+          //attrName = 'veepdotaiContent';
+          attrName = 'post_content';
           //let _content = format(data[attrName]);
           //_content = data[attrName];
           //_content = MyContentDetailsUtils.getData(data, i, "content");
@@ -86,7 +82,7 @@ export default function AllStepsOneByOneContent( { prompt, data, cid } ) {
                       </div>
 
                       <div className={innerCN}>
-                        {instructions.prompt.split(/\n/).map((item, i) => <p key="{i}">{item}</p>)}
+                        {instructions.prompt.split(/\n/).map((item, i) => <p key={i}>{item}</p>)}
                         {/*instructions.prompt.replace(/\n/g, "<br /><br />")*/}
                       </div>
                     </div>

@@ -1,5 +1,7 @@
 import { Constants } from 'src/constants/Constants';
 import { Logger } from 'react-logger-lib';
+import { createPlateEditor } from '@udecode/plate-common/react';
+import { MarkdownPlugin } from '@udecode/plate-markdown';
 
 export const Utils = {
 	log: Logger.of("Utils"),
@@ -59,5 +61,42 @@ export const Utils = {
 	 */
 	convertDoubleQuotesToQuotesInJSON: function(jsonString) {
 		return jsonString.replace(/(?<![:\[,{])\\*"(?!\s*[,:\]}])/g, "'")
-	}
+	},
+
+	format(_content, _parse = false) {
+		let log = (msg) => Utils.log.trace(`format: ${msg}`)
+		if (_content) {
+		  if (! _parse) {
+			let r = _content.replace(/\n/g, "<br />")
+			log("parse: false | content: " + r)
+			return r
+		  } else {
+			//let r = parse(_content.replace(/\n/g, "<br />"))
+			let r = _content.replace(/(<br\s+\/>)+/g, "\n\n")
+			//r = "Trois\nDeux\nUn\n" 
+			
+			log("parse: true | content: " + r)
+			return r 
+		  }
+		} else {
+		  return "";
+		}
+	  },
+
+	  convertCrtToMarkdown(content) {
+		let log = (msg) => Utils.log.trace(`convertCrtToMarkdown: ${msg}`)
+
+		if (content?.startsWith('[{')) {
+			// It is a json string
+			log("Content is in CRT format: " + content[0])
+			content = Utils.convertDoubleQuotesToQuotesInJSON(content)
+			log("content after \" replacement with ': content: " + content);
+	  
+			const editor = createPlateEditor({ value: JSON.parse(content), plugins: [MarkdownPlugin] });      
+			content = editor.api.markdown.serialize();      
+		}
+		// else it is text, assumong it is markdown
+	  
+		return content
+	  }
 }

@@ -1,7 +1,6 @@
 import { ButtonGroup, Button, Col, Row } from 'react-bootstrap'
 import { Logger } from 'react-logger-lib'
 import { t } from 'i18next'
-import parse from 'html-react-parser'
 
 import { ToggleGroup, ToggleGroupItem } from "src/components/ui/shadcn/toggle-group"
 import { Popover, PopoverContent, PopoverTrigger } from 'src/components/ui/shadcn/popover'
@@ -10,8 +9,8 @@ import MergedContent from './parts/MergedContent'
 import AllStepsOneByOneContent from './parts/all-steps-one-by-one'
 import SideBySideViewContent from './parts/side-by-side-view-content'
 
-import EKeyLib from '../../lib/util-ekey'
 import { UtilsForm } from '../../lib/utils-form'
+import { Utils } from '../../lib/utils'
 
 import Content from './Content'
 
@@ -73,28 +72,41 @@ export default class MyContentDetailsUtils {
         if ( i === null) {
           log(`getData: i: ${i}: this is the parent.`)
           if (! attrName) {
-            result = data.nodes[0].content;
+            result = {
+              content: data.nodes[0].content,
+              cid: data.nodes[0].databaseId
+            };
           } else {
-            result = data.nodes[0][attrName]
+            result = {
+              content: data.nodes[0][attrName],
+              cid: data.nodes[0].databaseId
+            };
           }
-          log(`getData: parent's content: ${result}!`)
+          log(`result is parent's content!`)
         } else { // (i >= 0) { // i == 0 is a valid index
           log(`i: ${i}: this is a child.`)
           if (! attrName) {
-            result = data.nodes[0].children.edges[i].node['content'];
+            result = {
+              content: data.nodes[0].children.edges[i].node['content'],
+              cid:data.nodes[0].children.edges[i].node['databaseId'],
+            };
           } else {
-            result = data.nodes[0].children.edges[i].node[attrName]
+            result = {
+              content: data.nodes[0].children.edges[i].node[attrName],
+              cid:data.nodes[0].children.edges[i].node['databaseId'],
+            };
           }
         }
       }
 
-      log(`getData: result: ${result}`)
+      log(`getData: result: ${JSON.stringify(result)}`)
 
     } catch (e) {
       log(`getData: exception: ${e}: attrName: ${attrName}.`)
       result = "";
     }
 
+    result.content = Utils.convertCrtToMarkdown(result?.content)
     return result;
   }
 
@@ -147,8 +159,9 @@ export default class MyContentDetailsUtils {
 
   static getContent(prompt, data, cid, returnMarkdown = false) {
     if (returnMarkdown) {
-      let content = MergedContent.getContent(prompt, data)
-      MergedContent.log.trace(`getContent: content: ${content}`);
+      let node = MergedContent.getContent(prompt, data)
+      let content = node.content
+      MergedContent.log.trace(`getContent: content: ${node.content}`);
       return content;
     } else {
       return (

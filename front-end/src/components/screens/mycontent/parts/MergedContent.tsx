@@ -19,34 +19,14 @@ import { PlateEditor } from '../../../../components/screens/PlateEditor';
 export default class MergedContent {
     static log = Logger.of(MergedContent.name)
 
-    static format(_content, _parse = false) {
-      let log = MergedContent.log
-      if (_content) {
-        if (! _parse) {
-          let r = _content.replace(/\n/g, "<br />")
-          log.trace("parse: false | content: " + r)
-          return r
-        } else {
-          //let r = parse(_content.replace(/\n/g, "<br />"))
-          let r = _content.replace(/(<br\s+\/>)+/g, "\n\n")
-          //r = "Trois\nDeux\nUn\n" 
-          
-          log.trace("parse: true | content: " + r)
-          return r 
-        }
-      } else {
-        return "";
-      }
-    }
-
     /* Should be stored in a util class for content mgt */
-    static saveItPlease(contentId, attrName ) {
+    static saveItPlease(cid, attrName, content) {
       let params = {
-        cid: contentId,
-        content: Utils.convertDoubleQuotesToQuotesInJSON(localStorage.getItem("editor")),
+        cid: cid,
+        content: content,
         attrName: attrName
       }
-      MergedContent.log.trace("saveItPlease: " + params.content)
+      MergedContent.log.trace(`saveItPlease: ${params}`)
       PubSub.publish(`MARKDOWN_CONTENT_${attrName}`, params)
     }
 
@@ -158,7 +138,7 @@ export default class MergedContent {
           let j = MergedContent.getPromptKey(defaultChain, label)
 
           // Checks all the prompts of the pipeline to find the one with the same name
-          let sectionContent = MyContentDetailsUtils.getData(data, j, "");
+          let sectionContent = MyContentDetailsUtils.getData(data, j, "")?.content;
           log(`sectionContent: ${sectionContent}`)
 
           let hasTitle = 0 <= sectionContent.search(/^\s{0,3}#/)
@@ -180,17 +160,12 @@ export default class MergedContent {
     }
 
     static getMergedContent(prompt, data, options) {
-      let log = (msg) => MergedContent.log.trace("getContentPart: " + msg)
+      let log = (msg) => MergedContent.log.trace("getMergedContent: " + msg)
 
       let defaultChain = Veeplet.getChainAsArray(prompt.prompts.chain);
-//      let defaultOutput = Veeplet.getOutputAsArray(prompt.prompts.output);
       log(`prompt.prompts.chain: ${JSON.stringify(defaultChain)}.`);
 
-      //let chain = ["P.1", "Intro", "P.2"];
-      //let chain = Veeplet.getChainAsArray("P.1, P.2, Intro");
-      //let chain = Veeplet.getChainAsArray(["P.1", "P.2", "Intro"]);
       let chain = Veeplet.getChainAsArray(defaultChain);
-//      let output = Veeplet.getOutputAsArray(defaultChain);
       log(`chain: ${JSON.stringify(chain)}.`);
       log("chain is not null.");
 
@@ -229,27 +204,24 @@ export default class MergedContent {
       if (! prompt.prompts) return "";
 
       // We try to get the merged data from the database
-      let dbContent = MyContentDetailsUtils.getData(data, null, "content")
+      let node = MyContentDetailsUtils.getData(data, null, "content")
+      let dbContent = node?.content
       log("dbContent before formatting: " + dbContent + "!")
 
-      let _content = ""
-      log(`content2.1: ${_content}`)
-
       if (MergedContent.isEmpty(dbContent)) {
-        log(`Merging...${_content}.`) 
-        _content = MergedContent.getMergedContent(prompt, data, options)
+        log(`Content is empty. Merging existing children content to create one...`) 
+        node.content = MergedContent.getMergedContent(prompt, data, options)
       } else {
         log(`Content is not empty... Taking it.`) 
-        _content = dbContent
+        node.content = dbContent
       }
 
-      log(`content2.2: ${_content}`)
+      log(`node: ${JSON.stringify(node)}`)
 
-      return _content
+      return node
     }
 
     static getElement(prompt, data, cid, returnMarkdown = false) {
-      //let chain = [].concat(prompt.prompts.chain);
 
       let output = <></>;
       let _content = "";
@@ -258,8 +230,8 @@ export default class MergedContent {
 
       try {
 
-        //if (chain) {
-          let _content = MergedContent.getContent(prompt, data)
+          let node = MergedContent.getContent(prompt, data)
+          let _content = node.content 
           if (returnMarkdown) {
             return _content
           } else {
@@ -269,9 +241,9 @@ export default class MergedContent {
                   attrName={attrName}
                   title={title}
                   raw={_content}
-                  contentAsText={MergedContent.format(_content)}
+                  contentAsText={Utils.format(_content)}
                   contentAsText2CRLF={_content}
-                  contentAsHtml={parse(MergedContent.format(_content))}
+                  contentAsHtml={parse(Utils.format(_content))}
                 >
                     { false ?
                       <Markdown className={style.reactMarkdown} remarkPlugins={[remarkGfm]}>{_content}</Markdown>

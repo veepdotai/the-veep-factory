@@ -127,13 +127,13 @@ export default function MyContentDetails( { id }) {
                 <>
                   <ResizablePanelGroup direction="horizontal" className="h-full">
                     <ResizablePanel className="h-full" style={{borderRight: "1px solid #eeefff"}} defaultSize={25}>
-                      <Tabs className="justify-start h-full" id="mycontent-chat" defaultValue="conversation">
+                      <Tabs className="justify-start h-full" id="mycontent-chat" defaultValue="chat">
                         <ScrollArea className="w-100 whitespace-nowrap h-full">
                           <ScrollBar orientation="vertical" />
 
                           {MyContentDetailsForDesktop.desktopMenu(prompt, "side")}
 
-                          <TabsContent id="details-chat-conversation" className="h-full" value="conversation">
+                          <TabsContent id="details-chat-conversation" className="h-full" value="chat">
                             {MyContentDetailsUtils.getAllStepsOneByOne(prompt, data, contentId)}
                           </TabsContent>
                           <TabsContent id="details-chat-prompt" className="h-full" value="metadata">
@@ -158,10 +158,14 @@ export default function MyContentDetails( { id }) {
                           {MyContentDetailsForDesktop.desktopPDFContent(selectedFormat, prompt, data, contentId)}
                         </TabsContent>
                         <TabsContent id="details-sideBySide-content" value="sideBySide-content">
-                          {MyContentDetailsUtils.getColumnsSelectors([1, 2, 3, 4, 6], setWidth)}
-                          <Row className="px-4">
-                            {MyContentDetailsUtils.getSideBySideView(prompt, data, contentId, width)}                          
-                          </Row>
+                          <ScrollArea className="w-100 whitespace-nowrap h-full">
+                            <ScrollBar orientation="vertical" />
+
+                            {MyContentDetailsUtils.getColumnsSelectors([1, 2, 3, 4, 6], setWidth)}
+                            <Row className="px-4">
+                              {MyContentDetailsUtils.getSideBySideView(prompt, data, contentId, width)}                          
+                            </Row>
+                          </ScrollArea>
                         </TabsContent>
                       </Tabs>
                     </ResizablePanel>

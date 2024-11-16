@@ -1,19 +1,10 @@
 import { useState } from 'react'
 
-import { Button, Tab, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Logger } from 'react-logger-lib';
-import md5 from 'js-md5';
 import { t } from 'i18next';
 
-import { createPlateEditor } from '@udecode/plate-common/react';
-import { MarkdownPlugin } from '@udecode/plate-markdown';
-import { HeadingPlugin } from '@udecode/plate-heading/react';
-
-
-import { Separator } from "src/components/ui/shadcn/separator"
-import { ToggleGroup, ToggleGroupItem } from "src/components/ui/shadcn/toggle-group"
-import { Popover, PopoverContent, PopoverTrigger } from 'src/components/ui/shadcn/popover'
-import { Tabs, TabsList, TabsTrigger } from "src/components/ui/shadcn/tabs"
+import { TabsList, TabsTrigger } from "src/components/ui/shadcn/tabs"
 
 import PDFPanel from 'src/components/veepdotai-pdf-config/PDFPanel'
 import PDFParams from 'src/components/veepdotai-pdf-config/components/PDFParams';
@@ -21,11 +12,9 @@ import PDFParams from 'src/components/veepdotai-pdf-config/components/PDFParams'
 import { Icons } from "src/constants/Icons";
 import EKeyLib from '../../lib/util-ekey';
 import { Utils } from '../../lib/utils';
-import { UtilsForm } from '../../lib/utils-form';
 import Veeplet from '../../lib/class-veeplet'
 
 import MyContentDetailsUtils from './MyContentDetailsUtils'
-import Content from './Content';
 import { UtilsDataConverter } from '../../lib/utils-data-converter';
 
 export default class MyContentDetailsForDesktop {
@@ -69,8 +58,8 @@ export default class MyContentDetailsForDesktop {
         { mode === "side" ?
           <TabsList id="details-menu-chat" variant="pills" className="">
             <div>            
-              <TabsTrigger id="details-menu-pipeline" value="pipeline">
-                <MyContentDetailsForDesktop.TT id="m-pipeline" title={t("Pipeline")}>
+              <TabsTrigger id="details-menu-chat" value="chat">
+                <MyContentDetailsForDesktop.TT id="m-conversation" title={t("Chat")}>
                   {Icons.support}
                 </MyContentDetailsForDesktop.TT>
               </TabsTrigger>
@@ -148,15 +137,7 @@ export default class MyContentDetailsForDesktop {
     log("data: " + JSON.stringify(data));
 
     let content = MyContentDetailsUtils.getContent(prompt, data, contentId, true);
-
-    if (content.startsWith('[{')) {
-      log("Content is in CRT format: " + content[0])
-      content = Utils.convertDoubleQuotesToQuotesInJSON(content)
-      log("content after \" replacement with ': content: " + content);
-
-      const editor = createPlateEditor({ value: JSON.parse(content), plugins: [MarkdownPlugin] });      
-      content = editor.api.markdown.serialize();      
-    }
+    content = Utils.convertCrtToMarkdown(content)
 
     log("content is now json: " + JSON.stringify(content));
 
