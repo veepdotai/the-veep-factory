@@ -12,6 +12,7 @@ import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 import { FaComputer, FaIndustry } from "react-icons/fa6";
 import { LiaIndustrySolid } from "react-icons/lia";
 import { GoLaw } from "react-icons/go";
+import { FiUser, FiUserPlus, FiUserCheck } from "react-icons/fi";
 
 //import * as Icon from "react-icons/fc";
 
@@ -80,6 +81,11 @@ export const Icons = {
     "config-veeplet":   <Md.MdOutlineDisplaySettings {...attr} />,
     workspace:          <GiOrganigram {...attr} />,
 //    exit:               <Icon.MdLogout {...attr} />,
+
+    "user-normal":      <FiUser {...attr} />,
+    "user-advanced":    <FiUserPlus {...attr} />,
+    "user-expert":      <FiUserCheck {...attr} />,
+
 
     // Organization
     assistant:          <TbRobot {...attr} />,

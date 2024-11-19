@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 import { Logger } from 'react-logger-lib';
+import PubSub from 'pubsub-js'
 
 import { pushState } from "src/components/lib/utils-analytics"
 import NavItemLinkIconText from "src/components/NavItemLinkIconText"
@@ -11,6 +12,7 @@ export default function MenuItem( {id = '', innerCN, outerCN, itemKey, itemLabel
   const log = Logger.of(MenuItem.name);
 
   function handleClick() {
+    PubSub.publish("TAB_CLICKED", itemKey)
     pushState("#" + itemKey);
 //    if (direction == "horizontal") {
     if (true) {

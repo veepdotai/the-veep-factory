@@ -1,27 +1,21 @@
 import { useContext, useState, useEffect } from 'react';
-import { Badge, Button,Container, Col, Row, Toast, ToastContainer, Spinner } from 'react-bootstrap';
+import { Container, Col, Row } from 'react-bootstrap';
 import { Logger } from 'react-logger-lib';
-import Markdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 import { useCookies } from 'react-cookie';
 import { t } from 'i18next';
 import PubSub from 'pubsub-js';
-import toast from 'react-hot-toast';
 
 import { ContentIdContext } from "src/context/ContentIdProvider"
 
 import { Constants } from "src/constants/Constants";
-import { Icons } from "src/constants/Icons";
 import styles from 'src/styles/Home.module.css';
 
 import Form from './form/Form';
 import Process from './screens/process/Process';
 import Monitoring from './Monitoring';
 
-import stylesUtils from 'src/styles/utils.module.css';
-//import { Utils } from './lib/utils';
-import { UploadLib } from './lib/util-upload-form';
-import useBreakpoint from  "src/hooks/useBreakpoint";
+import { UtilsMenu } from './lib/utils-menu'
+
 import { useMediaQuery } from 'usehooks-ts';
 
 export default function Home( props ) {
@@ -100,12 +94,80 @@ export default function Home( props ) {
     }
     
 */
-    function reset(topic, msg) {
+    function reset(topic = null, msg = null) {
         setDisplay(false);
         setShowResultWindow(false);
         log.trace('Publishing SELECT CONTENT on GO_TO_SELECT_SCREEN channel');
         PubSub.publish("GO_TO_SELECT_SCREEN", "SELECT_CONTENT");
         PubSub.publish("SHOW_CATALOGS", true);
+    }
+
+    function getFormInSheet(form) {
+        return UtilsMenu.getSheetForm(form)
+    }
+    
+    function getFormInStaticScreen() {
+        return (
+            <Container id="home" className={styles.container}>
+                <Row className="justify-content-md-center">
+                    {
+                        ! showResultWindow ?
+                            <>
+                                { ! isDesktop ?
+                                    <>
+                                        <Col id="monitoring" {...s.noresult.nodesktop}><Monitoring /></Col>
+                                        <Col id="generic-form" {...s.noresult.nodesktop}><Form contentType={contentType} credits={props.credits} /></Col>
+                                    </>
+                                :
+                                    <>
+                                        <Col id="generic-form" {...s.noresult.desktop}><Form contentType={contentType} credits={props.credits} /></Col>
+                                        <Col id="monitoring" {...s.noresult.desktop}><Monitoring /></Col>
+                                    </>
+                                }
+                            </>
+                        :
+                            <>
+                                { ! isDesktop ?
+                                    <>
+                                        <Col id="monitoring" {...s.result.nodesktop}><Monitoring /></Col>
+                                        <Col id="processing" {...s.result.nodesktop}><Process contentType={contentType} current={current}/></Col>
+                                    </>
+                                :
+                                    <>
+                                        <Col id="processing" {...s.result.desktop.process}><Process contentType={contentType} current={current}/></Col>
+                                        <Col id="monitoring" {...s.result.desktop.monitoring}><Monitoring /></Col>
+                                    </>
+                                }
+                            </>
+                    }
+                </Row>
+            </Container>
+        )
+    }
+
+    function getForm(open) {
+        let viewType = "nosheet"
+
+        let form = getFormInStaticScreen()
+        if ( "sheet" === viewType) {
+            return getFormInSheet(form, open, setDisplay)
+        } else {
+            return form
+        }
+    }
+    
+    let s = {
+        "result": {
+            "nodesktop": {xs: 12, md: 12, className: 'mb-3'},
+            "desktop": {
+                "process": {lg: 10, xl: 10, className: 'mb-3'},
+                "monitoring": {lg: 2, xl: 2, className: 'mb-3'},
+            },
+        },
+        "noresult": {
+            "nodesktop": {xs: 12, md: 12, className: 'mb-3'},
+            "desktop": {lg: 2, xl: 4, className: 'mb-3'},
+        }
     }
 
     useEffect(() => {
@@ -123,58 +185,17 @@ export default function Home( props ) {
     //}, [size]);
     }, [isDesktop]);
 
-    let s = {
-        "result": {
-            "nodesktop": {xs: 12, md: 12, className: 'mb-3'},
-            "desktop": {
-                "process": {lg: 10, xl: 10, className: 'mb-3'},
-                "monitoring": {lg: 2, xl: 2, className: 'mb-3'},
-            },
-        },
-        "noresult": {
-            "nodesktop": {xs: 12, md: 12, className: 'mb-3'},
-            "desktop": {lg: 2, xl: 4, className: 'mb-3'},
-        }
-    }
+    useEffect(() => {
+        log.trace(`Home: display: ${display}`)
+    }, [display])
 
     return (
         <>
         {
             display ?
-                <Container id="home" className={styles.container}>
-                    <Row className="justify-content-md-center">
-                        {
-                            ! showResultWindow ?
-                                <>
-                                    { ! isDesktop ?
-                                        <>
-                                            <Col id="monitoring" {...s.noresult.nodesktop}><Monitoring /></Col>
-                                            <Col id="generic-form" {...s.noresult.nodesktop}><Form contentType={contentType} credits={props.credits} /></Col>
-                                        </>
-                                    :
-                                        <>
-                                            <Col id="generic-form" {...s.noresult.desktop}><Form contentType={contentType} credits={props.credits} /></Col>
-                                            <Col id="monitoring" {...s.noresult.desktop}><Monitoring /></Col>
-                                        </>
-                                    }
-                                </>
-                            :
-                                <>
-                                    { ! isDesktop ?
-                                        <>
-                                            <Col id="monitoring" {...s.result.nodesktop}><Monitoring /></Col>
-                                            <Col id="processing" {...s.result.nodesktop}><Process contentType={contentType} current={current}/></Col>
-                                        </>
-                                    :
-                                        <>
-                                            <Col id="processing" {...s.result.desktop.process}><Process contentType={contentType} current={current}/></Col>
-                                            <Col id="monitoring" {...s.result.desktop.monitoring}><Monitoring /></Col>
-                                        </>
-                                    }
-                                </>
-                        }
-                    </Row>
-                </Container>
+                <> 
+                    {getForm(display)}
+                </>
                 :
                 <></>
         }

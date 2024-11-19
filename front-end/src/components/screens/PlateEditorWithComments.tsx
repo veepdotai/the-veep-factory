@@ -1,12 +1,7 @@
 'use client';
- 
+
 import React, { useRef } from 'react';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
- 
-import type { ValueId } from '@/config/customizer-plugins';
- 
-import { cn } from '@udecode/cn';
+import { cn, withProps } from '@udecode/cn';
 import { AlignPlugin } from '@udecode/plate-alignment/react';
 import { AutoformatPlugin } from '@udecode/plate-autoformat/react';
 import {
@@ -19,16 +14,30 @@ import {
   UnderlinePlugin,
 } from '@udecode/plate-basic-marks/react';
 import { BlockquotePlugin } from '@udecode/plate-block-quote/react';
-import { SingleLinePlugin } from '@udecode/plate-break/react';
+import { ExitBreakPlugin, SoftBreakPlugin } from '@udecode/plate-break/react';
 import { CaptionPlugin } from '@udecode/plate-caption/react';
-import { CodeBlockPlugin } from '@udecode/plate-code-block/react';
+import {
+  isCodeBlockEmpty,
+  isSelectionAtCodeBlockStart,
+  unwrapCodeBlock,
+} from '@udecode/plate-code-block';
+import {
+  CodeBlockPlugin,
+  CodeLinePlugin,
+  CodeSyntaxPlugin,
+} from '@udecode/plate-code-block/react';
 import { CommentsPlugin } from '@udecode/plate-comments/react';
 import {
+  isBlockAboveEmpty,
+  isSelectionAtBlockStart,
+  someNode,
+} from '@udecode/plate-common';
+import {
+  createPlateEditor,
   ParagraphPlugin,
   Plate,
-  usePlateEditor,
+  PlateLeaf,
 } from '@udecode/plate-common/react';
-import { DatePlugin } from '@udecode/plate-date/react';
 import { DndPlugin } from '@udecode/plate-dnd';
 import { DocxPlugin } from '@udecode/plate-docx';
 import { EmojiPlugin } from '@udecode/plate-emoji/react';
@@ -38,400 +47,409 @@ import {
   FontColorPlugin,
   FontSizePlugin,
 } from '@udecode/plate-font/react';
-import { HEADING_KEYS } from '@udecode/plate-heading';
-import { HeadingPlugin, TocPlugin } from '@udecode/plate-heading/react';
+import { HEADING_KEYS, HEADING_LEVELS } from '@udecode/plate-heading';
+import { HeadingPlugin } from '@udecode/plate-heading/react';
 import { HighlightPlugin } from '@udecode/plate-highlight/react';
 import { HorizontalRulePlugin } from '@udecode/plate-horizontal-rule/react';
-import { IndentPlugin } from '@udecode/plate-indent/react';
 import { IndentListPlugin } from '@udecode/plate-indent-list/react';
+import { IndentPlugin } from '@udecode/plate-indent/react';
 import { JuicePlugin } from '@udecode/plate-juice';
 import { KbdPlugin } from '@udecode/plate-kbd/react';
-import { ColumnPlugin } from '@udecode/plate-layout/react';
 import { LineHeightPlugin } from '@udecode/plate-line-height/react';
 import { LinkPlugin } from '@udecode/plate-link/react';
-import { ListPlugin, TodoListPlugin } from '@udecode/plate-list/react';
+import { TodoListPlugin } from '@udecode/plate-list/react';
 import { MarkdownPlugin } from '@udecode/plate-markdown';
 import { ImagePlugin, MediaEmbedPlugin } from '@udecode/plate-media/react';
-import { MentionPlugin } from '@udecode/plate-mention/react';
-import { NodeIdPlugin } from '@udecode/plate-node-id';
-import { NormalizeTypesPlugin } from '@udecode/plate-normalizers';
-import { PlaywrightPlugin } from '@udecode/plate-playwright';
-import { DeletePlugin, SelectOnBackspacePlugin } from '@udecode/plate-select';
-import { BlockSelectionPlugin } from '@udecode/plate-selection/react';
-import { SlashPlugin } from '@udecode/plate-slash-command/react';
-import { TablePlugin } from '@udecode/plate-table/react';
-import { TogglePlugin } from '@udecode/plate-toggle/react';
-import { TrailingBlockPlugin } from '@udecode/plate-trailing-block';
-import Prism from 'prismjs';
- 
-import { CheckPlugin } from '@/components/context/check-plugin';
-import { settingsStore } from '@/components/context/settings-store';
-import { PlaygroundFixedToolbarButtons } from '@/components/plate-ui/playground-fixed-toolbar-buttons';
-import { PlaygroundFloatingToolbarButtons } from '@/components/plate-ui/playground-floating-toolbar-buttons';
-import { getAutoformatOptions } from '@/lib/plate/demo/plugins/autoformatOptions';
-import { createPlateUI } from '@/plate/create-plate-ui';
-import { editableProps } from '@/plate/demo/editableProps';
-import { isEnabled } from '@/plate/demo/is-enabled';
-import { DragOverCursorPlugin } from '@/plate/demo/plugins/DragOverCursorPlugin';
-import { exitBreakPlugin } from '@/plate/demo/plugins/exitBreakPlugin';
-import { resetBlockTypePlugin } from '@/plate/demo/plugins/resetBlockTypePlugin';
-import { softBreakPlugin } from '@/plate/demo/plugins/softBreakPlugin';
-import { tabbablePlugin } from '@/plate/demo/plugins/tabbablePlugin';
-import { commentsData, usersData } from '@/plate/demo/values/commentsValue';
-import { usePlaygroundValue } from '@/plate/demo/values/usePlaygroundValue';
-import { CommentsPopover } from '@/components/plate-ui/comments-popover';
-import { CursorOverlay } from '@/components/plate-ui/cursor-overlay';
-import { Editor } from '@/components/plate-ui/editor';
-import { FixedToolbar } from '@/components/plate-ui/fixed-toolbar';
-import { FloatingToolbar } from '@/components/plate-ui/floating-toolbar';
-import { ImagePreview } from '@/components/plate-ui/image-preview';
 import {
-  FireLiComponent,
-  FireMarker,
-} from '@/components/plate-ui/indent-fire-marker-component';
+  MentionInputPlugin,
+  MentionPlugin,
+} from '@udecode/plate-mention/react';
+import { NodeIdPlugin } from '@udecode/plate-node-id';
+import { ResetNodePlugin } from '@udecode/plate-reset-node/react';
+import { SelectOnBackspacePlugin } from '@udecode/plate-select';
+import { BlockSelectionPlugin } from '@udecode/plate-selection/react';
+import { TabbablePlugin } from '@udecode/plate-tabbable/react';
+import {
+  TableCellHeaderPlugin,
+  TableCellPlugin,
+  TablePlugin,
+  TableRowPlugin,
+} from '@udecode/plate-table/react';
+import { TrailingBlockPlugin } from '@udecode/plate-trailing-block';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
+import { autoformatRules } from '@/lib/plate/autoformat-rules';
+import { BlockquoteElement } from '@/components/plate-ui/blockquote-element';
+import { CodeBlockElement } from '@/components/plate-ui/code-block-element';
+import { CodeLeaf } from '@/components/plate-ui/code-leaf';
+import { CodeLineElement } from '@/components/plate-ui/code-line-element';
+import { CodeSyntaxLeaf } from '@/components/plate-ui/code-syntax-leaf';
+import { CommentLeaf } from '@/components/plate-ui/comment-leaf';
+import { CommentsPopover } from '@/components/plate-ui/comments-popover';
+import {
+  CursorOverlay,
+  DragOverCursorPlugin,
+} from '@/components/plate-ui/cursor-overlay';
+import { Editor } from '@/components/plate-ui/editor';
+import { ExcalidrawElement } from '@/components/plate-ui/excalidraw-element';
+import { FixedToolbar } from '@/components/plate-ui/fixed-toolbar';
+import { FixedToolbarButtons } from '@/components/plate-ui/fixed-toolbar-buttons';
+import { FloatingToolbar } from '@/components/plate-ui/floating-toolbar';
+import { FloatingToolbarButtons } from '@/components/plate-ui/floating-toolbar-buttons';
+import { HeadingElement } from '@/components/plate-ui/heading-element';
+import { HighlightLeaf } from '@/components/plate-ui/highlight-leaf';
+import { HrElement } from '@/components/plate-ui/hr-element';
+import { ImageElement } from '@/components/plate-ui/image-element';
 import {
   TodoLi,
   TodoMarker,
 } from '@/components/plate-ui/indent-todo-marker-component';
+import { KbdLeaf } from '@/components/plate-ui/kbd-leaf';
+import { LinkElement } from '@/components/plate-ui/link-element';
 import { LinkFloatingToolbar } from '@/components/plate-ui/link-floating-toolbar';
- 
-import { usePlaygroundEnabled } from './usePlaygroundEnabled';
- 
-export const usePlaygroundEditor = (id: any = '', scrollSelector?: string) => {
-  const enabledPlugins = settingsStore.use.checkedPlugins();
-  const overridePlugins = usePlaygroundEnabled(id);
-  const autoformatOptions = getAutoformatOptions(id, enabledPlugins);
- 
-  const value = usePlaygroundValue(id);
-  const key = settingsStore.use.version();
- 
-  const editorId = id || 'playground-' + key;
- 
-  const a = usePlateEditor(
-    {
-      id: editorId,
-      override: {
-        components: createPlateUI({
-          draggable: isEnabled('dnd', id),
-          placeholder: isEnabled('placeholder', id),
-        }),
-        plugins: overridePlugins,
-      },
-      plugins: [
-        // Nodes
-        HeadingPlugin,
-        TocPlugin.configure({
-          options: {
-            isScroll: true,
-            scrollContainerSelector: `#${scrollSelector}`,
-            topOffset: 80,
-          },
-        }),
-        BlockquotePlugin,
-        CodeBlockPlugin.configure({
-          options: {
-            prism: Prism,
-          },
-        }),
-        HorizontalRulePlugin,
-        LinkPlugin.extend({
-          render: { afterEditable: () => <LinkFloatingToolbar /> },
-        }),
-        ListPlugin,
-        ImagePlugin.extend({
-          render: { afterEditable: ImagePreview },
-        }),
-        MediaEmbedPlugin,
-        CaptionPlugin.configure({
-          options: {
-            plugins: [ImagePlugin, MediaEmbedPlugin],
-          },
-        }),
-        DatePlugin,
-        MentionPlugin.configure({
-          options: {
-            triggerPreviousCharPattern: /^$|^[\s"']$/,
-          },
-        }),
-        SlashPlugin,
-        TablePlugin.configure({
-          options: {
-            enableMerging: id === 'tableMerge',
-          },
-        }),
-        TodoListPlugin,
-        TogglePlugin,
-        ExcalidrawPlugin,
- 
-        // Marks
-        BoldPlugin,
-        ItalicPlugin,
-        UnderlinePlugin,
-        StrikethroughPlugin,
-        CodePlugin,
-        SubscriptPlugin,
-        SuperscriptPlugin,
-        FontColorPlugin,
-        FontBackgroundColorPlugin,
-        FontSizePlugin,
-        HighlightPlugin,
-        KbdPlugin,
- 
-        // Block Style
-        AlignPlugin.extend({
-          inject: {
-            targetPlugins: [
-              ParagraphPlugin.key,
-              MediaEmbedPlugin.key,
-              HEADING_KEYS.h1,
-              HEADING_KEYS.h2,
-              HEADING_KEYS.h3,
-              HEADING_KEYS.h4,
-              HEADING_KEYS.h5,
-              ImagePlugin.key,
-              HEADING_KEYS.h6,
-            ],
-          },
-        }),
-        IndentPlugin.extend({
-          inject: {
-            targetPlugins: [
-              ParagraphPlugin.key,
-              HEADING_KEYS.h1,
-              HEADING_KEYS.h2,
-              HEADING_KEYS.h3,
-              HEADING_KEYS.h4,
-              HEADING_KEYS.h5,
-              HEADING_KEYS.h6,
-              BlockquotePlugin.key,
-              CodeBlockPlugin.key,
-              TogglePlugin.key,
-            ],
-          },
-        }),
-        IndentListPlugin.extend({
-          inject: {
-            targetPlugins: [
-              ParagraphPlugin.key,
-              HEADING_KEYS.h1,
-              HEADING_KEYS.h2,
-              HEADING_KEYS.h3,
-              HEADING_KEYS.h4,
-              HEADING_KEYS.h5,
-              HEADING_KEYS.h6,
-              BlockquotePlugin.key,
-              CodeBlockPlugin.key,
-              TogglePlugin.key,
-            ],
-          },
-          options: {
-            listStyleTypes: {
-              fire: {
-                liComponent: FireLiComponent,
-                markerComponent: FireMarker,
-                type: 'fire',
-              },
-              todo: {
-                liComponent: TodoLi,
-                markerComponent: TodoMarker,
-                type: 'todo',
-              },
-            },
-          },
-        }),
-        LineHeightPlugin.extend({
-          inject: {
-            nodeProps: {
-              defaultNodeValue: 1.5,
-              validNodeValues: [1, 1.2, 1.5, 2, 3],
-            },
-            targetPlugins: [
-              ParagraphPlugin.key,
-              HEADING_KEYS.h1,
-              HEADING_KEYS.h2,
-              HEADING_KEYS.h3,
-              HEADING_KEYS.h4,
-              HEADING_KEYS.h5,
-              HEADING_KEYS.h6,
-            ],
-          },
-        }),
- 
-        // Functionality
-        AutoformatPlugin.configure({ options: autoformatOptions }),
-        BlockSelectionPlugin.configure({
-          enabled: !!scrollSelector,
-          options: {
-            areaOptions: {
-              boundaries: `#${scrollSelector}`,
-              container: `#${scrollSelector}`,
-              selectables: [`#${scrollSelector} .slate-selectable`],
-              selectionAreaClass: 'slate-selection-area',
-            },
-            enableContextMenu: false,
-          },
-        }),
-        DndPlugin.configure({ options: { enableScroller: true } }),
-        EmojiPlugin,
-        exitBreakPlugin,
-        NodeIdPlugin,
-        NormalizeTypesPlugin.configure({
-          options: {
-            rules: [{ path: [0], strictType: HEADING_KEYS.h1 }],
-          },
-        }),
-        resetBlockTypePlugin,
-        SelectOnBackspacePlugin.configure({
-          options: {
-            query: {
-              allow: [ImagePlugin.key, HorizontalRulePlugin.key],
-            },
-          },
-        }),
-        DeletePlugin,
-        SingleLinePlugin,
-        softBreakPlugin,
-        tabbablePlugin,
-        TrailingBlockPlugin.configure({
-          options: { type: ParagraphPlugin.key },
-        }),
-        DragOverCursorPlugin,
- 
-        // Collaboration
-        CommentsPlugin.configure({
-          options: {
-            comments: commentsData,
-            myUserId: '1',
-            users: usersData,
-          },
-        }),
- 
-        // Deserialization
-        DocxPlugin,
-        MarkdownPlugin,
-        JuicePlugin,
-        ColumnPlugin,
- 
-        // Testing
-        PlaywrightPlugin.configure({
-          enabled: process.env.NODE_ENV !== 'production',
-        }),
-      ],
-      value: value,
-    },
-    []
-  );
- 
-  return a;
-};
- 
-export function PlaygroundDemo({
-  id,
-  className,
-  scrollSelector,
-}: {
-  id?: ValueId;
-  className?: string;
-  scrollSelector?: string;
-}) {
+import { MediaEmbedElement } from '@/components/plate-ui/media-embed-element';
+import { MentionElement } from '@/components/plate-ui/mention-element';
+import { MentionInputElement } from '@/components/plate-ui/mention-input-element';
+import { ParagraphElement } from '@/components/plate-ui/paragraph-element';
+import { withPlaceholders } from '@/components/plate-ui/placeholder';
+import {
+  TableCellElement,
+  TableCellHeaderElement,
+} from '@/components/plate-ui/table-cell-element';
+import { TableElement } from '@/components/plate-ui/table-element';
+import { TableRowElement } from '@/components/plate-ui/table-row-element';
+import { TodoListElement } from '@/components/plate-ui/todo-list-element';
+import { withDraggables } from '@/components/plate-ui/with-draggables';
+
+export default function PlateEditor() {
   const containerRef = useRef(null);
-  const enabled = settingsStore.use.checkedComponents();
- 
-  const editor = usePlaygroundEditor(id, scrollSelector);
- 
+
+  const editor = useMyEditor();
+
   return (
-    <DemoId id={id}>
-      <DndProvider backend={HTML5Backend}>
-        <Plate editor={editor}>
-          <CheckPlugin componentId="fixed-toolbar">
-            <FixedToolbar className="no-scrollbar">
-              <CheckPlugin componentId="fixed-toolbar-buttons">
-                <PlaygroundFixedToolbarButtons />
-              </CheckPlugin>
-            </FixedToolbar>
-          </CheckPlugin>
- 
-          <div
-            id="editor-playground"
-            className="flex w-full"
-            style={
-              {
-                '--editor-px': 'max(5%,24px)',
-              } as any
-            }
-          >
-            <div
-              id={scrollSelector}
-              ref={containerRef}
-              className={cn(
-                'relative flex max-h-[800px] w-full overflow-x-auto',
-                // block selection area
-                '[&_.slate-selection-area]:border [&_.slate-selection-area]:border-brand/25 [&_.slate-selection-area]:bg-brand/15',
-                className
-              )}
-              data-plate-selectable
-            >
-              <Editor
-                {...editableProps}
-                size="md"
-                variant="ghost"
-                className={cn(
-                  editableProps.className,
-                  'overflow-x-auto rounded-none px-[var(--editor-px)]',
-                  !id && 'pb-[20vh] pt-4',
-                  id && 'pb-8 pt-2'
-                )}
-                placeholder=""
-                focusRing={false}
-              />
- 
-              <CheckPlugin componentId="floating-toolbar">
-                <FloatingToolbar
-                  state={{
-                    showWhenReadOnly: isEnabled(
-                      'comment',
-                      id,
-                      enabled[CommentsPlugin.key]
-                    ),
-                  }}
-                >
-                  <CheckPlugin componentId="floating-toolbar-buttons">
-                    <PlaygroundFloatingToolbarButtons />
-                  </CheckPlugin>
-                </FloatingToolbar>
-              </CheckPlugin>
- 
-              <CheckPlugin id="cursoroverlay" plugin={DragOverCursorPlugin}>
-                <CursorOverlay containerRef={containerRef} />
-              </CheckPlugin>
-            </div>
- 
-            <CheckPlugin
-              id="comment"
-              componentId="comments-popover"
-              plugin={CommentsPlugin}
-            >
-              <CommentsPopover />
-            </CheckPlugin>
-          </div>
-        </Plate>
-      </DndProvider>
-    </DemoId>
+    <DndProvider backend={HTML5Backend}>
+      <Plate editor={editor}>
+        <div
+          ref={containerRef}
+          className={cn(
+            'relative',
+            // Block selection
+            '[&_.slate-start-area-left]:!w-[64px] [&_.slate-start-area-right]:!w-[64px] [&_.slate-start-area-top]:!h-4'
+          )}
+        >
+          <FixedToolbar>
+            <FixedToolbarButtons />
+          </FixedToolbar>
+
+          <Editor
+            className="px-[96px] py-16"
+            autoFocus
+            focusRing={false}
+            variant="ghost"
+            size="md"
+          />
+
+          <FloatingToolbar>
+            <FloatingToolbarButtons />
+          </FloatingToolbar>
+
+          <CommentsPopover />
+
+          <CursorOverlay containerRef={containerRef} />
+        </div>
+      </Plate>
+    </DndProvider>
   );
 }
- 
-const DemoIdContext = React.createContext<string | undefined>(undefined);
- 
-export function DemoId({
-  id,
-  children,
-}: {
-  children: React.ReactNode;
-  id?: string;
-}) {
-  return <DemoIdContext.Provider value={id}>{children}</DemoIdContext.Provider>;
-}
- 
-export function useDemoId() {
-  return React.useContext(DemoIdContext);
-}
+
+export const useMyEditor = () => {
+  const editor = createPlateEditor({
+    plugins: [
+      // Nodes
+      HeadingPlugin,
+      BlockquotePlugin,
+      CodeBlockPlugin,
+      CodeLinePlugin,
+      CodeSyntaxPlugin,
+      HorizontalRulePlugin,
+      LinkPlugin.configure({
+        render: { afterEditable: () => <LinkFloatingToolbar /> },
+      }),
+      ImagePlugin,
+      MediaEmbedPlugin,
+      CaptionPlugin.configure({
+        options: { plugins: [ImagePlugin, MediaEmbedPlugin] },
+      }),
+      MentionPlugin,
+      MentionInputPlugin,
+      TablePlugin,
+      TableRowPlugin,
+      TableCellPlugin,
+      TableCellHeaderPlugin,
+      TodoListPlugin,
+      ExcalidrawPlugin,
+
+      // Marks
+      BoldPlugin,
+      ItalicPlugin,
+      UnderlinePlugin,
+      StrikethroughPlugin,
+      CodePlugin,
+      SubscriptPlugin,
+      SuperscriptPlugin,
+      FontColorPlugin,
+      FontBackgroundColorPlugin,
+      FontSizePlugin,
+      HighlightPlugin,
+      KbdPlugin,
+
+      // Block Style
+      AlignPlugin.configure({
+        inject: {
+          targetPlugins: [ParagraphPlugin.key, ...HEADING_LEVELS],
+        },
+      }),
+      IndentPlugin.configure({
+        inject: {
+          targetPlugins: [
+            ParagraphPlugin.key,
+            BlockquotePlugin.key,
+            CodeBlockPlugin.key,
+            ...HEADING_LEVELS,
+          ],
+        },
+      }),
+      IndentListPlugin.configure({
+        inject: {
+          targetPlugins: [
+            ParagraphPlugin.key,
+            BlockquotePlugin.key,
+            CodeBlockPlugin.key,
+            ...HEADING_LEVELS,
+          ],
+        },
+        options: {
+          listStyleTypes: {
+            todo: {
+              liComponent: TodoLi,
+              markerComponent: TodoMarker,
+              type: 'todo',
+            },
+          },
+        },
+      }),
+      LineHeightPlugin.configure({
+        inject: {
+          nodeProps: {
+            defaultNodeValue: 1.5,
+            validNodeValues: [1, 1.2, 1.5, 2, 3],
+          },
+          targetPlugins: [ParagraphPlugin.key, ...HEADING_LEVELS],
+        },
+      }),
+
+      // Functionality
+      AutoformatPlugin.configure({
+        options: {
+          rules: autoformatRules,
+          enableUndoOnDelete: true,
+        },
+      }),
+      BlockSelectionPlugin.configure({
+        options: {
+          areaOptions: {
+            behaviour: {
+              scrolling: {
+                startScrollMargins: { x: 0, y: 0 },
+              },
+            },
+            boundaries: '#scroll_container',
+            container: '#scroll_container',
+            selectables: '#scroll_container .slate-selectable',
+            selectionAreaClass: 'slate-selection-area',
+          },
+          enableContextMenu: true,
+        },
+      }),
+      DndPlugin.configure({
+        options: { enableScroller: true },
+      }),
+      EmojiPlugin,
+      ExitBreakPlugin.configure({
+        options: {
+          rules: [
+            {
+              hotkey: 'mod+enter',
+            },
+            {
+              hotkey: 'mod+shift+enter',
+              before: true,
+            },
+            {
+              hotkey: 'enter',
+              query: {
+                start: true,
+                end: true,
+                allow: HEADING_LEVELS,
+              },
+              relative: true,
+              level: 1,
+            },
+          ],
+        },
+      }),
+      NodeIdPlugin,
+      ResetNodePlugin.configure({
+        options: {
+          rules: [
+            {
+              types: [BlockquotePlugin.key, TodoListPlugin.key],
+              defaultType: ParagraphPlugin.key,
+              hotkey: 'Enter',
+              predicate: isBlockAboveEmpty,
+            },
+            {
+              types: [BlockquotePlugin.key, TodoListPlugin.key],
+              defaultType: ParagraphPlugin.key,
+              hotkey: 'Backspace',
+              predicate: isSelectionAtBlockStart,
+            },
+            {
+              types: [CodeBlockPlugin.key],
+              defaultType: ParagraphPlugin.key,
+              onReset: unwrapCodeBlock,
+              hotkey: 'Enter',
+              predicate: isCodeBlockEmpty,
+            },
+            {
+              types: [CodeBlockPlugin.key],
+              defaultType: ParagraphPlugin.key,
+              onReset: unwrapCodeBlock,
+              hotkey: 'Backspace',
+              predicate: isSelectionAtCodeBlockStart,
+            },
+          ],
+        },
+      }),
+      SelectOnBackspacePlugin.configure({
+        options: {
+          query: {
+            allow: [ImagePlugin.key, HorizontalRulePlugin.key],
+          },
+        },
+      }),
+      SoftBreakPlugin.configure({
+        options: {
+          rules: [
+            { hotkey: 'shift+enter' },
+            {
+              hotkey: 'enter',
+              query: {
+                allow: [
+                  CodeBlockPlugin.key,
+                  BlockquotePlugin.key,
+                  TableCellPlugin.key,
+                  TableCellHeaderPlugin.key,
+                ],
+              },
+            },
+          ],
+        },
+      }),
+      TabbablePlugin.configure(({ editor }) => ({
+        options: {
+          query: () => {
+            if (isSelectionAtBlockStart(editor)) return false;
+
+            return !someNode(editor, {
+              match: (n) => {
+                return !!(
+                  n.type &&
+                  ([
+                    TablePlugin.key,
+                    TodoListPlugin.key,
+                    CodeBlockPlugin.key,
+                  ].includes(n.type as string) ||
+                    n.listStyleType)
+                );
+              },
+            });
+          },
+        },
+      })),
+      TrailingBlockPlugin.configure({
+        options: { type: ParagraphPlugin.key },
+      }),
+      DragOverCursorPlugin,
+
+      // Collaboration
+      CommentsPlugin.configure({
+        options: {
+          users: {
+            1: {
+              id: '1',
+              name: 'zbeyens',
+              avatarUrl:
+                'https://avatars.githubusercontent.com/u/19695832?s=96&v=4',
+            },
+          },
+          myUserId: '1',
+        },
+      }),
+
+      // Deserialization
+      DocxPlugin,
+      MarkdownPlugin,
+      JuicePlugin,
+    ],
+    override: {
+      components: withDraggables(
+        withPlaceholders({
+          [BlockquotePlugin.key]: BlockquoteElement,
+          [CodeBlockPlugin.key]: CodeBlockElement,
+          [CodeLinePlugin.key]: CodeLineElement,
+          [CodeSyntaxPlugin.key]: CodeSyntaxLeaf,
+          [HorizontalRulePlugin.key]: HrElement,
+          [HEADING_KEYS.h1]: withProps(HeadingElement, { variant: 'h1' }),
+          [HEADING_KEYS.h2]: withProps(HeadingElement, { variant: 'h2' }),
+          [HEADING_KEYS.h3]: withProps(HeadingElement, { variant: 'h3' }),
+          [HEADING_KEYS.h4]: withProps(HeadingElement, { variant: 'h4' }),
+          [HEADING_KEYS.h5]: withProps(HeadingElement, { variant: 'h5' }),
+          [HEADING_KEYS.h6]: withProps(HeadingElement, { variant: 'h6' }),
+          [ImagePlugin.key]: ImageElement,
+          [LinkPlugin.key]: LinkElement,
+          [MediaEmbedPlugin.key]: MediaEmbedElement,
+          [MentionPlugin.key]: MentionElement,
+          [MentionInputPlugin.key]: MentionInputElement,
+          [ParagraphPlugin.key]: ParagraphElement,
+          [TablePlugin.key]: TableElement,
+          [TableRowPlugin.key]: TableRowElement,
+          [TableCellPlugin.key]: TableCellElement,
+          [TableCellHeaderPlugin.key]: TableCellHeaderElement,
+          [TodoListPlugin.key]: TodoListElement,
+          [ExcalidrawPlugin.key]: ExcalidrawElement,
+          [BoldPlugin.key]: withProps(PlateLeaf, { as: 'strong' }),
+          [CodePlugin.key]: CodeLeaf,
+          [HighlightPlugin.key]: HighlightLeaf,
+          [ItalicPlugin.key]: withProps(PlateLeaf, { as: 'em' }),
+          [KbdPlugin.key]: KbdLeaf,
+          [StrikethroughPlugin.key]: withProps(PlateLeaf, { as: 's' }),
+          [SubscriptPlugin.key]: withProps(PlateLeaf, { as: 'sub' }),
+          [SuperscriptPlugin.key]: withProps(PlateLeaf, { as: 'sup' }),
+          [UnderlinePlugin.key]: withProps(PlateLeaf, { as: 'u' }),
+          [CommentsPlugin.key]: CommentLeaf,
+        })
+      ),
+    },
+    value: [
+      {
+        id: '1',
+        type: ParagraphPlugin.key,
+        children: [{ text: 'Hello, World!' }],
+      },
+    ],
+  });
+
+  return editor;
+};

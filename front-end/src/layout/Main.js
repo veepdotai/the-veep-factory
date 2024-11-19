@@ -34,9 +34,18 @@ import Playground from "src/components/ffmpeg/Playground";
 import { UtilsMenu } from 'src/components/lib/utils-menu';
 import { interval } from 'date-fns';
 
-//export default function App() {
+let home = null
+
+/**
+ * Create a screen for each main part
+ * @param {*} credits Credits the user has
+ * @param {*} current The current screen 
+ * @returns 
+ */
 export default function Main({credits, current}) {
   const log = Logger.of(Main.name);
+
+  home = <Home credits={credits} current={current} />
 
   return (
       <Tab.Content className="p-0">
@@ -51,9 +60,9 @@ export default function Main({credits, current}) {
           </Container>
         </Tab.Pane>
 
-        {UtilsMenu.createPaneFromMenuItem(UtilsMenu.getGenericMenu())}
+        {UtilsMenu.createPaneFromMenuItem(UtilsMenu.getGenericMenu(), home)}
 
-        {UtilsMenu.createPaneFromMenuItem(UtilsMenu.getMainContentMenu())}
+        {UtilsMenu.createPaneFromMenuItem(UtilsMenu.getMainContentMenu(), home)}
         <Tab.Pane eventKey="config-pdf">
           <ScreenHeading name="config-pdf" title={t("ConfigPDF")} subtitle={t("ConfigPDFSubtitle")} />
           <Container className='p-0'>
@@ -72,7 +81,7 @@ export default function Main({credits, current}) {
           <ScreenHeading name="add-content" title={t("AddContentTitle")} subtitle={t("AddContentSubtitle")} />
           <Container className='p-2'>
             <CardSelector />
-            <Home credits={credits} current={current} />
+            {home}
           </Container>
         </Tab.Pane>
         <Tab.Pane eventKey="brand-voice">

@@ -47,14 +47,16 @@ function DataTableBase( props ) {
 	return (
 		<>
 		<div className={`hidden h-full flex-1 flex-col space-y-8 ${cns.cnForTableOuterContainer} md:flex`}>
-		  <div className={`flex items-center justify-between ${cns.cnForTablePresentation} space-y-2`}>
-				<h2 className="text-2xl font-bold tracking-tight">{t("WelcomeBack")}</h2>
+			{/*
+				<div className={`flex items-center justify-between ${cns.cnForTablePresentation} space-y-2`}>
+						<h2 className="text-2xl font-bold tracking-tight">{t("WelcomeBack")}</h2>
+				</div>
+			*/}
+			<div className="${cns.cnForTablePresentation} d-flex mt-4 space-y-2">
 				<Button variant="ghost" className=" justify-end" onClick={handleRefresh}>{Icons.refresh}</Button>
-		  </div>
-		  <div className="${cns.cnForTablePresentation} space-y-2">
-			  <p className="text-muted-foreground">{t("CurrentContentsList")}</p>
-		  </div>
-		  {getDataTableContent(props, cns)}
+				<p className="text-muted-foreground">{t("CurrentContentsList")}</p>
+			</div>
+			{getDataTableContent(props, cns)}
 		</div>
 	  </>
 	)

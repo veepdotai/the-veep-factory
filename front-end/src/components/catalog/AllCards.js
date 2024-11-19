@@ -13,8 +13,18 @@ import { VeepletContext } from 'src/context/VeepletProvider';
 
 import Prompt from './Prompt';
 import { Constants } from "src/constants/Constants";
-
-export default function AllCards( { type, title, firstTab = null }) {
+/**
+ * 
+ * @param {shared|personal} type shared is global for all users 
+ * @param {Home instance} formScreen form shared instance
+ * beetween the main create menu and the specific one to input data,
+ * so only one creation screen may be available at a time
+ * @param {String} cat category label to look for
+ * @param {String} firstTab first tab id so select by default
+ * @returns the available prompts for this type and the category if provided
+ * or all the categories otherwise
+ */
+export default function AllCards( { type, title, formScreen = null, cat = null, firstTab = null }) {
   const log = Logger.of(AllCards.name);
 
   let defaultEventKey = type + "-first";
@@ -39,13 +49,36 @@ export default function AllCards( { type, title, firstTab = null }) {
     return array.indexOf(value) === index;
   }
   
-  function getCategories(directory) {
+  function getCategories(directory, category = null) {
     if (directory) {
-      let categories = directory.map((row) => { return row.status === "active" && row.category })
+      let categories = directory.map((row) => {
+        //log.trace(`AllCards: Domain/Category/SubCategory: ${JSON.stringify(row)}`)
+        log.trace(`AllCards: Domain/Category/SubCategory: ${row.group}/${row.category}/${row.subCategory}`)
+        let result = ""
+        if (row.status === "active" && category) {
+          result = row?.category === category ? category : ""
+        } else {
+          result = row?.category
+        }
+        return result 
+      })
       return categories.filter(onlyUnique);
     } else {
       return [];
     }
+  }
+
+  function getFilteredCategories(directory, category = null) {
+    if (directory) {
+      let categories = directory.map((row) => { return row.status === "active" && (category ? row?.category == category : row?.category)})
+      return categories.filter(onlyUnique);
+    } else {
+      return [];
+    }
+  }
+
+  function getAIsByOneCategory(category) {
+    return 
   }
 
   function getAIsByCategory(category) {
@@ -78,14 +111,7 @@ export default function AllCards( { type, title, firstTab = null }) {
         <Tab.Pane eventKey={i == 0 ? defaultEventKey : cat}>
           <Row className='pt-0'>
             {
-              getAIsByCategory(cat).map((ai) => {
-                log.trace("Category: " + cat + ", AI: " + ai.name);
-                return (
-                  <Col {...config}>
-                    <Prompt definition={ai} setDisplay={() => PubSub.publish("HIDE_CATALOGS", null)} />
-                  </Col>                  
-                )
-              })
+              getAIsByOneCategory(cat)
             }
           </Row>
         </Tab.Pane>
@@ -194,20 +220,26 @@ export default function AllCards( { type, title, firstTab = null }) {
               <Card.Header>{title}</Card.Header>
               <Card.Body>
                 { directory ?
+                <>
+                {
+                    getAIsByOneCategory("Marketing")
+                  
+                }
                   <Tab.Container defaultActiveKey={defaultEventKey}>
                       <Row>
                         <Col className="pt">
                           <Nav variant="underline">
-                            {displayNav(getCategories(directory), defaultEventKey)}
+                            {displayNav(getCategories(directory, cat), defaultEventKey)}
                           </Nav>
                         </Col>
                       </Row>
                       <Row>
-                        <Tab.Content>
-                          {showContents(getCategories(directory), defaultEventKey)}
+                      <Tab.Content>
+                        {showContents(getCategories(directory), defaultEventKey)}
                         </Tab.Content>
                       </Row>
                   </Tab.Container>
+                  </>
                   :
                   <></>
                 }
@@ -216,6 +248,11 @@ export default function AllCards( { type, title, firstTab = null }) {
           </>
         :
           <>
+            { cat ?
+                <div>A content is under construction</div>
+              :
+                <></>
+            }
           </>
       }
     </>

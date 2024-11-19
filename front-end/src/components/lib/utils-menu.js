@@ -4,9 +4,54 @@ import { t } from 'i18next'
 import { Container, Row, Col, Tab } from 'react-bootstrap';
 import { ScreenHeading } from "src/components/common/Heading";
 import MyContent from "src/components/screens/mycontent/MyContent";
+import AllCards from '../catalog/AllCards';
+import Home from "src/components/Home";
+
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
 
 export const UtilsMenu = {
   log: Logger.of("Menu"),
+
+  getSheetForm: function(home, open, setOpen) {
+  //<Sheet open={open} onOpenChange={setOpen}>
+    return (
+      <Sheet open={open} onOpenChange={setOpen}>
+        {/*
+        <SheetTrigger asChild>
+          <Button variant="outline">Open</Button>
+        </SheetTrigger>
+        */}
+        <SheetContent className="sm:max-w-8xl w-75">
+          <SheetHeader>
+            <SheetTitle>Edit profile</SheetTitle>
+            <SheetDescription>
+              Make changes to your profile here. Click save when you're done.
+            </SheetDescription>
+          </SheetHeader>
+          <>
+            {home}
+          </>
+          <SheetFooter>
+            <SheetClose asChild>
+              <Button type="submit">Save changes</Button>
+            </SheetClose>
+          </SheetFooter>
+        </SheetContent>
+      </Sheet>
+    )
+  },
 
   getGenericMenu: function() {
     let menuDefinition = [{
@@ -35,10 +80,13 @@ export const UtilsMenu = {
   },
 
   getMainContentMenu: function() {
-      function rest(name) {
+      function details(name, displayAgents = true) {
         return  {
+          id: `dpt-${name?.toLowerCase()}`,
+          name: name,
           label: t(name),
-          query: { view: t(name), status: "DRAFT", meta: {value: name, compare: "LIKE", key: "veepdotaiCategory"}}
+          query: { view: t(name), status: "DRAFT", meta: {value: name, compare: "LIKE", key: "veepdotaiCategory"}},
+          displayAgents: displayAgents
         }
       }
 
@@ -47,32 +95,32 @@ export const UtilsMenu = {
             id: "function-sales",
             title: t("SalesFunction"),
             items: [
-              {id: 'dpt-communication', ...rest("Communication")},
-              {id: 'dpt-marketing', ...rest("Marketing")},
-              {id: 'dpt-sales', ...rest("Sales")},
+              details("Communication"),
+              details("Marketing"),
+              details("Sales"),
             ]
         },
         {
             id: "function-production",
             title: t("ProductionConsultingServicesFunction"),
             items: [
-                {id: 'dpt-management', ...rest("Management")},
-                {id: 'dpt-production', ...rest("Production")},
-                {id: 'dpt-consulting', ...rest("Consulting")},
-                {id: 'dpt-service', ...rest("Service")},
-                {id: 'dpt-quality', ...rest("Quality")},
-                {id: 'dpt-randd', ...rest("RandD")},
+                details("Management"),
+                details("Production"),
+                details("Consulting"),
+                details("Service"),
+                details("Quality"),
+                details("RandD"),
             ]
         },
         {
             id: "function-support",
             title: t("SupportFunction"),
             items: [
-                {id: 'dpt-finance', ...rest("Finance")},
-                {id: 'dpt-hr', ...rest("HR")},
-                {id: 'dpt-it', ...rest("IT")},
-                {id: 'dpt-logistics', ...rest("Logistics")},
-                {id: 'dpt-procurement', ...rest("Procurement")},
+                details("Finance"),
+                details("HR"),
+                details("IT"),
+                details("Logistics"),
+                details("Procurement"),
             ]
         },
     ]
@@ -80,7 +128,7 @@ export const UtilsMenu = {
     return menuDefinition
   },
 
-  createPaneFromMenuItem: function(menuDefinition) {
+  createPaneFromMenuItem: function(menuDefinition, home = null) {
     let tab = menuDefinition.map((menu) => {
         let panes = menu.items.map((row) => {
           if (! row?.dontcreate) { 
@@ -88,6 +136,15 @@ export const UtilsMenu = {
               <Tab.Pane eventKey={row.id}>
                 <ScreenHeading name={row.id} title={t(row?.query?.view) || t(row.label)} subtitle={t(`${row.label}Subtitle`)} />
                 <Container className='p-0'>
+                  {row.displayAgents ?
+                      <>
+                        <AllCards id="catalog-shared" type="personal" title={t("VeepVeeplets")} cat={row.name} form={home} />
+                        {/* <Home credits={credits} current={current} /> */}
+                      </>
+                    :
+                      <></>
+
+                  }
                   <MyContent 
                     view={row?.query?.view}
                     status={row?.query?.status}

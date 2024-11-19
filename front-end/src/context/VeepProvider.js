@@ -14,6 +14,7 @@ import { ThirdPartiesDataProvider } from './ThirdPartiesDataProvider';
 import { SharedCatalogProvider } from './catalog/SharedCatalogProvider';
 import { PersonalCatalogProvider } from './catalog/PersonalCatalogProvider';
 import { VeepletProvider } from './VeepletProvider';
+//import { SelectedPromptProvider } from './SelectedPromptProvider';
 import { ContentIdProvider } from './ContentIdProvider';
 
 export default function VeepProvider ( { children, appPrefs, setAppPrefs } ) {
@@ -27,6 +28,7 @@ export default function VeepProvider ( { children, appPrefs, setAppPrefs } ) {
     const [ personalCatalog, setPersonalCatalog ] = useState();
     const [ veeplet, setVeeplet ] = useState();
     const [ contentId, setContentId ] = useState();
+    //const [ selectedPrompt, setSelectedPrompt ] = useState();
 
     return (
         <AppPreferencesProvider value={{ appPrefs, setAppPrefs}}>
@@ -36,9 +38,11 @@ export default function VeepProvider ( { children, appPrefs, setAppPrefs } ) {
                         <SharedCatalogProvider value={{ sharedCatalog, setSharedCatalog }}>
                             <PersonalCatalogProvider value={{ personalCatalog, setPersonalCatalog }}>
                                 <VeepletProvider value={{ veeplet, setVeeplet }}>
-                                    <ContentIdProvider value={{ contentId, setContentId }}>
-                                        {children}
-                                    </ContentIdProvider>
+                                    {/*<SelectedPromptProvider value={{ selectedPrompt, setSelectedPrompt }}> */}
+                                        <ContentIdProvider value={{ contentId, setContentId }}>
+                                            {children}
+                                        </ContentIdProvider>
+                                    {/*</SelectedPromptProvider>*/}
                                 </VeepletProvider>
                             </PersonalCatalogProvider>
                         </SharedCatalogProvider>

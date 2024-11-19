@@ -34,8 +34,12 @@ export default function Index() {
 
   const [cookies] = useCookies(['JWT']);
   const [credits, setCredits] = useState();
-  const [current, setCurrent] = useState();
+  //const [current, setCurrent] = useState();
+  const [current, setCurrent] = useState("contents");
   const [isManager, setIsManager] = useState(false);
+
+  const [activeTab, setActiveTab] = useState({})
+  const [defaultActiveKey, setDefaultActiveKey] = useState({defaultActiveKey: "contents"})
 
   const size = useBreakpoint();
   const [menuDirection, setMenuDirection] = useState();
@@ -69,6 +73,18 @@ export default function Index() {
 
   useEffect(() => {
     function initPageListeners() {
+
+      PubSub.subscribe("TAB_CLICKED", (topic, itemKey) => {    
+          //setActiveTab(itemKey);
+          if ("add-content" === itemKey) {
+            setActiveTab({activeKey: itemKey});
+          } else if (activeTab) {
+            // We were on add-content because it is the only reason to set activeTab
+            setActiveTab({});
+            setDefaultActiveKey({defaultActiveKey: itemKey})
+          }
+      });
+
       /* What's currently happening? */
       PubSub.subscribe("CURRENT_STEP", (topic, message) => {
           setCurrent(message);
@@ -78,10 +94,17 @@ export default function Index() {
       //PubSub.subscribe("_TRANSCRIPTION_FINISHED_", (topic, message) => {
           getCredits();
       });
+
+      PubSub.subscribe("SELECTED_DOCTYPE", (topic, message) => setActiveTab({activeKey: "add-content"}));
+
     }
     
     initPageListeners();
   }, []);
+
+  useEffect(() => {
+    log.trace(`Index: current: ${current}`)
+  }, [current]);
 
   useEffect(() => {
     getCredits();
@@ -89,6 +112,8 @@ export default function Index() {
       setIsManager(Utils.isManager(profile));
     }
   }, [profile]);
+
+  //defaultActiveKey={"contents"}
 
   return (
       <ThemeProvider data-bs-theme="dark">
@@ -103,7 +128,8 @@ export default function Index() {
         <Cover />
         
         <Tab.Container
-          defaultActiveKey="contents"
+          {...defaultActiveKey}
+          {...activeTab}
           id="controlled-tab-home"
           style={menuStyle} 
           className="mb-3 container"
