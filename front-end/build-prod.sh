@@ -22,40 +22,123 @@
 # local and remote installation.
 #
 
-TEST=$(command sshpass -v > test-command.txt | grep Usage test-command.txt)
-if [ -z "$TEST" ]; then
-    sudo apt-get install sshpass
-else
-    echo "sshpass is already installed"
-fi
-
-set -e
+#set -e
 
 # hash code to use
+ALL_ARGS=$@
+
 ARGS=$1
 
 # Go and look at the build/env.tpl file to have an idea of the expected informations
 
 . ../.env
 
+parse_options() {
+    echo "Parsing options"
+
+    COMMAND_LINE_OPTIONS_HELP='
+Command line options:
+    -b          Builds the client app
+    -d          Deploys the client app on the remote target 
+    -D  DIR     Deploys the provided client app on the remote target 
+    -s          Deploys the client app on the remote target
+
+Examples:
+    Builds and deploys client app:
+        '`basename $0`' -b -d
+
+    Deploys specific client app:
+        '`basename $0`' -b -D 241124-1151-af1914b9
+
+    Deploys server modules:
+        '`basename $0`' -s
+
+'
+    OPTIONS=":hbdDs:"
+
+    BUILDS_CLIENT_APP="n"
+    DEPLOYS_CLIENT_APP="n"
+    DEPLOYS_SERVER_MODULES="n"
+
+    echo "OPTIONS: $OPTIONS"
+    while getopts $OPTIONS option
+    do
+        echo "$option option found."
+        case $option in
+            h)
+                echo "$COMMAND_LINE_OPTIONS_HELP"
+                exit $E_OPTERROR
+                ;;
+            b)
+                echo "Builds the client app"
+                BUILDS_CLIENT_APP="y"
+                ;;
+            d)
+                echo "Deploys the client app on the remote target"
+                DEPLOYS_CLIENT_APP="y"
+                ;;
+            D)
+                echo "Deploys the server modules on the remote target"
+                BUILDS_CLIENT_APP="n"
+                DEPLOYS_SERVER_MODULES="y"
+                TAG=$OPTARG
+                ;;
+            s)
+                echo "Deploys the server modules on the remote target"
+                DEPLOYS_SERVER_MODULES="y"
+                ;;
+            :)
+                echo "$OPTARG option required an argument"
+                exit 1
+                ;;
+            \?)
+                echo "$OPTARG : option invalide"
+                exit 1
+                ;;
+        esac
+    done
+
+    echo BUILDS_CLIENT_APP=$BUILDS_CLIENT_APP
+    echo DEPLOYS_CLIENT_APP=$DEPLOYS_CLIENT_APP
+    echo DEPLOYS_SERVER_MODULES=$DEPLOYS_SERVER_MODULES
+
+    echo "Analyse des options terminées"
+
+}
+
 main() {
+    parse_options $ALL_ARGS
+
+    test_sshpass
+
     echo "Executing Main"
     init
-    if [ -z "$ARGS" ]; then        
-	echo "No parameters provided"
-        # build = prepare + build + store
-        build
 
-        # deploys only the js app
-        deploy_build
-    else
+    # build = prepare + build + store
+    if [ "y$BUILDS_CLIENT_APP" = "y" ]; then        
+        build
+    fi
+
+    # deploys only the js app
+    if [ "y$DEPLOYS_CLIENT_APP" = "y" ]; then        
         deploy_build
     fi
 
     # deploys the wp plugins
-#    deploy_server
+    if [ "y$DEPLOYS_SERVER_MODULES" = "y" ]; then        
+        deploy_server
+    fi
 
     echo "The server has been pusblished: $APP_HOST/v/$TAG"
+}
+
+test_sshpass() {
+    TEST=$(command sshpass -v > test-command.txt | grep Usage test-command.txt)
+    if [ -z "$TEST" ]; then
+        sudo apt-get install sshpass
+    else
+        echo "sshpass is already installed"
+    fi
 }
 
 init() {
