@@ -98,6 +98,7 @@ export default function initAppJSLogs(level = "NONE") {
     localStorage.setItem('ReactIconsPicker', level);
 
     /** Form */
+    localStorage.setItem('Sources', level);
     localStorage.setItem('Form', level);
     localStorage.setItem('ToggleForm', level);
     localStorage.setItem('UploadSelector', level);

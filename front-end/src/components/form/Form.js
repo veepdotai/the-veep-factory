@@ -5,6 +5,9 @@ import { Logger } from 'react-logger-lib';
 import PubSub from 'pubsub-js';
 import { t } from 'i18next';
 
+import Markdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+
 import styles from './Form.module.css';
 
 import { Constants } from "src/constants/Constants";
@@ -12,7 +15,6 @@ import { Icons } from "src/constants/Icons";
 
 import UploadSelector from './UploadSelector';
 import VocalForm from './VocalForm';
-import UploadForm from './UploadForm';
 import UploadRDU from './UploadRDU';
 import TextForm from './TextForm';
 import UrlForm from './UrlForm';
@@ -63,11 +65,10 @@ function ToggleForm( props ) {
         service: Constants.WORDPRESS_REST_URL + "/?rest_route=/veepdotai_rest/v1/posts",
         'token': cookies.JWT
     }
-        
+
     function disableForm(topic, msg) {
         log.info(topic + " msg received: " + JSON.stringify(msg));
         setDisabled(true);
-        //setDisplay(true);
     }
 
     function goToForm(topic, msg) {
@@ -92,6 +93,42 @@ function ToggleForm( props ) {
         }
     }
 
+    function getFormAsCard(icon, title, form) {
+        return (
+            <Card className={'h-100 rounded-4 overflow-auto '}>
+                <Card.Title className={'border-bottom text-center p-2 '}>
+                    {icon}
+                    {title}
+                </Card.Title>
+                <Card.Body style={{"font-size": "0.875rem"}} className={'m-0 mb-3 ' + (disabled ? 'pt-0' : '')}>
+                    {form}
+                </Card.Body>
+            </Card>
+        )
+    }
+
+    function getFormAsSimpleView(icon, title, form) {
+        return (
+            <div className={'h-100'}>
+                <div className={'border-bottom p-2 pl-5'}>
+                    {icon} {title}
+                </div>
+                <div className={'w-75 m-auto overflow-auto text-sm p-5 ' + (disabled ? 'pt-0' : '')}>
+                    {form}
+                </div>
+            </div>
+        )
+    }
+
+    function getForm(icon, title, form) {
+        let view = "noborder"
+        if ( "border" == view) {
+            return getFormAsCard(icon, title, form)
+        } else {
+            return getFormAsSimpleView(icon, title, form)
+        }
+    }
+
     useEffect(() => {
         log.info('Subscribing to PROCESSING_PID');
         PubSub.subscribe( "PROCESSING_PID", disableForm);
@@ -102,62 +139,34 @@ function ToggleForm( props ) {
     const onSubmit = data => log.info(data);
 
     return (
-        <Card className={'h-100 rounded-4 overflow-auto '}>
-            <Card.Title className={'border-bottom text-center p-2 '}>
-                {Icons.volume}
-                {t(props.contentType?.title)}
-            </Card.Title>
-            <Card.Body style={{"font-size": "0.875rem"}} className={'m-0 mb-3 ' + (disabled ? 'pt-0' : '')}>
+        <>{
+            getForm(
+                Icons.volume,
+                t(props.contentType?.title),
                 <form onSubmit={onSubmit}>
                     <Tips1 disabled={disabled} contentType={props.contentType} />
                     <div>
-                        {
-                            uploadSelector ?
-                                <UploadSelector />
-                                :
-                                <></>
-                        }
-                        {
-                            vocalForm ?
-                                <VocalForm conf={conf} credits={props.credits} />
-                            :
-                                <></>
-                        }
-                        {
-                            uploadForm ?
-                                <UploadRDU conf={conf} credits={props.credits} />
-                            :
-                                <></>
-                        }
-                        {
-                            textForm ?
-                                <TextForm conf={conf} credits={props.credits} />
-                            :
-                                <></>
-                        }
-                        {
-                            urlForm ?
-                                <UrlForm conf={conf} credits={props.credits} />
-                            :
-                                <></>
-                        }
+                        { uploadSelector ? <UploadSelector /> : <></> }
+                        { vocalForm ? <VocalForm conf={conf} credits={props.credits} /> : <></> }
+                        { uploadForm ? <UploadRDU conf={conf} credits={props.credits} /> : <></> }
+                        { textForm ? <TextForm conf={conf} credits={props.credits} /> : <></> }
+                        { urlForm ? <UrlForm conf={conf} credits={props.credits} /> : <></> }
                     </div>
                     <Tips2 disabled={disabled} contentType={props.contentType} />
                 </form>
-
-            </Card.Body>
-        </Card>
+            )
+        }</>
     );
 }
 
 export function Tips1( {disabled, contentType}) {
     return (
-        <div className={disabled ? dNone : ''}>
+        <div className={' ' + disabled ? dNone : ''}>
             {
                 contentType && contentType.tips1 ?
-                <p>{contentType.tips1}</p>
+                    <Markdown remarkPlugins={[remarkGfm]}>{contentType.tips1}</Markdown>
                 :
-                <></>
+                    <></>
             }
             <label className={'fw-bold ' + (disabled ? 'd-none': '')}>{t("Form.Vocal")}</label>
         </div>
@@ -166,12 +175,12 @@ export function Tips1( {disabled, contentType}) {
 
 export function Tips2( {disabled, contentType}) {
     return (
-        <div className={disabled ? dNone : ''}>
+        <div className={' ' + disabled ? dNone : ''}>
             {
                 contentType && contentType.tips2 ?
-                <p className="mt-2">{contentType.tips2}</p>
+                    <Markdown remarkPlugins={[remarkGfm]}>{contentType.tips2}</Markdown>
                 :
-                <></>
+                    <></>
             }
         </div>
     )

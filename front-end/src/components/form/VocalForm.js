@@ -92,6 +92,7 @@ export default function Vocal( {...props} ) {
       return null;
     }
 
+    PubSub.publish("STREAM_ADDED", { "veepdotai-ai-input-stream": { blob: blob, name: "record.wav"}})
     UploadLib.sendRecording(conf, fd, veeplet, setContentId);
     setDisabled(true);
   }

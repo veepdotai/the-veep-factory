@@ -47,6 +47,7 @@ export default function UrlForm( {...props} ) {
         return null;
     }
       
+    PubSub.publish("URL_ADDED", fd)
     UploadLib.sendRecording(conf, fd, veeplet, setContentId);
     setSubmitButtonIsEnabled(false);
   }

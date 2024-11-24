@@ -30,10 +30,12 @@ export const Icons = {
     share:              <Md.MdOutlineIosShare {...attr} />,
     terminal:           <Md.MdTerminal {...attr} />,
 
+    micro:              <Md.MdMic {...attr}/>,
     microphone:         <Md.MdMic {...attr}/>,
     file:               <Md.MdFileUpload {...attr}/>,
     textarea:           <Md.MdTextSnippet {...attr}/>,
-
+    text:               <Md.MdTextSnippet {...attr}/>,
+    url:                <Md.MdLink {...attr}/>,
     stats:              <Md.MdBarChart {...attr}/>,
 
     pdf:                <Md.MdOutlinePictureAsPdf {...attr}/>,
@@ -62,6 +64,7 @@ export const Icons = {
     params:             <Md.MdOutlineDesignServices {...attr}  />,
     "add-content":      <Md.MdOutlineModeEdit {...attr}  />,
     "editorial-calendar": <Md.MdOutlineCalendarMonth {...attr} />,
+    help:               <Md.MdOutlineLiveHelp {...attr}  />,
     support:            <Md.MdOutlineForum {...attr}  />,
     tour:               <Md.MdOutlineLiveHelp {...attr} />,
     exit:               <Md.MdExitToApp {...attr} />,

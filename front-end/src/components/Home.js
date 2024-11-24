@@ -5,12 +5,16 @@ import { useCookies } from 'react-cookie';
 import { t } from 'i18next';
 import PubSub from 'pubsub-js';
 
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup, } from "src/components/ui/shadcn/resizable"
+import { ScrollArea, ScrollBar } from "src/components/ui/shadcn/scroll-area"
+
 import { ContentIdContext } from "src/context/ContentIdProvider"
 
 import { Constants } from "src/constants/Constants";
 import styles from 'src/styles/Home.module.css';
 
 import Form from './form/Form';
+import Sources from './form/Sources';
 import Process from './screens/process/Process';
 import Monitoring from './Monitoring';
 
@@ -36,6 +40,25 @@ export default function Home( props ) {
     const conf = {
         service: Constants.WORDPRESS_REST_URL + "/?rest_route=/veepdotai_rest/v1/posts",
         'token': cookies.JWT
+    }
+
+    let s = {
+        "result": {
+            "nodesktop": {xs: 12, md: 12, className: 'mb-3'},
+            "desktop": {
+                "sources": {lg: 2, xl: 2, className: 'mb-3'},
+                "process": {lg: 8, xl: 8, className: 'mb-3'},
+                "monitoring": {lg: 2, xl: 2, className: 'mb-3'},
+            },
+        },
+        "noresult": {
+            "nodesktop": {xs: 12, md: 12, className: 'mb-3'},
+            "desktop": {
+                "sources": {lg: 2, xl: 2, className: 'mb-3'},
+                "process": {lg: 8, xl: 8, className: 'mb-3'},
+                "monitoring": {lg: 2, xl: 2, className: 'mb-3'},
+            }
+        }
     }
 
     function showResult() {
@@ -106,6 +129,65 @@ export default function Home( props ) {
         return UtilsMenu.getSheetForm(form)
     }
     
+    function getCreationPanel(params, sources, state, monitoring) {
+        let view = "Resizable"
+        if ("cols" === view) {
+            return creationPanelWithCols(params, sources, state, monitoring)
+        } else {
+            return creationPanelWithResizableArea(params, sources, state, monitoring)
+        }
+    }
+
+    function creationPanelWithCols(params, sources, state, monitoring) {
+        return (
+            <>
+                <Col id="sources" {...params.sources}><Sources /></Col>
+                <Col id="processing" {...params.process}><Process contentType={contentType} current={current}/></Col>
+                <Col id="monitoring" {...params.monitoring}><Monitoring /></Col>
+            </>
+        )
+    }
+
+    function creationPanelWithResizableArea(params, sources, state, monitoring) {
+        let buttonsPosition = "top"
+        let menuPosition = "right"
+
+        let menu = <ResizablePanel className="h-full p-5" style={{borderRight: "1px solid #eeefff"}} defaultSize={25}>
+            <ScrollArea className="w-100 whitespace-nowrap h-full">
+                <ScrollBar orientation="vertical" />
+                { "top" == buttonsPosition ?
+                        <>
+                            {monitoring}
+                            {sources}
+                        </>
+                    :
+                        <>
+                            {sources}
+                            {monitoring}
+                        </>
+                }
+            </ScrollArea>
+        </ResizablePanel>
+
+        let content = <ResizablePanel defaultSize={74} className='h-full'>
+                <ScrollArea className="w-100 whitespace-nowrap h-full">
+                <ScrollBar orientation="vertical" />
+
+                {state}
+                </ScrollArea>
+        </ResizablePanel>
+
+        return (
+            <>
+                <ResizablePanelGroup direction="horizontal" className="h-full">
+                {"left" == menuPosition ? menu : content}
+                <ResizableHandle withHandle withHandleStyle={{ marginLeft: "-1px"}} withHandleClassName="bg-light" />
+                {"left" == menuPosition ? content : menu}
+                </ResizablePanelGroup>            
+            </>
+        )
+    }
+
     function getFormInStaticScreen() {
         return (
             <Container id="home" className={styles.container}>
@@ -120,8 +202,12 @@ export default function Home( props ) {
                                     </>
                                 :
                                     <>
-                                        <Col id="generic-form" {...s.noresult.desktop}><Form contentType={contentType} credits={props.credits} /></Col>
-                                        <Col id="monitoring" {...s.noresult.desktop}><Monitoring /></Col>
+                                        {getCreationPanel(
+                                            s.noresult.desktop,
+                                            <Sources />,
+                                            <Form contentType={contentType} credits={props.credits} />,
+                                            <Monitoring />
+                                        )}
                                     </>
                                 }
                             </>
@@ -134,8 +220,12 @@ export default function Home( props ) {
                                     </>
                                 :
                                     <>
-                                        <Col id="processing" {...s.result.desktop.process}><Process contentType={contentType} current={current}/></Col>
-                                        <Col id="monitoring" {...s.result.desktop.monitoring}><Monitoring /></Col>
+                                        {getCreationPanel(
+                                            s.result.desktop,
+                                            <Sources />,
+                                            <Process contentType={contentType} current={current}/>,
+                                            <Monitoring />
+                                        )}
                                     </>
                                 }
                             </>
@@ -145,31 +235,25 @@ export default function Home( props ) {
         )
     }
 
+    /**
+     * Only nosheet display works
+     * 
+     * @param {*} open 
+     * @returns 
+     */
     function getForm(open) {
         let viewType = "nosheet"
 
         let form = getFormInStaticScreen()
         if ( "sheet" === viewType) {
-            return getFormInSheet(form, open, setDisplay)
+            // Does not work !!!
+            //return getFormInSheet(form, open, setDisplay)
+            return <>Doesn't work!!!</>
         } else {
             return form
         }
     }
     
-    let s = {
-        "result": {
-            "nodesktop": {xs: 12, md: 12, className: 'mb-3'},
-            "desktop": {
-                "process": {lg: 10, xl: 10, className: 'mb-3'},
-                "monitoring": {lg: 2, xl: 2, className: 'mb-3'},
-            },
-        },
-        "noresult": {
-            "nodesktop": {xs: 12, md: 12, className: 'mb-3'},
-            "desktop": {lg: 2, xl: 4, className: 'mb-3'},
-        }
-    }
-
     useEffect(() => {
         //log.trace(`useEffect: size: ${size}`);
         log.trace('useEffect: Subscribing to events.');

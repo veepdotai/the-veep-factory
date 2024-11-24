@@ -32,7 +32,8 @@ export default function UploadRDU( {...props} ) {
             files[0].meta.name
         );
         log.trace("onFileUpload: selectedFile: " + files[0].meta.name);
-    
+
+        PubSub.publish("FILE_ADDED", { "veepdot-ai-input-file": files[0] })
         UploadLib.sendRecording(conf, fd, veeplet, setContentId);
         allFiles.forEach(f => f.remove())
     }

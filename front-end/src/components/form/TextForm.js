@@ -52,7 +52,8 @@ export default function TextForm( {...props} ) {
         log.trace("handleSubmit: no data provided.");
         return null;
     }
-      
+     
+    PubSub.publish("FREETEXT_ADDED", fd)
     UploadLib.sendRecording(conf, fd, veeplet, setContentId);
     setSubmitButtonIsEnabled(false);
   }

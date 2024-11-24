@@ -1,21 +1,21 @@
-import { useContext, useState, useEffect } from 'react';
-import { Badge, Button,Container, Col, Row } from 'react-bootstrap';
-import { Logger } from 'react-logger-lib';
-import { useCookies } from 'react-cookie';
-import toast from 'react-hot-toast';
-import { confirmAlert } from 'react-confirm-alert';
+import { useContext, useState, useEffect } from 'react'
+import { Badge, Container, Col, Row, Popover, OverlayTrigger } from 'react-bootstrap'
+import { Button } from "@/components/ui/button"
 
-import { t } from 'i18next';
-import PubSub from 'pubsub-js';
+import { Logger } from 'react-logger-lib'
+import { useCookies } from 'react-cookie'
+import { confirmAlert } from 'react-confirm-alert'
+
+import { t } from 'i18next'
+import PubSub from 'pubsub-js'
 
 import { ContentIdContext } from "src/context/ContentIdProvider"
-import { Constants } from "src/constants/Constants";
+import { Constants } from "src/constants/Constants"
 
-import WaitForIt from './common/WaitForIt';
-
-import { UploadLib } from './lib/util-upload-form';
-
-import flash from 'src/styles/css.flash.css';
+import WaitForIt from './common/WaitForIt'
+import { UploadLib } from './lib/util-upload-form'
+import flash from 'src/styles/css.flash.css'
+import { Icons } from '../constants/Icons'
 
 export default function Monitoring( props ) {
     const log = Logger.of(Monitoring.name);
@@ -142,48 +142,66 @@ export default function Monitoring( props ) {
         
     }, []);
 
-    return (
-        <Row>
-            <Col className="w-100 h-100 text-align-end" xs={6} md={6} lg={6} xl={6}>
-                { timer ?
-                    <WaitForIt duration={duration} viewStep={0.1}/>
-                    :
-                    <></>
-                }
-            </Col>
+    const popoverClick = (
+        <Popover id="popover-trigger-click" title="Popover bottom">
+            {t("SystemPaused")}
+        </Popover>
+    );
 
-            {
-                <Col className="text-align-start" xs={12} md={12} lg={12} xl={12}>
-                    
-                    {
-                        ! backDisabled ?
-                            <>
-                                {/* New button */}
-                                <Button className={'w-100 m-1'} variant='outline-primary' onClick={backToSelection} disabled={backDisabled}>
-                                    {backText}
-                                </Button>
-                            </>
+    return (
+        <div className="">
+            <div className="fw-bold">
+                Actions
+            </div>
+            <Row>
+                <Col className="w-100 h-100 text-align-end" xs={6} md={6} lg={6} xl={6}>
+                    { timer ?
+                        <WaitForIt duration={duration} viewStep={0.1}/>
                         :
-                            <>
-                                {/* Cancel button */}
-                                <Button className={"w-100 " + (!backDisabled ? 'd-none' :'m-1')} variant='outline-danger' onClick={cancelProcess} disabled={!backDisabled}>
-                                    {t("Menu.Cancel")}
-                                </Button>
-                                { resumeButton && contentId ?
-                                        <>
-                                            <Button className="flash w-100 m-1" onClick={resume}>
-                                                {t("Resume")}
-                                            </Button>
-                                            <Container style={{fontSize: "0.75rem"}}>{t("SystemPaused")}</Container>
-                                        </>
-                                    :
-                                    <></>
-                                }
-                            </>
+                        <></>
                     }
                 </Col>
-            }
-        </Row>
+
+                {
+                    <Col className="text-align-start" xs={12} md={12} lg={12} xl={12}>
+                        
+                        {
+                            ! backDisabled ?
+                                <>
+                                    {/* New button */}
+                                    <Button className={'m-1'} onClick={backToSelection} disabled={backDisabled}>
+                                        {backText}
+                                    </Button>
+                                </>
+                            :
+                                <>
+                                    {/*
+                                    <ScrollArea className="w-100 whitespace-nowrap h-full">
+                                    <ScrollBar orientation="vertical" />
+                                    */}
+
+                                    {/* Cancel button */}
+                                    <Button className={"whitespace-normal " + (!backDisabled ? 'd-none' :'m-1')} onClick={cancelProcess} disabled={!backDisabled}>
+                                        {t("Menu.Cancel")}
+                                    </Button>
+                                    { resumeButton && contentId ?
+                                            <>
+                                                <Button className="flash m-1" onClick={resume}>
+                                                    {t("Resume")}
+                                                </Button>
+                                                <OverlayTrigger trigger="click" placement="bottom" overlay={popoverClick}>
+                                                    {Icons.help}
+                                                </OverlayTrigger>
+                                            </>
+                                        :
+                                        <></>
+                                    }
+                                </>
+                        }
+                    </Col>
+                }
+            </Row>
+        </div>
     )
 }
 

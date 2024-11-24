@@ -311,6 +311,8 @@
   "AdvancedUser": "Affichage avancé",
   "ExpertUser": "Affichage expert",
 
+  "NotAvailableData": "Pas de données disponibles",
+
   "Stop": "Stop"
 
 }
