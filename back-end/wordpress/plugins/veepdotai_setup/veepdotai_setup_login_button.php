@@ -4,13 +4,27 @@
  * @version 0.0.1
  */
 
+require_once plugin_dir_path(__DIR__) . 'veepdotai/includes/class-veepdotai.php';
+
 add_action( 'template_redirect', 'redirect_to_app_on_404' );
-function redirect_to_app_on_404(){
-    if( is_user_logged_in() && is_404() ){
-		wp_redirect(home_url() . '/v/app');
+function redirect_to_app_on_404() {
+    if( is_user_logged_in() && is_404() ) {
+
+		$user_wp = wp_get_current_user();
+		$url = Veepdotai::get_jwt_link( $user_wp );
+	
+		// User is redirected on the app
+		if ( strpos( home_url(), "localhost") !== false ) {
+			$url = str_replace("80", "3000", home_url());
+		} else if ( strpos( home_url(), "gitpod") !== false ) {
+			$url = str_replace("8001", "3000", home_url());
+		}
+
+		//$url = "https://www.google.com";
+		wp_redirect( $url );
 		exit;
     } else if (is_404()) {
-		wp_redirect('https://app.veep.ai/');
+		wp_redirect( home_url() );
 		exit;
 	}
 }

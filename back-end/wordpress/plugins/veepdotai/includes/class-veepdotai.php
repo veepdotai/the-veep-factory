@@ -9,10 +9,18 @@ add_action("wp_dashboard_setup", "Veepdotai::dashboard_setup");
  * Prevents user to access login screen except admin
  */
 
-add_action( 'init2', 'blockusers_init' );
+add_action( 'init', 'blockusers_init' );
 function blockusers_init() {
-    if ( is_admin() && ! current_user_can( 'administrator' ) && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
-        wp_redirect( home_url() );
+	$user_wp = wp_get_current_user();
+	//error_log("user_wp: " . print_r($user_wp, null), 3, "/tmp/wp-init.log");
+	$url = Veepdotai::get_jwt_link( $user_wp );
+	//error_log("user_wp: " . print_r($url, null), 3, "/tmp/wp-init.log");
+	//$url = "https://www.google.com";
+
+    if ( is_admin()
+			&& ! current_user_can( 'administrator' )
+			&& ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+        wp_redirect( $url );
         exit;
     }
 }
@@ -21,7 +29,7 @@ add_filter( 'graphql_request_results', 'my_graphql_request_results', 10, 1);
 function my_graphql_request_results( $response ) {
 //function my_graphql_request_results( $response, $schema, $operation, $request, $variables ) {
 	//error_log( "\n### filtering graphql_request_results", 3, "/tmp/filter_graphql.log" );
-	if ( is_array( $response ) && isset( $response['extensions'] ) ) {
+	if ( is_array( $response ) && isset( $response['extensions'] ) ) { 
 			unset( $response['extensions'] );
 	}
 
@@ -55,7 +63,7 @@ function my_posts_results_filter( $posts ) {
 		//print_r( $post->post_author );
 		if ( 2 != $post->post_author ) {
 			// safe to add non-selfie title post to array
-//			$filtered_posts[] = $post;
+			//$filtered_posts[] = $post;
 		}
 	}
 	$posts = [] ;
@@ -220,20 +228,16 @@ class Veepdotai {
 	public static function get_app_url_with_jwt( $jwt ) {
 		if ( strpos( home_url(), "localhost") !== false ) {
 			$url = home_url() . ":3000/r?JWT=" . $jwt;
-			//$app_url = home_url() . ":3000/?JWT=" . $app_jwt;
 		} else if ( strpos( home_url(), "ws-eu116") !== false ) {
 			$url = str_replace("8001", "3000", home_url()) . "/r?JWT=" . $jwt;
 		} else {
 			$url = home_url() . "/v/app/r?JWT=" . $jwt;
-			//$app_url = home_url() . "/app/r?JWT=" . $app_jwt;
 		}
 
 		return $url;
 	}
 
-	public static function provide_jwt_links() {
-		$user_wp = wp_get_current_user();
-		
+	public static function get_jwt_link( $user ) {		
 		$jwt_is_ok = false;
 		if ( isset($_COOKIE["JWT"]) && $_COOKIE["JWT"] ) {
 			$jwt = $_COOKIE["JWT"];
@@ -243,12 +247,21 @@ class Veepdotai {
 		}
 		
 		if ( ! $jwt_is_ok ) {
-			$jwt = Veepdotai_Login::veepdotai_create_jwt_token( $user_wp, null );
+			$jwt = Veepdotai_Login::veepdotai_create_jwt_token( $user, null );
 			//setcookie("JWT", $jwt, time() + 60 * 15,  "/" );
 		} 	
 	
-		$app_jwt = Veepdotai_Login::veepdotai_create_jwt_token( $user_wp, null, null, J7);
+		$app_jwt = Veepdotai_Login::veepdotai_create_jwt_token( $user, null, null, J7);
 		$url = self::get_app_url_with_jwt( $app_jwt );		
+
+		return $url;
+	}
+
+	public static function provide_jwt_links() {
+		$user_wp = wp_get_current_user();
+
+		$url = self::get_jwt_link( $user_wp );
+		$app_jwt = Veepdotai_Login::veepdotai_create_jwt_token( $user_wp, null, null, J7);
 
 		echo "<ul>";
 		echo "<li><a href='$url'>Lancer l'application</a></li>";
