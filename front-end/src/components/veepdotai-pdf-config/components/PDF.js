@@ -142,12 +142,13 @@ export function PDFDocument({content, params}) {
   function contentPages() {
     //With a new page every new title
     if (data?.newPage && content.length > 0) {
+      let bookmark = content[0].length > 0 ? t(content[0][1]) : t("Content")
       return (
         <>
           {content.map( (page) => {
             console.log(page[5])
             return (
-              <Page style={data.styles?.contentPage} id={page[0]} bookmark={t("Content")} size={data?.dimensions}>
+              <Page style={data.styles?.contentPage} id={page[0]} bookmark={t(page[1])} size={data?.dimensions}>
                 {header()}
                 <Text style={data.styles?.title1}>{page[1]}</Text>
                 {page[2].map((subtitle) => {
@@ -167,8 +168,9 @@ export function PDFDocument({content, params}) {
       )
     } else if (content.length > 0) {
       //Without a new page every new title
+      let bookmark = content[0].length > 0 ? t(content[0][1]) : t("Content")
       return (
-          <Page style={data.styles?.contentPage} id={"content"} bookmark={t("Content")} size={data?.dimensions}>
+          <Page style={data.styles?.contentPage} id={"content"} bookmark={bookmark} size={data?.dimensions}>
             {header()}
             {content.map( function(page) {
               return (
