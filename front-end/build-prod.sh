@@ -27,8 +27,6 @@
 # hash code to use
 ALL_ARGS=$@
 
-ARGS=$1
-
 # Go and look at the build/env.tpl file to have an idea of the expected informations
 
 . ../.env
@@ -54,7 +52,7 @@ Examples:
         '`basename $0`' -s
 
 '
-    OPTIONS=":hbdDs:"
+    OPTIONS=":hbdD:s"
 
     BUILDS_CLIENT_APP="n"
     DEPLOYS_CLIENT_APP="n"
@@ -80,7 +78,7 @@ Examples:
             D)
                 echo "Deploys the server modules on the remote target"
                 BUILDS_CLIENT_APP="n"
-                DEPLOYS_SERVER_MODULES="y"
+                DEPLOYS_CLIENT_APP="y"
                 TAG=$OPTARG
                 ;;
             s)
@@ -107,25 +105,25 @@ Examples:
 }
 
 main() {
+    init
     parse_options $ALL_ARGS
 
     test_sshpass
 
     echo "Executing Main"
-    init
 
     # build = prepare + build + store
-    if [ "y$BUILDS_CLIENT_APP" = "y" ]; then        
+    if [ "y$BUILDS_CLIENT_APP" = "yy" ]; then        
         build
     fi
 
     # deploys only the js app
-    if [ "y$DEPLOYS_CLIENT_APP" = "y" ]; then        
+    if [ "y$DEPLOYS_CLIENT_APP" = "yy" ]; then        
         deploy_build
     fi
 
     # deploys the wp plugins
-    if [ "y$DEPLOYS_SERVER_MODULES" = "y" ]; then        
+    if [ "y$DEPLOYS_SERVER_MODULES" = "yy" ]; then        
         deploy_server
     fi
 
