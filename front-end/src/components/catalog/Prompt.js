@@ -311,7 +311,7 @@ export default function Prompt( { definition, setDisplay } ) {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <PromptForm definition={definition} handleClose={closeInputForm} />
+                    <PromptForm className="d-block" definition={definition} handleClose={closeInputForm} />
                 </Modal.Body>
             </Modal>
         

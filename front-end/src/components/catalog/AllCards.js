@@ -1,9 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
-import { Button, Card, Container, Col, Modal, Row, Nav, Tab, Tabs} from 'react-bootstrap';
+import { Card, Col, Row, Nav} from 'react-bootstrap';
 import { Logger } from 'react-logger-lib';
 import PubSub from 'pubsub-js';
 import { useCookies } from 'react-cookie';
 import { t } from 'i18next';
+
+import { Tabs, TabsList, TabsTrigger, TabsContent } from 'src/components/ui/shadcn/tabs'
 
 import useCatalog from  "src/hooks/useCatalog";
 
@@ -88,13 +90,15 @@ export default function AllCards( { type, title, formScreen = null, cat = null, 
   function displayNav(categories, defaultEventKey) {
     let items = categories.map((cat, i) => {
       return (
-        <Nav.Item>
-          <Nav.Link eventKey={i == 0 ? defaultEventKey : cat}>{cat}</Nav.Link>
-        </Nav.Item>
+          <TabsTrigger value={i == 0 ? defaultEventKey : cat}>{cat}</TabsTrigger>
       )
     })
 
-    return items;
+    return (
+      <TabsList>
+        {items}
+      </TabsList>
+    )
   }
 
   function hideCatalogs() {
@@ -108,13 +112,13 @@ export default function AllCards( { type, title, formScreen = null, cat = null, 
   function showContentsByRow(categories, defaultEventKey) {
     let contents = categories.map((cat, i) => {
       return (
-        <Tab.Pane eventKey={i == 0 ? defaultEventKey : cat}>
+        <TabsContent value={i == 0 ? defaultEventKey : cat}>
           <Row className='pt-0'>
             {
               getAIsByOneCategory(cat)
             }
           </Row>
-        </Tab.Pane>
+        </TabsContent>
       )
     })
 
@@ -124,7 +128,7 @@ export default function AllCards( { type, title, formScreen = null, cat = null, 
   function showContentsByGrid(categories, defaultEventKey) {
     let contents = categories.map((cat, i) => {
       return (
-        <Tab.Pane eventKey={i == 0 ? defaultEventKey : cat}>
+        <TabsContent value={i == 0 ? defaultEventKey : cat}>
           <div className='grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2'>
             {
               getAIsByCategory(cat).map((ai) => {
@@ -138,7 +142,7 @@ export default function AllCards( { type, title, formScreen = null, cat = null, 
               })
             }
           </div>
-        </Tab.Pane>
+        </TabsContent>
       )
     })
 
@@ -217,7 +221,7 @@ export default function AllCards( { type, title, formScreen = null, cat = null, 
         display ? 
           <>
             <Card className='mt-2'>
-              <Card.Header>{title}</Card.Header>
+              <Card.Header>{title} X</Card.Header>
               <Card.Body>
                 { directory ?
                 <>
@@ -225,7 +229,7 @@ export default function AllCards( { type, title, formScreen = null, cat = null, 
                     getAIsByOneCategory("Marketing")
                   
                 }
-                  <Tab.Container defaultActiveKey={defaultEventKey}>
+                  <Tabs defaultValue={defaultEventKey}>
                       <Row>
                         <Col className="pt">
                           <Nav variant="underline">
@@ -234,11 +238,9 @@ export default function AllCards( { type, title, formScreen = null, cat = null, 
                         </Col>
                       </Row>
                       <Row>
-                      <Tab.Content>
                         {showContents(getCategories(directory), defaultEventKey)}
-                        </Tab.Content>
                       </Row>
-                  </Tab.Container>
+                  </Tabs>
                   </>
                   :
                   <></>

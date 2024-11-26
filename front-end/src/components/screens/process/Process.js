@@ -1,5 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
-import { Nav, NavDropdown, Tab } from 'react-bootstrap';
+import { Nav, NavDropdown, /*Tab*/ } from 'react-bootstrap';
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import { t } from 'i18next';
 
@@ -94,10 +96,12 @@ export default function Process( props ) {
      * - the tab body with the new content
      */
     return (
-        <Tab.Container className="container" defaultActiveKey="transcription">
+        <Tabs className="container" defaultValue="transcription">
+            <TabsList>
             {
                 navbars && links ? /* Tab headers update */
-                    <Nav variant="underline" className="">
+                    <>
+                    {/*<Nav variant="underline" className="">*/}
                         {
                             ! isDesktop ?
                                 <NavDropdown className="w-100" id="process-menu-contents" title="Generated contents" activeKey="Dropdown-generated-contents">
@@ -108,29 +112,31 @@ export default function Process( props ) {
                                     {links}
                                 </>
                         }
-                    </Nav>
+                    {/*</Nav>*/}
+                    </>
                     :
                     <></>
             }
-            <Tab.Content id="process-contents" className="mb-3">
+            </TabsList>
+            
+            <div id="process-contents" className="mb-3">
                 {
                     navbars ? /* Tab body update */
                             navbars.map((item) => {
                                 return (
-                                    <Tab.Pane id={`process-contents-${item.name}`} eventKey={item.name}>
                                         <Result
+                                            name={item.name}
                                             option={item.option}
                                             title={item.title}
                                             topic={item.contentListeners}
                                             current={current}/>
-                                    </Tab.Pane>
                                 )
                             })
                         :
                             <></>
                 }
-            </Tab.Content>
-        </Tab.Container>
+            </div>
+        </Tabs>
     )
 
 }

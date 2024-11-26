@@ -17,12 +17,14 @@ import Content from '../../screens/mycontent/Content';
 import ResultActions from './ResultActions';
 import { PlateEditor } from '../../../components/screens/PlateEditor'
 import MergedContent from '../mycontent/parts/MergedContent';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 export default function Result( props ) {
     const log = Logger.of(Result.name);
     log.trace("Props: " + JSON.stringify(props));
 
     const option = props.option; //option could be multivalued
+    const name = props.name; //option could be multivalued
     const _topic = props.topic;
     //const current = props.current;
     const duration = props.duration || 60;
@@ -200,7 +202,7 @@ export default function Result( props ) {
     }, [])
 
     return (
-        <>
+        <TabsContent id={`process-contents-${name}`} value={name}>
             <Card id="results" className='h-100 border-0 overflow-auto'>
                 {/*<Card.Title>{current}</Card.Title>*/}
                 <Card.Body className={styles.card}>
@@ -265,6 +267,6 @@ export default function Result( props ) {
                     </div>
                 </Card.Body>
             </Card>
-        </>
+        </TabsContent>
     );
 }
