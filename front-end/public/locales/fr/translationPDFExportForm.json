@@ -32,9 +32,9 @@
   "displayTOCPlaceHolder": "",
   "displayTOCDesc": "",
   
-  "displayPageOnBreakLabel": "Afficher les sauts de page",
-  "displayPageOnBreakPlaceHolder": "",
-  "displayPageOnBreakDesc": "",
+  "displayBreakOnPageLabel": "Mettre un saut de page avant les titres 1",
+  "displayBreakOnPagePlaceHolder": "",
+  "displayBreakOnPageDesc": "",
   
   "logoLabel": "Logo",
   "logoPlaceHolder": "",

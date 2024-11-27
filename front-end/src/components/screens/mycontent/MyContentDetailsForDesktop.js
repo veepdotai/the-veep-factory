@@ -142,13 +142,13 @@ export default class MyContentDetailsForDesktop {
     log("content is now json: " + JSON.stringify(content));
 
     return (
-        <PDFViewer content={content} data={data} />
+        <PDFViewer cid={contentId} content={content} data={data} />
     )
   }
 
 }
 
-export function PDFViewer( {content, data} ) {
+export function PDFViewer( {cid, content, data} ) {
   let log = Logger.of(PDFViewer.name);
 
   log.trace("data: " + JSON.stringify(data))
@@ -166,6 +166,7 @@ export function PDFViewer( {content, data} ) {
   return(
 
     <PDFPanel
+      cid={cid}
       initContent={pdfContent}
       initParams={new PDFParams(vo)}
       displayConfigPanel={hasConfigCapabilities} />

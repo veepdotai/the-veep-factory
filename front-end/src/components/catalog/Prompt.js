@@ -183,7 +183,9 @@ export default function Prompt( { definition, setDisplay } ) {
         PubSub.publish("SELECTED_DOCTYPE", definition);
     }
     
-    function closeInputForm() {
+    function closeInputForm(e) {
+        e?.preventDefault()
+        
         setViewForm(false);
     }
 

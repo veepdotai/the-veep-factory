@@ -12,8 +12,12 @@ namespace Veepdotai\Graphql\Mutations;
 function register() {
 	register_remove_parent_operation();
 	register_get_usage_data();
-	register_list_data();
+
 	register_save_data();
+	register_list_data();
+
+	register_save_metadata();
+	register_list_metadata();
 }
 
 function log( $msg ) {
@@ -208,69 +212,6 @@ _EOM_;
 	return $response;
 }
 
-function register_list_data() {
-	register_graphql_mutation( 'listData', [
-
-		'description' => __( 'Gets data (name => value)', 'your-textdomain' ),
-		'inputFields'         => [
-			'option' => [
-				'type' => 'String',
-				'description' => __( 'Object name', 'your-textdomain' ),
-			],
-
-		],
-	
-		# outputFields expects an array of fields that can be asked for in response to the mutation
-		# the resolve function is optional, but can be useful if the mutateAndPayload doesn't return an array
-		# with the same key(s) as the outputFields
-		'outputFields'        => [
-			'result' => [
-				'type' => 'String',
-				'description' => __( 'Result operation as a json object', 'your-textdomain' ),
-/*
-				'resolve' => function( $payload, $args, $context, $info ) {
-							   return isset( $payload['ids'] ) ? implode( ',', $payload[ 'ids' ]) : null;
-				}
-*/
-			]
-		],
-	
-		'mutateAndGetPayload' => function( $input, $context, $info ) {
-			$fn = "listData";
-			$pn = "veepdotai-";
-			$prompt_prefix = "ai-prompt-";
-	
-			$param_name = sanitize_text_field( $input['option'] );
-			$user = wp_get_current_user();
-			log( "$fn: user: " . print_r( $user, true) . "." );
-	
-			$option_name = $pn . $param_name;
-			log( "$fn: Setting option: $option_name = $option_value." );
-
-			$result = \Veepdotai_Util::get_option( $option_name );
-			log( "$fn: get_option: result: $result" );
-
-			$data = [];
-			if ( $result ) {
-				log( "$fn: result: true" );
-				$data = [
-					"user_id" => $user->user_login,
-					"result" => $result,
-				];
-			} else {
-				$data = [
-					"user_id" => $user->user_login,
-					"result" => false,
-				];
-			}
-	
-			return [
-				'result' => json_encode( $data ),
-			];
-		}
-	] );
-}
-
 function register_save_data() {
 	register_graphql_mutation( 'saveData', [
 
@@ -291,18 +232,10 @@ function register_save_data() {
 
 		],
 	
-		# outputFields expects an array of fields that can be asked for in response to the mutation
-		# the resolve function is optional, but can be useful if the mutateAndPayload doesn't return an array
-		# with the same key(s) as the outputFields
 		'outputFields'        => [
 			'result' => [
 				'type' => 'String',
 				'description' => __( 'Result operation as a json object', 'your-textdomain' ),
-/*
-				'resolve' => function( $payload, $args, $context, $info ) {
-							   return isset( $payload['ids'] ) ? implode( ',', $payload[ 'ids' ]) : null;
-				}
-*/
 			]
 		],
 	
@@ -352,3 +285,191 @@ function register_save_data() {
 		}
 	] );
 }
+
+function register_list_data() {
+	register_graphql_mutation( 'listData', [
+
+		'description' => __( 'Gets data (name => value)', 'your-textdomain' ),
+		'inputFields'         => [
+			'option' => [
+				'type' => 'String',
+				'description' => __( 'Object name', 'your-textdomain' ),
+			],
+
+		],
+	
+		'outputFields'        => [
+			'result' => [
+				'type' => 'String',
+				'description' => __( 'Result operation as a json object', 'your-textdomain' ),
+			]
+		],
+	
+		'mutateAndGetPayload' => function( $input, $context, $info ) {
+			$fn = "listData";
+			$pn = "veepdotai-";
+			$prompt_prefix = "ai-prompt-";
+	
+			$param_name = sanitize_text_field( $input['option'] );
+			$user = wp_get_current_user();
+			log( "$fn: user: " . print_r( $user, true) . "." );
+	
+			$option_name = $pn . $param_name;
+			log( "$fn: Getting option: $option_name." );
+
+			$result = \Veepdotai_Util::get_option( $option_name );
+			log( "$fn: get_option: result: $result" );
+
+			$data = [];
+			if ( $result ) {
+				log( "$fn: result: true" );
+				$data = [
+					"user_id" => $user->user_login,
+					"result" => $result,
+				];
+			} else {
+				$data = [
+					"user_id" => $user->user_login,
+					"result" => false,
+				];
+			}
+	
+			return [
+				'result' => json_encode( $data ),
+			];
+		}
+	] );
+}
+
+function register_save_metadata() {
+	register_graphql_mutation( 'saveMetadata', [
+
+		'description' => __( 'Saves data (name => value)', 'your-textdomain' ),
+		'inputFields'         => [
+			'contentId' => [
+				'type' => 'String',
+				'description' => __( 'Object content id', 'your-textdomain' ),
+			],
+			'title' => [
+				'type' => 'String',
+				'description' => __( 'Object title', 'your-textdomain' ),
+			],
+			'metadata' => [
+				'type' => 'String',
+				'description' => __( 'Object metadata', 'your-textdomain' ),
+			],
+
+		],
+	
+		'outputFields'        => [
+			'result' => [
+				'type' => 'String',
+				'description' => __( 'Result operation as a json object', 'your-textdomain' ),
+			]
+		],
+	
+		'mutateAndGetPayload' => function( $input, $context, $info ) {
+			$fn = "saveMetadata";
+			$pn = "veepdotai-";
+	
+			$content_id = sanitize_text_field( $input['contentId'] );
+			$title = sanitize_text_field( $input['title'] );
+			$metadata = sanitize_text_field( $input['metadata'] );
+	
+			$user = wp_get_current_user();
+			log( "$fn: user: " . print_r( $user, true) . "." );
+	
+			$post_array = array(
+				"ID" => $content_id,
+				"post_title" => $title,
+				"meta_input" => array(
+					"veepdotaiMetadata" => $metadata,
+				)
+			);
+			log( __METHOD__ . ": post_array: " . print_r( $post_array, true ) );
+			$result = wp_update_post( $post_array );
+	
+			log( "$fn: wp_update_post: content_id: result: $result" );
+
+			$data = [];
+			if ( $content_id ) {
+				log( "$fn: result: true" );
+				$data = [
+					"user_id" => $user->user_login,
+					"content_id" => $result,
+					"result" => true,
+				];
+			} else {
+				$data = [
+					"user_id" => $user->user_login,
+					"content_id" => $result,
+					"result" => false,
+				];
+			}
+	
+			return [
+				'result' => json_encode( $data ),
+			];
+		}
+	] );
+}
+
+function register_list_metadata() {
+	register_graphql_mutation( 'listMetadata', [
+
+		'description' => __( 'Gets data (cid, metadata) => value)', 'your-textdomain' ),
+
+		'inputFields'         => [
+			'contentId' => [
+				'type' => 'String',
+				'description' => __( 'Object contentId', 'your-textdomain' ),
+			],
+			'metadata' => [
+				'type' => 'String',
+				'description' => __( 'Object metadata', 'your-textdomain' ),
+			],
+
+		],
+	
+		'outputFields'        => [
+			'result' => [
+				'type' => 'String',
+				'description' => __( 'Result operation as a json object', 'your-textdomain' ),
+			]
+		],
+	
+		'mutateAndGetPayload' => function( $input, $context, $info ) {
+			$fn = "listMetadata";
+			$pn = "veepdotai-";
+			$prompt_prefix = "ai-prompt-";
+	
+			$contentId = sanitize_text_field( $input['contentId'] );
+			$metadata = sanitize_text_field( $input['metadata'] );
+
+			$user = wp_get_current_user();
+			log( "$fn: user: " . print_r( $user, true) . "." );
+	
+			$result = get_post_meta( $contentId, "veepdotaiMetadata", true );
+			log( "$fn: metadata: result: $result" );
+
+			$data = [];
+			if ( $result ) {
+				log( "$fn: result: true" );
+				$data = [
+					"user_id" => $user->user_login,
+					"result" => $result,
+				];
+			} else {
+				$data = [
+					"user_id" => $user->user_login,
+					"result" => false,
+				];
+			}
+	
+			return [
+				'result' => json_encode( $data ),
+			];
+		}
+	] );
+}
+

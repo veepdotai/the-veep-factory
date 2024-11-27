@@ -104,7 +104,6 @@ function register_Vcontent() {
 		'graphql_interfaces' => ['Icontent'],
 		'taxonomies'  => [ 'category', 'post_tag' ],
 		'resolveType' => function( $node ) {
-			// use the post_type to determine what GraphQL Type should be returned. Default to Cake
 			return get_post_type_object( $node->post_type )->graphql_single_name ?: 'Vcontent';
 		}
 	];
@@ -236,11 +235,18 @@ function register_MetadataFields( $baseType ) {
 	]);
 
 	register_graphql_field( $baseType, 'veepdotaiArtefactType', [ 'type' => 'String',
-	'resolve' => function( $post ) {
-		$value = get_post_meta( $post->ID, "veepdotaiArtefactType", true );
-		return ! empty( $value ) ? $value : '';
-	}
-]);
+		'resolve' => function( $post ) {
+			$value = get_post_meta( $post->ID, "veepdotaiArtefactType", true );
+			return ! empty( $value ) ? $value : '';
+		}
+	]);
+
+	register_graphql_field( $baseType, 'veepdotaiMetadata', [ 'type' => 'String',
+		'resolve' => function( $post ) {
+			$value = get_post_meta( $post->ID, "veepdotaiMetadata", true );
+			return ! empty( $value ) ? $value : '';
+		}
+	]);
 
 }
 

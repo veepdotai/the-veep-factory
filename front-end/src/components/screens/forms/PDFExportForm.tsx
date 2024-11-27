@@ -17,11 +17,11 @@ import { useToast } from "src/components/ui/shadcn/hooks/use-toast"
 import { Button } from "src/components/ui/shadcn/button"
 import { Form, } from "src/components/ui/shadcn/form"
 import { Tabs, TabsContent, TabsList, TabsTrigger, } from "src/components/ui/shadcn/tabs"
-import { UtilsGraphQLObject } from '../../../api/utils-graphql-object'
+import { UtilsGraphQL } from '../../../api/utils-graphql'
 
 import Loading from 'src/components/common/Loading'
 
-export default function PDFExportForm( {params} ) {
+export default function PDFExportForm( {cid, params} ) {
     const log = Logger.of(PDFExportForm.name);
 
     const graphqlURI = Constants.WORDPRESS_GRAPHQL_ENDPOINT;
@@ -75,25 +75,61 @@ export default function PDFExportForm( {params} ) {
       }
     })
 
-    function updateForm(topic, message) {
-      return UFC.updateForm(form, topic, message)
+    function updateFormDisplay(topic, message) {
+      log.trace('updateFormDisplay: message: ' + JSON.stringify(message))
+
+      let metadata = null
+      if ("200" == message?.status) {
+        metadata = message.original
+      } else {
+        metadata = message
+      }
+
+      log.trace('updateFormDisplay: metadata: ' + JSON.stringify(metadata))
+
+      let newParams = {cid: cid, ...metadata, ...params}
+      log.trace(`onSubmit: newParams: ${JSON.stringify(newParams)}`)
+      PubSub.publish("INFOS_PANEL_UPDATED", newParams)
+
+      return UFC.updateForm(form, topic, metadata)  
     }
 
     //function onSubmit(data: z.infer<typeof FormSchema>) {
     function onSubmit(data) {
         // Merge export form data and params
-        log.trace(`onSubmit:`)
+        log.trace(`onSubmit.`)
         log.trace(`onSubmit: data: ${JSON.stringify(data)}`)
 
-        let newParams = {...params, ...data}
+        let newParams = {cid: cid, ...data, ...params}
         log.trace(`onSubmit: newParams: ${JSON.stringify(newParams)}`)
         PubSub.publish("INFOS_PANEL_UPDATED", newParams)
-        return UFC.onSubmit(graphqlURI, cookies, name, topic, data, toast)
+        return UFC.onSubmitMetadata(graphqlURI, cookies, cid, data, topic, toast)
     }
 
     useEffect(() => {
-      PubSub.subscribe(topic, updateForm)
-      UtilsGraphQLObject.listOne(graphqlURI, cookies, name, topic)
+      PubSub.subscribe(topic, updateFormDisplay)
+      if (cid) {
+        UtilsGraphQL
+        .listOne(graphqlURI, cookies, cid)
+        .then(
+          (data) => {
+            log.trace("useEffect: data: " + JSON.stringify(data));
+            let metadataString = data?.nodes[0].veepdotaiMetadata
+            log.trace(`useEffect: metadataString: ${metadataString}`);
+
+            metadataString = metadataString.replace(/_G_/g, '"').replace(/_EOL_/g, "\n")
+            let metadata = null
+            try {
+              metadata = JSON.parse(metadataString)
+            } catch (e) {
+              log.trace(`${e}: Can't parse metadataString to json: ${metadataString}`)
+            }
+  
+            PubSub.publish(topic, metadata) // String
+        })
+      }
+
+      //UtilsGraphQLObject.listOne(graphqlURI, cookies, cid, "metadata", topic)
     }, [])
 
     return (
@@ -104,7 +140,7 @@ export default function PDFExportForm( {params} ) {
 
               <TabsList className="grid grid-cols-5">
                 <TabsTrigger className={cn} value="metadata">{t("Metadata")}</TabsTrigger>
-                <TabsTrigger className={cn} value="display">{t("Display")}</TabsTrigger>
+                <TabsTrigger className={cn} value="display">{t("Layout")}</TabsTrigger>
                 <TabsTrigger className={cn} value="css">{t("CSS")}</TabsTrigger>
               </TabsList>
 
@@ -128,7 +164,7 @@ export default function PDFExportForm( {params} ) {
 
             </Tabs>
 
-            <Button type="submit">{t("Submit")}</Button>
+            <Button className="text-right" type="submit">{t("Submit")}</Button>
           </form>
         </Form>
     )

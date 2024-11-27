@@ -46,6 +46,7 @@ export const UtilsGraphQLVcontent = {
 						veepdotaiDomain
 						veepdotaiCategory
 						veepdotaiArtefactType
+						veepdotaiMetadata
 						children {
 							edges {
 								node {

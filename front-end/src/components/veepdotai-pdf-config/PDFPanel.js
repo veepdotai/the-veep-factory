@@ -12,11 +12,12 @@ import PDFExportForm from '../screens/forms/PDFExportForm';
 //const PDFDownloadLink = dynamic(() => import('@react-pdf/renderer').then(mod => mod.PDFDownloadLink), { ssr: false });
  
 /**
- * React component used to render a PDF renderer and a PDF config pannel
+ * React component to render a PDF config pannel with a PDF renderer.
+ * 
  * Props : params - an instance of PDFParams
  *         content - an instance of (markdown or JSON) String
  */
-export default function PDFPanel( {initParams, initContent, displayInfosPanel}) {
+export default function PDFPanel( {cid, initParams, initContent, displayInfosPanel}) {
     const log = Logger.of(PDFPanel.name)
 
     const [params, setParams] = useState(initParams || new PDFParams())
@@ -200,7 +201,8 @@ export default function PDFPanel( {initParams, initContent, displayInfosPanel}) 
               <ResizablePanelGroup direction="horizontal" className='h-full bottom-0'>
                   <ResizablePanel className='bottom-0'>
                       {/*<ConfigPanel content={infosPanel.content} handleCompilePDF={handleCompilePDF} params={infosPanel.params}/>*/}
-                      <PDFExportForm params={params} />
+                      <PDFExportForm cid={cid} 
+                      params={params} />
                   </ResizablePanel>
 
                   <ResizableHandle/>

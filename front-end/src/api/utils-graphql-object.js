@@ -35,7 +35,7 @@ export const UtilsGraphQLObject = {
 				PubSub.publish(topic, r);
 				return r
 			}).catch((e) => {
-				log.trace(`list: error while fetching data. Exception: ${e}`);
+				log.trace(`list: error while fetching option value for ${name}. Exception: ${e}`);
 				let r = { "status": 500, "error": e, "msg": `Exception while creating ${name}: ${e}`}
 				PubSub.publish(topic, r);
 				return r
@@ -86,5 +86,43 @@ export const UtilsGraphQLObject = {
 				return r
 			})
 	
+	},
+
+	saveMetadata: function(graphqlURI, cookies, contentId, title, metadata, topic) {
+		let log = UtilsGraphQLObject.log
+
+		let metadataString = JSON.stringify(metadata)
+		metadataString = metadataString.replace(/"/g, "_G_").replace(/\n/g, "_EOL_")
+
+		let q = `
+			mutation update {
+				saveMetadata(input: { contentId: "${contentId}", title: "${title}", metadata: "${metadataString}" }) {
+					result
+				}
+			}
+		`;
+	
+		log.trace(`update: query: ${q}`)
+
+		return UtilsGraphQL
+			.client(graphqlURI, cookies)
+			.mutate({
+				mutation: gql`${q}`
+			}).then((result) => {
+				log.trace(`update: ` + JSON.stringify(result));
+				let data = result.data.saveMetadata.result
+				let r = {
+					"status": 200,
+					"result": data,
+					"original": metadata
+				}
+				PubSub.publish(topic, r);
+				return r
+			}).catch((e) => {
+				log.trace(`create: error while updating data and metadata. Exception: ${e}`);
+				let r = { "status": 500, "error": e, "msg": `Exception while updating title '${title}' and metadata '${metadata}' : ${e}`}
+				PubSub.publish(topic, r);
+				return r
+			})
 	}
 }

@@ -116,9 +116,10 @@ export default class Veeplet {
         let veepletJson = TOML.parse(tomlSource);
     
         // default values
+        Veeplet.log.trace("handleSave: veepletJson1: " + JSON.stringify(veepletJson));
         veepletJson.owner.orgId = md5(email);
 
-        Veeplet.log.trace("handleSave: veepletJson: " + JSON.stringify(veepletJson));
+        Veeplet.log.trace("handleSave: veepletJson2: " + JSON.stringify(veepletJson));
         
         let source = TOML.stringify(veepletJson).replace(/\n/g, "#EOL#");
         Veeplet.log.trace("handleSave: veepletJson(text): " + source);

@@ -1,38 +1,38 @@
 {
   "SelectOneItem": "You have to select at least one item",
 
-  "titleLabel": "Titre",
+  "titleLabel": "Title",
   "titlePlaceHolder": "",
   "titleDesc": "",
 
-  "subtitleLabel": "Sous-titre",
+  "subtitleLabel": "Subtitle",
   "subtitlePlaceHolder": "",
   "subtitleDesc": "",
 
-  "organizationNameLabel": "Organisation",
+  "organizationNameLabel": "Organization",
   "organizationNamePlaceHolder": "",
   "organizationNameDesc": "",
 
-  "authorLabel": "Auteur",
+  "authorLabel": "Author",
   "authorPlaceHolder": "",
   "authorDesc": "",
 
   "DisplayOptionsLabel": "Display options",
   "DisplayOptionsDesc": "Select options you want to enable",
 
-  "displayHeaderLabel": "Afficher en-tête",
+  "displayHeaderLabel": "Display header",
   "displayHeaderPlaceHolder": "",
   "displayHeaderDesc": "",
   
-  "displayFooterLabel": "Afficher pied de page",
+  "displayFooterLabel": "Display footer",
   "displayFooterPlaceHolder": "",
   "displayFooterDesc": "",
   
-  "displayTOCLabel": "Afficher table des matières",
+  "displayTOCLabel": "Display TOC",
   "displayTOCPlaceHolder": "",
   "displayTOCDesc": "",
   
-  "displayBreakOnPageLabel": "Afficher les sauts de page",
+  "displayBreakOnPageLabel": "Set a break before header 1",
   "displayBreakOnPagePlaceHolder": "",
   "displayBreakOnPageDesc": "",
   
@@ -40,7 +40,7 @@
   "logoPlaceHolder": "",
   "logoDesc": "",
 
-  "backgroundImageLabel": "Arrière-plan",
+  "backgroundImageLabel": "Background",
   "backgroundImagePlaceHolder": "",
   "backgroundImageDesc": "",
 

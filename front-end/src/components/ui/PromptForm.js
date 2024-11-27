@@ -133,7 +133,9 @@ export default function PromptForm({definition, handleClose}) {
     'prefix': promptPrefix
   }
 
-  function handleSave() {
+  function handleSave(e) {
+    e?.preventDefault()
+    
     let form = document.getElementById("prompt-editor-form");
     let inputFields = [...form.getElementsByTagName("input")];
     let textareaFields = [...form.getElementsByTagName("textarea")];
@@ -599,7 +601,7 @@ export default function PromptForm({definition, handleClose}) {
                 </TabsContent>
               </Tabs>
               <Container className="text-end">
-                <Button className="m-2" onClick={handleClose}>{t("Menu.Cancel")}</Button>
+                <Button className="m-2" onClick={(e) => handleClose(e)}>{t("Menu.Cancel")}</Button>
                 {/*<Button onClick={handleSave}>{t("Save")}</Button>*/}
                 <SuspenseClick waiting={saving} disabled={disabledSaveButton} handleAction={handleSave} label={t("Menu.Save")} />
               </Container>

@@ -18,7 +18,29 @@ import { UtilsGraphQLObject } from '@/src/api/utils-graphql-object'
 export const UtilsFormCommon = {
     log: Logger.of("UtilsFormCommon"),
 
-    //onSubmit: function(graphqlURI, cookies, name, topic, data: z.infer<typeof FormSchema>) {
+    onSubmitMetadata: function(graphqlURI, cookies, cid, data, topic, toast) {
+        let log = (msg) => UtilsFormCommon.log.trace("onSubmitMetadata: " + msg)
+
+        let o = JSON.stringify(data, null, 2)
+        log("Submitting data: " + o)
+
+        let q = UtilsGraphQLObject.saveMetadata(graphqlURI, cookies,
+          cid,
+          data.title,
+          data,
+          topic,
+        )
+  
+        log("GraphQL response: " + q)
+
+        toast({
+          title: t("Status"),
+          description: (
+            <div className="mt-2 w-[500px] rounded-md">{t("DataUpdated")}</div>
+          ),
+        })
+    },
+
     onSubmit: function(graphqlURI, cookies, name, topic, data, toast) {
         let log = (msg) => UtilsFormCommon.log.trace("onSubmit: " + msg)
         let o = JSON.stringify(data, null, 2)
@@ -39,7 +61,15 @@ export const UtilsFormCommon = {
         })
     },
   
+    // It is form display, not an update in the database
     updateForm: function(form, topic, message) {
+        let log = (msg) => UtilsFormCommon.log.trace("updateForm: " + msg)
+
+        log("message: " + JSON.stringify(message))
+        form.reset(message)
+    },
+
+    updateFormOld: function(form, topic, message) {
         let log = (msg) => UtilsFormCommon.log.trace("updateForm: " + msg)
 
         log("message: " + JSON.stringify(message))
@@ -112,7 +142,7 @@ export const UtilsFormCommon = {
                 {id: "displayHeader", label: t("displayHeaderLabel")},
                 {id: "displayFooter", label: t("displayFooterLabel")},
                 {id: "displayTOC", label: t("displayTOCLabel")},
-                {id: "displayBreakBeforePage", label: t("displayBreakBeforePageLabel")},
+                {id: "displayBreakOnPage", label: t("displayBreakOnPageLabel")},
             ]
             let f = <FormField
                 control={form.control}
