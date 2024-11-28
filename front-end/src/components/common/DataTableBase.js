@@ -12,7 +12,9 @@ function getDataTableContent(props, cns) {
 			{ props?.dtViewType == "DTComponent" ?
 				<DataTableComponent {...props} />
 				:
+				<>
 				<DataTableTanStack {...props} cns={cns}/>
+				</>
 			}
 		</>
 	)
@@ -46,7 +48,7 @@ function DataTableBase( props ) {
 
 	return (
 		<>
-		<div className={`hidden h-full flex-1 flex-col space-y-8 ${cns.cnForTableOuterContainer} md:flex`}>
+		<div className={`h-full flex-1 flex-col space-y-8 ${cns.cnForTableOuterContainer} md:flex`}>
 			{/*
 				<div className={`flex items-center justify-between ${cns.cnForTablePresentation} space-y-2`}>
 						<h2 className="text-2xl font-bold tracking-tight">{t("WelcomeBack")}</h2>
