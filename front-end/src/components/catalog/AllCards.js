@@ -6,6 +6,7 @@ import { useCookies } from 'react-cookie';
 import { t } from 'i18next';
 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from 'src/components/ui/shadcn/tabs'
+import { ScrollArea, ScrollBar } from "src/components/ui/shadcn/scroll-area"
 
 import useCatalog from  "src/hooks/useCatalog";
 
@@ -129,8 +130,9 @@ export default function AllCards( { type, title, formScreen = null, cat = null, 
     let contents = categories.map((cat, i) => {
       return (
         <TabsContent value={i == 0 ? defaultEventKey : cat}>
-          <div className='grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2'>
-            {
+          {/*<div className='grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2'>*/}
+          <div className='flex w-max space-x-4 p-4'>
+          {
               getAIsByCategory(cat).map((ai) => {
                 log.trace("Category: " + cat + ", AI: " + ai.name);
                 return (
@@ -237,9 +239,12 @@ export default function AllCards( { type, title, formScreen = null, cat = null, 
                           </Nav>
                         </Col>
                       </Row>
+                      <ScrollArea className="w-full rounded-md border">
                       <Row>
-                        {showContents(getCategories(directory), defaultEventKey)}
+                      {showContents(getCategories(directory), defaultEventKey)}
                       </Row>
+                      <ScrollBar orientation="horizontal" />
+                      </ScrollArea>
                   </Tabs>
                   </>
                   :
