@@ -134,7 +134,7 @@ export default function PDFExportForm( {cid, params} ) {
 
     return (
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 mx-3">
 
             <Tabs defaultValue="metadata">
 
@@ -147,6 +147,7 @@ export default function PDFExportForm( {cid, params} ) {
               <TabsContent value="metadata" className={defaultTabsContentLayout}>
                 {UFC.getFormField(form, "title", "input")}
                 {UFC.getFormField(form, "subtitle", "input")}
+                {UFC.getFormField(form, "version", "input")}
                 {UFC.getFormField(form, "organizationName", "input")}
                 {UFC.getFormField(form, "author", "input")}
               </TabsContent>
@@ -164,7 +165,7 @@ export default function PDFExportForm( {cid, params} ) {
 
             </Tabs>
 
-            <Button className="text-right" type="submit">{t("Submit")}</Button>
+            <Button className="float-right" type="submit">{t("Submit")}</Button>
           </form>
         </Form>
     )

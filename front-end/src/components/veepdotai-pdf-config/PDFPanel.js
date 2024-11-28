@@ -197,7 +197,7 @@ export default function PDFPanel( {cid, initParams, initContent, displayInfosPan
 
     return (
         <div className='h-full bottom-0'>
-          { true ?
+          { params ?
               <ResizablePanelGroup direction="horizontal" className='h-full bottom-0'>
                   <ResizablePanel className='bottom-0'>
                       {/*<ConfigPanel content={infosPanel.content} handleCompilePDF={handleCompilePDF} params={infosPanel.params}/>*/}

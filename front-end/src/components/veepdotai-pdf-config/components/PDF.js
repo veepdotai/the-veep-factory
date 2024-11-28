@@ -84,6 +84,7 @@ export function PDFDocument({content, params}) {
 
         <View style={data.styles?.metadataBlock}>
           {/*getInlineContentWithLabel(45, t("Company"), data?.companyName, "company")*/}
+          {data?.organizationName ? getInlineContentWithLabel(30, t("OrganizationName"), data.organizationName, "organization", data.styles) : ""}
           {getInlineContentWithLabel(30, t("Author"), data?.author, "author", data.styles)}
           {getInlineContentWithLabel(15, t("Version"), data?.version, "version", data.styles)}
           {getInlineContentWithLabel(0, t("Date"), data?.date, "date", data.styles)}
