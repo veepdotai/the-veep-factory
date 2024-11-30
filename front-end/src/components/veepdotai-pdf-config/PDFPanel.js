@@ -5,9 +5,12 @@ import { useEffect, useState } from 'react';
 import { Logger } from 'react-logger-lib'
 import PubSub from 'pubsub-js'
 import {ResizableHandle, ResizablePanel, ResizablePanelGroup} from 'src/components/ui/shadcn/resizable';
+import { ScrollArea, ScrollBar } from "src/components/ui/shadcn/scroll-area"
+
 import PDFParams from './components/PDFParams';
 import PDF from './components/PDF';
 import PDFExportForm from '../screens/forms/PDFExportForm';
+import { useMediaQuery } from 'usehooks-ts';
 
 //const PDFDownloadLink = dynamic(() => import('@react-pdf/renderer').then(mod => mod.PDFDownloadLink), { ssr: false });
  
@@ -19,6 +22,8 @@ import PDFExportForm from '../screens/forms/PDFExportForm';
  */
 export default function PDFPanel( {cid, initParams, initContent, displayInfosPanel}) {
     const log = Logger.of(PDFPanel.name)
+
+    const isDesktop = useMediaQuery("(min-width: 768px)");
 
     const [params, setParams] = useState(initParams || new PDFParams())
     const [content, setContent] = useState(initContent == undefined ? convertContentToAbstractContent(" ") : convertContentToAbstractContent(initContent))
@@ -59,7 +64,7 @@ export default function PDFPanel( {cid, initParams, initContent, displayInfosPan
     function convertJsonToAbstractContent(content) {
       let res = []
       let all = JSON.parse(content)
-      for (let i = 0; i < all.slides.length; i++){
+      for (let i = 0; i < all.slides?.length; i++){
           res.push([
           all.slides[i].number,
           all.slides[i].title,
@@ -83,7 +88,7 @@ export default function PDFPanel( {cid, initParams, initContent, displayInfosPan
       function convertMarkdownLinesToAbstractContent(markdownTitle, lines) {
         let res = []
         //checking every following content
-        for (let i = 1; i < lines.length; i ++){
+        for (let i = 1; i < lines?.length; i ++){
           let line = lines[i]
           let isHigherTitle = getMarkdownLevel(line) > 0 && getMarkdownLevel(line) <= getMarkdownLevel(markdownTitle) 
           if (isHigherTitle) {
@@ -99,7 +104,7 @@ export default function PDFPanel( {cid, initParams, initContent, displayInfosPan
             let title = line.replace(/#+\s*/, "")      
             let sub = [title]
             sub = sub.concat(convertMarkdownLinesToAbstractContent(line, lines.slice(i)))
-            i = i + sub.length - 1
+            i = i + sub?.length - 1
             res.push(sub)
           }
         }
@@ -114,7 +119,7 @@ export default function PDFPanel( {cid, initParams, initContent, displayInfosPan
       // reference points
       function getTitleIndexes(lines) {
           let titleIndexes = []
-          for (let i = 0; i < lines.length; i ++){
+          for (let i = 0; i < lines?.length; i ++){
               let line = lines[i]
               if (getMarkdownLevel(line) == 1){
                   titleIndexes.push(i)
@@ -130,7 +135,7 @@ export default function PDFPanel( {cid, initParams, initContent, displayInfosPan
       // If there isn't lvl 1 title at all or there is none within the // 
       // first 10 linebreaks
       // And so?
-      if (titleIndexes.length == 0 || titleIndexes[0] > 10){
+      if (titleIndexes?.length == 0 || titleIndexes[0] > 10){
           titleIndexes.unshift(0)
           lines.unshift(' ')
       }
@@ -139,7 +144,7 @@ export default function PDFPanel( {cid, initParams, initContent, displayInfosPan
   
       // Loop to every title: get rid of the # and every space before
       // the title, then generating content and pushing the result page
-      for (let i = 0; i < titleIndexes.length; i++){
+      for (let i = 0; i < titleIndexes?.length; i++){
           let currentTitleIndex = titleIndexes[i]
           let currentMarkdownTitle = lines[currentTitleIndex] 
           let currentTitle = currentMarkdownTitle.replace(/^#+\s*/, "")
@@ -176,7 +181,7 @@ export default function PDFPanel( {cid, initParams, initContent, displayInfosPan
      */
     function getMarkdownLevel(string){
         let level = 0
-        for (let i = 0; i < string.length; i ++){
+        for (let i = 0; i < string?.length; i ++){
           if (string[i] != '#' && string[i] != ' ' || (string[i] == ' ' && level > 0)){
             break
           } else if (string[i] == '#'){
@@ -198,23 +203,30 @@ export default function PDFPanel( {cid, initParams, initContent, displayInfosPan
     return (
         <div className='h-full bottom-0'>
           { params ?
-              <ResizablePanelGroup direction="horizontal" className='h-full bottom-0'>
-                  <ResizablePanel className='bottom-0'>
-                      {/*<ConfigPanel content={infosPanel.content} handleCompilePDF={handleCompilePDF} params={infosPanel.params}/>*/}
-                      <PDFExportForm cid={cid} 
-                      params={params} />
-                  </ResizablePanel>
+              isDesktop ?
+                  <ResizablePanelGroup direction="horizontal" className='h-full bottom-0'>
+                      <ResizablePanel className='bottom-0'>
+                          {/*<ConfigPanel content={infosPanel.content} handleCompilePDF={handleCompilePDF} params={infosPanel.params}/>*/}
+                          <PDFExportForm cid={cid} params={params} />
+                      </ResizablePanel>
 
-                  <ResizableHandle/>
+                      <ResizableHandle/>
 
-                  <ResizablePanel defaultSize={60} className='vh-100 bottom-0'>
+                      <ResizablePanel defaultSize={60} className='vh-100 bottom-0'>
+                          <PDF content={content} params={params}/>
+                      </ResizablePanel>
+                  </ResizablePanelGroup>
+                :
+                  <ScrollArea className="w-100 whitespace-nowrap h-full">
+                    <ScrollBar orientation='vertical' />
+
+                    <div class="columns-1">
+                      <PDFExportForm cid={cid} params={params} />
                       <PDF content={content} params={params}/>
-                  </ResizablePanel>
-              </ResizablePanelGroup>
+                    </div>
+                  </ScrollArea>
               :
-                <div className='vh-100'>
-                  <PDF content={content} params={params}/>
-                </div>
+                <>{t("NoDataAvailable")}</>
           }
         </div>
     );

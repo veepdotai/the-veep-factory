@@ -3,6 +3,8 @@ import { Logger } from 'react-logger-lib';
 import { PDFDownloadLink, Link, Page, Text, Image, View, Document, StyleSheet } from '@react-pdf/renderer';
 import { t } from 'i18next';
 import dynamic from 'next/dynamic';
+import { useMediaQuery } from 'usehooks-ts';
+
 
 // const which import the pdf renderer
 const PDFViewer = dynamic(
@@ -21,10 +23,12 @@ const PDFViewer = dynamic(
 export function PDF( props ) {
   const log = Logger.of(PDF.name)
 
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+
   log.trace("style... parameters: " + JSON.stringify(props.params))
   return (
     <>
-      <PDFViewer width={'100%'} height={'100%'}>
+      <PDFViewer width={'100%'} height={isDesktop ? '100%' : '800px'}>
           <PDFDocument
             content={props.content}
             params={props.params}
@@ -142,8 +146,8 @@ export function PDFDocument({content, params}) {
    */
   function contentPages() {
     //With a new page every new title
-    if (data?.newPage && content.length > 0) {
-      let bookmark = content[0].length > 0 ? t(content[0][1]) : t("Content")
+    if (data?.newPage && content?.length > 0) {
+      let bookmark = content[0]?.length > 0 ? t(content[0][1]) : t("Content")
       return (
         <>
           {content.map( (page) => {
@@ -167,9 +171,9 @@ export function PDFDocument({content, params}) {
           })}
         </>
       )
-    } else if (content.length > 0) {
+    } else if (content?.length > 0) {
       //Without a new page every new title
-      let bookmark = content[0].length > 0 ? t(content[0][1]) : t("Content")
+      let bookmark = content[0]?.length > 0 ? t(content[0][1]) : t("Content")
       return (
           <Page style={data.styles?.contentPage} id={"content"} bookmark={bookmark} size={data?.dimensions}>
             {header()}

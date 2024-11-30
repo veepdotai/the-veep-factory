@@ -12,7 +12,7 @@ function ContentDynamicDisplay(props){
     const [activePage, setActive] = useState(1)
 
     const handlePageLoad = (number) => {
-        if (number >= 1 && number <= pages.length){
+        if (number >= 1 && number <= pages?.length){
             setActive(number)
         }
     }
@@ -43,15 +43,15 @@ function ContentDynamicDisplay(props){
     }
 
     const addPage = () => {
-        pages.push([pages.length+1, "./assets/images/nothing.png",t("DefaultBackCoverContent"),t("DefaultBackCoverTitle")])
+        pages.push([pages?.length+1, "./assets/images/nothing.png",t("DefaultBackCoverContent"),t("DefaultBackCoverTitle")])
         props.handleChange(pages)
         setActive(activePage)
     }
 
     const deletePage = () => {
-        if (pages.length > 1){
+        if (pages?.length > 1){
             pages = pages.slice(0, activePage-1).concat(pages.slice(activePage))
-            if (pages.length < activePage && activePage > 1){
+            if (pages?.length < activePage && activePage > 1){
                 setActive(activePage-1)
             }
 
@@ -64,8 +64,8 @@ function ContentDynamicDisplay(props){
 
     return (
         <div>
-            {pages.length > 1 ? (
-                        <Pagination className={pages.length > 1 ? "w-full" : "hidden"}>
+            {pages?.length > 1 ? (
+                        <Pagination className={pages?.length > 1 ? "w-full" : "hidden"}>
                         <PaginationContent className="">
                             <PaginationItem>
                                 <PaginationPrevious onClick={() => {handlePageLoad(activePage-1)}} />
@@ -75,42 +75,42 @@ function ContentDynamicDisplay(props){
                                 <PaginationLink className={(activePage == 1? "border-2":"")} onClick={() => {handlePageLoad(1)}}> {1 + props.startingPage} </PaginationLink>
                             </PaginationItem>
 
-                            { pages.length > 2 ? 
+                            { pages?.length > 2 ? 
                                 (<PaginationItem>
-                                    <PaginationLink className={(activePage == 2 && pages.length > 2? "border-2":"")} 
-                                        onClick={() => {activePage > 2 ? (activePage == pages.length || activePage == pages.length-1 ? handlePageLoad(2) : handlePageLoad(activePage-1)) : (pages.length > 2 ? handlePageLoad(2) : "")}}
+                                    <PaginationLink className={(activePage == 2 && pages?.length > 2? "border-2":"")} 
+                                        onClick={() => {activePage > 2 ? (activePage == pages?.length || activePage == pages?.length-1 ? handlePageLoad(2) : handlePageLoad(activePage-1)) : (pages?.length > 2 ? handlePageLoad(2) : "")}}
                                     > 
-                                        {activePage > 2 ? (activePage == pages.length || activePage == pages.length-1 ? 2 + props.startingPage : activePage-1 + props.startingPage) : (pages.length > 2 ? 2 + props.startingPage : "")} 
+                                        {activePage > 2 ? (activePage == pages?.length || activePage == pages?.length-1 ? 2 + props.startingPage : activePage-1 + props.startingPage) : (pages?.length > 2 ? 2 + props.startingPage : "")} 
                                     </PaginationLink>
                                 </PaginationItem>)
                                 : ""
                             }  
 
 
-                            { pages.length > 4 ?
+                            { pages?.length > 4 ?
                             (<PaginationItem>
-                                <PaginationLink className={(activePage != 1 && activePage != 2 && activePage != pages.length-1 && activePage != pages.length ? "border-2":"")} 
-                                    onClick={()=> {activePage == 1 || activePage == 2 || activePage == pages.length || activePage == pages.length-1 ? ((activePage == 1 || activePage == 2) && pages.length > 4 ? handlePageLoad(3) : ((activePage == pages.length || activePage == pages.length-1) && pages.length > 4 ? handlePageLoad(pages.length-2) : "") ) : ""}}
+                                <PaginationLink className={(activePage != 1 && activePage != 2 && activePage != pages?.length-1 && activePage != pages?.length ? "border-2":"")} 
+                                    onClick={()=> {activePage == 1 || activePage == 2 || activePage == pages?.length || activePage == pages?.length-1 ? ((activePage == 1 || activePage == 2) && pages?.length > 4 ? handlePageLoad(3) : ((activePage == pages?.length || activePage == pages?.length-1) && pages?.length > 4 ? handlePageLoad(pages?.length-2) : "") ) : ""}}
                                 > 
-                                    {activePage == 1 || activePage == 2 || activePage == pages.length || activePage == pages.length-1 ? ((activePage == 1 || activePage == 2) && pages.length > 4 ? 3 + props.startingPage : ((activePage == pages.length || activePage == pages.length-1) && pages.length > 4 ? pages.length-2 + props.startingPage : "") ) : activePage + props.startingPage} 
+                                    {activePage == 1 || activePage == 2 || activePage == pages?.length || activePage == pages?.length-1 ? ((activePage == 1 || activePage == 2) && pages?.length > 4 ? 3 + props.startingPage : ((activePage == pages?.length || activePage == pages?.length-1) && pages?.length > 4 ? pages?.length-2 + props.startingPage : "") ) : activePage + props.startingPage} 
                                 </PaginationLink>
                             </PaginationItem>)
                             : ""
                             }
 
-                            { pages.length > 3 ? 
+                            { pages?.length > 3 ? 
                             (<PaginationItem>
-                                <PaginationLink className={(activePage == pages.length-1 && pages.length > 3? "border-2":"")} 
-                                    onClick={() => {activePage < pages.length-2 ? (activePage == 2 || activePage == 1 ? handlePageLoad(pages.length-1) : handlePageLoad(activePage + 1)) : (pages.length > 3 ? handlePageLoad(pages.length-1) : "")}}
+                                <PaginationLink className={(activePage == pages?.length-1 && pages?.length > 3? "border-2":"")} 
+                                    onClick={() => {activePage < pages?.length-2 ? (activePage == 2 || activePage == 1 ? handlePageLoad(pages?.length-1) : handlePageLoad(activePage + 1)) : (pages?.length > 3 ? handlePageLoad(pages?.length-1) : "")}}
                                 > 
-                                    {activePage < pages.length-2 ? (activePage == 2 || activePage == 1 ? pages.length-1 + props.startingPage : activePage + 1 + props.startingPage) : (pages.length > 3 ? pages.length-1 + props.startingPage : "")} 
+                                    {activePage < pages?.length-2 ? (activePage == 2 || activePage == 1 ? pages?.length-1 + props.startingPage : activePage + 1 + props.startingPage) : (pages?.length > 3 ? pages?.length-1 + props.startingPage : "")} 
                                 </PaginationLink>
                             </PaginationItem>)
                             : ""
                             }
 
                             <PaginationItem>
-                                <PaginationLink className={(activePage == pages.length? "border-2":"")} onClick={() => handlePageLoad(pages.length)}> {pages.length + props.startingPage} </PaginationLink>
+                                <PaginationLink className={(activePage == pages?.length? "border-2":"")} onClick={() => handlePageLoad(pages?.length)}> {pages?.length + props.startingPage} </PaginationLink>
                             </PaginationItem>
 
                             <PaginationItem>

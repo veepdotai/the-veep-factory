@@ -95,7 +95,7 @@ export default class PDFParams {
 
         let findFirstDot = false
 
-        for (let i = 0; i < this.version.length; i++){
+        for (let i = 0; i < this.version?.length; i++){
             if (this.version.charAt(i) == "." && findFirstDot){
                 second = i
                 return ([first, second])
@@ -141,7 +141,7 @@ export default class PDFParams {
         const affichage = JSON.stringify(this.styles)
         let result = ""
         let i = 1
-        for(i; i < affichage.length; i += 1) {
+        for(i; i < affichage?.length; i += 1) {
             if (affichage[i] == "}"){
                 result += "\n"
             }
@@ -154,7 +154,7 @@ export default class PDFParams {
                 result += "\n    "
             }
         }
-        return String(result.substring(0, result.length-1))
+        return String(result.substring(0, result?.length-1))
     }
 
     /**
@@ -170,7 +170,7 @@ export default class PDFParams {
         let result = ""
 
         let i = 0
-        for (i; i < cssString.length; i++){
+        for (i; i < cssString?.length; i++){
             if ( legalChar.includes(cssString[i]) && !inQuote && cssString[i] != "\"" && !(legalChar.includes(cssString[i-1])) ){
                 result += "\""
                 result += cssString[i]
