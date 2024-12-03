@@ -47,19 +47,19 @@ export default class MergedContent {
 
       let isEmpty = false
       if (content) {
-        if (content.length == 4 && content == "null") {
+        if (content?.length == 4 && content == "null") {
           log("content is not null but it contains 'null' => we consider it empty")
           isEmpty = true
-        } else if (content.length == 52) {
-          log("content is not null and it is 52-length, maybe it is the empty CRT?")
+        } else if (content?.length == 52) {
+          log("content is not null and it is 52?.length, maybe it is the empty CRT?")
           isEmpty = (content[22] + content[23]) === '""' 
-        } else if (content.length < 60) { // 52 exactly?
-          log("content is not null and it is < 60-length, maybe it is the empty CRT with a new format? We just try this case")
+        } else if (content?.length < 60) { // 52 exactly?
+          log("content is not null and it is < 60?.length, maybe it is the empty CRT with a new format? We just try this case")
           try {
             let jsonContent = JSON.parse(content)
             isEmpty = jsonContent[0].children[0].text == ""
           } catch (e) {
-            log("content is not null and it is < 60-length, but parsing as json failed so there is really some content")
+            log("content is not null and it is < 60?.length, but parsing as json failed so there is really some content")
             isEmpty = false
           }
         }
@@ -86,7 +86,7 @@ export default class MergedContent {
       let j = 0;
       let done = false;
       // Looks for the id corresponding to the prompt label
-      for(let i = 0; i < defaultChain.length && ! done; i++) {
+      for(let i = 0; i < defaultChain?.length && ! done; i++) {
         j = i;
         let currentLabel = defaultChain[i];
         log(`currentLabel: ${currentLabel}.`);

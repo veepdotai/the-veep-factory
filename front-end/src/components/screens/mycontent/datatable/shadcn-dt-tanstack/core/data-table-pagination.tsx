@@ -30,12 +30,12 @@ export function DataTablePagination<TData>({
       <>
       { viewMode == "compact2" ?
         <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length}/{table.getFilteredRowModel().rows.length}
+          {table.getFilteredSelectedRowModel()?.rows?.length}/{table.getFilteredRowModel()?.rows?.length}
         </div>
       :
         <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
+          {table.getFilteredSelectedRowModel()?.rows?.length} of{" "}
+          {table.getFilteredRowModel()?.rows?.length} row(s) selected.
         </div>
       }
       </>

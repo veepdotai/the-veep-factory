@@ -42,13 +42,15 @@ export const UtilsGraphQL = {
 	list: function(graphqlURI, cookies, authorId, props, topic = null, msg = null) {
 
 		let q = UtilsGraphQLClauseBuilder.buildClauseQuery(authorId, props);
+
+		UtilsGraphQL.log.info('URI (before client): ' + graphqlURI);
 	
 		return UtilsGraphQL
 			.client(graphqlURI, cookies)
 			.query({
 				query: gql`${q}`
 			}).then((data) => {
-				UtilsGraphQL.log.info('URI: ' + graphqlURI);
+				UtilsGraphQL.log.info('URI (after client): ' + graphqlURI);
 				UtilsGraphQL.log.trace(`list: data: ${JSON.stringify(data)}`)
 
 				let nodes = UtilsDataConverter.convertGqlToGqlVContents(data)

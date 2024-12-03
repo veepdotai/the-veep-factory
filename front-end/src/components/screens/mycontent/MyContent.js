@@ -60,18 +60,20 @@ function ReportData( {...props} ) {
   function getData(topic = null, msg = null) {
     log.trace(`getData: topic: ${JSON.stringify(topic)}, msg: ${JSON.stringify(msg)}`)
 
-    UtilsGraphQL
-      .list(graphqlURI, cookies, authorId, props)
-      .then((data) => {
-        log.trace(`getData: data: ${JSON.stringify(data)}`)
+    if (graphqlURI && cookies) {
+      UtilsGraphQL
+        .list(graphqlURI, cookies, authorId, props)
+        .then((data) => {
+          log.trace(`getData: data: ${JSON.stringify(data)}`)
 
-        let r = UtilsDataConverter.convertGqlVContentsToVO(data)
-        log.trace("data: " + JSON.stringify(r));
-        
-        setData(r)
-      }).catch((e) => {
-        log.trace(`getData: the following exception "${e}" has been raised while trying to get some data with the following parameters: authorId: ${authorId}, props: ${JSON.stringify(props)}`)
-      })
+          let r = UtilsDataConverter.convertGqlVContentsToVO(data)
+          log.trace("data: " + JSON.stringify(r));
+          
+          setData(r)
+        }).catch((e) => {
+          log.trace(`getData: the following exception "${e}" has been raised while trying to get some data with the following parameters: authorId: ${authorId}, props: ${JSON.stringify(props)}`)
+        })
+    }
   }
 
   function datatable() {
@@ -110,7 +112,7 @@ function ReportData( {...props} ) {
     PubSub.subscribe("CONTENTS_LIST_TO_REFRESH", getData);
 
     getData();
-	}, []);
+	}, [graphqlURI, cookies]);
 
   return (
       <MyContentPanel side={datatable} info={info} content={details} />

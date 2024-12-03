@@ -85,7 +85,7 @@ export default class MyContentDetailsForDesktop {
           <TabsList id="details-menu-main" variant="pills" className="flex justify-start w-100 mh-100">
             <div>
               <TabsTrigger id="details-menu-content" value="content">
-                  <MyContentDetailsForDesktop.TT id="m1" title={t("MainContent") + "_test"}>
+                  <MyContentDetailsForDesktop.TT id="m1" title={t("MainContent")}>
                     {Icons.aggregatedView}
                   </MyContentDetailsForDesktop.TT>
               </TabsTrigger>
@@ -151,25 +151,35 @@ export default class MyContentDetailsForDesktop {
 export function PDFViewer( {cid, content, data} ) {
   let log = Logger.of(PDFViewer.name);
 
-  log.trace("data: " + JSON.stringify(data))
+  if (cid) {
+    log.trace("data: " + JSON.stringify(data))
 
-  let role = "admin";
-  let hasConfigCapabilities = role === "admin" ? true : false;
-  const [pdfContent, setPdfContent] = useState(content);
+    let role = "admin";
+    let hasConfigCapabilities = role === "admin" ? true : false;
+    const [pdfContent, setPdfContent] = useState(content);
 
-  let vo = UtilsDataConverter.convertGqlVContentsToVO(data.nodes)
-  vo = vo[0]
-  vo.author = vo.givenName
+    let vo = UtilsDataConverter.convertGqlVContentsToVO(data?.nodes)
+    if (Array.isArray(vo) && vo?.length > 0) {
+      vo = vo[0]
+      vo.author = vo.givenName  
 
-  log.trace("vo: " + JSON.stringify(vo))
+      log.trace("vo: " + JSON.stringify(vo))
+    } else {
+      vo = null;
 
-  return(
+      log.trace("vo: " + vo)
+    }
 
-    <PDFPanel
-      cid={cid}
-      initContent={pdfContent}
-      initParams={new PDFParams(vo)}
-      displayConfigPanel={hasConfigCapabilities} />
-  )
-
+    return(
+      <PDFPanel
+        cid={cid}
+        initContent={pdfContent}
+        initParams={new PDFParams(vo)}
+        displayConfigPanel={hasConfigCapabilities} />
+    )  
+  } else {
+    return ( 
+      <>{t("NoContentAvailable")}</>
+    )
+  }
 }

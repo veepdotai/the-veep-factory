@@ -103,7 +103,8 @@ export default function PDFPanel( {cid, initParams, initContent, displayInfosPan
             // get rid of the # before the subtitle
             let title = line.replace(/#+\s*/, "")      
             let sub = [title]
-            sub = sub.concat(convertMarkdownLinesToAbstractContent(line, lines.slice(i)))
+            //sub = sub.concat(convertMarkdownLinesToAbstractContent(line, lines.slice(i)))
+            sub = [...sub, ...convertMarkdownLinesToAbstractContent(line, lines.slice(i))]
             i = i + sub?.length - 1
             res.push(sub)
           }

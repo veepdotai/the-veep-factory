@@ -54,7 +54,7 @@ export default function AllCards( { type, title, formScreen = null, cat = null, 
   
   function getCategories(directory, category = null) {
     if (directory) {
-      let categories = directory.map((row) => {
+      let categories = directory?.map((row) => {
         //log.trace(`AllCards: Domain/Category/SubCategory: ${JSON.stringify(row)}`)
         log.trace(`AllCards: Domain/Category/SubCategory: ${row.group}/${row.category}/${row.subCategory}`)
         let result = ""
@@ -73,8 +73,8 @@ export default function AllCards( { type, title, formScreen = null, cat = null, 
 
   function getFilteredCategories(directory, category = null) {
     if (directory) {
-      let categories = directory.map((row) => { return row.status === "active" && (category ? row?.category == category : row?.category)})
-      return categories.filter(onlyUnique);
+      let categories = directory?.map((row) => { return row.status === "active" && (category ? row?.category == category : row?.category)})
+      return categories?.filter(onlyUnique);
     } else {
       return [];
     }
@@ -85,7 +85,7 @@ export default function AllCards( { type, title, formScreen = null, cat = null, 
   }
 
   function getAIsByCategory(category) {
-    return directory.filter((row) => { return row.status === "active" && row.category === category});
+    return directory?.filter((row) => { return row.status === "active" && row.category === category});
   }
 
   function displayNav(categories, defaultEventKey) {

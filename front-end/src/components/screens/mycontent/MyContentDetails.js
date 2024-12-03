@@ -24,6 +24,7 @@ import { useMediaQuery } from 'usehooks-ts';
 import useBreakpoint from  "src/hooks/useBreakpoint.js";
 
 import { Tabs, TabsContent } from "src/components/ui/shadcn/tabs"
+import { Switch } from "src/components/ui/shadcn/switch"
 
 import MyContentDetailsUtils from './MyContentDetailsUtils';
 import MyContentDetailsForDesktop from './MyContentDetailsForDesktop';
@@ -31,6 +32,7 @@ import MyContentDetailsForMobile from './MyContentDetailsForMobile';
 
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup, } from "src/components/ui/shadcn/resizable"
 import { ScrollArea, ScrollBar } from "src/components/ui/shadcn/scroll-area"
+import { Label } from "src/components/ui/shadcn/label"
 
 import { UtilsGraphQL } from 'src/api/utils-graphql.js'
 import { Constants } from "src/constants/Constants";
@@ -45,6 +47,8 @@ export default function MyContentDetails( { id }) {
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   // Stores all the information related to the veeplet processing
+  const [auditMode, setAuditMode] = useState(false);
+
   const [mainNode, setMainNode] = useState();
   const [contentId, setContentId] = useState();
   const [data, setData] = useState(null);
@@ -64,6 +68,56 @@ export default function MyContentDetails( { id }) {
           log.trace("init: data: " + JSON.stringify(data));
           setData(data);
       })
+  }
+
+  function getSideContent() {
+    return (
+      <>
+        <Tabs className="justify-start h-full" id="mycontent-chat" defaultValue="chat">
+          <ScrollArea className="w-100 whitespace-nowrap h-full">
+            <ScrollBar orientation="vertical" />
+
+            {MyContentDetailsForDesktop.desktopMenu(prompt, "side")}
+
+            <TabsContent id="details-chat-conversation" className="h-full" value="chat">
+              {MyContentDetailsUtils.getAllStepsOneByOne(prompt, data, contentId)}
+            </TabsContent>
+            <TabsContent id="details-chat-prompt" className="h-full" value="metadata">
+              {MyContentDetailsUtils.getPromptContent(contentId, mainNode)}
+            </TabsContent>
+            <TabsContent id="details-chat-transcription" className="h-full" value="transcription">
+              {MyContentDetailsUtils.getTranscriptionContent(contentId, mainNode)}
+            </TabsContent>
+          </ScrollArea>
+        </Tabs>
+      </>
+    )
+  }
+
+  function getMainContent() {
+    return (
+      <Tabs className="justify-start h-full" id="mycontent-main" defaultValue="content">
+
+        {MyContentDetailsForDesktop.desktopMenu(prompt, "main")}
+
+        <TabsContent id="details-content-main" className="h-full" value="content">
+          {MyContentDetailsForDesktop.desktopMarkdownContent(selectedFormat, prompt, data, contentId)}
+        </TabsContent>
+        <TabsContent id="details-content-pdf" className="h-full" value="pdf-merged-content">
+          {MyContentDetailsForDesktop.desktopPDFContent(selectedFormat, prompt, data, contentId)}
+        </TabsContent>
+        <TabsContent id="details-sideBySide-content" value="sideBySide-content">
+          <ScrollArea className="w-100 whitespace-nowrap h-full">
+            <ScrollBar orientation="vertical" />
+
+            {MyContentDetailsUtils.getColumnsSelectors([1, 2, 3, 4, 6], setWidth)}
+            <Row className="px-4">
+              {MyContentDetailsUtils.getSideBySideView(prompt, data, contentId, width)}                          
+            </Row>
+          </ScrollArea>
+        </TabsContent>
+      </Tabs>
+    )
   }
 
   useEffect(() => {
@@ -86,7 +140,7 @@ export default function MyContentDetails( { id }) {
         let promptObj = TOML.parse(node.veepdotaiPrompt.replace(/#EOL#/g, "\n"));
         log.trace("useEffect[data]: prompt.metadata.name: " + promptObj.metadata.name);
         log.trace("useEffect[data]: prompt.prompts.chain[0]: " + promptObj.prompts.chain[0]);
-        log.trace("useEffect[data]: prompt.prompts.chain.length: " + promptObj.prompts.chain.length);
+        log.trace("useEffect[data]: prompt.prompts.chain?.length: " + promptObj.prompts.chain?.length);
         setPrompt(promptObj);
       }
     } catch (e) {
@@ -111,6 +165,12 @@ export default function MyContentDetails( { id }) {
     //PubSub.subscribe("");
   }, []);
 
+  /*
+    {MyContentDetailsForMobile.mobileMenu(prompt)}
+    <TabsContent id="details-content" className="h-100" value="content">
+      {MyContentDetailsForMobile.mobileContent()}
+    </TabsContent>
+  */
   return (
     <Container className='mw-100 h-100 m-0 p-0'>
       {
@@ -118,81 +178,32 @@ export default function MyContentDetails( { id }) {
             <>
               { ! isDesktop ?
                 <>
-                  {MyContentDetailsForMobile.mobileMenu(prompt)}
-                  <TabsContent id="details-content" className="h-100" value="content">
-                    {MyContentDetailsForMobile.mobileContent()}
-                  </TabsContent>
+                  <Switch
+                      checked={auditMode}
+                      onCheckedChange={() => setAuditMode(! auditMode)}
+                  />
+                  <Label htmlFor="airplane-mode">{t("Audit")}</Label>
+
+                  { auditMode ?
+                      getSideContent()
+                    :
+                      getMainContent()
+                  }
                 </>
               :
                 <>
                   <ResizablePanelGroup direction="horizontal" className="h-full">
                     <ResizablePanel className="h-full" style={{borderRight: "1px solid #eeefff"}} defaultSize={25}>
-                      <Tabs className="justify-start h-full" id="mycontent-chat" defaultValue="chat">
-                        <ScrollArea className="w-100 whitespace-nowrap h-full">
-                          <ScrollBar orientation="vertical" />
-
-                          {MyContentDetailsForDesktop.desktopMenu(prompt, "side")}
-
-                          <TabsContent id="details-chat-conversation" className="h-full" value="chat">
-                            {MyContentDetailsUtils.getAllStepsOneByOne(prompt, data, contentId)}
-                          </TabsContent>
-                          <TabsContent id="details-chat-prompt" className="h-full" value="metadata">
-                            {MyContentDetailsUtils.getPromptContent(contentId, mainNode)}
-                          </TabsContent>
-                          <TabsContent id="details-chat-transcription" className="h-full" value="transcription">
-                            {MyContentDetailsUtils.getTranscriptionContent(contentId, mainNode)}
-                          </TabsContent>
-                        </ScrollArea>
-                      </Tabs>
+                      {getSideContent()}
                     </ResizablePanel>
                     <ResizableHandle withHandle withHandleStyle={{ marginLeft: "-1px"}} withHandleClassName="bg-light" />
                     <ResizablePanel defaultSize={74} className='h-full'>
-                      <Tabs className="justify-start h-full" id="mycontent-main" defaultValue="content">
-
-                        {MyContentDetailsForDesktop.desktopMenu(prompt, "main")}
-
-                        <TabsContent id="details-content-main" className="h-full" value="content">
-                          {MyContentDetailsForDesktop.desktopMarkdownContent(selectedFormat, prompt, data, contentId)}
-                        </TabsContent>
-                        <TabsContent id="details-content-pdf" className="h-full" value="pdf-merged-content">
-                          {MyContentDetailsForDesktop.desktopPDFContent(selectedFormat, prompt, data, contentId)}
-                        </TabsContent>
-                        <TabsContent id="details-sideBySide-content" value="sideBySide-content">
-                          <ScrollArea className="w-100 whitespace-nowrap h-full">
-                            <ScrollBar orientation="vertical" />
-
-                            {MyContentDetailsUtils.getColumnsSelectors([1, 2, 3, 4, 6], setWidth)}
-                            <Row className="px-4">
-                              {MyContentDetailsUtils.getSideBySideView(prompt, data, contentId, width)}                          
-                            </Row>
-                          </ScrollArea>
-                        </TabsContent>
-                      </Tabs>
+                      {getMainContent()}
                     </ResizablePanel>
                   </ResizablePanelGroup>
                 </>
               }
 
-              {/*
-              <TabsContent id="details-sideBySide-content" value="sideBySide-content">
-                <Row>
-                  { MyContentDetailsUtils.getColumnsSelectors([1, 2, 3, 4, 6], setWidth) }
-                </Row>
-              </TabsContent>
-              */}
-
-              {/*
-              <Row>
-                  {MyContentDetailsUtils.getAllStepsOneByOne(prompt, data, contentId)}
-              </Row>
-              */}
-            {/*
-            <Col className='' xs={12} lg={2} xl={2}>
-              {getInput(t("SharedWithUsers"), 'users')}
-              {getInput(t("SharedWithGroups"), 'groups')}
-              <Button onClick={alert('NYI')}>{t("Save")}</Button>
-            </Col>
-            */}
           </>
         )
       }

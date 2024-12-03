@@ -32,38 +32,36 @@ const useCatalog = (cookies, catalogType, setF) => {
     })
 
     log.trace("getCatalog: directory before filter: " + JSON.stringify(directory));
-    directory.map((row) => Object.keys(row) != "");
+    directory?.map((row) => Object.keys(row) != "");
     log.trace("getCatalog: directory after filter: " + JSON.stringify(directory));
 
     return directory;
   }
   
-//  useEffect(() => {
-      async function getCatalogData(conf, catalogType, setF) {
-        const config = {};
-        const params = { params: { 'JWT': conf.token } };
-        await axios.get(conf.service + "/" + catalogType,
-            params,
-            config
-        ).then(function (res) {
-            log.trace("getCatalogData: res: " + JSON.stringify(res));
+  async function getCatalogData(conf, catalogType, setF) {
+    const config = {};
+    const params = { params: { 'JWT': conf.token } };
+    await axios.get(conf.service + "/" + catalogType,
+        params,
+        config
+    ).then(function (res) {
+        log.trace("getCatalogData: res: " + JSON.stringify(res));
 
-            let catalog = res.data.catalog;
-            log.trace("getCatalogData: data: " + JSON.stringify(catalog));
+        let catalog = res.data.catalog;
+        log.trace("getCatalogData: data: " + JSON.stringify(catalog));
 
-            let directory = getCatalog(catalog.veeplets);
-            log.trace("getCatalogData: catalog: " + JSON.stringify(directory));
-            
-            setF(directory);
-    
-            //PubSub.publish("GET_PROMPT_OPTION_RESULT", data); 
-        }).catch((err) => {
-            log.error(err);
-        });
-      }
+        let directory = getCatalog(catalog.veeplets);
+        log.trace("getCatalogData: catalog: " + JSON.stringify(directory));
+        
+        setF(directory);
+
+        //PubSub.publish("GET_PROMPT_OPTION_RESULT", data); 
+    }).catch((err) => {
+        log.error(err);
+    });
+  }
       
-      getCatalogData(conf, catalogType, setF);
-  //}, []);
+  getCatalogData(conf, catalogType, setF);
 
 }
 

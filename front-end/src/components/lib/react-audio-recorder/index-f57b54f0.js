@@ -265,9 +265,9 @@ var ae = { exports: {} };
           return e.call(t);
         if (typeof t.next == "function")
           return t;
-        if (!isNaN(t.length)) {
+        if (!isNaN(t?.length)) {
           var r = -1, a = function n() {
-            for (; ++r < t.length; )
+            for (; ++r < t?.length; )
               if (l.call(t, r))
                 return n.value = t[r], n.done = !1, n;
             return n.value = g, n.done = !0, n;

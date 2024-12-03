@@ -41,7 +41,7 @@ export default function Process( props ) {
     const [cookies] = useCookies(['JWT']);
 
     const size = useBreakpoint();
-    const isDesktop = useMediaQuery("(min-width: 764px");
+    const isDesktop = useMediaQuery("(min-width: 768px)");
 
     function buildNavBars(topic, message) {
         log.trace("buildNavBars: " + JSON.stringify(message));

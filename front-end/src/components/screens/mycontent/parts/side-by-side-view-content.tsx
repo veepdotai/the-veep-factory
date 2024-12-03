@@ -32,7 +32,7 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 6 } 
     let chain = Veeplet.getChainAsArray(prompt.prompts.chain);
     if (chain) {
       log.trace("getCompareView: chain: " + typeof chain + " / " + JSON.stringify(chain));
-      let stepsNb = chain.length;
+      let stepsNb = chain?.length;
       let r = chain.map((_promptId, i) => {
         let promptId = EKeyLib.encode(_promptId);
 

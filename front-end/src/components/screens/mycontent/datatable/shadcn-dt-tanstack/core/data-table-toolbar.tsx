@@ -24,7 +24,7 @@ export function DataTableToolbar<TData>({
   viewMode = "compact1",
   cns
 }: DataTableToolbarProps<TData>) {
-  const isFiltered = table.getState().columnFilters.length > 0
+  const isFiltered = table.getState().columnFilters?.length > 0
   
   function getColumns() {
     let result = metadata.map((meta) => table.getColumn(meta.name) && (

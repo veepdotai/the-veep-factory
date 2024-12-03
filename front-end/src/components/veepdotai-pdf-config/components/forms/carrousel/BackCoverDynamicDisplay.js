@@ -39,7 +39,8 @@ function BackCoverDynamicDisplay(props){
 
     const deletePage = () => {
         if (pages?.length > 1){
-            pages = pages.slice(0, activePage-1).concat(pages.slice(activePage))
+            //pages = pages.slice(0, activePage-1).concat(pages.slice(activePage))
+            pages = [...pages.slice(0, activePage-1), ...pages.slice(activePage)]
             if (pages?.length < activePage && activePage > 1){
                 setActive(activePage-1)
             }

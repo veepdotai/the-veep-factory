@@ -24,7 +24,7 @@ export const UtilsDataConverter = {
     convertGqlToGqlVContents: function(data) {
         UtilsDataConverter.log.trace("convertGqlToGqlVContents: data: " + JSON.stringify(data))
 
-        let contents = data.data?.posts ? data.data?.posts : data.data?.vcontents
+        let contents = data?.data?.posts ? data?.data?.posts : data?.data?.vcontents
         UtilsDataConverter.log.trace("convertGqlToGqlVContents: contents: " + JSON.stringify(contents))
 
         let nodes = contents?.nodes
