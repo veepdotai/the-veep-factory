@@ -140,7 +140,6 @@ test_sshpass() {
 }
 
 init() {
-    #APP_HOST="https://8001-veepdotai-voice2post-jy1dot3bmal.ws-eu116.gitpod.io"
     APP_HOST="https://app.veep.ai"
     APP_DIR=$(echo "$APP_HOST" | sed "s,https\?://,,g")
 
