@@ -188,8 +188,8 @@ export default function getColumns(operations): ColumnDef<Data>[] {
       getColumnMetadata({name: "domain", title: t("Domain"), width: "150px", onClick: operations.onShow}),
       getColumnMetadata({name: "category", title: t("Category"), width: "150px", onClick: operations.onShow}),
       getColumnMetadata({name: "artefactType", title: t("ArtefactType"), width: "150px", onClick: operations.onShow}),
-      getEnumColumnMetadata({name: "status", title: t("Status"), data: statuses}),
-      getEnumColumnMetadata({name: "priority", title: t("Priority"), data: priorities}),
+//      getEnumColumnMetadata({name: "status", title: t("Status"), data: statuses}),
+//      getEnumColumnMetadata({name: "priority", title: t("Priority"), data: priorities}),
       getId(),
       getActions(operations),
   ]

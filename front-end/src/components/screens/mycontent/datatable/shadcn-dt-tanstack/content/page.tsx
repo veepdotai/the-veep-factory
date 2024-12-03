@@ -16,6 +16,7 @@ export default function DataTableTanStack(props) {
   const data = getData(props)
 
   let metadata = [
+/*
     {
       name: "status",
       title: t("Status"),
@@ -26,6 +27,7 @@ export default function DataTableTanStack(props) {
       title: t("Priority"),
       data: priorities
     }
+*/
   ]
 
   return (
