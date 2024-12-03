@@ -33,6 +33,7 @@ import Schema from "src/components/schemas/Schema";
 import Playground from "src/components/ffmpeg/Playground";
 import { UtilsMenu } from 'src/components/lib/utils-menu';
 import { interval } from 'date-fns';
+import { useMediaQuery } from 'usehooks-ts';
 
 let home = null
 
@@ -44,6 +45,8 @@ let home = null
  */
 export default function Main({credits, current}) {
   const log = Logger.of(Main.name);
+
+  const isDesktop = useMediaQuery("(min-width: 768px)")
 
   home = <Home credits={credits} current={current} />
 
@@ -73,7 +76,11 @@ export default function Main({credits, current}) {
           <ScreenHeading name="infos" title={t("Infos")} subtitle={t("Infos")} />
           <Container className='p-2'>
             <Logs />
-            <Playground />
+            { isDesktop ?
+              <Playground />
+            :
+              <></>
+            }
             {/*<Schema />*/}
           </Container>
         </Tab.Pane>

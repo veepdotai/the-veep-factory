@@ -138,7 +138,7 @@ export default function AllCards( { type, title, formScreen = null, cat = null, 
                 return (
                   <>
                     {/*<div {...config}>*/}
-                    <Prompt definition={ai} setDisplay={() => PubSub.publish("HIDE_CATALOGS", null)} />
+                    <Prompt key={cat + ai.name} definition={ai} setDisplay={() => PubSub.publish("HIDE_CATALOGS", null)} />
                   </>                  
                 )
               })
@@ -240,10 +240,10 @@ export default function AllCards( { type, title, formScreen = null, cat = null, 
                         </Col>
                       </Row>
                       <ScrollArea className="w-full rounded-md border">
-                      <Row>
-                      {showContents(getCategories(directory), defaultEventKey)}
-                      </Row>
-                      <ScrollBar orientation="horizontal" />
+                        <Row>
+                          {showContents(getCategories(directory), defaultEventKey)}
+                        </Row>
+                        <ScrollBar orientation="horizontal" />
                       </ScrollArea>
                   </Tabs>
                   </>

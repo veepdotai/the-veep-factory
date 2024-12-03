@@ -52,7 +52,7 @@ export default function AddContentWizard() {
                     palettes.map((row, i) => {
                         if (row.color == "white") {
                             return (
-                                <Carousel.Item style={innerStyle}>
+                                <Carousel.Item key={i} style={innerStyle}>
                                     <Card className={cardCN} style={{...getCardStyle(i)}}>
                                         <Card.Text className={cardTextCN}>
                                             Articles de blog, livres blancs, retours d'expérience, interviews, témoignages...

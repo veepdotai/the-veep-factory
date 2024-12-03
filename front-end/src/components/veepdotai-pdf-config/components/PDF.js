@@ -79,14 +79,14 @@ export function PDFDocument({content, params}) {
     log.trace("firstPage: processing...");
 
     return (
-      <Page style={data.styles?.firstPage} bookmark={t("CoverPage")} size={data?.dimensions}>
+      <Page key={"page-" + data.title} style={data.styles?.firstPage} bookmark={t("CoverPage")} size={data?.dimensions}>
         
         {getInlineContent("title", "title")}
         {getInlineContent("subTitle", "subTitle")}
 
         <Image style={data.styles?.featuredImage} src={data?.featuredImage} />
 
-        <View style={data.styles?.metadataBlock}>
+        <View key={"view-" + data.title} style={data.styles?.metadataBlock}>
           {/*getInlineContentWithLabel(45, t("Company"), data?.companyName, "company")*/}
           {data?.organizationName ? getInlineContentWithLabel(30, t("OrganizationName"), data.organizationName, "organization", data.styles) : ""}
           {getInlineContentWithLabel(30, t("Author"), data?.author, "author", data.styles)}
