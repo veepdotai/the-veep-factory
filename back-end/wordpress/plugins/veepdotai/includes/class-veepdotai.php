@@ -228,7 +228,7 @@ class Veepdotai {
 	public static function get_app_url_with_jwt( $jwt ) {
 		if ( strpos( home_url(), "localhost") !== false ) {
 			$url = home_url() . ":3000/r?JWT=" . $jwt;
-		} else if ( strpos( home_url(), "ws-eu116") !== false ) {
+		} else if ( strpos( home_url(), "ws-eu11") !== false ) {
 			$url = str_replace("8001", "3000", home_url()) . "/r?JWT=" . $jwt;
 		} else {
 			$url = home_url() . "/v/app/r?JWT=" . $jwt;
