@@ -88,7 +88,7 @@ export function PDFDocument({content, params}) {
 
         <View key={"view-" + data.title} style={data.styles?.metadataBlock}>
           {/*getInlineContentWithLabel(45, t("Company"), data?.companyName, "company")*/}
-          {data?.organizationName ? getInlineContentWithLabel(30, t("OrganizationName"), data.organizationName, "organization", data.styles) : ""}
+          {getInlineContentWithLabel(30, t("OrganizationName"), data.organizationName, "organizationName", data.styles)}
           {getInlineContentWithLabel(30, t("Author"), data?.author, "author", data.styles)}
           {getInlineContentWithLabel(15, t("Version"), data?.version, "version", data.styles)}
           {getInlineContentWithLabel(0, t("Date"), data?.date, "date", data.styles)}
@@ -221,12 +221,15 @@ export function PDFDocument({content, params}) {
         <>
           {/*<Text style={data.styles?.subTitle}>{subtitle[0]}</Text>*/}
           <Text style={data.styles['title' + i]}>{subtitle[0]}</Text>
-          <>{
-            typeof(subtitle[1]) == "string"
-              ? <Text style={data.styles?.text}>{subtitle[1]}</Text>
-              : <>{displaySubtitle(i + 1, subtitle[1])}</>
+            {subtitle.length > 1 ?
+                <>{typeof(subtitle[1]) == "string"
+                    ? <Text style={data.styles?.text}>{subtitle[1]}</Text>
+                    : <>{displaySubtitle(i + 1, subtitle[1])}</>
+                  }
+                </>
+                :
+                <></>
             }
-          </>
         </>
       )
   }
