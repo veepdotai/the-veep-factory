@@ -16,9 +16,13 @@
   "authorLabel": "Auteur",
   "authorPlaceHolder": "",
   "authorDesc": "",
-  
-  "DisplayOptionsLabel": "Options d'affichage",
-  "DisplayOptionsDesc": "Sélectionnez les options à activer",
+
+  "versionLabel": "Version",
+  "versionPlaceHolder": "",
+  "versionDesc": "",
+
+  "displayOptionsLabel": "Options d'affichage",
+  "displayOptionsDesc": "Sélectionnez les options à activer",
 
   "displayHeaderLabel": "Afficher en-tête",
   "displayHeaderPlaceHolder": "",

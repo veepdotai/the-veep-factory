@@ -42,10 +42,12 @@ export default function PDFExportForm( {cid, params} ) {
       subtitle: getConstraints(minChars),
       organizationName: getConstraints(minChars),
       author: getConstraints(minChars),
+      version: getConstraints(minChars),
 
-      displays: z.array(z.string()).refine((value) => value.some((item) => item), {
-        message: t("SelectOnItem"),
-      }),
+      displayOptions: z.array(z.string()).optional(),
+//      displayOptions: z.array(z.string()).refine((value) => value?.some((item) => item), {
+//        message: t("SelectOnItem"),
+//      }),
 
       logo: getConstraints(minChars),
       backgroundImage: getConstraints(minChars),
@@ -63,11 +65,12 @@ export default function PDFExportForm( {cid, params} ) {
         subtitle: params?.subtitle,
         organizationName: params?.organizationName,
         author: params?.author,
+        version: params?.version,
   
 //        displays: z.array(z.string()).refine((value) => value.some((item) => item), {
 //          message: t("SelectOneItem"),
 //        }),
-        displays: [],
+        displayOptions: [],
 
         logo: params?.logo,
         backgroundImage: params?.backgroundImage,
@@ -153,7 +156,7 @@ export default function PDFExportForm( {cid, params} ) {
               </TabsContent>
 
               <TabsContent value="display" className={defaultTabsContentLayout}>
-                {UFC.getFormField(form, "displays", "checkbox")}
+                {UFC.getFormField(form, "displayOptions", "checkbox")}
 
                 {UFC.getFormField(form, "logo", "input")}
                 {UFC.getFormField(form, "backgroundImage", "input")}

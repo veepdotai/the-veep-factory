@@ -325,7 +325,7 @@ export function PDFDocument(props) {
     subTitle: props.subTitle,
     featuredImage: props.featuredImage,
     author: props.author || t("DefaultAuthor"),
-    version: props.version || "1.0.0",
+    version: props.version || "1.0.1",
     date: props.date || moment().format("DD/MM/YYYY"),
     imageBg: "https://images.pexels.com/photos/2088205/pexels-photo-2088205.jpeg",
     imageBg2: "https://images.pexels.com/photos/6144105/pexels-photo-6144105.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",

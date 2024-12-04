@@ -17,8 +17,12 @@
   "authorPlaceHolder": "",
   "authorDesc": "",
 
-  "DisplayOptionsLabel": "Display options",
-  "DisplayOptionsDesc": "Select options you want to enable",
+  "versionLabel": "Version",
+  "versionPlaceHolder": "",
+  "versionDesc": "",
+
+  "displayOptionsLabel": "Display options",
+  "displayOptionsDesc": "Select options you want to enable",
 
   "displayHeaderLabel": "Display header",
   "displayHeaderPlaceHolder": "",

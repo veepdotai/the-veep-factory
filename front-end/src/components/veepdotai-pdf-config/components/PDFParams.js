@@ -51,7 +51,7 @@ export default class PDFParams {
         this.toc = params?.toc || true
 
         this.author = params?.author || t("DefaultAuthor") 
-        this.version = params?.version  || t("DefaultVersionNumber") || "1.0.0"
+        this.version = params?.version  || t("DefaultVersionNumber") || "1.0.2"
         this.date = params?.date || moment().format("DD/MM/YYYY")
         this.footer = params?.footer || t("DefaultFooterContent")
 

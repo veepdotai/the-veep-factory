@@ -150,14 +150,14 @@ export const UtilsFormCommon = {
                 render={() => (
                     <FormItem>
                         <div className="mb-4">
-                            <FormLabel className="text-base">{t("DisplayOptionsLabel")}</FormLabel>
-                            <FormDescription>{t("DisplayOptionsDesc")}</FormDescription>
+                            <FormLabel className="text-base">{t("displayOptionsLabel")}</FormLabel>
+                            <FormDescription>{t("displayOptionsDesc")}</FormDescription>
                         </div>
                         {items.map((item) => (
                             <FormField
                                 key={item.id}
                                 control={form.control}
-                                name="displays"
+                                name="displayOptions"
                                 render={({field}) => {
                                     log(`fields: ${JSON.stringify(field)}`)
                                     return (
@@ -167,7 +167,7 @@ export const UtilsFormCommon = {
                                         >
                                             <FormControl>
                                                 <Checkbox
-                                                    checked={field.value.includes(item.id)}
+                                                    checked={field.value?.includes(item.id)}
                                                     onCheckedChange={(checked) => {
                                                         if (checked) {
                                                             if (field.value) {
@@ -177,9 +177,7 @@ export const UtilsFormCommon = {
                                                             }
                                                         } else {
                                                             field.onChange(
-                                                                field.value?.filter(
-                                                                    (value) => value !== item.id
-                                                                )
+                                                                field.value?.filter((value) => value !== item.id)
                                                             )
                                                         }
                                                     }}
@@ -197,20 +195,6 @@ export const UtilsFormCommon = {
                     </FormItem>
                 )}
             />
-
-            /*
-            return(
-                <div className="flex items-center space-x-2">
-                    <Checkbox id={fieldName} onValueChange={field.onChange} />
-                    <label htmlFor={fieldName} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                        {t(fieldName + "Label")}
-                    </label>
-                    <p className="text-sm text-muted-foreground">
-                        {t(fieldName + "PlaceHolder")}
-                    </p>
-                </div>
-            )
-            */
 
             return f
         } else if (fieldType === "combobox") {

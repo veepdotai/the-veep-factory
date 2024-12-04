@@ -54,6 +54,7 @@ export function PDFDocument({content, params}) {
     title: params?.title,
     subTitle: params?.subTitle || params?.subtitle,
     featuredImage: params?.companyImg,
+    organizationName: params?.organizationName,
     author: params?.author,
     version: params?.version,
     date: params?.date,
