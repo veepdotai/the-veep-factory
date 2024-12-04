@@ -223,7 +223,7 @@ export default function AllCards( { type, title, formScreen = null, cat = null, 
         display ? 
           <>
             <Card className='mt-2'>
-              <Card.Header>{title} X</Card.Header>
+              <Card.Header>{title}</Card.Header>
               <Card.Body>
                 { directory ?
                 <>
@@ -235,7 +235,10 @@ export default function AllCards( { type, title, formScreen = null, cat = null, 
                       <Row>
                         <Col className="pt">
                           <Nav variant="underline">
-                            {displayNav(getCategories(directory, cat), defaultEventKey)}
+                            <ScrollArea className="w-full rounded-md border">
+                              {displayNav(getCategories(directory, cat), defaultEventKey)}
+                              <ScrollBar orientation="horizontal" />
+                            </ScrollArea>
                           </Nav>
                         </Col>
                       </Row>
