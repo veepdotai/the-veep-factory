@@ -111,7 +111,10 @@ export default function initAppJSLogs(level = "NONE") {
     localStorage.setItem('UploadLib', level);
     localStorage.setItem('EditorialLineForm', level);
 
+    localStorage.setItem('VeepletModel', level);
+
     localStorage.setItem('getColumns', level);
+    localStorage.setItem('UtilsForm', level);
     localStorage.setItem('UtilsFormCommon', level);
 
 }
