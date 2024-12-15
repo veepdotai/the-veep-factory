@@ -8,7 +8,6 @@ import { UtilsMenu } from 'src/components/lib/utils-menu'
 import MenuOptions from './MenuOptions'
 import MenuItem from './MenuItems/MenuItem'
 import LogoWithLink from "src/components/LogoWithLink"
-import ComboboxWorkspaces from "src/components/ui/ComboboxWorkspaces"
 import { Icons } from '@/constants/Icons'
 
 import { Label } from "@/components/ui/label"
@@ -32,15 +31,15 @@ export default function MenuVertical( {direction, isManager, profile} ) {
     function getMenu(view, menuDefinition) {
         return(
             <>
-                <Accordion type="single" collapsible className="ms-4">
+                <Accordion type="multiple" className="ms-4">
                     {
-                        menuDefinition.map((menu) => {
+                        menuDefinition.map((menu, i) => {
                             if (menu.title == "") {
-                                return menu.items.map(row => row.id == "separator" ? <hr /> : <MenuItem itemKey={row.id} itemLabel={row.label} direction={direction} /> )
+                                return menu.items.map(row => row.id == "separator" ? <hr /> : <MenuItem key={i} itemKey={row.id} itemLabel={row.label} direction={direction} /> )
                             } else {
                                 return getAccordionItem(menu.id, menu.title,
                                     <>
-                                        {menu.items.map(row => row.id == "separator" ? <hr /> : <MenuItem itemKey={row.id} itemLabel={row.label} direction={direction} /> )}
+                                        {menu.items.map(row => row.id == "separator" ? <hr /> : <MenuItem key={i} itemKey={row.id} itemLabel={row.label} direction={direction} /> )}
                                     </>
                                 )       
                             }
@@ -96,7 +95,7 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                     {selectUserLevel()}
                 </div>
 
-                <Accordion className="mt-3" defaultValue="home">
+                <Accordion type="multiple" className="mt-3" defaultValue={["home", "content"]}>
 
                     {/*<MenuItem itemKey="add-content-wizard" itemLabel={t("AddContent")} innerCN=" bg-secondary text-white border border-2" outerCN="mb-2" direction={direction} />*/}
                     {/*<MenuItem itemKey="add-content" itemLabel={t("AddContent")} innerCN="border border-2" outerCN="mb-2" direction={direction} />*/}
@@ -162,6 +161,7 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                                 {getAccordionItem("configuration", getMenuTitle(t("Configuration")),
                                     <>
                                         <MenuItem itemKey="config-pdf" itemLabel={t("PDFConfig")} direction={direction} />
+                                        <MenuItem itemKey="config-post" itemLabel={t("PostConfig")} direction={direction} />
                                     </>
                                 )}
                             </>

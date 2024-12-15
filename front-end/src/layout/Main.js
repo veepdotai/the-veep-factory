@@ -9,6 +9,7 @@ import Logs from "src/components/Logs";
 
 import MyContent from "src/components/screens/mycontent/MyContent";
 import BrandVoiceForm from "src/components/screens/forms/BrandVoiceForm";
+import VContentForm from "src/components/screens/forms/VContentForm";
 import PDFExportForm from "src/components/screens/forms/PDFExportForm";
 import PubTarget from "src/components/screens/PubTarget";
 import EditorialLine from "src/components/screens/EditorialLine";
@@ -95,6 +96,12 @@ export default function Main({credits, current}) {
           <ScreenHeading name="brand-voice" title={t("BrandVoiceTitle")} subtitle={t("BrandVoiceSubtitle")} />
           <Container className='p-2'>
             <BrandVoiceForm />
+          </Container>
+        </Tab.Pane>
+        <Tab.Pane eventKey="config-post">
+          <ScreenHeading name="config-post" title={t("ConfigPost")} subtitle={t("ConfigPostSubtitle")} />
+          <Container className='p-0'>
+            {<VContentForm />}
           </Container>
         </Tab.Pane>
         <Tab.Pane eventKey="editorial-line">

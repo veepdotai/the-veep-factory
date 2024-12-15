@@ -1,6 +1,5 @@
 #!/bin/bash
 
-. ./.env
 . ./back-end/wordpress/bin/generate-wp-config-php.sh
 . ./back-end/wordpress/bin/setup-env.sh
 
