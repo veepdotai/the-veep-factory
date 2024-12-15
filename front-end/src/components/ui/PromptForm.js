@@ -2,14 +2,11 @@
  * When arriving on this screen, the veeplet is not defined yet, only the short
  * definition required by the catalog to display veeplets summary view.
  * 
- * It is only when the user clicks on a veeplet to configure or use it that it
- * is selected.
+ * It is only when the user clicks on a veeplet to configure or use it that it is
+ * selected.
  */
 import { useContext, useEffect, useState } from 'react'
-import { Form, FloatingLabel, Container, NavDropdown, Row, Col, Stack, Dropdown } from 'react-bootstrap'
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-
+import { Form, FloatingLabel, Button, Container, Nav, NavDropdown, Row, Col, Stack, Tab, Tabs, Dropdown } from 'react-bootstrap'
 import { Logger } from 'react-logger-lib'
 import { t } from 'i18next'
 import { useCookies } from 'react-cookie'
@@ -31,7 +28,7 @@ import { ProfileContext } from  "src/context/ProfileProvider"
 import SuspenseClick from '../common/SuspenseClick'
 import Loading from '../common/Loading';
 import { LayoutSidebarInsetReverse } from 'react-bootstrap-icons'
-import DropdownOrNavItem from '../DropdownOrNavItem'
+import DropdownOrNavItem from './PromptForm-DropdownOrNavItem'
 import { useMediaQuery } from 'usehooks-ts'
 
 export default function PromptForm({definition, handleClose}) {
@@ -133,9 +130,7 @@ export default function PromptForm({definition, handleClose}) {
     'prefix': promptPrefix
   }
 
-  function handleSave(e) {
-    e?.preventDefault()
-    
+  function handleSave() {
     let form = document.getElementById("prompt-editor-form");
     let inputFields = [...form.getElementsByTagName("input")];
     let textareaFields = [...form.getElementsByTagName("textarea")];
@@ -221,18 +216,14 @@ export default function PromptForm({definition, handleClose}) {
     return textareaStyleDocumentation;
   }
 
-  function removeOnePrompt(row, e) {
-    e.preventDefault()
-
+  function removeOnePrompt(row) {
     let copy = JSON.parse(JSON.stringify(veepletObject));
     delete copy.prompts[row];
     log.trace("removeOnePromt: veepletObject: " + JSON.stringify(copy));
     setVeepletObject(copy);
   }
 
-  function duplicatePrompt(row, e) {
-    e.preventDefault()
-
+  function duplicatePrompt(row) {
     let name = EKeyLib.decode(row);
     let newName = `${name} (${t("aCopy")})`;
     let newEncodedName = EKeyLib.encode(newName);
@@ -245,9 +236,7 @@ export default function PromptForm({definition, handleClose}) {
     setVeepletObject(copy);
   }
 
-  function addOnePrompt(e) {
-    e.preventDefault()
-
+  function addOnePrompt() {
     let copy = JSON.parse(JSON.stringify(veepletObject));
     copy.prompts["TmV3"] = {"label": "New"};
     log.trace("addOnePromt: veepletObject: " + JSON.stringify(copy));
@@ -279,250 +268,6 @@ export default function PromptForm({definition, handleClose}) {
     )
   }
 
-  function getInformationTabContent() {
-    return (
-      <Tabs 
-      id="infos-menu"
-      defaultValue="general"
-      className="mb-3">
-              <TabsList className='grid grid-cols-3'>
-                { isDesktop ? getInfoLinks()
-                          : <NavDropdown className="w-100" title={t("Select")}>
-                              {getInfoLinks()}
-                            </NavDropdown>        
-                }
-              </TabsList>
-            {/*<Tab.Content>*/}
-              <TabsContent id="general" value="general">
-                <Row>
-                  <Col xs="12" md="6">
-                    {getInput(t("Heading"), 'details.presentation.heading')}
-                    {getInput(t("Name"), 'metadata.name')}
-                    {getInput(t("Status"), 'metadata.publication.status', {
-                      field: 'select:active|inactive|draft|trash'
-                    })}
-                    {getInput(t("Summary"), 'metadata.summary')}
-                  </Col>
-                  <Col xs="12" md="6">
-                    {getInput(t("Group"), 'metadata.classification.group')}
-                    {getInput(t("Category"), 'metadata.classification.category')}
-                    {getInput(t("SubCategory"), 'metadata.classification.subCategory')}
-                  </Col>
-                </Row>
-                {getInput(t("Tips1"), 'details.presentation.tips1', {field: 'textarea'})}
-                {getInput(t("Tips2"), 'details.presentation.tips2', {field: 'textarea'})}
-              </TabsContent>
-    {/*
-              <TabsContent value="classification">
-                {getInput(t("Group"), 'metadata.classification.group')}
-                {getInput(t("Category"), 'metadata.classification.category')}
-                {getInput(t("SubCategory"), 'metadata.classification.subCategory')}
-              </TabsContent>
-    */}
-              <TabsContent id="looknfeel" value="looknfeel" title={t("Colors")}>
-                <Row>
-                  <Col xs={12} md={6} className='fs-6'>
-                    <Container>
-                      {t("Header")}
-                      {getInput(t("FontColor"), `details.ui.HeaderColor`, {field: "color", defaultValue: "white"})}
-                      {getInput(t("BgColorFrom"), `details.ui.HeaderBgColorFrom`, {field: "color", defaultValue: "black"})}
-                    </Container>
-                  </Col>
-                  <Col xs={12} md={6} className='fs-6'>
-                    <Container>
-                      {t("Body")}
-                      {looknfeel("body", definition)}
-                    </Container>
-                  </Col>
-                </Row>
-
-    {/*
-                <Tabs
-                  defaultActiveKey="header"
-                  id="looknfeel-tab"
-                  className="mb-3"
-                  >
-                  <Row>
-                    <Col xs={3}>
-                      <Nav variant="pills" className="flex-column">
-                        <Nav.Item>
-                          <Nav.Link eventKey="header">{t("Header")}</Nav.Link>
-                        </Nav.Item>
-                        <Nav.Item>
-                          <Nav.Link eventKey="body">{t("Body")}</Nav.Link>
-                        </Nav.Item>
-                      </Nav>
-                    </Col>
-                    <Col>
-                      <Tab.Content>
-                        <TabsContent eventKey="header">
-                          {looknfeel("header", definition)}
-                        </TabsContent>
-                        <TabsContent eventKey="body">
-                          {looknfeel("body", definition)}
-                        </TabsContent>
-                      </Tab.Content>
-                    </Col>
-                  </Row>
-                </Tabs>
-    */}
-              </TabsContent>
-              <TabsContent value="system">
-                {getInput(t("Version"), 'metadata.version')}
-                {getInput(t("CreationDate"), 'owner.creationDate')}
-                {getInput(t("Reviews"), 'metadata.reviews')}
-                {getInput(t("Effort"), 'metadata.effort')}
-                {getInput(t("authorId"), 'owner.authorId')}
-                {getInput(t("OrgId"), 'owner.orgId')}
-                {getInput(t("Scope"), 'metadata.publication.scope', {
-                  field: 'select:public|personal|private'
-                })}
-                {getInput(t("Schema"), 'metadata.schema')}
-              </TabsContent>
-            {/*</Tab.Content>*/}
-      </Tabs>
-    )
-  }
-
-  function getChainTabContent() {
-    return (
-      <>
-        {/*<FormRepeater />*/}
-        {getInput(t("PromptsChain"), 'prompts.chain', {required: true})}
-        <Tabs
-          //defaultActiveKey={veepletObject.prompts.g1.label}
-          //defaultActiveKey="__prompt__FiRsT__"
-          //defaultActiveKey={Object.keys(getPrompts())[1]}
-          defaultValue={activePromptKey}
-          onSelect={(k) => setActivePromptKey(k)}
-          //defaultActiveKey="__prompt__FiRsT__"
-          id="prompt-tab"
-          className="mb-3"
-        >
-          <Row>
-            <Col xs={12} lg={3}>
-                <TabsList className="bg-transparent flex-col">
-              {
-                Object.keys(getPrompts()).map((row, i) => {
-                  log.trace("render: row tabname: " + row + ", i: " + i);
-                  //let eventKey = i;
-                  let eventKey = i == 1 ? row : row;
-                  //let eventKey = i == 1 ? "__prompt__FiRsT__" : row;
-                  //let eventKey = i == 1 ? "__prompt__FiRsT__" : "rowIs" + i;
-                  if (i > 0) { // i == 0 => prompts.chain
-                    return (
-                      <Stack key={eventKey} direction="horizontal" gap={3}>
-                        <TabsTrigger class="m-0" value={eventKey}>
-                            <div class="w-[200px] text-left flex-1 inline-block align-middle">{veepletObject.prompts[row].label}</div>
-                            <Button variant="secondary" className="ms-auto bg-transparent inline-block align-middle" onClick={(e) => duplicatePrompt(row, e)}>
-                              {Icons.copy}
-                            </Button>
-                            <Button variant="secondary" className="ms-auto bg-transparent inline-block align-middle" onClick={(e) => removeOnePrompt(row, e)}>
-                              {Icons.delete}
-                            </Button>
-                        </TabsTrigger>
-                      </Stack>
-                    )
-                  }
-              })}
-                    <Stack direction="horizontal" gap={3}>
-                      <div class="m-0">
-                        <div class="w-[200px] text-left flex-1 inline-block align-middle">{t("AddPrompt")}</div>
-                        <Button variant="secondary" className="bg-transparent ms-auto inline-block align-middle" onClick={(e) => { addOnePrompt(e)}}>
-                          {Icons['add-content']}
-                        </Button>
-                      </div>
-                    </Stack>
-                  </TabsList>
-            </Col>
-            <Col>
-              {/*<Tab.Content>*/}
-                {
-                  Object.keys(getPrompts()).map((row, i) => {
-                    log.trace("render: row tab: " + row + ", i: " + i);
-                    //let eventKey = i;
-                    let eventKey = i == 1 ? row : row;
-                    //let eventKey = i == 1 ? "__prompt__FiRsT__" : row;
-                    //let eventKey = i == 1 ? "__prompt__FiRsT__" : "rowIs" + i;
-                    if (i > 0) {
-                      return (
-                        <TabsContent key={eventKey} value={eventKey}>
-                          <Row>
-                            <Col xs={12} lg={3}>
-                              {getInput(t("Label"), `prompts.${row}.label`, {required: true})}
-                              {getInput(t("Role"), `prompts.${row}.role`, {
-                                field: 'textarea', style: {
-                                  height: '200px'
-                                }
-                              })}
-                            </Col>
-                            <Col xs={12} lg={6}>
-                              {getInput(t("Prompt"), `prompts.${row}.prompt`, getTextareaStyle("300px"))}
-                            </Col>
-                            <Col xs={12} lg={3}>
-                              {getInput(t("LLM"), `prompts.${row}.llm`, {field: 'select:'
-                                + 'openai-gpt-4|openai-gpt-4-0125-preview|openai-gpt-4-1106-preview'
-                                + '|mistral-mistral-tiny|mistral-mistral-small|mistral-mistral-medium'
-                              })}
-                              <Row>
-                                <Col>{getInput(t("TopP"), `prompts.${row}.top_p`)}</Col>
-                                <Col>{getInput(t("Temperature"), `prompts.${row}.temperature`)}</Col>
-                              </Row>
-                              <Row>
-                                <Col>{getInput(t("FrequencyPenalty"), `prompts.${row}.frequency_penalty`)}</Col>
-                                <Col>{getInput(t("PresencePenalty"), `prompts.${row}.presence_penalty`)}</Col>
-                              </Row>
-                            </Col>
-                          </Row>
-                        </TabsContent>
-                        )                              
-                      }
-                    })
-                }
-              {/*</Tab.Content>*/}
-            </Col>
-          </Row>
-        </Tabs>
-      </>
-    )
-  }
-
-  function getDocumentationTabContent() {
-    return (
-      <Tabs
-      orientation="vertical"
-      defaultValue="userManual"
-      id="documentation-tab"
-      className="mb-3"
-      >
-              <TabsList className='grid grid-cols-5'>
-                { isDesktop ? getDocLinks()
-                      : <NavDropdown className="w-100" title={t("Select")}>
-                          {getDocLinks()}
-                        </NavDropdown>        
-                }
-              </TabsList>
-            {/*<Tab.Content>*/}
-              <TabsContent value="userManual">
-                {getInput(t("UserManual"), "details.info.userManual", getTextareaStyle("300px"))}
-              </TabsContent>
-              <TabsContent value="adminManual">
-                {getInput(t("AdminManual"), "details.info.adminManual", getTextareaStyle("300px"))}
-              </TabsContent>
-              <TabsContent value="devManual">
-                {getInput(t("DevManual"), "details.info.devManual", getTextareaStyle("300px"))}
-              </TabsContent>
-              <TabsContent value="faq">
-                {getInput(t("FAQ"), "details.info.faq", getTextareaStyle("300px"))}
-              </TabsContent>
-              <TabsContent value="changelog">
-                {getInput(t("ChangeLog"), "details.info.changelog", getTextareaStyle("300px"))}
-              </TabsContent>
-            {/*</Tab.Content>*/}
-      </Tabs>
-    )
-  }
-  
   let hPrompts = ! isDesktop ? {
     height: "150px",
     flexWrap: "nowrap",
@@ -534,14 +279,12 @@ export default function PromptForm({definition, handleClose}) {
   } : {}
 
   let hInfos = {
-    /*
     display: "flex",
     flexDirection: "row",
     overflow: "auto",
     flexWrap: "nowrap",
     textOverflow: "clip",
     whiteSpace: "nowrap"
-    */
   }
 
   useEffect(() => {
@@ -578,30 +321,260 @@ export default function PromptForm({definition, handleClose}) {
             <Form>
               <Tabs
                 variant='underline'
-                defaultValue="informations"
+                defaultActiveKey="informations"
                 id="promptform-menu"
                 style={hInfos}
                 className="mb-3"
               >
-                <TabsList className='grid grid-cols-3'>
-                  <TabsTrigger value="informations">{t("Informations")}</TabsTrigger>
-                  <TabsTrigger value="chain">{t("PromptsChain")}</TabsTrigger>
-                  <TabsTrigger value="documentation">{t("Documentation")}</TabsTrigger>
-                </TabsList>
+                <Tab id="promptform-menu-informations" eventKey="informations" title={t("Informations")}>
+                  <Tab.Container 
+                      id="infos-menu"
+                      defaultActiveKey="general"
+                      className="mb-3">
+                    <Row>
+                      <Col xs={12} md={3}>
+                        <Nav variant="pills" className="clearfix flex-column">
+                          { isDesktop ? getInfoLinks()
+                                    : <NavDropdown className="w-100" title={t("Select")}>
+                                        {getInfoLinks()}
+                                      </NavDropdown>        
+                          }
+                        </Nav>
+                      </Col>
+                      <Col>
+                        <Tab.Content>
+                          <Tab.Pane id="general" eventKey="general">
+                            <Row>
+                              <Col xs="12" md="6">
+                                {getInput(t("Heading"), 'details.presentation.heading')}
+                                {getInput(t("Name"), 'metadata.name')}
+                                {getInput(t("Status"), 'metadata.publication.status', {
+                                  field: 'select:active|inactive|draft|trash'
+                                })}
+                                {getInput(t("Summary"), 'metadata.summary')}
+                              </Col>
+                              <Col xs="12" md="6">
+                                {getInput(t("Group"), 'metadata.classification.group')}
+                                {getInput(t("Category"), 'metadata.classification.category')}
+                                {getInput(t("SubCategory"), 'metadata.classification.subCategory')}
+                              </Col>
+                            </Row>
+                            {getInput(t("Tips1"), 'details.presentation.tips1', {field: 'textarea'})}
+                            {getInput(t("Tips2"), 'details.presentation.tips2', {field: 'textarea'})}
+                          </Tab.Pane>
+{/*
+                          <Tab.Pane eventKey="classification">
+                            {getInput(t("Group"), 'metadata.classification.group')}
+                            {getInput(t("Category"), 'metadata.classification.category')}
+                            {getInput(t("SubCategory"), 'metadata.classification.subCategory')}
+                          </Tab.Pane>
+*/}
+                          <Tab.Pane id="looknfeel" eventKey="looknfeel" title={t("Colors")}>
+                            <Row>
+                              <Col xs={12} md={6} className='fs-6'>
+                                <Container>
+                                  {t("Header")}
+                                  {getInput(t("FontColor"), `details.ui.HeaderColor`, {field: "color", defaultValue: "white"})}
+                                  {getInput(t("BgColorFrom"), `details.ui.HeaderBgColorFrom`, {field: "color", defaultValue: "black"})}
+                                </Container>
+                              </Col>
+                              <Col xs={12} md={6} className='fs-6'>
+                                <Container>
+                                  {t("Body")}
+                                  {looknfeel("body", definition)}
+                                </Container>
+                              </Col>
+                            </Row>
 
-                <TabsContent value="informations" title={t("Informations")}>
-                  {getInformationTabContent()}
-                </TabsContent>
-                <TabsContent value="chain" title={t("PromptsChain")}>
-                  {getChainTabContent()}
+{/*
+                            <Tab.Container
+                              defaultActiveKey="header"
+                              id="looknfeel-tab"
+                              className="mb-3"
+                              >
+                              <Row>
+                                <Col xs={3}>
+                                  <Nav variant="pills" className="flex-column">
+                                    <Nav.Item>
+                                      <Nav.Link eventKey="header">{t("Header")}</Nav.Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                      <Nav.Link eventKey="body">{t("Body")}</Nav.Link>
+                                    </Nav.Item>
+                                  </Nav>
+                                </Col>
+                                <Col>
+                                  <Tab.Content>
+                                    <Tab.Pane eventKey="header">
+                                      {looknfeel("header", definition)}
+                                    </Tab.Pane>
+                                    <Tab.Pane eventKey="body">
+                                      {looknfeel("body", definition)}
+                                    </Tab.Pane>
+                                  </Tab.Content>
+                                </Col>
+                              </Row>
+                            </Tab.Container>
+*/}
+                          </Tab.Pane>
+                          <Tab.Pane id="system" eventKey="system">
+                            {getInput(t("Version"), 'metadata.version')}
+                            {getInput(t("CreationDate"), 'owner.creationDate')}
+                            {getInput(t("Reviews"), 'metadata.reviews')}
+                            {getInput(t("Effort"), 'metadata.effort')}
+                            {getInput(t("authorId"), 'owner.authorId')}
+                            {getInput(t("OrgId"), 'owner.orgId')}
+                            {getInput(t("Scope"), 'metadata.publication.scope', {
+                              field: 'select:public|personal|private'
+                            })}
+                            {getInput(t("Schema"), 'metadata.schema')}
+                          </Tab.Pane>
+                        </Tab.Content>
+                      </Col>
+                    </Row>
+                  </Tab.Container>
+                </Tab>
+                <Tab id="chain" eventKey="chain" title={t("PromptsChain")}>
+                  {/*<FormRepeater />*/}
+                  {getInput(t("PromptsChain"), 'prompts.chain', {required: true})}
+                  <Tab.Container
+                    //defaultActiveKey={veepletObject.prompts.g1.label}
+                    //defaultActiveKey="__prompt__FiRsT__"
+                    //defaultActiveKey={Object.keys(getPrompts())[1]}
+                    activeKey={activePromptKey}
+                    onSelect={(k) => setActivePromptKey(k)}
+                    //defaultActiveKey="__prompt__FiRsT__"
+                    id="prompt-tab"
+                    className="mb-3"
+                  >
+                    <Row>
+                      <Col xs={12} lg={3}>
+                        <Nav style={hPrompts} variant="pills" className="flex-column">
+                        {
+                          Object.keys(getPrompts()).map((row, i) => {
+                            log.trace("render: row tabname: " + row + ", i: " + i);
+                            //let eventKey = i;
+                            let eventKey = i == 1 ? row : row;
+                            //let eventKey = i == 1 ? "__prompt__FiRsT__" : row;
+                            //let eventKey = i == 1 ? "__prompt__FiRsT__" : "rowIs" + i;
+                            if (i > 0) { // i == 0 => prompts.chain
+                              return (
+                                <Stack key={eventKey} direction="horizontal" gap={3}>
+                                  <Nav.Item className="w-100">
+                                    <Nav.Link eventKey={eventKey}>
+                                          <div>{veepletObject.prompts[row].label}</div>
+                                    </Nav.Link>
+                                  </Nav.Item>
+                                  <Button variant="outline-primary" className="ms-auto" onClick={(e) => duplicatePrompt(row)}>
+                                    {Icons.copy}
+                                  </Button>
+                                  <Button variant="outline-primary" className="ms-auto" onClick={(e) => removeOnePrompt(row)}>
+                                    {Icons.delete}
+                                  </Button>
+                                </Stack>
+                              )
+                            }
+                        })}
+                            <Stack direction="horizontal" gap={3}>
+                              <div>{t("AddPrompt")}</div>
+                              <Button variant="outline-primary" className="ms-auto" onClick={(e) => addOnePrompt()}>
+                                    {Icons['add-content']}
+                              </Button>
+                            </Stack>
+                        </Nav>
+                      </Col>
+                      <Col>
+                        <Tab.Content>
+                          {
+                            Object.keys(getPrompts()).map((row, i) => {
+                              log.trace("render: row tab: " + row + ", i: " + i);
+                              //let eventKey = i;
+                              let eventKey = i == 1 ? row : row;
+                              //let eventKey = i == 1 ? "__prompt__FiRsT__" : row;
+                              //let eventKey = i == 1 ? "__prompt__FiRsT__" : "rowIs" + i;
+                              if (i > 0) {
+                                return (
+                                  <Tab.Pane key={eventKey} eventKey={eventKey}>
+                                    <Row>
+                                      <Col xs={12} lg={3}>
+                                        {getInput(t("Label"), `prompts.${row}.label`, {required: true})}
+                                        {getInput(t("Role"), `prompts.${row}.role`, {
+                                          field: 'textarea', style: {
+                                            height: '200px'
+                                          }
+                                        })}
+                                      </Col>
+                                      <Col xs={12} lg={6}>
+                                        {getInput(t("Prompt"), `prompts.${row}.prompt`, getTextareaStyle("300px"))}
+                                      </Col>
+                                      <Col xs={12} lg={3}>
+                                        {getInput(t("LLM"), `prompts.${row}.llm`, {field: 'select:'
+                                          + 'openai-gpt-4|openai-gpt-4-0125-preview|openai-gpt-4-1106-preview'
+                                          + '|mistral-mistral-tiny|mistral-mistral-small|mistral-mistral-medium'
+                                        })}
+                                        <Row>
+                                          <Col>{getInput(t("TopP"), `prompts.${row}.top_p`)}</Col>
+                                          <Col>{getInput(t("Temperature"), `prompts.${row}.temperature`)}</Col>
+                                        </Row>
+                                        <Row>
+                                          <Col>{getInput(t("FrequencyPenalty"), `prompts.${row}.frequency_penalty`)}</Col>
+                                          <Col>{getInput(t("PresencePenalty"), `prompts.${row}.presence_penalty`)}</Col>
+                                        </Row>
+                                      </Col>
+                                    </Row>
+                                  </Tab.Pane>
+                                  )                              
+                                }
+                              })
+                          }
+                        </Tab.Content>
+                      </Col>
+                    </Row>
+                  </Tab.Container>
+
                   {/*getInput(t("PromptsChain"), "promptsChain", {field: 'textarea'})*/}
-                </TabsContent>
-                <TabsContent value="documentation" title={t("Documentation")}>
-                  {getDocumentationTabContent()}
-                </TabsContent>
+                </Tab>
+                <Tab eventKey="documentation" title={t("Documentation")}>
+                  <Tab.Container
+                      defaultActiveKey="userManual"
+                      id="documentation-tab"
+                      className="mb-3"
+                      >
+                      <Row>
+                        <Col xs={12} md={3}>
+                          <Nav variant="pills" className="flex-column">
+                              { isDesktop ? getDocLinks()
+                                    : <NavDropdown className="w-100" title={t("Select")}>
+                                        {getDocLinks()}
+                                      </NavDropdown>        
+                              }
+                          </Nav>
+                        </Col>
+                        <Col>
+                          <Tab.Content>
+                            <Tab.Pane eventKey="userManual">
+                              {getInput(t("UserManual"), "details.info.userManual", getTextareaStyle("300px"))}
+                            </Tab.Pane>
+                            <Tab.Pane eventKey="adminManual">
+                              {getInput(t("AdminManual"), "details.info.adminManual", getTextareaStyle("300px"))}
+                            </Tab.Pane>
+                            <Tab.Pane eventKey="devManual">
+                              {getInput(t("DevManual"), "details.info.devManual", getTextareaStyle("300px"))}
+                            </Tab.Pane>
+                            <Tab.Pane eventKey="faq">
+                              {getInput(t("FAQ"), "details.info.faq", getTextareaStyle("300px"))}
+                            </Tab.Pane>
+                            <Tab.Pane eventKey="changelog">
+                              {getInput(t("ChangeLog"), "details.info.changelog", getTextareaStyle("300px"))}
+                            </Tab.Pane>
+                          </Tab.Content>
+                        </Col>
+                      </Row>
+                    </Tab.Container>
+                </Tab>
               </Tabs>
               <Container className="text-end">
-                <Button className="m-2" onClick={(e) => handleClose(e)}>{t("Menu.Cancel")}</Button>
+                <Button className="m-2" onClick={handleClose}>{t("Menu.Cancel")}</Button>
                 {/*<Button onClick={handleSave}>{t("Save")}</Button>*/}
                 <SuspenseClick waiting={saving} disabled={disabledSaveButton} handleAction={handleSave} label={t("Menu.Save")} />
               </Container>
