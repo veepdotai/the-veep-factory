@@ -52,7 +52,7 @@ export default function MyContentDetails( { id }) {
   const [mainNode, setMainNode] = useState();
   const [contentId, setContentId] = useState();
   const [data, setData] = useState(null);
-  const [width, setWidth] = useState(4);
+  const [width, setWidth] = useState(1);
   const [prompt, setPrompt] = useState(null);
   const [selectedFormat, setSelectedFormat] = useState("PDF");
 
@@ -110,7 +110,7 @@ export default function MyContentDetails( { id }) {
           <ScrollArea className="w-100 whitespace-nowrap h-full">
             <ScrollBar orientation="vertical" />
 
-            {MyContentDetailsUtils.getColumnsSelectors([1, 2, 3, 4, 6], setWidth)}
+            {MyContentDetailsUtils.getColumnsSelectors([1,3,5], setWidth)}
             <Row className="px-4">
               {MyContentDetailsUtils.getSideBySideView(prompt, data, contentId, width)}                          
             </Row>

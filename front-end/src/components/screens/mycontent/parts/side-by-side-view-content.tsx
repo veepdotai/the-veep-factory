@@ -1,9 +1,10 @@
-import { Col } from 'react-bootstrap';
 import { Logger } from 'react-logger-lib';
-import md5 from 'js-md5';
+
 import parse from 'html-react-parser';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { Col, Row } from 'react-bootstrap';
+import { ScrollArea, ScrollBar } from '@/src/components/ui/shadcn/scroll-area';
 
 import EKeyLib from '../../../lib/util-ekey';
 
@@ -12,8 +13,9 @@ import Veeplet from '../../../lib/class-veeplet'
 import Content from '../Content';
 import MyContentDetailsUtils from '../MyContentDetailsUtils';
 import { PlateEditor } from '../../PlateEditor';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/src/components/ui/shadcn/carousel';
 
-export default function SideBySideViewContent( { prompt, data, cid, width = 6 } ) {
+export default function SideBySideViewContent( { prompt, data, cid, width = 1 } ) {
     const log = Logger.of(SideBySideViewContent.name)
 
     function format(_content, _parse = false) {
@@ -57,35 +59,43 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 6 } 
         let _content = node?.content ? node.content : node
         let lcid = node?.cid ? node.cid : cid
 
+        let max = ["xl", "lg", "md", "sm", "xs"]
         return (
-          <Col className='p-1 h-100' xs={12} lg={width}>
-            <Content
-              contentId={lcid}
-              attrName={attrName}
-              title={title}
-              
-              raw={_content}
-              contentAsText={format(_content)}
-              contentAsText2CRLF={_content}
-              contentAsHtml={parse(format(_content))}
-            >
-            { false ?
-              <Markdown remarkPlugins={[remarkGfm]}>{_content}</Markdown>
-              :
-              <>
-              {/* Could be replaced by PlateEditor: <EditorHome attrName={attrName} markdown={_content} contentEditableClassName={"details-" + md5(title)} />*/}
-                <div className="p-0 bg-neutral-100">
-                  <PlateEditor className="p-0" view="Advanced" input={_content} contentId={lcid} attrName={attrName}>
-                  </PlateEditor>
-                </div>      
-              </>
-            }
-            </Content>
-          </Col>
+          <CarouselItem key={i} className={`pl-1 off-basis-1/${width} flex justify-center items-center max-w-${max[width - 1]}`}>
+            <div className={`h-[800px]`}>
+                <Content className={`p-1`}
+                  contentId={lcid}
+                  attrName={attrName}
+                  title={title}
+                  
+                  raw={_content}
+                  contentAsText={format(_content)}
+                  contentAsText2CRLF={_content}
+                  contentAsHtml={parse(format(_content))}
+                >
+                  <div className="p-0 bg-neutral-100">
+                      <PlateEditor className="p-0" view="Advanced" input={_content} contentId={lcid} attrName={attrName}>
+                      </PlateEditor>
+                  </div>
+              </Content>
+            </div>
+          </CarouselItem>
+
         )
       });
 
-      return r;
+      return (
+        <div className={`p-1`}>
+        {/*<div className={`p-1 w-1/${width} flex overflow-x-auto space-x-2`}>*/}
+          <Carousel opts={{align: "start",}} className="w-full max-w-screen-full">
+            <CarouselContent className="-ml-1 flex flex-row">
+              {r}
+            </CarouselContent>
+            <CarouselPrevious className='absolute left-none right-[5rem] top-0'/>
+            <CarouselNext className='absolute right-[2rem] top-0'/>
+          </Carousel>
+        </div>
+      );
     } else {
       return (<></>);
     }

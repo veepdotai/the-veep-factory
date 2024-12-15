@@ -4,6 +4,7 @@ import { t } from 'i18next'
 
 import { ToggleGroup, ToggleGroupItem } from "src/components/ui/shadcn/toggle-group"
 import { Popover, PopoverContent, PopoverTrigger } from 'src/components/ui/shadcn/popover'
+import { ScrollArea, ScrollBar } from 'src/components/ui/shadcn/scroll-area'
 
 import MergedContent from './parts/MergedContent'
 import AllStepsOneByOneContent from './parts/all-steps-one-by-one'
@@ -149,7 +150,7 @@ export default class MyContentDetailsUtils {
           :
             <ToggleGroup type="single">
               {columns.map((nb) => 
-                <ToggleGroupItem value={nb} onClick={(e) => setWidth(12/nb)}>{nb}</ToggleGroupItem>
+                <ToggleGroupItem value={nb} onClick={(e) => setWidth(nb)}>{nb}</ToggleGroupItem>
               )}
             </ToggleGroup>
         }
@@ -176,8 +177,16 @@ export default class MyContentDetailsUtils {
     return (<AllStepsOneByOneContent prompt={prompt} data={data} cid={cid} />)
   }
 
-  static getSideBySideView(prompt, data, cid, width = 6) {
-    return (<SideBySideViewContent prompt={prompt} data={data} cid={cid} width={width} />)
+  static getSideBySideView(prompt, data, cid, width = 1) {
+    return (
+      <>
+        {/*<ScrollArea className="w-100 whitespace-nowrap">
+          <ScrollBar orientation="horizontal" />
+          */}
+          <SideBySideViewContent prompt={prompt} data={data} cid={cid} width={width} />
+        {/*</ScrollArea>*/}
+      </>
+    )
   }
 
   static getTranscriptionContent(cid, data) {
