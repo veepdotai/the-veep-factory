@@ -6,6 +6,7 @@ const nextConfig = {
     distDir: 'dist',
     output: 'export',
     trailingSlash: true,
+    //compress: false,
     images: {
         unoptimized: true
     },
@@ -13,6 +14,7 @@ const nextConfig = {
     webpack: (config) => {
       config.resolve.fallback = { fs: false };
       config.resolve.symlinks = true
+      //config.optimization.minimize = false
       return config;
     },
     "typescript": {
