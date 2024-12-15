@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Logger } from 'react-logger-lib';
 import { t } from 'i18next'
+import { ScrollArea, ScrollBar } from '@/src/components/ui/shadcn/scroll-area';
 
 import { withProps } from '@udecode/cn';
 import { createPlateEditor, Plate, ParagraphPlugin, PlateElement, PlateLeaf } from '@udecode/plate-common/react';
@@ -100,7 +101,7 @@ import { Utils } from 'src/components/lib/utils'
  * @param (String | String[]) input provided as markdown or CRT. If markdown then converted in CRT 
  * @returns Plate editor with provided plugins
  */
-export function PlateEditor( {input, contentId = null, attrName = null, custom = null, cn = "w-full"} ) {
+export function PlateEditor( {input, contentId = null, attrName = null, custom = null, cn = "w-full", viewType = "scroll"} ) {
   const log = Logger.of("PlaceEditor")
 
   const [content, setContent] = useState([])
@@ -300,6 +301,15 @@ export function PlateEditor( {input, contentId = null, attrName = null, custom =
     }
   }
 
+  function getEditorElement() {
+    return (
+      <Editor
+        style={editorWindowSpacing}
+        className={`${cn} mx-auto mt-2 rounded-none focus-visible:ring-none focus-visible:ring-1 focus-visible:ring-offset-0`}
+      />
+    )
+  }
+
   log.trace("input: " + input)
 
   let editor
@@ -345,11 +355,16 @@ export function PlateEditor( {input, contentId = null, attrName = null, custom =
                 <FixedToolbar>
                   <FixedToolbarButtons operations={operations} />
                 </FixedToolbar>
-                <Editor
-                  style={editorWindowSpacing}
-                  className={`${cn} mx-auto mt-2 rounded-none focus-visible:ring-none focus-visible:ring-1 focus-visible:ring-offset-0`}
-                />
-                
+
+                {"scroll" == viewType ?
+                    <ScrollArea type='auto' className="w-100 whitespace-nowrap h-auto">
+                      <ScrollBar orientation="vertical" />              
+                      {getEditorElement()}
+                    </ScrollArea>
+                  :
+                    <>{getEditorElement()}</>
+                }
+
               <FloatingToolbar>
                 <FloatingToolbarButtons />
               </FloatingToolbar>
