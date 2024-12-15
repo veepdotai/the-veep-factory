@@ -15,22 +15,21 @@ import { Form, } from "src/components/ui/shadcn/form"
 import { Tabs, TabsContent, TabsList, TabsTrigger, } from "src/components/ui/shadcn/tabs"
 import { UtilsGraphQL } from '../../../api/utils-graphql'
 
-import { PDFExportModel } from "./DataModel"
+import { VContentModel } from './DataModel'
 
 import Loading from 'src/components/common/Loading'
 
-export default function PDFExportForm( {cid, params} ) {
-    const log = Logger.of(PDFExportForm.name);
+export default function VContentForm( {cid, params} ) {
+    const log = Logger.of(VContentForm.name);
 
     const graphqlURI = Constants.WORDPRESS_GRAPHQL_ENDPOINT;
     const [cookies] = useCookies(['JWT']);
   
     const { toast } = useToast()
 
-    const name = "pdfExport"
-    const topic = "PDF_EXPORT_DATA_FETCHED"
+    const topic = "VCONTENT_FETCHED"
 
-    let model= PDFExportModel(params)
+    let model= VContentModel(params)
     let form = model.form
 
     let cn = "text-sm font-bold"
@@ -66,6 +65,31 @@ export default function PDFExportForm( {cid, params} ) {
         log.trace(`onSubmit: newParams: ${JSON.stringify(newParams)}`)
         PubSub.publish("INFOS_PANEL_UPDATED", newParams)
         return UFC.onSubmitMetadata(graphqlURI, cookies, cid, data, topic, toast)
+    }
+
+
+    function getDomainValues() {
+      return "draft|waiting|validated|published"
+    }
+
+    function getSubDomainValues() {
+      return "draft|waiting|validated|published"
+    }
+
+    function getCategoryValues() {
+      return "pole-dir-generale|pole-admin-finance|pole-marketing-communication|"
+    }
+
+    function getSubCategoryValues() {
+      return "dir-generale|dir-operations|dir-service-client|dir-rh|dir-commerciale|dir-admin-financier|dir-marketing|dir-maintenance|dir-technique|dir-innovation"
+    }
+
+    function getArtefactTypeValues() {
+      return "case-study|feedback|white-paper|blog-article|blog-post|linkedin-article|linkedin-post"
+    }
+
+    function getStatusValues() {
+      return "draft|waiting|validated|published"
     }
 
     useEffect(() => {
@@ -112,6 +136,18 @@ export default function PDFExportForm( {cid, params} ) {
                 {UFC.getFormField(form, "version", "input")}
                 {UFC.getFormField(form, "organizationName", "input")}
                 {UFC.getFormField(form, "author", "input")}
+
+                {UFC.getFormField(form, "domain", "combobox", getDomainValues(), defaultCBB)}
+                {UFC.getFormField(form, "subDomain", "combobox", getSubDomainValues(), defaultCBB)}
+                {UFC.getFormField(form, "category", "combobox", getCategoryValues(), defaultCBB)}
+                {UFC.getFormField(form, "subCategory", "combobox", getSubCategoryValues(), defaultCBB)}
+                {UFC.getFormField(form, "artefactType", "combobox", getArtefactTypeValues(), defaultCBB)}
+                
+                {UFC.getFormField(form, "status", "combobox", getStatusValues(), defaultCBB)}
+                {UFC.getFormField(form, "pubDate", "input")}
+                {UFC.getFormField(form, "target", "input")}
+                {UFC.getFormField(form, "up", "input")}
+                {UFC.getFormField(form, "down", "input")}
               </TabsContent>
 
               <TabsContent value="display" className={defaultTabsContentLayout}>
