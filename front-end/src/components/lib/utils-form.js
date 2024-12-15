@@ -4,6 +4,7 @@ import { Logger } from 'react-logger-lib'
 import { t } from 'i18next'
 
 import IconPicker from 'react-icons-picker'
+import { UtilsFormCommon } from './utils-form-common'
 
 export const UtilsForm = {
   log: Logger.of("UtilsForm"),
@@ -16,6 +17,25 @@ export const UtilsForm = {
       //xs: 12,
     //md: 3,
     //className: "fw-semibold text-capitalize"
+  },
+
+  getValueRHF: function(form, name, varName, params, veepletObject, handleChange, storeFieldData = null, iconNames = null, setIconNames = null, setDisabledSaveButton = null) {
+    let log = (msg) => UtilsForm.log.trace("getValueRHF: " + msg)
+    let fieldType = params?.field ?? "input";
+    let fieldValues = null
+    if (fieldType.match(/select:/)) {
+      fieldValues = fieldType.replace(/select:/, "")
+      fieldType = "combobox"
+    } else if (fieldType.match(/.*\|.*/)) {
+      fieldValues = fieldType
+      fieldType = "combobox"
+    }
+    
+    //log(`form: ${JSON.stringify(form)}`);
+    log(`varName: ${varName} / type: ${fieldType}`);
+
+    //return "val: " + varName + field
+    return UtilsFormCommon.getFormField(form, varName, fieldType, fieldValues)
   },
 
   /**
@@ -32,24 +52,25 @@ export const UtilsForm = {
    * @returns 
    */
   getValue: function(name, varName, params, veepletObject, handleChange, storeFieldData = null, iconNames = null, setIconNames = null, setDisabledSaveButton = null) {
+    let log = (msg) => UtilsForm.log.trace("getValue: " + msg)
     let field = params?.field ?? "input";
-    this.log.trace(`getValue: varName: ${varName} / typeof ${typeof field}`);
+    log(`varName: ${varName} / typeof ${typeof field}`);
     
     let data = veepletObject;
-    this.log.trace("getValue: veepletObject: " + JSON.stringify(data));
-    this.log.trace("getValue: varName: " + varName);
+    log("veepletObject: " + JSON.stringify(data));
+    log("varName: " + varName);
     let attrs = varName.match(/[a-zA-Z_0-9]+/g)
-    this.log.trace("getValue: attrs: " + JSON.stringify(attrs));
+    log("attrs: " + JSON.stringify(attrs));
 
     for(let i = 0; i < attrs.length; i++) {
-      this.log.trace("getValue: attr: " + attrs[i]);
+      log("attr: " + attrs[i]);
       try {
         data = data[attrs[i]];
       } catch(e) {
         data = "";
       }
     }
-    this.log.trace("getValue: varName / data: " + varName + "/" + JSON.stringify(data));
+    log("varName / data: " + varName + "/" + JSON.stringify(data));
 
     //let id = varName.toLowerCase();
     let id = varName;

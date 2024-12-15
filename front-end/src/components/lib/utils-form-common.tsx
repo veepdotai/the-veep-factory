@@ -11,6 +11,8 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue,} from "src/components/ui/shadcn/select"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, } from "src/components/ui/shadcn/command"
 import { Popover, PopoverContent, PopoverTrigger, } from "src/components/ui/shadcn/popover"
+import { Calendar as CalendarIcon } from "lucide-react" 
+import { Calendar } from "src/components/ui/shadcn/calendar"
 import { Input } from "src/components/ui/shadcn/input"
 import { Textarea } from "src/components/ui/shadcn/textarea"
 import { UtilsGraphQLObject } from '@/src/api/utils-graphql-object'
@@ -257,10 +259,38 @@ export const UtilsFormCommon = {
                     </PopoverContent>
                 </Popover>
             )
+        } else if (fieldType === "date") {
+            const [date, setDate] = useState<Date>()
+ 
+            return (
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-[280px] justify-start text-left font-normal",
+                      !date && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {date ? format(date, "PPP") : <span>Pick a date</span>}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={date}
+                    onSelect={setDate}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+            )
         }
     },
 
     getFormField: function(form, fieldName, fieldType = "input", fieldValues = null, fieldOptions = {}) {
+        let _fieldName = fieldName.replace(/([^\.]*)$/, "$1")
         let fo = fieldOptions
         if (fieldType === "combobox" || fieldType === "checkbox") {
             fo.displayFormLabel = fo.displayFormLabel || false
@@ -272,7 +302,7 @@ export const UtilsFormCommon = {
                 render={({ field }) => (
                     <FormItem>
                         {fo?.displayFormLabel &&
-                            <FormLabel className={`${fo?.cnFormLabel} font-bold text-sm mt-4 pe-2 pb-2`}>{t(fieldName + "Label")}</FormLabel>
+                            <FormLabel className={`${fo?.cnFormLabel} font-bold text-sm mt-4 pe-2 pb-2`}>{t(_fieldName + "Label")}</FormLabel>
                         }
                         {UtilsFormCommon.getFieldType(form, field, fieldName, fieldType, fieldValues, fo)}
                         <FormMessage className="mx-3 mt-3 mb-2 text-xs"/>
