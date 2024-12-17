@@ -30,6 +30,7 @@ export const Icons = {
     share:              <Md.MdOutlineIosShare {...attr} />,
     terminal:           <Md.MdTerminal {...attr} />,
 
+    menu:               <Md.MdMenu {...attr}/>,
     micro:              <Md.MdMic {...attr}/>,
     microphone:         <Md.MdMic {...attr}/>,
     file:               <Md.MdFileUpload {...attr}/>,

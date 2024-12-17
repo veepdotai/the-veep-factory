@@ -1,10 +1,6 @@
 import { Logger } from 'react-logger-lib';
 
 import parse from 'html-react-parser';
-import Markdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import { Col, Row } from 'react-bootstrap';
-import { ScrollArea, ScrollBar } from '@/src/components/ui/shadcn/scroll-area';
 
 import EKeyLib from '../../../lib/util-ekey';
 
@@ -34,7 +30,7 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
 
     function getCarouselItem(content, i) {
       return (
-        <CarouselItem key={i} className={`pl-1 off-basis-1/${width} flex justify-center items-center max-w-${MAX[width - 1]}`}>
+        <CarouselItem key={i} className={`pl-1 flex justify-center items-center max-w-${MAX[width - 1]}`}>
           {content}
         </CarouselItem>
       )
@@ -97,7 +93,7 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
     function getContentWithCarousel(content) {
       return (
         <Carousel opts={{align: "start",}} className="w-full max-w-screen-full">
-          <CarouselContent className="-ml-1 flex flex-row">
+          <CarouselContent className="-ml-1">
             {content}
           </CarouselContent>
           <CarouselPrevious className='absolute left-none right-[5rem] top-0'/>
@@ -132,7 +128,7 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
     }
 
     let chain = Veeplet.getChainAsArray(prompt.prompts.chain);
-    let viewType = "scroll"
+    let viewType = "carousel"
 
     return (
       <>

@@ -95,6 +95,9 @@ export default function MyContentDetails( { id }) {
   }
 
   function getMainContent() {
+
+    let displaySelector = false
+
     return (
       <Tabs className="justify-start h-full" id="mycontent-main" defaultValue="content">
 
@@ -110,7 +113,7 @@ export default function MyContentDetails( { id }) {
           <ScrollArea className="w-100 whitespace-nowrap h-full">
             <ScrollBar orientation="vertical" />
 
-            {MyContentDetailsUtils.getColumnsSelectors([1,3,5], setWidth)}
+            {displaySelector && MyContentDetailsUtils.getColumnsSelectors([1,3,5], setWidth)}
             <Row className="px-4">
               {MyContentDetailsUtils.getSideBySideView(prompt, data, contentId, width)}                          
             </Row>

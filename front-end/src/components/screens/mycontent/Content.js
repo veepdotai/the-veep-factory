@@ -1,32 +1,32 @@
 import { useEffect } from 'react';
 import { Logger } from 'react-logger-lib';
-import { Button, Container, Stack } from 'react-bootstrap';
 import format from "date-fns/format"
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { useCookies } from 'react-cookie';
-import md5 from 'js-md5';
 import toast from 'react-hot-toast'
 import { t } from 'i18next';
-import axios from 'axios';
 
-import addDays from "date-fns/addDays"
-import addHours from "date-fns/addHours"
-import nextMonday from "date-fns/nextMonday"
 import { fr } from 'date-fns/locale'
 import { setDefaultOptions } from 'date-fns';
 setDefaultOptions({ locale: fr })
 
 import { ScrollArea, ScrollBar } from "src/components/ui/shadcn/scroll-area"
 import { Separator } from "src/components/ui/shadcn/separator"
-import { Popover, PopoverContent, PopoverTrigger } from "src/components/ui/shadcn/popover"
-import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "src/components/ui/shadcn/tooltip"
-import { Calendar } from "src/components/ui/shadcn/calendar"
+
 import ContentCardActions from "./ContentCardActions"
 
 import { getService } from 'src/api/service-fetch';
 import { UtilsDom } from '../../lib/utils-dom';
+
+import addDays from "date-fns/addDays"
+import addHours from "date-fns/addHours"
+import nextMonday from "date-fns/nextMonday"
+import { Calendar } from "src/components/ui/shadcn/calendar"
+
 import MyContentDetailsActions from './MyContentDetailsActions';
-import { Icons } from "src/constants/Icons";
+
+import {ContentActionsUtils as CAU } from './ContentActions';
+import ContentActions from './ContentActions';
 
 export default function Content( {contentId, title, attrName = null, content = "", raw = "", contentStyle = {}, contentClassName = "", ...props} ) {
   const log = Logger.of(Content.name);
@@ -38,22 +38,153 @@ export default function Content( {contentId, title, attrName = null, content = "
   
   const [cookies] = useCookies('JWT');
 
+  let actions = [
+    {
+      title: t("Up"),
+      icon: "up",
+      action: (params) => up(params),
+      shortcut: "U",
+      visibility: "toolbar",
+      cn: ""
+    },
+    {
+      title: t("Down"),
+      icon: "down",
+      action: (params) => down(params),
+      shortcut: "D",
+      visibility: "toolbar",
+      cn: ""
+    },
+    { type: "separator", cn: "" },
+    {
+      title: t("Schedule"),
+      icon: "schedule",
+      shortcut: "S",
+      visibility: "toolbar:lg:hidden,menu:max-lg:hidden",
+      content: (params) => getSchedulePanel(params),
+      cn: ""
+    },
+    {
+      title: t("Copy"),
+      icon: "copy",
+      action: (params) => copy(params),
+      shortcut: "C",
+      visibility: "toolbar:lg:hidden,menu:max-lg:hidden",
+      cn: ""
+    },
+    {
+      title: t("Share"),
+      icon: "share",
+      content: (params) => getSharePanel(params),
+      shortcut: "D",
+      visibility: "toolbar:lg:hidden,menu:max-lg:hidden",
+      cn: ""
+    },
+    {
+      title: t("Publish"),
+      icon: "publish",
+      content: (params) => getPublishPanel(params),
+      shortcut: "P",
+      visibility: "toolbar:lg:hidden,menu:max-lg:hidden",
+      cn: ""
+    },
+    {
+      title: t("Generate"),
+      icon: "generate",
+      content: (params) => getGeneratePanel(params),
+      shortcut: "G",
+      visibility: "toolbar:lg:hidden,menu:max-lg:hidden",
+      cn: ""
+    },
+  ]
+
+  actions = actions.map((action) => {
+    log.trace("action: " + JSON.stringify(action))
+    let result = {...action}
+    if (action.action) {
+      result.action = () => action.action(action)
+      log.trace("result.action: " + JSON.stringify(result.action + ""))
+    }
+    if (action.content) {
+      result.content = () => action.content(action)
+      log.trace("result.content: " + JSON.stringify(result.content + ""))
+    }
+
+    return result
+  })
+  log.trace("actions (after recomputation): " + JSON.stringify(actions))
+
+  function getSchedulePanel(params) {
+    log.trace("getSchedulePanel: params: " + JSON.stringify(params))
+    function action() { alert('schedule: NYI') }
+
+    const today = new Date()
+
+    let part1 = <div className="flex flex-col">
+      {CAU.getButton({title: t("LaterToday") + " ", action: () => format(addHours(today, 4), "E H:mm")})}
+      {CAU.getButton({title: t("Tomorrow") + " ", action: () => format(addDays(today, 1), "E H:mm")})}
+      {CAU.getButton({title: t("NextMonday") + " ", action: () => format(nextMonday(today), "E H:mm")})}
+      {CAU.getButton({title: t("NextWeek") + " ", action: () => format(addDays(today, 7), "E H:mm")})}
+    </div>
+
+    let part2 = <Calendar className="text-sm"/>
+    let button = CAU.getButton({title: params.title, action: action, icon: params.icon, className: "border"})
+    let content = CAU.getContent(params.title, part1, part2, button)
+
+    return (
+      <>{CAU.getPopoverWithTT({title: params.title, icon: params.icon, content: content, className: "w-[580px]"})}</>
+    )
+  }
+
+  function getSharePanel(params) {
+    function action() { alert('share: NYI') }
+
+    let part1 = <>This is part one</>
+    let part2 = <>This is part two</>
+    let button = CAU.getButton({title: params.title, action: action, icon: params.icon, className: "border"})
+    let content = CAU.getContent(params.title, part1, part2, button)
+
+    return (
+      <>{CAU.getPopoverWithTT({title: params.title, icon: params.icon, content: content})}</>
+    )
+  }
+
+  function getPublishPanel(params) {
+    function action() { alert('publish: NYI') }
+
+    let part1 = <>This is part one</>
+    let part2 = <>This is part two</>
+    let button = CAU.getButton({title: params.title, action: action, icon: params.icon, className: "border"})
+    let content = CAU.getContent(params.title, part1, part2, button)
+
+    return (
+      <>{CAU.getPopoverWithTT({title: params.title, icon: params.icon, content: content})}</>
+    )
+  }
+
+  function getGeneratePanel(params) {
+    function action() { alert('generate: NYI') }
+
+    let part1 = <>This is part one</>
+    let part2 = <>This is part two</>
+    let button = CAU.getButton({title: params.title, action: action, icon: params.icon, className: "border"})
+    let content = CAU.getContent(params.title, part1, part2, button)
+
+    return (
+      <>{CAU.getPopoverWithTT({title: params.title, icon: params.icon, content: content})}</>
+    )
+  }
+
   function handleClick(className) {
     UtilsDom.selectElementContents(document.getElementsByClassName(className)[0]);
     toast.success(t("Copy+C"));
   }
 
-  function remove() {
-    ContentCardActions.remove()
-  }
+  function up(params) { alert(`${params.title}: NYI`) }
+  function down(params) { alert(`${params.title}: NYI`) }
+  function copy(params) { alert(`${params.title}: NYI`) }
 
-  function copy() {
-    ContentCardActions.copy()
-  }
-
-  function publish() {
-    ContentCardActions.publish()
-  }
+  function remove() { ContentCardActions.remove() }
 
   function handleSave(topic, params) {
     log.trace(`handleSave: topic: ${topic} / params: ${JSON.stringify(params)}`);
@@ -67,148 +198,30 @@ export default function Content( {contentId, title, attrName = null, content = "
 
   }
 
-  function getContentActionsMenu() {
-
-    let mail = true
-    const today = new Date()
-
-    function getTTWithButton(actionName, onAction, title, disabled = false) {
-      return (
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button className="p-1" variant="ghost" size="icon" disabled={disabled} onClick={onAction}>
-              {/*<Archive className="h-4 w-4" />*/}
-              {Icons[actionName]}
-              <span className="sr-only">{title}</span>
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>{title}</TooltipContent>
-        </Tooltip>
-      )
-    }
-
-    function getPopoverWithTT(title, icon, part1, part2) {
-      return (
-        <Tooltip>
-          <Popover>
-            <PopoverTrigger asChild>
-              <TooltipTrigger asChild>
-                <Button variant="ghost" size="icon" disabled={false}>
-                  {Icons[icon]}
-                  <span className="sr-only">{title}</span>
-                </Button>
-              </TooltipTrigger>
-            </PopoverTrigger>
-            <PopoverContent className="flex w-[585px] p-0">
-              <div className="flex flex-col gap-2 border-r px-2 py-4">
-                <div className="text-sm font-medium">{t(title)}</div>
-                {/*<div className="grid min-w-[225px] gap-1">*/}
-                <div className="min-w-[250px]">
-                  {part1}
-                </div>
-              </div>
-              <div className="p-2">
-                {part2}
-              </div>
-            </PopoverContent>
-          </Popover>
-          <TooltipContent>{title}</TooltipContent>
-        </Tooltip>
-      )
-    }
-
-    function getScheduleButton() {
-      let part1 = <>
-        {getShortCut(t("LaterToday") + " ", () => format(addHours(today, 4), "E H:mm"))}
-        {getShortCut(t("Tomorrow") + " ", () => format(addDays(today, 1), "E H:mm"))}
-        {getShortCut(t("NextMonday") + " ", () => format(nextMonday(today), "E H:mm"))}
-        {getShortCut(t("NextWeek") + " ", () => format(addDays(today, 7), "E H:mm"))}
-      </>
-
-      let part2 = <Calendar className="text-sm"/>
-
-      return (
-        <>{getPopoverWithTT("Schedule", "schedule", part1, part2)}</>
-      )
-    }
-
-    function getShareButton() {
-      let part1 = <>This is Share part one</>
-      let part2 = <>This is Share part two</>
-
-      return (
-        <>{getPopoverWithTT("Share", "share", part1, part2)}</>
-      )
-    }
-
-    function getGenerateButton() {
-      let part1 = <>This is Generate part one</>
-      let part2 = <>This is Generate part two</>
-
-      return (
-        <>{getPopoverWithTT("Generate", "generate", part1, part2)}</>
-      )
-    }
-
-    function getShortCut(title, onAction) {
-      return (
-        <Button variant="ghost" className="hover:bg-accent justify-start font-normal text-sm">
-          {title}
-          <span className="mx text-muted-foreground text-xs">
-            {onAction()}
-          </span>
-        </Button>
-      )
-    }
-
+  function getContentActionsMenu(actions, viewType = "menu") {
     return (
-      <>
-        <TooltipProvider delayDuration={0}>
-        <div className="flex h-full flex-col ms-auto">
-          <div className="flex items-center p-2">
-            <div className="flex items-center gap-2">
-              {getScheduleButton()}
-              <Separator orientation="vertical" className="mx-1 h-6" />
-              {getTTWithButton("up", () => alert("NYI"), t("Up"))}
-              {getTTWithButton("down", () => alert("NYI"), t("Down"))}
-              <Separator orientation="vertical" className="mx-1 h-6" />
-              {getShareButton("share", () => alert("NYI"), t("Publish"))}
-              {getGenerateButton("generate", () => alert("NYI"), t("Generate"))}
-            </div>
-          </div>
-        </div>
-        </TooltipProvider>
-      </>
-    )
-/*
-    return (
-      <>
-      </>
-    )
-*/
-
-  }
-
-  function getContentActionsMenu2() {
-    return (
-      <Stack direction="horizontal" className="w-100">
-        <MyContentDetailsActions
-            showPromptEditor={() => null}
-            showInfo={() => null}
-            copy={copy}
-            remove={remove}
-            publish={publish}
-            />
-      </Stack>
+      <ContentActions actions={actions} title={t("Actions")} icon="menu" shortcut="M" viewType={viewType} />
     )
   }
   
-  function getContentBanner(title, author, date, email) {
+  function getContentActions(actions) {
+    let mail = true
+
     return (
-      <div className="flex items-start p-4">
+      <>
+        <ContentActions actions={actions} viewType="toolbar" />
+        {/*getContentActionsMenu(actions)}
+        {getContentActionsMenu(actions, "navigation")*/}
+        </>
+    ) 
+  }
+
+  function getContentBanner(actions, title, author, date, email) {
+    return (
+      <div className="flex items-center justify-between">
         <div className="flex items-start gap-4 text-sm">
           <div className="grid gap-1">
-            {title &&   <div className="font-semibold">{title}</div>}
+            {title &&   <div className="font-semibold ps-2">{title}</div>}
             {author &&  <div className="line-clamp-1 text-xs">{author}</div>}
             {email &&   <div className="line-clamp-1 text-xs">
                           <span className="font-medium">Reply-To:</span> {email}
@@ -222,7 +235,7 @@ export default function Content( {contentId, title, attrName = null, content = "
         )}
         
         <div className="">
-          {getContentActionsMenu()}
+          {getContentActions(actions)}
         </div>
       </div>
     )
@@ -245,7 +258,7 @@ export default function Content( {contentId, title, attrName = null, content = "
         {contentId ?
           <div className="flex flex-1 flex-col h-full">
               {/*getContentMenu()*/}
-              {getContentBanner(title, author, date, email)}
+              {getContentBanner(actions, title, author, date, email)}
               <Separator />
 
               { true ?

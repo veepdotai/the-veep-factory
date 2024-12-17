@@ -35,18 +35,18 @@ export function FixedToolbarButtons( {view = "Basic", operations} ) {
       >
         {!readOnly && (
           <>
-            <ToolbarGroup>
-              <Button className="border-none bg-white text-black" onClick={operations.handleSave}>
+            <ToolbarGroup className="">
+              <Button className="border-none bg-white text-black hover:bg-black hover:text-white p-2" onClick={operations.handleSave}>
                 {MyIcons.save}
               </Button>
             </ToolbarGroup>
 
-            <ToolbarGroup noSeparator>
+            <ToolbarGroup noSeparator className="">
               <InsertDropdownMenu />
               <TurnIntoDropdownMenu />
             </ToolbarGroup>
 
-            <ToolbarGroup>
+            <ToolbarGroup noSeparator className="max-lg:hidden">
               <MarkToolbarButton nodeType={BoldPlugin.key} tooltip="Bold (⌘+B)">
                 <Icons.bold />
               </MarkToolbarButton>
