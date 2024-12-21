@@ -341,6 +341,9 @@ function register_list_data() {
 	] );
 }
 
+/**
+ * Save veepdotaiMetadata object
+ */
 function register_save_metadata() {
 	register_graphql_mutation( 'saveMetadata', [
 
@@ -357,6 +360,14 @@ function register_save_metadata() {
 			'metadata' => [
 				'type' => 'String',
 				'description' => __( 'Object metadata', 'your-textdomain' ),
+			],
+			'name' => [
+				'type' => 'String',
+				'description' => __( 'Metadata name to update', 'your-textdomain' ),
+			],
+			'value' => [
+				'type' => 'String',
+				'description' => __( 'Metadata value of the provided metadata name to update', 'your-textdomain' ),
 			],
 
 		],
@@ -375,25 +386,34 @@ function register_save_metadata() {
 			$content_id = sanitize_text_field( $input['contentId'] );
 			$title = sanitize_text_field( $input['title'] );
 			$metadata = sanitize_text_field( $input['metadata'] );
+			$name = sanitize_text_field( $input['name'] );
+			$value = sanitize_text_field( $input['value'] );
 	
 			$user = wp_get_current_user();
 			log( "$fn: user: " . print_r( $user, true) . "." );
-	
-			$post_array = array(
-				"ID" => $content_id,
-				"post_title" => $title,
-				"meta_input" => array(
-					"veepdotaiMetadata" => $metadata,
-				)
-			);
+
+			$meta_input = [];
+
+			// For example
+			// * updateMetadata("tvfUp", "12")
+			// * updateMetadata("tvfDown", "4")
+			// * updateMetadata("tvfStatus", "draft")
+			if ( $name ) $meta_input[$name] = $value;
+			if ( $metadata ) $meta_input["veepdotaiMetadata"] = $metadata;
+			log( __METHOD__ . ": meta_input: " . print_r( $meta_input, true ) );
+
+			$post_array = [ "ID" => $content_id ];
+			if ( $title ) 		$post_array["post_title"] = $title;
+			if ( $meta_input ) 	$post_array["meta_input"] = $meta_input;
 			log( __METHOD__ . ": post_array: " . print_r( $post_array, true ) );
+
 			$result = wp_update_post( $post_array );
 	
 			log( "$fn: wp_update_post: content_id: result: $result" );
 
 			$data = [];
-			if ( $content_id ) {
-				log( "$fn: result: true" );
+			if ( $result ) {
+				log( "$fn: result: $result" );
 				$data = [
 					"user_id" => $user->user_login,
 					"content_id" => $result,

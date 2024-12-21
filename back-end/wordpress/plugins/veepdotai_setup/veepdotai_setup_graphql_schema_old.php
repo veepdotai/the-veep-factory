@@ -241,6 +241,31 @@ function register_MetadataFields( $baseType ) {
 		}
 	]);
 
+	register_graphql_field( $baseType, 'tvfUp', [ 'type' => 'String',
+		'resolve' => function( $post ) {
+			$value = get_post_meta( $post->ID, "tvfUp", true );
+			return ! empty( $value ) ? $value : '';
+		}
+	]);
+	register_graphql_field( $baseType, 'tvfDown', [ 'type' => 'String',
+		'resolve' => function( $post ) {
+			$value = get_post_meta( $post->ID, "tvfDown", true );
+			return ! empty( $value ) ? $value : '';
+		}
+	]);
+	register_graphql_field( $baseType, 'tvfPubDate', [ 'type' => 'String',
+		'resolve' => function( $post ) {
+			$value = get_post_meta( $post->ID, "tvfPubDate", true );
+			return ! empty( $value ) ? $value : '';
+		}
+	]);
+	register_graphql_field( $baseType, 'tvfStatus', [ 'type' => 'String',
+		'resolve' => function( $post ) {
+			$value = get_post_meta( $post->ID, "tvfStatus", true );
+			return ! empty( $value ) ? $value : '';
+		}
+	]);
+
 	register_graphql_field( $baseType, 'veepdotaiMetadata', [ 'type' => 'String',
 		'resolve' => function( $post ) {
 			$value = get_post_meta( $post->ID, "veepdotaiMetadata", true );
@@ -253,7 +278,7 @@ function register_MetadataFields( $baseType ) {
 function register_schema_old() {
 	$prefix = "veepdotai";
 
-	register_veepdotaiFields('Post');
+	//register_veepdotaiFields('Post');
 	register_MetadataFields('Post');
 }
 

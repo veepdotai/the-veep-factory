@@ -174,6 +174,7 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                             {getAccordionItem("administration", getMenuTitle(t("Administration")),
                                 <>
                                     <MenuItem itemKey="infos" itemLabel={t("Infos")} direction={direction} />
+                                    <MenuItem itemKey="editorial-calendar" itemLabel={t("EditorialCal")} direction={direction} />
                                 </>
                             )}
                         </>

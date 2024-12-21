@@ -88,7 +88,17 @@ export const UtilsGraphQLObject = {
 	
 	},
 
-	saveMetadata: function(graphqlURI, cookies, contentId, title, metadata, topic) {
+	/**
+	 * 
+	 * @param {*} graphqlURI 
+	 * @param {*} cookies 
+	 * @param {*} contentId 
+	 * @param {*} title 
+	 * @param {*} metadata 
+	 * @param {*} topics may be one topic (string) or a topic (string) array 
+	 * @returns 
+	 */
+	saveMetadata: function(graphqlURI, cookies, contentId, title, metadata, topics) {
 		let log = UtilsGraphQLObject.log
 
 		let metadataString = JSON.stringify(metadata)
@@ -116,7 +126,12 @@ export const UtilsGraphQLObject = {
 					"result": data,
 					"original": metadata
 				}
-				PubSub.publish(topic, r);
+				if (Array.isArray(topics)) {
+					topics.map((topic) => PubSub.publish(topic, r))	
+				} else  {
+					PubSub.publish(topics, r)
+				}
+
 				return r
 			}).catch((e) => {
 				log.trace(`create: error while updating data and metadata. Exception: ${e}`);
