@@ -27,6 +27,8 @@ import MyContentDetailsActions from './MyContentDetailsActions';
 
 import {ContentActionsUtils as CAU } from './ContentActions';
 import ContentActions from './ContentActions';
+import { UtilsFormCommon } from '../../lib/utils-form-common';
+import { graphqlURI } from '@/src/constants/Constants';
 
 export default function Content( {contentId, title, attrName = null, content = "", raw = "", contentStyle = {}, contentClassName = "", ...props} ) {
   const log = Logger.of(Content.name);
@@ -150,7 +152,7 @@ export default function Content( {contentId, title, attrName = null, content = "
   }
 
   function getPublishPanel(params) {
-    function action() { alert('publish: NYI') }
+    function action() { alert('publish: NYI2') }
 
     let part1 = <>This is part one</>
     let part2 = <>This is part two</>
@@ -180,9 +182,12 @@ export default function Content( {contentId, title, attrName = null, content = "
     toast.success(t("Copy+C"));
   }
 
-  function up(params) { alert(`${params.title}: NYI`) }
-  function down(params) { alert(`${params.title}: NYI`) }
-  function copy(params) { alert(`${params.title}: NYI`) }
+  function up(params) { 
+    UtilsFormCommon.onSubmitMetadata(graphqlURI, cookies, contentId, null, null, null, "tvfUp", "uno")
+  }
+
+  function down(params) { alert(`${params.title}: NYI2`) }
+  function copy(params) { alert(`${params.title}: NYI2`) }
 
   function remove() { ContentCardActions.remove() }
 

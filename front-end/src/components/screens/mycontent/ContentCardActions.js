@@ -10,14 +10,15 @@ const ContentCardActions = {
     alert('NYI');
   },
 
+  /*
   copy: function() {
     alert('NYI');
   },
 
   publish: function() {
-    alert('NYI');
+    alert('NYI3');
   },
-
+  */
   handleSave: function(params) {
     let log = ContentCardActions.log
 

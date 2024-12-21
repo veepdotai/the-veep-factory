@@ -98,15 +98,22 @@ export const UtilsGraphQLObject = {
 	 * @param {*} topics may be one topic (string) or a topic (string) array 
 	 * @returns 
 	 */
-	saveMetadata: function(graphqlURI, cookies, contentId, title, metadata, topics) {
+	saveMetadata: function(graphqlURI, cookies, contentId, title, metadata, topics = null, name = null, value = null) {
 		let log = UtilsGraphQLObject.log
 
-		let metadataString = JSON.stringify(metadata)
-		metadataString = metadataString.replace(/"/g, "_G_").replace(/\n/g, "_EOL_")
+		let metadataString = metadata ? JSON.stringify(metadata) : null
+		metadataString = metadataString?.replace(/"/g, "_G_").replace(/\n/g, "_EOL_")
 
+		let getClause = (name, value) => name && value ? `${name}: "${value}",` : ""
 		let q = `
 			mutation update {
-				saveMetadata(input: { contentId: "${contentId}", title: "${title}", metadata: "${metadataString}" }) {
+				saveMetadata(input: {
+					contentId: "${contentId}",
+					${getClause("title", title)}
+					${getClause("metadata", metadataString)}
+					${getClause("name", name)}
+					${getClause("value", value)}
+				}) {
 					result
 				}
 			}
@@ -128,7 +135,7 @@ export const UtilsGraphQLObject = {
 				}
 				if (Array.isArray(topics)) {
 					topics.map((topic) => PubSub.publish(topic, r))	
-				} else  {
+				} else if (topics) {
 					PubSub.publish(topics, r)
 				}
 
@@ -136,7 +143,7 @@ export const UtilsGraphQLObject = {
 			}).catch((e) => {
 				log.trace(`create: error while updating data and metadata. Exception: ${e}`);
 				let r = { "status": 500, "error": e, "msg": `Exception while updating title '${title}' and metadata '${metadata}' : ${e}`}
-				PubSub.publish(topic, r);
+				//PubSub.publish(topic, r);
 				return r
 			})
 	}

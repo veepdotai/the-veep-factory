@@ -33,7 +33,7 @@ export const UtilsGraphQL = {
 			},
 			defaultOptions: {
 				watchQuery: {
-					fetchPolicy: 'network-only',
+					fetchPolicy: 'cache_first', // network-only
 				},
 			},
 		})
