@@ -134,17 +134,12 @@ export default function Index() {
           style={menuStyle} 
           className="mb-3 container"
         >
-        {/*<Row style={{backgroundColor: "#3663EA"}} className="bg-light p-4 pt-0">*/}
-        {/*<Row style={menuStyle} className="mw-100 pt-0">*/}
         <Row style={menuStyle} className="m-0 p-0">
           {
             menuDirection == 'vertical' ?
               <>
-                {/*<Col style={{backgroundColor: "#3663EA"}} className="vh-100" md={3} xl={2}>*/}
                 <Col style={{height: "100%", overflowY: "auto"}} className="bg-light vh-100 border-end" md={3} xl={2}>
-                  {/*<div style={{position: "fixed", height: "100%", overflowY: "auto"}}>*/}
                     <MenuVertical id="menu" direction={menuDirection} isManager={isManager} profile={profile}/>
-                  {/*</div>*/}
                 </Col>
                 <Col style={{overflowY: "auto"}} className="vh-100 bg-white" md={9} xl={10}>
                   <div style={{height: "100%"}}>
