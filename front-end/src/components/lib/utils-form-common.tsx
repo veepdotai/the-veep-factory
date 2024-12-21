@@ -20,22 +20,24 @@ import { UtilsGraphQLObject } from '@/src/api/utils-graphql-object'
 export const UtilsFormCommon = {
     log: Logger.of("UtilsFormCommon"),
 
-    onSubmitMetadata: function(graphqlURI, cookies, cid, data, topic, toast) {
+    onSubmitMetadata: function(graphqlURI, cookies, cid, data, topic, toast, name = null, value = null) {
         let log = (msg) => UtilsFormCommon.log.trace("onSubmitMetadata: " + msg)
 
-        let o = JSON.stringify(data, null, 2)
+        let o = data ? JSON.stringify(data, null, 2) : null
         log("Submitting data: " + o)
 
         let q = UtilsGraphQLObject.saveMetadata(graphqlURI, cookies,
           cid,
-          data.title,
+          data?.title,
           data,
           topic,
+          name,
+          value
         )
   
         log("GraphQL response: " + q)
 
-        toast({
+        toast && toast({
           title: t("Status"),
           description: (
             <div className="mt-2 w-[500px] rounded-md">{t("DataUpdated")}</div>
