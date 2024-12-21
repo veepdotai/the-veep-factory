@@ -49,6 +49,7 @@ function PDFExportModel(params) {
   const minChars = 2
 
   const Schema = {
+    title: getConstraints(minChars),
     subtitle: getConstraints(minChars),
     organizationName: getConstraints(minChars),
     author: getConstraints(minChars),
@@ -62,6 +63,7 @@ function PDFExportModel(params) {
   const FormSchema = z.object(Schema)
 
   let defaultValues = {
+    title: params?.title,
     subtitle: params?.subtitle,
     organizationName: params?.organizationName,
     author: params?.author,

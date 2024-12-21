@@ -384,7 +384,7 @@ export function PDFDocument({content, params}) {
   return (
     <>
     {
-      content ?
+      content && params ?
         <Document>
           {firstPage()}
           {data?.toc ? toc() : (<></>)}

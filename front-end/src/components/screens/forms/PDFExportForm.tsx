@@ -50,8 +50,8 @@ export default function PDFExportForm( {cid, params} ) {
       log.trace('updateFormDisplay: metadata: ' + JSON.stringify(metadata))
 
       let newParams = {cid: cid, ...metadata, ...params}
-      log.trace(`onSubmit: newParams: ${JSON.stringify(newParams)}`)
-      PubSub.publish("INFOS_PANEL_UPDATED", newParams)
+      log.trace(`onSubmit: newParams3FormDisplay: ${JSON.stringify(newParams)}`)
+      //PubSub.publish("INFOS_PANEL_UPDATED", newParams)
 
       return UFC.updateForm(form, topic, metadata)  
     }
@@ -62,14 +62,15 @@ export default function PDFExportForm( {cid, params} ) {
         log.trace(`onSubmit.`)
         log.trace(`onSubmit: data: ${JSON.stringify(data)}`)
 
-        let newParams = {cid: cid, ...data, ...params}
-        log.trace(`onSubmit: newParams: ${JSON.stringify(newParams)}`)
+        let newParams = {cid: cid, ...params, ...data }
+        log.trace(`onSubmit: newParams3OnSubmit: ${JSON.stringify(newParams)}`)
         PubSub.publish("INFOS_PANEL_UPDATED", newParams)
-        return UFC.onSubmitMetadata(graphqlURI, cookies, cid, data, topic, toast)
+        return UFC.onSubmitMetadata(graphqlURI, cookies, cid, data, [topic, "CONTENT_ELEMENT_UPDATED"], toast)
     }
 
     useEffect(() => {
       PubSub.subscribe(topic, updateFormDisplay)
+
       if (cid) {
         UtilsGraphQL
         .listOne(graphqlURI, cookies, cid)
