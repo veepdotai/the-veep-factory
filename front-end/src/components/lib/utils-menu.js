@@ -58,12 +58,14 @@ export const UtilsMenu = {
         id: "common",
         title: "",
         items: [
+/*
             {
               id: 'digitalTwin', label: t("MyDigitalTwin"),
               query: {
                 view: t("RecentActivities"), status: "DRAFT", interval: {after: "2024-11-01", before: "2024-11-30"}
               }
             },
+*/
             //{id: 'assistant', label: t("CreateAssistant")},
             {id: 'add-content', dontcreate: true, label: t("CreateContent")},
             {

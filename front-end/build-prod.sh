@@ -29,7 +29,8 @@ ALL_ARGS=$@
 
 # Go and look at the build/env.tpl file to have an idea of the expected informations
 
-. ../.env
+# env vars must have been loaded before running this script
+#. ../../.env
 
 parse_options() {
     echo "Parsing options"

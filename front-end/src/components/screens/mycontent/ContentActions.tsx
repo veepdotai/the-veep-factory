@@ -83,6 +83,7 @@ export default function ContentActions( {actions = null, title = null, icon = nu
         <TooltipProvider delayDuration={0}>
         <div className="flex h-full flex-col ms-auto">
           <div className="flex items-center p-2">
+
             <div className="flex items-center gap-2">
               {actions.map((action) => {
                 if ("separator" == action.type) {
@@ -117,6 +118,9 @@ export default function ContentActions( {actions = null, title = null, icon = nu
   useEffect(() => {
   }, [])
 
+  /**
+   * It is toolbar OR menu OR navigation
+   */
   return (
     <>
       {"toolbar" == viewType && getActionsToolbar(actions)}
