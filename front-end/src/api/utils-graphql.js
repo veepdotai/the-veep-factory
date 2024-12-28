@@ -1,6 +1,6 @@
 import { Logger } from 'react-logger-lib'
 import { gql } from '@apollo/client'
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
+import { ApolloClient, InMemoryCache, useQuery } from '@apollo/client'
 import { UtilsGraphQLPost } from './utils-graphql-post'
 import { UtilsGraphQLVcontent } from './utils-graphql-vcontent'
 import { UtilsGraphQLClauseBuilder } from './utils-graphql-clause-builder'
@@ -40,6 +40,12 @@ export const UtilsGraphQL = {
 	},
 
 	list: function(graphqlURI, cookies, authorId, props, topic = null, msg = null) {
+		let q = UtilsGraphQLClauseBuilder.buildClauseQuery(authorId, props);
+		//return `gql${q}`
+		return q
+	},
+
+	list2: function(graphqlURI, cookies, authorId, props, topic = null, msg = null) {
 
 		let q = UtilsGraphQLClauseBuilder.buildClauseQuery(authorId, props);
 

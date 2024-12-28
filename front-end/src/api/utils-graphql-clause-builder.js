@@ -3,6 +3,7 @@ import { UtilsGraphQL } from './utils-graphql'
 
 // 'vcontent'|'post'
 let CONTENT_TYPE = 'vcontent'
+const ITEMS_NB = 20
 
 //let cb = UtilsGraphQLClauseBuilder;
 export const UtilsGraphQLClauseBuilder = {
@@ -72,7 +73,7 @@ export const UtilsGraphQLClauseBuilder = {
 	
 		let contentTypes = contentType + 's';
 		let q = `query contents {
-			${contentTypes} (first: 100, where: {${query}}) {
+			${contentTypes} (first: ${ITEMS_NB}, where: {${query}}) {
 			  nodes {
 				author {
 				  node {

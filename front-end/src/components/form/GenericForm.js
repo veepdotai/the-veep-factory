@@ -80,9 +80,9 @@ export default function GenericForm( props ) {
           <Container className="">
             <Form onSubmit={handleSubmit(onSubmit)}>
               {
-                Object.keys(fields).map((attr) => {
+                Object.keys(fields).map((attr, i) => {
                   return (
-                    <Form.Group className="mt-3" controlId={attr}>
+                    <Form.Group key={i} className="mt-3" controlId={attr}>
                       <Form.Label className="fs-bold">{titleize(attr)}:</Form.Label>
                       <Form.Control value={fields[attr]} type="text" {...register(attr)} onChange={handleChanges} />
                     </Form.Group>

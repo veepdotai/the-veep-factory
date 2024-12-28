@@ -6,6 +6,9 @@ import { Image, Spinner } from 'react-bootstrap';
 import { Logger } from 'react-logger-lib';
 import { t } from 'i18next';
 
+//import { setContext } from '@apollo/client/link/context';
+//import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink, } from '@apollo/client';
+
 import 'src/styles/global.css';
 import "src/styles/video-react.css";
 
@@ -15,8 +18,9 @@ import { getGenericData } from "src/api/service-fetch"
 import { Utils } from "src/components/lib/utils"
 
 import Index from './index';
-import { Constants } from "src/constants/Constants"
+import { Constants, graphqlURI } from "src/constants/Constants"
 import FirstLoading from "src/components/common/FirstLoading"
+
 
 //export default function App({ Component, pageProps }) {
 export default function App() {
@@ -32,7 +36,41 @@ export default function App() {
       "topic": "APP_PREFERENCES", "cookies": cookies, "ns": "app_prefs", "service": "prefs", "setData": setAppPrefs
     });
   }
-  
+/*
+  const httpLink = createHttpLink({
+    uri: graphqlURI,
+    fetchOptions: {
+      mode: 'cors', // no-cors, *cors, same-origin
+      credentials: 'include', // 'same-origin'
+    },
+  });
+
+  const authLink = setContext((_, { headers }) => {
+    // get the authentication token from local storage if it exists
+    //const token = localStorage.getItem('token');
+    const token = cookies?.JWT ? cookies.JWT : ''
+    // return the headers to the context so httpLink can read them
+    return {
+      headers: {
+        ...headers,
+        'Authorization': token ? `Bearer ${token}` : "",
+        'client-name': 'Veep.AI fetcher',
+        'client-version': '1.0.0',
+        }
+    }
+  });
+
+  const client = new ApolloClient({
+    link: authLink.concat(httpLink),
+    cache: new InMemoryCache(),
+    credentials: 'same-site', //'include',
+    defaultOptions: {
+      watchQuery: {
+        fetchPolicy: 'network-only',
+      },
+    },
+  });
+*/
   useEffect(() => {
     if (done) {
 
@@ -63,13 +101,15 @@ export default function App() {
 
   return (
     <CookiesProvider>
-      {done ?
-        <VeepProvider appPrefs={appPrefs} setAppPrefs={setAppPrefs}>
-           <Index />
-        </VeepProvider>
-        :
-        <FirstLoading />
-      }
+      {/*<ApolloProvider client={client}>*/}
+        {done ?
+          <VeepProvider appPrefs={appPrefs} setAppPrefs={setAppPrefs}>
+            <Index />
+          </VeepProvider>
+          :
+          <FirstLoading />
+        }
+      {/*</ApolloProvider>*/}
     </CookiesProvider>
   );
 }

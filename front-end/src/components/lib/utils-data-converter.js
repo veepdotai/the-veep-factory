@@ -24,7 +24,8 @@ export const UtilsDataConverter = {
     convertGqlToGqlVContents: function(data) {
         UtilsDataConverter.log.trace("convertGqlToGqlVContents: data: " + JSON.stringify(data))
 
-        let contents = data?.data?.posts ? data?.data?.posts : data?.data?.vcontents
+        //let contents = data?.data?.posts ? data?.data?.posts : data?.data?.vcontents
+        let contents = data?.posts ? data?.posts : data?.vcontents
         UtilsDataConverter.log.trace("convertGqlToGqlVContents: contents: " + JSON.stringify(contents))
 
         let nodes = contents?.nodes
@@ -41,7 +42,7 @@ export const UtilsDataConverter = {
         let log = (msg) => UtilsDataConverter.log.trace("convertGqlVContentsToVO: " + msg)
         log("data: " + JSON.stringify(data))
 
-        let vo = data?.map((o) => {
+        let vo = Array.isArray(data) && data?.map((o) => {
             log(`o: ${JSON.stringify(o)}`)
 
             let ps = TOML.parse(o.veepdotaiPrompt?.replace(/#EOL#/g, "\n"));
