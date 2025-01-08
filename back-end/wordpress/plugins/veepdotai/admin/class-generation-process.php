@@ -453,9 +453,9 @@ class Generation_Process {
 
         $content = $res->choices[0]->message->content;
         //Veepdotai_Util::save_extracted_data( $data, $key );
-        Veepdotai_Util::set_option( $option, $content );
+        //Veepdotai_Util::set_option( $option, $content );
 
-        $new_content_id = self::save_generation( $content_id, "", $result, $content, $res, "veepdotaiPhase", $i, $label_encoded);
+        $new_content_id = self::save_generation( $content_id, "", $result, $content, $res, "veepdotaiPhase", $i, $label_encoded, $option);
 
         self::log_step_finished2( $pid, $topic, "cid:${new_content_id}");
         self::log( __METHOD__ . ": generated data: topic: $topic: " . Veepdotai_Util::get_options( $option ));
@@ -479,6 +479,7 @@ class Generation_Process {
         
         // Replace {{inspiration}} placeholder
         $prompt = preg_replace("/(\{\{inspiration\}\})/", "$inspiration", $_prompt);
+        $prompt = preg_replace("/(\{\{NOW\}\})/", date_format( date_create(), 'Y-m-d\TH:i:s' ), $prompt);
         $done = false;
 
         // Replace g* placeholders
@@ -599,26 +600,7 @@ class Generation_Process {
      * with the content and is used to inspect the content. The prompt order is then the
      * same that it was when executed.
      */
-    public static function save_generation_bak( $id, $title, $result, $content, $res, $prefix, $i, $label_encoded ) {
-        //unset($res->choices[0]->message->content);
-        $post_array = array(
-            "ID" => $id,
-            //"post_title" => $title || date_create(),
-            "post_content" => $result,
-            "meta_input" => array(
-                //"${prefix}${i}Content" => $label_encoded . "\n" . $content,
-                "${prefix}${i}Content" => $content,
-                "${prefix}${i}Details" => json_encode( $res ),
-                "veepdotaiLastStepDone" => $i,
-            )
-        );
-        self::log( __METHOD__ . ": post_array: " . print_r( $post_array, true ) );
-        $id = wp_update_post( $post_array );
-
-        return $id;
-    }
-
-    public static function save_generation( $id, $title, $result, $content, $res, $prefix, $i, $label_encoded ) {
+    public static function save_generation( $id, $title, $result, $content, $res, $prefix, $i, $label_encoded, $option = null ) {
         //unset($res->choices[0]->message->content);
 
         self::log( __METHOD__ . ": content: " . print_r( $content, true ) );
@@ -627,21 +609,37 @@ class Generation_Process {
         $computed_title = Veepdotai\Misc\Encoding\fixUTF8($extracted);
         self::log( __METHOD__ . ": computed_title: " . print_r( $computed_title, true ) );
 
+        $elements = self::extract_elements( $content );
+        $only_content = $elements["content"];
+        if ( $option ) {
+            Veepdotai_Util::set_option( $option, $only_content );
+        }
+
+        // Create metadata
+        $custom_metadata = $elements["metadata"];
+        $veep_metadata = array(
+            //"${prefix}${i}Content" => $label_encoded . "\n" . $content,
+            "veepdotaiContent" => $only_content,
+            "veepdotaiDetails" => json_encode( $res ),
+            "veepdotaiParent" => $id
+        );
+        $metadata = array_merge(
+            $custom_metadata,
+            $veep_metadata
+        );
+
+        // Create vcontent
         $post_array = array(
             "post_type" => GENERATED_CONTENT,
             "post_title" => $computed_title,
-            "post_content" => $content,
+            "post_content" => $only_content,
             "post_parent" => $id,
-            "meta_input" => array(
-                //"${prefix}${i}Content" => $label_encoded . "\n" . $content,
-                "veepdotaiContent" => $content,
-                "veepdotaiDetails" => json_encode( $res ),
-                "veepdotaiParent" => $id,
-            )
+            "meta_input" => $metadata
         );
         self::log( __METHOD__ . ": child post_array: " . print_r( $post_array, true ) );
         $content_id = wp_insert_post( $post_array );
 
+        // Update parent to reflect current step
         // Doesn't need a post type because the item already exists
         $post_array = array(
             "ID" => $id,
@@ -656,6 +654,59 @@ class Generation_Process {
 
         return $content_id;
         //return $id;
+    }
+
+    /**
+     * Returns metadata from provided generation
+     * 
+     * Currently, metadata is agregated at the end of main content between "--x-- [/start|/end] metadata".
+     * For example:
+     * --x-- /start metadata
+     * title: This is the title
+     * publicationDate: 2025-01-08T08:00:00
+     * --x-- /end metadata 
+     */
+    public static function extract_elements( $content ) {
+
+        function extract_metadata( $raw_metadata ) {
+            $metadata = [];
+            // Extracts metadata from each line or raw_metadata
+            $lines = explode( "\n", $raw_metadata );
+            
+            for($i = 0; $i < count( $lines ); $i++) {
+                $line =  $lines[$i];
+                if ( $line ) { // some lines may be empty
+                    preg_match_all("/([^:]*)\S*:\S*(.*)/", $lines[$i], $matches);
+                    if ( count( $matches ) == 3 && $matches[1] && $matches[2]) {
+                        $metadata[ $matches[1][0] ] = $matches[2][0];
+                    }
+                }
+            }
+            //print_r( $metadata );
+            return $metadata;
+        }
+        
+        $open = preg_quote( '--x-- /start metadata' );
+        $close = preg_quote( '--x-- /end metadata' );
+
+        $pattern =  "~(.*)$open\r?\n(.+)$close~misU";
+        preg_match_all( $pattern, $content, $matches);
+        $content = "";
+        $metadata = [];
+        if ( count( $matches ) == 2 ) { // Content only, no metadata
+            $content = $matches[1][0];
+        } else if ( count( $matches ) == 3 ) { // Content and metadata
+            $content = $matches[1][0];
+            $raw_metadata = $matches[2][0]; // $matches[1] contains start delimiter
+            if ( $raw_metadata ) {
+                $metadata = extract_metadata( $raw_metadata );
+            }
+        }
+
+        return [
+            "content" => $content,
+            "metadata" => $metadata
+        ];
     }
     
 }

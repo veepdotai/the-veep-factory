@@ -47,7 +47,7 @@ function register_Icontent() {
 			'NodeWithRevisions'
 		],
 		'fields' => [
-			'source' => [
+			'tvfSource' => [
 				'type' => 'String',
 				'description' => __( 'Source of the content', 'your-textdomain' ),
 				'resolve' => function( $obj ) {
@@ -55,7 +55,7 @@ function register_Icontent() {
 					return ! empty( $value ) ? $value : '';
 				}
 			],
-			'favorite' => [
+			'tvfFavorite' => [
 				'type' => 'Boolean',
 				'resolve' => function( $obj ) {
 					$value = get_post_meta( $obj->ID, "favorite", true );
