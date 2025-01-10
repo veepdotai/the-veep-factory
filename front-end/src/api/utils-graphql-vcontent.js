@@ -57,6 +57,11 @@ export const UtilsGraphQLVcontent = {
 										content(format: RAW)
 										veepdotaiDetails
 										databaseId
+										tvfStatus
+										tvfPubDate
+										tvfUp
+										tvfDown
+										tvfSubtitle
 									}
 								}
 							}

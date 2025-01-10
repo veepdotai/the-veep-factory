@@ -199,9 +199,9 @@ function register_MetadataFields( $baseType ) {
 	   }
 	]);
 
-	register_graphql_field( $baseType, 'veepdotaiSubtitle', [ 'type' => 'String',
+	register_graphql_field( $baseType, 'tvfSubtitle', [ 'type' => 'String',
 	   'resolve' => function( $post ) {
-			$value = get_post_meta( $post->ID, "veepdotaiSubtitle", true );
+			$value = get_post_meta( $post->ID, "tvfSubtitle", true );
 			return ! empty( $value ) ? $value : '';
 	   }
 	]);

@@ -134,6 +134,8 @@
   "Quarter": "Trimestre",
   "Half-Year": "Semestre",
   "Year": "An",
+  "WorkWeek": "Semaine de travail",
+  "ShowMore": "+{{showMore}} plus",
 
   "frameworkLabel": "Tactique",
   "frameworkDesc": "TOFU/MOFU/BODU (Top/Middle/Bottom Of FUnnel) ou AARRR (Acquisition, Activation, Retention, Recommandation, Revenue",

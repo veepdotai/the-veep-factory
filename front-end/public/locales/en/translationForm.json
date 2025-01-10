@@ -128,6 +128,8 @@
   "Quarter": "Quarter",
   "Half-Year": "Semi-annual",
   "Year": "Year",
+  "WorkWeek": "Work Week",
+  "ShowMore": "+{{showMore}} more",
 
   "frameworkLabel": "Tactic",
   "frameworkDesc": "TOFU/MOFU/BOFU (Top/Middle/Bottom Of the Funnel) or AARRR (Acquisition, Activation, Retention, Recommendation, Revenue)",
