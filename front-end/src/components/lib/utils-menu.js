@@ -6,6 +6,7 @@ import { ScreenHeading } from "src/components/common/Heading";
 import MyContent from "src/components/screens/mycontent/MyContent";
 import AllCards from '../catalog/AllCards';
 import Home from "src/components/Home";
+import PubSub from "pubsub-js"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -87,7 +88,7 @@ export const UtilsMenu = {
           id: `dpt-${name?.toLowerCase()}`,
           name: name,
           label: t(name),
-          query: { view: t(name), status: "DRAFT", meta: {value: name, compare: "LIKE", key: "veepdotaiCategory"}},
+          query: { view: t(name), status: "DRAFT", meta: { key: "veepdotaiCategory", compare: "LIKE", value: name}},
           displayAgents: displayAgents
         }
       }
@@ -147,6 +148,7 @@ export const UtilsMenu = {
                       <></>
 
                   }
+                  {/*<Button onClick={() => PubSub.publish("CALENDAR_VIEW", null)}>Open Calendar</Button>*/}
                   <MyContent 
                     view={row?.query?.view}
                     status={row?.query?.status}

@@ -87,9 +87,18 @@ export const UtilsGraphQLClauseBuilder = {
 				title
 				uri
 				veepdotaiPrompt
+
 				veepdotaiDomain
+				veepdotaiSubDomain
 				veepdotaiCategory
+				veepdotaiSubCategory
 				veepdotaiArtefactType
+
+				tvfDomain
+				tvfSubDomain
+				tvfCategory
+				tvfSubCategory
+				tvfArtefactType
 			  }
 			}
 		  }

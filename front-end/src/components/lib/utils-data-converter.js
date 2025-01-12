@@ -66,9 +66,11 @@ export const UtilsDataConverter = {
             //r.status = o.categories?.edges[0].node.name
             r.type = ps?.metadata?.name + ' v' + ps?.metadata?.version
             
-            r.domain = (o.veepdotaiDomain || ps?.metadata?.classification?.group)?.trim()
-            r.category = (o.veepdotaiCategory || ps?.metadata?.classification?.category)?.trim()
-            r.artefactType = (o.veepdotaiArtefactType || ps?.metadata?.classification?.subCategory)?.trim()
+            r.domain = (o.veepdotaiDomain || o.tvfDomain || ps?.metadata?.classification?.group)?.trim()
+            r.subDomain = (o.veepdotaiSubDomain || o.tvfSubDomain || ps?.metadata?.classification?.subDomain)?.trim()
+            r.category = (o.veepdotaiCategory || o.tvfCategory || ps?.metadata?.classification?.category)?.trim()
+            r.subCategory = (o.veepdotaiSubCategory || o.tvfSubCategory || ps?.metadata?.classification?.subCategory)?.trim()
+            r.artefactType = (o.veepdotaiArtefactType || o.tvfArtefactType || ps?.metadata?.classification?.artefactType)?.trim()
 
             log(`r: ${JSON.stringify(r)}`)
             return r

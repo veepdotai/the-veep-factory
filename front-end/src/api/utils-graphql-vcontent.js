@@ -38,30 +38,60 @@ export const UtilsGraphQLVcontent = {
 						__typename
 						date
 						databaseId
-						content(format: RAW)
 						title
-						veepdotaiTranscription
+						content(format: RAW)
 						uri
+						veepdotaiTranscription
 						veepdotaiPrompt
+
 						veepdotaiDomain
+						veepdotaiSubDomain
 						veepdotaiCategory
+						veepdotaiSubCategory
 						veepdotaiArtefactType
 						veepdotaiMetadata
+
+						tvfSubtitle
+						tvfDomain
+						tvfSubDomain
+						tvfCategory
+						tvfSubCategory
+						tvfArtefactType
+						tvfMetadata
+						tvfStatus
+						tvfPubDate
+						tvfUp
+						tvfDown
+
 						children {
 							edges {
 								node {
 									id
 									__typename
 									... on Vcontent {
+										databaseId
 										title
 										content(format: RAW)
 										veepdotaiDetails
-										databaseId
+
+										veepdotaiDomain
+										veepdotaiSubDomain
+										veepdotaiCategory
+										veepdotaiSubCategory
+										veepdotaiArtefactType
+										veepdotaiMetadata
+
+										tvfSubtitle
+										tvfDomain
+										tvfSubDomain
+										tvfCategory
+										tvfSubCategory
+										tvfArtefactType
+										tvfMetadata
 										tvfStatus
 										tvfPubDate
 										tvfUp
 										tvfDown
-										tvfSubtitle
 									}
 								}
 							}
