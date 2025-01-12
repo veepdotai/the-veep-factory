@@ -58,7 +58,10 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
       )
     }
     
-    function getPromptContent(_promptId, i, viewType) {
+    /**
+     * Get content through the execution of the provided prompt
+     */
+    function getContentThroughPrompt(_promptId, i, viewType) {
       let promptId = EKeyLib.encode(_promptId);
 
       let title = ''
@@ -114,7 +117,7 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
       //let chain = [].concat(prompt.prompts.chain);
         log.trace("getCompareView: chain: " + typeof chain + " / " + JSON.stringify(chain));
         let stepsNb = chain?.length;
-        let contents = chain.map((_promptId, i) => getPromptContent(_promptId, i, viewType));
+        let contents = chain.map((_promptId, i) => getContentThroughPrompt(_promptId, i, viewType));
 
         return (
           <div className={`p-1`}>
