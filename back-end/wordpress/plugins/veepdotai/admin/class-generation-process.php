@@ -397,9 +397,11 @@ class Generation_Process {
         }
         $content_type = $veeplet[ 'metadata' ][ 'name' ];
 
-        $domain = $veeplet[ 'metadata' ][ 'classification' ][ 'group' ]??"Tmp";
-        $category = $veeplet[ 'metadata' ][ 'classification' ][ 'category' ]??"Tmp";
-        $artefact_type = $veeplet[ 'metadata' ][ 'classification' ][ 'subCategory' ]??"Generated";
+        $domain = $veeplet[ 'metadata' ][ 'classification' ][ 'group' ]?? "TmpDomain";
+        $sub_domain = $veeplet[ 'metadata' ][ 'classification' ][ 'subDomain' ] ?? "TmpSubDomain";
+        $category = $veeplet[ 'metadata' ][ 'classification' ][ 'category' ] ?? "TmpCategory";
+        $sub_category = $veeplet[ 'metadata' ][ 'classification' ][ 'subCategory' ] ?? "TmpSubCategory";
+        $artefact_type = $veeplet[ 'metadata' ][ 'classification' ][ 'artefactType' ] ?? "TmpArtefactType";
 
         $meta_input = array(
             'veepdotaiInputType' => $metadata[ 'input_type' ],
@@ -409,9 +411,11 @@ class Generation_Process {
             'veepdotaiLastStepDone' => "Transcription",
             'veepdotaiInputType' => $metadata[ 'input_type' ],
 
-            'veepdotaiDomain' => $domain,
-            'veepdotaiCategory' => $category,
-            'veepdotaiArtefactType' => $artefact_type,
+            'tvfDomain' => $domain,
+            'tvfSubDomain' => $sub_domain,
+            'tvfCategory' => $category,
+            'tvfSubCategory' => $sub_category,
+            'tvfArtefactType' => $artefact_type,
         );
 
 //        self::log("Transcription: " . $transcription);
