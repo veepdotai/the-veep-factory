@@ -3,7 +3,7 @@ import { t } from "i18next"
 import { Calendar, Navigate, Views, dayjsLocalizer } from 'react-big-calendar'
 import dayjs from 'dayjs'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
-import events from  './EditorialCalendar/events'
+//import events from  './EditorialCalendar/events'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
 
@@ -12,7 +12,19 @@ import Loading from '../common/Loading'
 
 import { CommonFacetedFilter } from './mycontent/datatable/shadcn-dt-tanstack/core/common-faceted-filter'
 
-export default function EditorialCalendar() {
+export interface CalendarProps {
+    id: string,
+    title: string,
+    start: Date,
+    end?: Date,
+    isDraggable: boolean,
+    type?: string,
+    resource?: number,
+    allDay?: boolean,
+    desc?: string
+}
+
+export default function EditorialCalendar({events}) {
     
     const DnDCalendar = withDragAndDrop(Calendar)
 
@@ -156,6 +168,12 @@ export default function EditorialCalendar() {
         )
     }
 
+    function getTitle(e) {
+        alert("e: " + JSON.stringify(e))
+        let title = (e.type ? e.type + " - " : "") + e.title
+        return title
+    }
+
     return (
         <>
             {/*className="h-screen"*/}
@@ -166,15 +184,15 @@ export default function EditorialCalendar() {
                     className="text-sm"
                     culture="fr"
                     messages={{
-                        today: `Aujourd'hui`,
+                        today: t("Today"),
                         previous: '<',
                         next: '>',
-                        day: 'Jour',
-                        week: 'Semaine',
-                        work_week: 'Semaine de travail',
-                        month: 'Mois',
-                        agenda: 'Agenda', // Ordre du jour
-                        showMore: (total) => `+${total} plus`,
+                        day: t('Day'),
+                        week: t('Week'),
+                        work_week: t('WorkWeek'),
+                        month: t('Month'),
+                        agenda: t('Agenda'), // Ordre du jour
+                        showMore: (total) => t("ShowMore", {showMore: total}),
                     }}
                     defaultDate={defaultDate}
                     defaultView={Views.WEEK}
@@ -200,7 +218,7 @@ export default function EditorialCalendar() {
                     components={components}
                     eventPropGetter={eventPropGetter}
                     tooltipAccessor={(e) => e.title}
-                    titleAccessor={(e) => e.type + " - " + e.title}
+                    titleAccessor={(e) => getTitle(e)}
                     drilldownView="day"
                     />
                 :
@@ -209,3 +227,4 @@ export default function EditorialCalendar() {
         </>
     )
 }
+

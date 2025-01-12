@@ -1,6 +1,7 @@
 import { ButtonGroup, Button, Col, Row } from 'react-bootstrap'
 import { Logger } from 'react-logger-lib'
 import { t } from 'i18next'
+import { addMinutes, addHours, addDays } from 'date-fns'
 
 import { ToggleGroup, ToggleGroupItem } from "src/components/ui/shadcn/toggle-group"
 import { Popover, PopoverContent, PopoverTrigger } from 'src/components/ui/shadcn/popover'
@@ -14,6 +15,7 @@ import { UtilsForm } from '../../lib/utils-form'
 import { Utils } from '../../lib/utils'
 
 import Content from './Content'
+import EditorialCalendar, { CalendarProps } from '../EditorialCalendar'
 
 export default class MyContentDetailsUtils {
   static log = Logger.of(MyContentDetailsUtils.name);
@@ -185,6 +187,34 @@ export default class MyContentDetailsUtils {
           */}
           <SideBySideViewContent prompt={prompt} data={data} cid={cid} width={width} />
         {/*</ScrollArea>*/}
+      </>
+    )
+  }
+
+  static getCalendarView(prompt, data, cid, width = 1) {
+    const log = (msg) => MyContentDetailsUtils.log.trace(`getCalendarView: ${msg}`)
+    let children = data.nodes[0].children
+    log(`edges.length: ${children.edges.length}`)
+    let events : CalendarProps[] = []
+    let date = new Date()
+    for(var i = 0; i < children.edges.length; i++) {
+      let n = children.edges[i].node
+      log(`n[${i}].title: ${n.title}`)
+      events[i] = {
+        id: n.databaseId,
+        title: n.title,
+        start: n.tvfPubDate || addDays(date, i),
+        end: n.tvfPubDate || addHours(addDays(date, i), 1),
+        isDraggable: true,
+        type: "TOFU",
+        //resource: 1,
+        //allDay: false,
+        desc: n.title 
+      }
+    }
+    return (
+      <>
+        <EditorialCalendar events={events}/>
       </>
     )
   }

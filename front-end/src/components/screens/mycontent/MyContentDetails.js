@@ -119,6 +119,15 @@ export default function MyContentDetails( { id }) {
             </Row>
           </ScrollArea>
         </TabsContent>
+        <TabsContent id="details-calendar-content" value="calendar-content">
+          <ScrollArea className="w-100 whitespace-nowrap h-full">
+            <ScrollBar orientation="vertical" />
+            {displaySelector && MyContentDetailsUtils.getColumnsSelectors([1,3,5], setWidth)}
+            <Row className="px-4">
+              {MyContentDetailsUtils.getCalendarView(prompt, data, contentId, width)}                          
+            </Row>
+          </ScrollArea>
+        </TabsContent>
       </Tabs>
     )
   }
