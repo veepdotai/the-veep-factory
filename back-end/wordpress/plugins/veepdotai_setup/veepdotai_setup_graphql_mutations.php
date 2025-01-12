@@ -342,7 +342,7 @@ function register_list_data() {
 }
 
 /**
- * Save veepdotaiMetadata object
+ * Save tvfMetadata object
  */
 function register_save_metadata() {
 	register_graphql_mutation( 'saveMetadata', [
@@ -399,7 +399,7 @@ function register_save_metadata() {
 			// * updateMetadata("tvfDown", "4")
 			// * updateMetadata("tvfStatus", "draft")
 			if ( $name ) $meta_input[$name] = $value;
-			if ( $metadata ) $meta_input["veepdotaiMetadata"] = $metadata;
+			if ( $metadata ) $meta_input["tvfMetadata"] = $metadata;
 			log( __METHOD__ . ": meta_input: " . print_r( $meta_input, true ) );
 
 			$post_array = [ "ID" => $content_id ];
@@ -469,7 +469,7 @@ function register_list_metadata() {
 			$user = wp_get_current_user();
 			log( "$fn: user: " . print_r( $user, true) . "." );
 	
-			$result = get_post_meta( $contentId, "veepdotaiMetadata", true );
+			$result = get_post_meta( $contentId, "tvfMetadata", true );
 			log( "$fn: metadata: result: $result" );
 
 			$data = [];
@@ -493,3 +493,64 @@ function register_list_metadata() {
 	] );
 }
 
+/**
+ * 
+ */
+function schedule_posts() {
+	register_graphql_mutation( 'schedulePosts', [
+
+		'description' => __( 'Schedules posts', 'your-textdomain' ),
+
+		'inputFields'         => [
+			'contentId' => [
+				'type' => 'String',
+				'description' => __( 'Object contentId', 'your-textdomain' ),
+			],
+			'metadata' => [
+				'type' => 'String',
+				'description' => __( 'Object metadata', 'your-textdomain' ),
+			],
+
+		],
+	
+		'outputFields'        => [
+			'result' => [
+				'type' => 'String',
+				'description' => __( 'Result operation as a json object', 'your-textdomain' ),
+			]
+		],
+	
+		'mutateAndGetPayload' => function( $input, $context, $info ) {
+			$fn = "listMetadata";
+			$pn = "veepdotai-";
+			$prompt_prefix = "ai-prompt-";
+	
+			$contentId = sanitize_text_field( $input['contentId'] );
+			$metadata = sanitize_text_field( $input['metadata'] );
+
+			$user = wp_get_current_user();
+			log( "$fn: user: " . print_r( $user, true) . "." );
+	
+			$result = get_post_meta( $contentId, "tvfMetadata", true );
+			log( "$fn: metadata: result: $result" );
+
+			$data = [];
+			if ( $result ) {
+				log( "$fn: result: true" );
+				$data = [
+					"user_id" => $user->user_login,
+					"result" => $result,
+				];
+			} else {
+				$data = [
+					"user_id" => $user->user_login,
+					"result" => false,
+				];
+			}
+	
+			return [
+				'result' => json_encode( $data ),
+			];
+		}
+	] );
+}
