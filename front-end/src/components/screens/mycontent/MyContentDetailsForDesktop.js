@@ -164,7 +164,11 @@ export function PDFViewer( {cid, content, data} ) {
     let vo = UtilsDataConverter.convertGqlVContentsToVO(data?.nodes)
     if (Array.isArray(vo) && vo?.length > 0) {
       vo = vo[0]
-      vo.author = vo.givenName  
+      vo.author = vo.givenName
+
+      vo.subtitle = vo?.tvfMetadata?.subtitle
+      vo.organizationName = vo?.tvfMetadata?.organizationName
+      vo.version = vo?.tvfMetadata?.version
 
       log.trace("vo: " + JSON.stringify(vo))
     } else {

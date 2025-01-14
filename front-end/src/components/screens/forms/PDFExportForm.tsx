@@ -63,7 +63,7 @@ export default function PDFExportForm( {cid, params} ) {
         log.trace(`onSubmit: data: ${JSON.stringify(data)}`)
 
         let newParams = {cid: cid, ...params, ...data }
-        log.trace(`onSubmit: newParams3OnSubmit: ${JSON.stringify(newParams)}`)
+        log.trace(`onSubmit: newParamsOnSubmit: ${JSON.stringify(newParams)}`)
         PubSub.publish("INFOS_PANEL_UPDATED", newParams)
         return UFC.onSubmitMetadata(graphqlURI, cookies, cid, data, [topic, "CONTENT_ELEMENT_UPDATED"], toast)
     }
@@ -77,7 +77,7 @@ export default function PDFExportForm( {cid, params} ) {
         .then(
           (data) => {
             log.trace("useEffect: data: " + JSON.stringify(data));
-            let metadataString = data?.nodes[0].veepdotaiMetadata
+            let metadataString = data?.nodes[0].tvfMetadata 
             log.trace(`useEffect: metadataString: ${metadataString}`);
 
             metadataString = metadataString.replace(/_G_/g, '"').replace(/_EOL_/g, "\n")

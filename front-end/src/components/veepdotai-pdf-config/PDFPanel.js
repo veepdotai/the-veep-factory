@@ -16,7 +16,7 @@ import { convert } from './lib/AbstractContent'
 //const PDFDownloadLink = dynamic(() => import('@react-pdf/renderer').then(mod => mod.PDFDownloadLink), { ssr: false });
  
 /**
- * React component to render a PDF config pannel with a PDF renderer.
+ * React component to render a PDF config panel with a PDF renderer.
  * 
  * Props : params - an instance of PDFParams
  *         content - an instance of (markdown or JSON) String

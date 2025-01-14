@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     //backgroundColor: "red",
   },
 
-  subTitle: {
+  subtitle: {
     position: "absolute",
     width: "100%",
     top: 200,
@@ -304,7 +304,8 @@ export function PDF( props ) {
           <PDFDocument
             content={props.content}
             title={props.title || "Veep.AI"}
-            subTitle={props.subtitle || "Compte rendu" }
+            subtitle={props.subtitle || "Compte rendu" }
+            organizationName={props.organizationName }
             featuredImage={props.featuredImage || "./assets/images/veep.png" }
           />
       </PDFViewer>
@@ -322,10 +323,11 @@ export function PDFDocument(props) {
 
   let data = {
     title: props.title,
-    subTitle: props.subTitle,
+    subtitle: props.subtitle,
     featuredImage: props.featuredImage,
     author: props.author || t("DefaultAuthor"),
     version: props.version || "1.0.1",
+    organizationName: props.organizationName,
     date: props.date || moment().format("DD/MM/YYYY"),
     imageBg: "https://images.pexels.com/photos/2088205/pexels-photo-2088205.jpeg",
     imageBg2: "https://images.pexels.com/photos/6144105/pexels-photo-6144105.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -340,7 +342,7 @@ export function PDFDocument(props) {
       <Page style={styles.firstPage} bookmark={t("CoverPage")}>
         
         {getInlineContent("title", "title")}
-        {getInlineContent("subTitle", "subTitle")}
+        {getInlineContent("subtitle", "subtitle")}
 
         <Image style={styles.featuredImage} src={data.featuredImage} />
 

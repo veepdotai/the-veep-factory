@@ -110,7 +110,7 @@ class ConfigPanel extends React.Component {
   }
 
   handleSubtitleChange(newSubtitle){
-    this.param.subTitle = newSubtitle
+    this.param.subtitle = newSubtitle
   }
 
   handleAuthorChange(newAuthor){
@@ -177,7 +177,7 @@ class ConfigPanel extends React.Component {
                   handleChangeTitle={this.handleTitleChange}
                   defaultTitle={this.param.title}
                   handleChangeSubtitle={this.handleSubtitleChange}
-                  defaultSubtitle={this.param.subTitle}
+                  defaultSubtitle={this.param.subtitle}
                   handleChangeName={this.handleNameChange}
                   defaultName={this.param.companyName}
                   handleChangeAuthor={this.handleAuthorChange}

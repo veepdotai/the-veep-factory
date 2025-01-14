@@ -28,7 +28,7 @@ export function PDF( props ) {
   log.trace("style... parameters: " + JSON.stringify(props.params))
   return (
     <>
-      <PDFViewer width={'100%'} height={isDesktop ? '100%' : '800px'}>
+      <PDFViewer width={'100%'} pageMode="fullScreen" height={isDesktop ? '100%' : '800px'}>
           <PDFDocument
             content={props.content}
             params={props.params}
@@ -52,7 +52,7 @@ export function PDFDocument({content, params}) {
 
   let data = {
     title: params?.title,
-    subTitle: params?.subTitle || params?.subtitle,
+    subtitle: params?.subtitle || params?.subtitle,
     featuredImage: params?.companyImg,
     organizationName: params?.organizationName,
     author: params?.author,
@@ -83,13 +83,13 @@ export function PDFDocument({content, params}) {
       <Page key={"page-" + data.title} style={data.styles?.firstPage} bookmark={t("CoverPage")} size={data?.dimensions}>
         
         {getInlineContent("title", "title")}
-        {getInlineContent("subTitle", "subTitle")}
+        {getInlineContent("subtitle", "subtitle")}
 
         <Image style={data.styles?.featuredImage} src={data?.featuredImage} />
 
         <View key={"view-" + data.title} style={data.styles?.metadataBlock}>
           {/*getInlineContentWithLabel(45, t("Company"), data?.companyName, "company")*/}
-          {getInlineContentWithLabel(30, t("OrganizationName"), data.organizationName, "organizationName", data.styles)}
+          {getInlineContentWithLabel(30, t("OrganizationName"), data?.organizationName, "organizationName", data.styles)}
           {getInlineContentWithLabel(30, t("Author"), data?.author, "author", data.styles)}
           {getInlineContentWithLabel(15, t("Version"), data?.version, "version", data.styles)}
           {getInlineContentWithLabel(0, t("Date"), data?.date, "date", data.styles)}
@@ -220,7 +220,7 @@ export function PDFDocument({content, params}) {
   function displaySubtitle(i, subtitle) {
       return (
         <>
-          {/*<Text style={data.styles?.subTitle}>{subtitle[0]}</Text>*/}
+          {/*<Text style={data.styles?.subtitle}>{subtitle[0]}</Text>*/}
           <Text style={data.styles['title' + i]}>{subtitle[0]}</Text>
             {subtitle.length > 1 ?
                 <>{typeof(subtitle[1]) == "string"

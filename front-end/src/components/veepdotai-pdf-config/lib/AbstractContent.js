@@ -34,7 +34,7 @@
           res.push([
           all.slides[i].number,
           all.slides[i].title,
-          [[all.slides[i].subTitle, all.slides[i].summary]],
+          [[all.slides[i].subtitle, all.slides[i].summary]],
           "./images/nothing.png",
           "./images/nothing.png",
           null])

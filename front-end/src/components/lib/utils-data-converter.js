@@ -72,6 +72,10 @@ export const UtilsDataConverter = {
             r.subCategory = (o.veepdotaiSubCategory || o.tvfSubCategory || ps?.metadata?.classification?.subCategory)?.trim()
             r.artefactType = (o.veepdotaiArtefactType || o.tvfArtefactType || ps?.metadata?.classification?.artefactType)?.trim()
 
+
+            log(`tvfMetadata: ${JSON.stringify(o.tvfMetadata)}`)
+            r.tvfMetadata = o.tvfMetadata ? JSON.parse(o.tvfMetadata.replace(/_G_/g, '"')) : null
+
             log(`r: ${JSON.stringify(r)}`)
             return r
         })

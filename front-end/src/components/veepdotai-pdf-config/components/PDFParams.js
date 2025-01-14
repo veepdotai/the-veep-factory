@@ -11,7 +11,7 @@ export default class PDFParams {
     /**
      * 
      * @param {String} title title of the pdf
-     * @param {String} subTitle subtitle of the pdf
+     * @param {String} subtitle subtitle of the pdf
      * @param {*} format format in which the pdf will render, either {height, width} or the name of the format. Format is used to set the dimension attribute, which is always {height, width}
      * @param {String} companyName name of the company
      * @param {String} companyImage logo of the company
@@ -31,7 +31,7 @@ export default class PDFParams {
         log.trace("constructor: params: " + JSON.stringify(params))
 
         this.title = params?.title
-        this.subTitle = params?.subTitle || params?.subtitle
+        this.subtitle = params?.subtitle || params?.subtitle
 
         this.styles = params?.stylesheet || ""
         log.trace("styles: " + JSON.stringify(this.styles))
@@ -50,8 +50,9 @@ export default class PDFParams {
         this.newPage = params?.newPage || true
         this.toc = params?.toc || true
 
+        this.organizationName = params?.organizationName
         this.author = params?.author || t("DefaultAuthor") 
-        this.version = params?.version  || t("DefaultVersionNumber") || "1.0.2"
+        this.version = params?.version || "1.0.0"
         this.date = params?.date || moment().format("DD/MM/YYYY")
         this.footer = params?.footer || t("DefaultFooterContent")
 

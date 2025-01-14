@@ -70,7 +70,7 @@ const MyDocument = (props) => {
                     Tests de paragraphes avec images
                 </Text>
 
-                <Text style={styles.subTitle} id='rightImage'>
+                <Text style={styles.subtitle} id='rightImage'>
                     Paragraphe avec image à droite
                 </Text>
 
@@ -88,7 +88,7 @@ const MyDocument = (props) => {
                     />
                 </View>
 
-                <Text style={styles.subTitle} id='leftImage' break>
+                <Text style={styles.subtitle} id='leftImage' break>
                     Paragraphe avec image à gauche
                 </Text>
 
@@ -106,7 +106,7 @@ const MyDocument = (props) => {
                     Tests d'images en fond
                 </Text>
 
-                <Text style={styles.subTitle} id='bgImg'>
+                <Text style={styles.subtitle} id='bgImg'>
                     Image avec texte par dessus
                 </Text>
                 
@@ -122,7 +122,7 @@ const MyDocument = (props) => {
                 </View>
                         
                 <View  style={styles.fullBackgroundImageContainer} break>
-                    <Text id='fullbgImg' style={styles.subTitle}>
+                    <Text id='fullbgImg' style={styles.subtitle}>
                         Image en fond de page
                     </Text>
 
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
         marginVertical: 20,
     },
 
-    subTitle: {
+    subtitle: {
         fontSize: 18,
         marginVertical: 20,
     },

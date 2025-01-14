@@ -100,7 +100,7 @@ export default function VContentForm( {cid, params} ) {
         .then(
           (data) => {
             log.trace("useEffect: data: " + JSON.stringify(data));
-            let metadataString = data?.nodes[0].veepdotaiMetadata
+            let metadataString = data?.nodes[0].tvfMetadata
             log.trace(`useEffect: metadataString: ${metadataString}`);
 
             metadataString = metadataString.replace(/_G_/g, '"').replace(/_EOL_/g, "\n")

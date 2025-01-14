@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
   /**
    * Banners: header/footer
    * Pages: firstPage/tocPage/contentPage/lastPage/backPageContent?
-   * Parts: title/subTitle
+   * Parts: title/subtitle
    * Styles: 
    */
   firstPage: {
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
       marginVertical:20
   },
   
-  subTitle:{
+  subtitle:{
       fontSize:40,
       textAlign:"center",
       marginVertical:30
