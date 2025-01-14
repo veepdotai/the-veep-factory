@@ -57,6 +57,7 @@ export default function initAppJSLogs(level = "NONE") {
       localStorage.setItem('Prompt', level);
       localStorage.setItem('PromptActions', level);
       localStorage.setItem('PromptDetails', level);
+    localStorage.setItem('EditorialCalendar', level);
     localStorage.setItem('Calendar', level);
       localStorage.setItem('CalendarView', level);
       localStorage.setItem('CalendarSheet', level);

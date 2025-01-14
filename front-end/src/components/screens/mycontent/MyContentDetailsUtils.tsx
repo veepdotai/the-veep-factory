@@ -193,7 +193,8 @@ export default class MyContentDetailsUtils {
 
   static getCalendarView(prompt, data, cid, width = 1) {
     const log = (msg) => MyContentDetailsUtils.log.trace(`getCalendarView: ${msg}`)
-    let children = data.nodes[0].children
+    let parent = data.nodes[0]
+    let children = parent.children
     log(`edges.length: ${children.edges.length}`)
     let events : CalendarProps[] = []
     let date = new Date()
@@ -209,7 +210,9 @@ export default class MyContentDetailsUtils {
         type: "TOFU",
         //resource: 1,
         //allDay: false,
-        desc: n.title 
+        desc: n.title,
+        content: n.content,
+        author: `${parent.author?.node.firstName} ${parent.author?.node.lastName}`
       }
     }
     return (

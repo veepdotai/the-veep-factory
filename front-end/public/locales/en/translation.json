@@ -309,6 +309,20 @@
 
   "NotAvailableData": "Data not available",
 
+  "SocialNetworkPreviewDialog": "Your {{socialNetworkName}} Post Preview",
+  "SocialNetworkPreviewDesc": "The preview is indicative and may vary slightly from the {{socialNetworkName}} site for reasons beyond our control",
+
+  "JustPreview": "It's just a preview. No action is available.",
+
+  "LIHits": "Impressions",
+  "LIViewAnalytics": "View analytics",
+  "LIUp": "Like",
+  "LISupport": "Comments",
+  "LIPublish": "Repost",
+  "LIShare": "Share",
+
+  "DefaultLIBaseline": "This is a default baseline just to give you the feeling like it will be on real social network",
+
   "Stop": "Stop"
 
 }

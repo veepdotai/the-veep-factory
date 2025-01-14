@@ -13,8 +13,7 @@ import { FaComputer, FaIndustry } from "react-icons/fa6";
 import { LiaIndustrySolid } from "react-icons/lia";
 import { GoLaw } from "react-icons/go";
 import { FiUser, FiUserPlus, FiUserCheck } from "react-icons/fi";
-
-//import * as Icon from "react-icons/fc";
+import { BiWorld } from "react-icons/bi";
 
 export const attr = {className: "d-inline align-text-middle", size: 20};
 
@@ -57,6 +56,7 @@ export const Icons = {
     credits:            <Md.MdEuroSymbol {...attr}  />,
     dashboard:          <Md.MdDashboard {...attr}  />,
     editor:             <Md.MdOutlineModeEdit {...attr}  />,
+    world: (size) => <BiWorld {...attr} size={size}  />,    
     portrait:           <Md.MdOutlineCropPortrait {...attr}  />,
     home:               <Md.MdOutlineHome {...attr}  />,
     infos:              <Md.MdOutlinePermDataSetting {...attr} />,

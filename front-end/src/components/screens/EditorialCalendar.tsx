@@ -1,5 +1,8 @@
 import React, { useCallback, useMemo, useState } from 'react'
+import { Logger } from 'react-logger-lib'
 import { t } from "i18next"
+import PubSub from "pubsub-js"
+
 import { Calendar, Navigate, Views, dayjsLocalizer } from 'react-big-calendar'
 import dayjs from 'dayjs'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
@@ -7,10 +10,12 @@ import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
 
+import { UtilsContent } from '../lib/util-content'
+
 import './EditorialCalendar/styles.css'
 import Loading from '../common/Loading'
-
 import { CommonFacetedFilter } from './mycontent/datatable/shadcn-dt-tanstack/core/common-faceted-filter'
+import SocialNetworkPreview from './SocialNetworkPreview'
 
 export interface CalendarProps {
     id: string,
@@ -21,23 +26,51 @@ export interface CalendarProps {
     type?: string,
     resource?: number,
     allDay?: boolean,
-    desc?: string
+    content: string,
+    avatarUrl?: string,
+    author?: string,
+    baseline?: string,
+    desc?: string,
+    mediaUrl?: string,
+
 }
 
 export default function EditorialCalendar({events}) {
-    
+    const log = Logger.of(EditorialCalendar.name)
     const DnDCalendar = withDragAndDrop(Calendar)
 
     const localizer = dayjsLocalizer(dayjs)
     const defaultDate = new Date()
     const data = []
 
+    function getContentPreview(content) {
+        let _content = {
+            //avatarUrl: "https://media.licdn.com/dms/image/v2/C5603AQH1QwJjj0fKQQ/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1519680310523?e=1742428800&v=beta&t=KbF4DkT-0Pxaw5S19Sf3P65UwtucEmfAKicMJ2nY_DQ",
+            //author: "Jean-Christophe Kermagoret",
+            //mediaUrl: "https://media.licdn.com/dms/image/v2/D4E22AQF0-kDhW1maNg/feedshare-shrink_800/B4EZRfcRyfGgAo-/0/1736768036733?e=1739404800&v=beta&t=gV4PSUoHaLpNG6_zr8Txat2zKXjqmfkAkRUKDZNKi_4",
+            //mediaUrl: "https://researchtorevenue.wordpress.com/wp-content/uploads/2015/04/1r41ai10801601_fong.pdf",
+            ...content,
+        }
+        return (
+            <SocialNetworkPreview content={_content} />
+        )
+    }
+
     const [myEvents, setMyEvents] = useState(events)
 
-    const selectEvent = useCallback(
-        (event) => window.alert(event.title),
-        []
-    )
+    const selectEvent = useCallback((event) => {
+        log.trace("title", event)
+
+        PubSub.publish("PROMPT_DIALOG", {
+            title: t("SocialNetworkPreviewDialog", {socialNetworkName: "LinkedIn"}),
+            description: t("SocialNetworkPreviewDesc", {socialNetworkName: "LinkedIn"}),
+            content: getContentPreview(event),
+            actions: [{
+                label: t("Close"),
+            }]
+        })
+    
+    }, [])
     
     const selectSlot = useCallback(
         ({ start, end }) => {
@@ -169,7 +202,6 @@ export default function EditorialCalendar({events}) {
     }
 
     function getTitle(e) {
-        alert("e: " + JSON.stringify(e))
         let title = (e.type ? e.type + " - " : "") + e.title
         return title
     }
@@ -227,4 +259,3 @@ export default function EditorialCalendar({events}) {
         </>
     )
 }
-

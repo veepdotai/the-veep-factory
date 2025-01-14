@@ -25,6 +25,7 @@ import MenuVertical from "src/layout/MenuVertical"
 import MenuHorizontal from "src/layout/MenuHorizontal"
 import Main from "src/layout/Main"
 import Footer from "src/layout/Footer"
+import CalendarView from '../components/screens/CalendarView'
 
 //export default function App() {
 export default function Index() {
@@ -126,6 +127,7 @@ export default function Index() {
         <PromptDialog />
         <VeepToast />
         <Cover />
+        {/*<CalendarView />*/}
         
         <Tab.Container
           {...defaultActiveKey}
