@@ -1,6 +1,7 @@
 import { Constants } from 'src/constants/Constants';
 import { Logger } from 'react-logger-lib';
-import { createPlateEditor } from '@udecode/plate-common/react';
+//import { createPlateEditor } from '@udecode/plate/react';
+import { createPlateEditor } from '@udecode/plate/react';
 import { MarkdownPlugin } from '@udecode/plate-markdown';
 import { t } from 'i18next';
 

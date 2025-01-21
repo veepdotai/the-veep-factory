@@ -1,4 +1,4 @@
-import type { PlateRenderElementProps } from '@udecode/plate-common/react';
+import type { PlateRenderElementProps } from '@udecode/plate/react';
 
 import { cn } from '@udecode/cn';
 import {

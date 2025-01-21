@@ -1,16 +1,12 @@
 
 import { Logger } from 'react-logger-lib'
 import { t } from 'i18next'
-import { Container, Row, Col, Tab } from 'react-bootstrap';
+import { Container, Tab } from 'react-bootstrap';
 import { ScreenHeading } from "src/components/common/Heading";
 import MyContent from "src/components/screens/mycontent/MyContent";
 import AllCards from '../catalog/AllCards';
-import Home from "src/components/Home";
-import PubSub from "pubsub-js"
 
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import {
   Sheet,
   SheetClose,

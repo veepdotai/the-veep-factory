@@ -91,7 +91,7 @@ export default function AllCards( { type, title, formScreen = null, cat = null, 
   function displayNav(categories, defaultEventKey) {
     let items = categories.map((cat, i) => {
       return (
-          <TabsTrigger value={i == 0 ? defaultEventKey : cat}>{cat}</TabsTrigger>
+          <TabsTrigger key={cat} value={i == 0 ? defaultEventKey : cat}>{cat}</TabsTrigger>
       )
     })
 
@@ -113,7 +113,7 @@ export default function AllCards( { type, title, formScreen = null, cat = null, 
   function showContentsByRow(categories, defaultEventKey) {
     let contents = categories.map((cat, i) => {
       return (
-        <TabsContent value={i == 0 ? defaultEventKey : cat}>
+        <TabsContent key={cat} value={i == 0 ? defaultEventKey : cat}>
           <Row className='pt-0'>
             {
               getAIsByOneCategory(cat)
@@ -129,7 +129,7 @@ export default function AllCards( { type, title, formScreen = null, cat = null, 
   function showContentsByGrid(categories, defaultEventKey) {
     let contents = categories.map((cat, i) => {
       return (
-        <TabsContent value={i == 0 ? defaultEventKey : cat}>
+        <TabsContent key={cat} value={i == 0 ? defaultEventKey : cat}>
           {/*<div className='grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2'>*/}
           <div className='flex w-max space-x-4 p-4'>
           {

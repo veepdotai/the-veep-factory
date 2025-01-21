@@ -8,8 +8,8 @@ import { CodeBlockPlugin } from '@udecode/plate-code-block/react';
 import {
   isBlockAboveEmpty,
   isSelectionAtBlockStart,
-} from '@udecode/plate-common';
-import { ParagraphPlugin } from '@udecode/plate-common/react';
+} from '@udecode/plate';
+import { ParagraphPlugin } from '@udecode/plate/react';
 import { TodoListPlugin } from '@udecode/plate-list/react';
 import { ResetNodePlugin } from '@udecode/plate-reset-node/react';
 

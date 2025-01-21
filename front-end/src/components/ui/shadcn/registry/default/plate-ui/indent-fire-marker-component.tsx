@@ -1,4 +1,4 @@
-import type { PlateRenderElementProps } from '@udecode/plate-common/react';
+import type { PlateRenderElementProps } from '@udecode/plate/react';
 import type { TIndentElement } from '@udecode/plate-indent';
 
 export const FireMarker = (

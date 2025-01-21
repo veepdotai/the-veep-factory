@@ -2,7 +2,7 @@ import { Button, Col, Container, Modal, Row, Form } from 'react-bootstrap';
 import PubSub from 'pubsub-js';
 import { t } from 'i18next';
 
-import { Icons } from '@/src/constants/Icons';
+import { Icons } from '@/constants/Icons';
 
 export default function UploadSelector() {
   let size = 32;

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 
-import type { PlateRenderElementProps } from '@udecode/plate-common/react';
+import type { PlateRenderElementProps } from '@udecode/plate/react';
 
 import { BasicElementsPlugin } from '@udecode/plate-basic-elements/react';
 import { BasicMarksPlugin } from '@udecode/plate-basic-marks/react';
@@ -11,7 +11,7 @@ import {
   Plate,
   createPlatePlugin,
   usePlateEditor,
-} from '@udecode/plate-common/react';
+} from '@udecode/plate/react';
 
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';

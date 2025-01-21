@@ -7,10 +7,10 @@ import {
   StrikethroughPlugin,
   UnderlinePlugin,
 } from '@udecode/plate-basic-marks/react';
-import { useEditorReadOnly } from '@udecode/plate-common/react';
+import { useEditorReadOnly } from '@udecode/plate/react';
 
 import { Icons } from '@/components/icons';
-import { Icons as MyIcons } from '@/src/constants/Icons';
+import { Icons as MyIcons } from '@/constants/Icons';
 import { InsertMenu } from './insert-dropdown-menu';
 import { MarkToolbarButton } from '@/components/plate-ui/mark-toolbar-button';
 import { ModeDropdownMenu } from '@/components/plate-ui/mode-dropdown-menu';

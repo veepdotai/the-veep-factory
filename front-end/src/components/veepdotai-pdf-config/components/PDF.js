@@ -1,19 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Logger } from 'react-logger-lib';
-import { PDFDownloadLink, Link, Page, Text, Image, View, Document, StyleSheet } from '@react-pdf/renderer';
+import { Link, Page, Text, Image, View, Document, StyleSheet } from '@react-pdf/renderer';
 import { t } from 'i18next';
 import dynamic from 'next/dynamic';
 import { useMediaQuery } from 'usehooks-ts';
 
+const dynamicProps = {ssr: false, loading: () => <p>{t("Loading...")}</p>}
 
-// const which import the pdf renderer
-const PDFViewer = dynamic(
-  () => import("@react-pdf/renderer").then((mod) => mod.PDFViewer),
-  {
-    ssr: false,
-    loading: () => <p>{t("Loading...")}</p>,
-  },
-);  
+const PDFViewer = dynamic(() => import("./PDFViewer"), {ssr: false, loading: () => <p>{t("Loading...")}</p>});  
+//const PDFViewer = dynamic(() => import("@react-pdf/renderer").then((mod) => mod.PDFViewer), {ssr: false, loading: () => <p>{t("Loading...")}</p>});  
+//const PDFViewer = dynamic(() => import("@react-pdf/renderer").then((mod) => mod.PDFViewer), dynamicProps);  
 
 /**
  * 
@@ -28,7 +24,7 @@ export function PDF( props ) {
   log.trace("style... parameters: " + JSON.stringify(props.params))
   return (
     <>
-      <PDFViewer width={'100%'} pageMode="fullScreen" height={isDesktop ? '100%' : '800px'}>
+      <PDFViewer width={'100%'} height={isDesktop ? '100%' : '800px'}>
           <PDFDocument
             content={props.content}
             params={props.params}
@@ -85,7 +81,7 @@ export function PDFDocument({content, params}) {
         {getInlineContent("title", "title")}
         {getInlineContent("subtitle", "subtitle")}
 
-        <Image style={data.styles?.featuredImage} src={data?.featuredImage} />
+        <Image key={data?.featuredImage} style={data.styles?.featuredImage} src={data?.featuredImage} />
 
         <View key={"view-" + data.title} style={data.styles?.metadataBlock}>
           {/*getInlineContentWithLabel(45, t("Company"), data?.companyName, "company")*/}
@@ -116,14 +112,14 @@ export function PDFDocument({content, params}) {
     return (
       <>
         { titles ?
-          <Page style={data.styles?.tocPage} bookmark={t("TOC")} size={data?.dimensions}>
+          <Page key="toc" style={data.styles?.tocPage} bookmark={t("TOC")} size={data?.dimensions}>
             <View style={data.styles?.contentTable}>
               <Text style={data.styles?.contentTableTitle}>{t("TOC")}</Text>
 
               <View style={data.styles?.contentTableLinks}>
                 {titles.map((title, i) => {
                   return (
-                    <Link style={data.styles?.link} src={"#" + (i+1)}>{title}</Link>
+                    <Link key={`${title}-${i}`} style={data.styles?.link} src={"#" + (i+1)}>{title}</Link>
                     )
                   })}
               </View>
@@ -151,15 +147,15 @@ export function PDFDocument({content, params}) {
       let bookmark = content[0]?.length > 0 ? t(content[0][1]) : t("Content")
       return (
         <>
-          {content.map( (page) => {
+          {content.map( (page, i) => {
             console.log(page[5])
             return (
-              <Page style={data.styles?.contentPage} id={page[0]} bookmark={t(page[1])} size={data?.dimensions}>
+              <Page key={`content-${i}`} style={data.styles?.contentPage} id={page[0]} bookmark={t(page[1])} size={data?.dimensions}>
                 {header()}
                 <Text style={data.styles?.title1}>{page[1]}</Text>
-                {page[2].map((subtitle) => {
+                {page[2].map((subtitle, i) => {
                   if (typeof(subtitle) == "string"){
-                    return (<Text style={data.styles?.text}>{subtitle}</Text>)
+                    return (<Text key={`text-${i}`} style={data.styles?.text}>{subtitle}</Text>)
                   }else {
                     return displaySubtitle(1, subtitle)
                   }
@@ -279,25 +275,25 @@ export function PDFDocument({content, params}) {
   function footer() {
     if(data?.displayFooter){
       return(
-        <>
+        <div key="footer">
           <View style={data.styles?.footerMargin} fixed></View>
           <View style={data.styles?.footer} fixed>
             <Text style={data.styles?.footerContent}>{data?.footer}</Text>
             <Text style={data.styles?.pageNumber} render={({ pageNumber, totalPages }) => (`${pageNumber} / ${totalPages}`)} fixed/>
           </View>
-        </>
+        </div>
       )
     }
   }
 
   /**
    * Renders an image which will be used as a background of the page it is in
-   * @param {String} img 
+   * @param {String} img Url of an image
    * @returns A rendered image usable as a page background
    */
   function background(img){
     return (
-      <View style={data.styles?.companyBackground} fixed>
+      <View key="background" style={data.styles?.companyBackground} fixed>
         <Image style={data.styles?.companyBackgroundImage} src={img}/>
       </View>
     )
@@ -345,7 +341,7 @@ export function PDFDocument({content, params}) {
     return (
       <>
         { name ?
-          <Text style={styleName}>{data[name]}</Text>
+          <Text key={name} style={styleName}>{data[name]}</Text>
           :
           <></>
         }
@@ -368,7 +364,7 @@ export function PDFDocument({content, params}) {
     return (
       <>
         { name ?
-          <View style={styles?.metadataLine}>
+          <View key={name} style={styles?.metadataLine}>
             <Text style={style?.label}>{name}</Text>
             <Text style={style?.sep}>:</Text>
             <Text style={style?.value}>{data}</Text>

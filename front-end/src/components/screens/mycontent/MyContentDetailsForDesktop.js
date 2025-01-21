@@ -58,17 +58,17 @@ export default class MyContentDetailsForDesktop {
         { mode === "side" ?
           <TabsList id="details-menu-chat" variant="pills" className="">
             <div>            
-              <TabsTrigger id="details-menu-chat" value="chat">
+              <TabsTrigger key="details-menu-chat" id="details-menu-chat" value="chat">
                 <MyContentDetailsForDesktop.TT id="m-conversation" title={t("Chat")}>
                   {Icons.support}
                 </MyContentDetailsForDesktop.TT>
               </TabsTrigger>
-              <TabsTrigger id="details-menu-transcription" value="transcription">
+              <TabsTrigger key="details-menu-transcription" id="details-menu-transcription" value="transcription">
                 <MyContentDetailsForDesktop.TT id="m-transcription" title={t("Transcription")}>
                   {Icons.transcriptionView}
                 </MyContentDetailsForDesktop.TT>
               </TabsTrigger>
-              <TabsTrigger id="details-menu-metadata" value="metadata">
+              <TabsTrigger key="details-menu-metadata" id="details-menu-metadata" value="metadata">
                 <MyContentDetailsForDesktop.TT id="m-metadata" title={t("Metadata")}>
                   {Icons.metadataView}
                 </MyContentDetailsForDesktop.TT>
@@ -84,20 +84,20 @@ export default class MyContentDetailsForDesktop {
         :
           <TabsList id="details-menu-main" variant="pills" className="flex justify-start w-100 mh-100">
             <div>
-              <TabsTrigger id="details-menu-content" value="content">
+              <TabsTrigger key="details-menu-content" id="details-menu-content" value="content">
                   <MyContentDetailsForDesktop.TT id="m1" title={t("MainContent")}>
                     {Icons.aggregatedView}
                   </MyContentDetailsForDesktop.TT>
               </TabsTrigger>
-              <TabsTrigger id="details-menu-pdf" value="pdf-merged-content">
+              <TabsTrigger key="details-menu-pdf" id="details-menu-pdf" value="pdf-merged-content">
                   <MyContentDetailsForDesktop.TT id="m3" title={t("PDFMergedContent")}>
                     {Icons.pdf}
                   </MyContentDetailsForDesktop.TT>
               </TabsTrigger>
-              <TabsTrigger id="details-menu-sideBySide-content" value="sideBySide-content">
+              <TabsTrigger key="details-menu-sideBySide-content" id="details-menu-sideBySide-content" value="sideBySide-content">
                   <MyContentDetailsForDesktop.TT id="m2" title={t("SideBySideView")}>{Icons.comparedView}</MyContentDetailsForDesktop.TT>
               </TabsTrigger>
-              <TabsTrigger id="details-menu-calendar-content" value="calendar-content">
+              <TabsTrigger key="details-menu-calendar-content" id="details-menu-calendar-content" value="calendar-content">
                   <MyContentDetailsForDesktop.TT id="m4" title={t("SideBySideView")}>{Icons['editorial-calendar']}</MyContentDetailsForDesktop.TT>
               </TabsTrigger>
             </div>

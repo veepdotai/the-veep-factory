@@ -1,8 +1,8 @@
 'use client';
 
 import { cn, withRef } from '@udecode/cn';
-import { setNodes } from '@udecode/plate-common';
-import { findNodePath } from '@udecode/plate-common/react';
+import { setNodes } from '@udecode/plate';
+import { findNodePath } from '@udecode/plate/react';
 
 import { Calendar } from './calendar';
 import { PlateElement } from './plate-element';

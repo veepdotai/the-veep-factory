@@ -13,8 +13,8 @@ import {
   type TCloudImageElement,
   CloudImagePlugin,
 } from '@udecode/plate-cloud';
-import { setNodes } from '@udecode/plate-common';
-import { findNodePath, useEditorRef } from '@udecode/plate-common/react';
+import { setNodes } from '@udecode/plate';
+import { findNodePath, useEditorRef } from '@udecode/plate/react';
 
 type ImageSize = { height: number; width: number };
 

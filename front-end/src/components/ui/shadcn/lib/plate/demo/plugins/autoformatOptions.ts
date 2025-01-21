@@ -32,7 +32,7 @@ import {
   isElement,
   isType,
   setNodes,
-} from '@udecode/plate-common';
+} from '@udecode/plate';
 import { ParagraphPlugin } from '@udecode/plate-core/react';
 import { HEADING_KEYS } from '@udecode/plate-heading';
 import { HighlightPlugin } from '@udecode/plate-highlight/react';

@@ -28,7 +28,7 @@ import MyContentDetailsActions from './MyContentDetailsActions';
 import {ContentActionsUtils as CAU } from './ContentActions';
 import ContentActions from './ContentActions';
 import { UtilsFormCommon } from '../../lib/utils-form-common';
-import { graphqlURI } from '@/src/constants/Constants';
+import { graphqlURI } from '@/constants/Constants';
 
 export default function Content( {contentId, title, attrName = null, content = "", raw = "", contentStyle = {}, contentClassName = "", ...props} ) {
   const log = Logger.of(Content.name);

@@ -24,7 +24,7 @@ export default function MenuVertical( {direction, isManager, profile} ) {
 
     function getMenuItem(key, label, direction = null) {
         return (
-            <MenuItem itemKey={key} itemLabel={label} direction={direction} />
+            <MenuItem key={key} itemKey={key} itemLabel={label} direction={direction} />
         )
     }
 
@@ -35,11 +35,11 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                     {
                         menuDefinition.map((menu, i) => {
                             if (menu.title == "") {
-                                return menu.items.map(row => row.id == "separator" ? <hr /> : <MenuItem key={i} itemKey={row.id} itemLabel={row.label} direction={direction} /> )
+                                return menu.items.map(row => row.id == "separator" ? <hr /> : <MenuItem key={menu.id} itemKey={row.id} itemLabel={row.label} direction={direction} /> )
                             } else {
                                 return getAccordionItem(menu.id, menu.title,
                                     <>
-                                        {menu.items.map(row => row.id == "separator" ? <hr /> : <MenuItem key={i} itemKey={row.id} itemLabel={row.label} direction={direction} /> )}
+                                        {menu.items.map((row) => row.id == "separator" ? <hr /> : <MenuItem key={menu.id} itemKey={row.id} itemLabel={row.label} direction={direction} /> )}
                                     </>
                                 )       
                             }
@@ -60,7 +60,7 @@ export default function MenuVertical( {direction, isManager, profile} ) {
        
     function getAccordionItem(value, trigger, content) {
         return (
-            <AccordionItem value={value}>
+            <AccordionItem key={value} value={value}>
                 <AccordionTrigger className="">
                     <div className="d-flex d-inline align-text-middle">
                         <div className="me-2">{Icons[value]}</div>
@@ -127,9 +127,9 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                             <>
                                 {getAccordionItem("content", getMenuTitle(t("Creation")),
                                     <>
-                                        <MenuItem itemKey="contents" itemLabel={t("MyContents")} />
+                                        <MenuItem key={"content"} itemKey="contents" itemLabel={t("MyContents")} />
                                         {/*<MenuItem itemKey="add-content" itemLabel={t("DocModels")} direction={direction} />*/}
-                                        <MenuItem itemKey="add-content" itemLabel={t("AddContent")} direction={direction} />
+                                        <MenuItem key={"add-content"} itemKey="add-content" itemLabel={t("AddContent")} direction={direction} />
                                     </>
                                 )}
                             </>
@@ -139,10 +139,10 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                             <>
                                 {getAccordionItem("context", getMenuTitle(t("Context")),
                                     <>
-                                        <MenuItem itemKey="brand-voice" itemLabel={t("BrandVoice")} direction={direction} />
-                                        <MenuItem itemKey="editorial-line" itemLabel={t("EditorialLine")} direction={direction} />
+                                        <MenuItem key={"brand-voice"} itemKey="brand-voice" itemLabel={t("BrandVoice")} direction={direction} />
+                                        <MenuItem key={"editorial-line"}  itemKey="editorial-line" itemLabel={t("EditorialLine")} direction={direction} />
 
-                                        <MenuItem itemKey="pdf-export" itemLabel={t("PDFExport")} direction={direction} />
+                                        <MenuItem key={"pdf-export"} itemKey="pdf-export" itemLabel={t("PDFExport")} direction={direction} />
                                     </>
                                 )}
 
@@ -160,8 +160,8 @@ export default function MenuVertical( {direction, isManager, profile} ) {
 
                                 {getAccordionItem("configuration", getMenuTitle(t("Configuration")),
                                     <>
-                                        <MenuItem itemKey="config-pdf" itemLabel={t("PDFConfig")} direction={direction} />
-                                        <MenuItem itemKey="config-post" itemLabel={t("PostConfig")} direction={direction} />
+                                        <MenuItem key={"config-pdf"} itemKey="config-pdf" itemLabel={t("PDFConfig")} direction={direction} />
+                                        <MenuItem key={"config-post"} itemKey="config-post" itemLabel={t("PostConfig")} direction={direction} />
                                     </>
                                 )}
                             </>
@@ -173,8 +173,8 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                         <>
                             {getAccordionItem("administration", getMenuTitle(t("Administration")),
                                 <>
-                                    <MenuItem itemKey="infos" itemLabel={t("Infos")} direction={direction} />
-                                    <MenuItem itemKey="editorial-calendar" itemLabel={t("EditorialCal")} direction={direction} />
+                                    <MenuItem key={"infos"} itemKey="infos" itemLabel={t("Infos")} direction={direction} />
+                                    <MenuItem key={"editorial-calendar"} itemKey="editorial-calendar" itemLabel={t("EditorialCal")} direction={direction} />
                                 </>
                             )}
                         </>

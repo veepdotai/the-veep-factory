@@ -9,12 +9,12 @@ import {
   isBlock,
   setNodes,
   unsetNodes,
-} from '@udecode/plate-common';
+} from '@udecode/plate';
 import {
   ParagraphPlugin,
   focusEditor,
   useEditorSelector,
-} from '@udecode/plate-common/react';
+} from '@udecode/plate/react';
 import { HEADING_KEYS } from '@udecode/plate-heading';
 import { HeadingPlugin } from '@udecode/plate-heading/react';
 import { ListStyleType, toggleIndentList } from '@udecode/plate-indent-list';

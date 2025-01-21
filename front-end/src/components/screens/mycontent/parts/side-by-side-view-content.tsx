@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { Logger } from 'react-logger-lib';
 
 import parse from 'html-react-parser';
@@ -9,7 +10,7 @@ import Veeplet from '../../../lib/class-veeplet'
 import Content from '../Content';
 import MyContentDetailsUtils from '../MyContentDetailsUtils';
 import { PlateEditor } from '../../PlateEditor';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/src/components/ui/shadcn/carousel';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 
 export default function SideBySideViewContent( { prompt, data, cid, width = 1 } ) {
     const log = Logger.of(SideBySideViewContent.name)
@@ -93,11 +94,11 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
       )
     }
 
-    function getContentWithCarousel(content) {
+    function getContentWithCarousel(contents) {
       return (
         <Carousel opts={{align: "start",}} className="w-full max-w-screen-full">
           <CarouselContent className="-ml-1">
-            {content}
+            {contents}
           </CarouselContent>
           <CarouselPrevious className='absolute left-none right-[5rem] top-0'/>
           <CarouselNext className='absolute right-[2rem] top-0'/>
@@ -105,10 +106,10 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
       )
     }
 
-    function getContentWithScrollbar(content) {
+    function getContentWithScrollbar(contents) {
       return (
         <div className={`p-1 w-1/${width} flex overflow-x-auto space-x-2`}>
-          {content}
+          {contents}
         </div>
       )
     }
@@ -117,7 +118,7 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
       //let chain = [].concat(prompt.prompts.chain);
         log.trace("getCompareView: chain: " + typeof chain + " / " + JSON.stringify(chain));
         let stepsNb = chain?.length;
-        let contents = chain.map((_promptId, i) => getContentThroughPrompt(_promptId, i, viewType));
+        let contents = chain.map((_promptId, i) => <Fragment key={_promptId}>{getContentThroughPrompt(_promptId, i, viewType)}</Fragment>);
 
         return (
           <div className={`p-1`}>

@@ -1,6 +1,6 @@
 import { CodeBlockPlugin } from '@udecode/plate-code-block/react';
-import { isSelectionAtBlockStart, someNode } from '@udecode/plate-common';
-import { createPlatePlugin } from '@udecode/plate-common/react';
+import { isSelectionAtBlockStart, someNode } from '@udecode/plate';
+import { createPlatePlugin } from '@udecode/plate/react';
 import { IndentListPlugin } from '@udecode/plate-indent-list/react';
 import { ListItemPlugin } from '@udecode/plate-list/react';
 import { TabbablePlugin } from '@udecode/plate-tabbable/react';

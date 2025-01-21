@@ -14,7 +14,7 @@ import { Constants } from "src/constants/Constants";
 import { Icons } from "src/constants/Icons";
 
 import UploadSelector from './UploadSelector';
-import VocalForm from './VocalForm';
+//import VocalForm from './VocalForm';
 import UploadRDU from './UploadRDU';
 import TextForm from './TextForm';
 import UrlForm from './UrlForm';
@@ -147,7 +147,7 @@ function ToggleForm( props ) {
                     <Tips1 disabled={disabled} contentType={props.contentType} />
                     <div>
                         { uploadSelector ? <UploadSelector /> : <></> }
-                        { vocalForm ? <VocalForm conf={conf} credits={props.credits} /> : <></> }
+                        { vocalForm ? <>{/*<VocalForm conf={conf} credits={props.credits} />*/}</> : <></> }
                         { uploadForm ? <UploadRDU conf={conf} credits={props.credits} /> : <></> }
                         { textForm ? <TextForm conf={conf} credits={props.credits} /> : <></> }
                         { urlForm ? <UrlForm conf={conf} credits={props.credits} /> : <></> }

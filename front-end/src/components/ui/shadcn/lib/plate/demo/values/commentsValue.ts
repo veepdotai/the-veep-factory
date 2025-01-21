@@ -1,5 +1,5 @@
 import type { TComment } from '@udecode/plate-comments';
-import type { Value } from '@udecode/plate-common';
+import type { Value } from '@udecode/plate';
 
 export const usersData = {
   1: {

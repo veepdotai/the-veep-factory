@@ -3,7 +3,7 @@
 import React from 'react';
 
 import { CloudPlugin } from '@udecode/plate-cloud';
-import { useEditorPlugin } from '@udecode/plate-common/react';
+import { useEditorPlugin } from '@udecode/plate/react';
 
 const buttonStyle: React.CSSProperties = {
   background: '#f0f0f0',

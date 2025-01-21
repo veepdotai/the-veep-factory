@@ -16,8 +16,8 @@ import {
   SubscriptPlugin,
   SuperscriptPlugin,
 } from '@udecode/plate-basic-marks/react';
-import { collapseSelection } from '@udecode/plate-common';
-import { focusEditor, useEditorRef } from '@udecode/plate-common/react';
+import { collapseSelection } from '@udecode/plate';
+import { focusEditor, useEditorRef } from '@udecode/plate/react';
 import { HighlightPlugin } from '@udecode/plate-highlight/react';
 import { KbdPlugin } from '@udecode/plate-kbd/react';
 

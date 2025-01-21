@@ -22,7 +22,7 @@ import {
   CodeSyntaxPlugin,
 } from '@udecode/plate-code-block/react';
 import { CommentsPlugin } from '@udecode/plate-comments/react';
-import { ParagraphPlugin } from '@udecode/plate-common/react';
+import { ParagraphPlugin } from '@udecode/plate/react';
 import { CsvPlugin } from '@udecode/plate-csv';
 import { DatePlugin } from '@udecode/plate-date/react';
 import { DndPlugin } from '@udecode/plate-dnd';
@@ -711,7 +711,7 @@ export const customizerItems: Record<string, SettingPlugin> = {
     ],
     label: 'Paragraph',
     plateImports: ['ParagraphPlugin'],
-    // npmPackage: '@udecode/plate-common',
+    // npmPackage: '@udecode/plate',
     pluginFactory: 'ParagraphPlugin',
     reactImport: true,
     route: customizerPlugins.basicnodes.route,

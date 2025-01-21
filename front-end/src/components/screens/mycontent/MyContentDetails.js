@@ -79,13 +79,13 @@ export default function MyContentDetails( { id }) {
 
             {MyContentDetailsForDesktop.desktopMenu(prompt, "side")}
 
-            <TabsContent id="details-chat-conversation" className="h-full" value="chat">
+            <TabsContent key="details-chat-conversation"  id="details-chat-conversation" className="h-full" value="chat">
               {MyContentDetailsUtils.getAllStepsOneByOne(prompt, data, contentId)}
             </TabsContent>
-            <TabsContent id="details-chat-prompt" className="h-full" value="metadata">
+            <TabsContent key="details-chat-prompt"  id="details-chat-prompt" className="h-full" value="metadata">
               {MyContentDetailsUtils.getPromptContent(contentId, mainNode)}
             </TabsContent>
-            <TabsContent id="details-chat-transcription" className="h-full" value="transcription">
+            <TabsContent key="details-chat-transcription" id="details-chat-transcription" className="h-full" value="transcription">
               {MyContentDetailsUtils.getTranscriptionContent(contentId, mainNode)}
             </TabsContent>
           </ScrollArea>
@@ -103,13 +103,13 @@ export default function MyContentDetails( { id }) {
 
         {MyContentDetailsForDesktop.desktopMenu(prompt, "main")}
 
-        <TabsContent id="details-content-main" className="h-full" value="content">
+        <TabsContent key="details-content-main" id="details-content-main" className="h-full" value="content">
           {MyContentDetailsForDesktop.desktopMarkdownContent(selectedFormat, prompt, data, contentId)}
         </TabsContent>
-        <TabsContent id="details-content-pdf" className="h-full" value="pdf-merged-content">
+        <TabsContent key="details-content-pdf" id="details-content-pdf" className="h-full" value="pdf-merged-content">
           {MyContentDetailsForDesktop.desktopPDFContent(selectedFormat, prompt, data, contentId)}
         </TabsContent>
-        <TabsContent id="details-sideBySide-content" value="sideBySide-content">
+        <TabsContent id="details-sideBySide-content" id="details-sideBySide-content" value="sideBySide-content">
           <ScrollArea className="w-100 whitespace-nowrap h-full">
             <ScrollBar orientation="vertical" />
 
@@ -119,7 +119,7 @@ export default function MyContentDetails( { id }) {
             </Row>
           </ScrollArea>
         </TabsContent>
-        <TabsContent id="details-calendar-content" value="calendar-content">
+        <TabsContent key="details-calendar-content" id="details-calendar-content" value="calendar-content">
           <ScrollArea className="w-100 whitespace-nowrap h-full">
             <ScrollBar orientation="vertical" />
             {displaySelector && MyContentDetailsUtils.getColumnsSelectors([1,3,5], setWidth)}

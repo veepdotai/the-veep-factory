@@ -9,7 +9,7 @@ import Veeplet from '../../../lib/class-veeplet'
 import Content from '../Content';
 import MyContentDetailsUtils from '../MyContentDetailsUtils';
 import { PlateEditor } from '../../PlateEditor';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/src/components/ui/shadcn/carousel';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/shadcn/carousel';
 
 export default function SideBySideViewContent( { prompt, data, cid, width = 1 } ) {
     const log = Logger.of(SideBySideViewContent.name)

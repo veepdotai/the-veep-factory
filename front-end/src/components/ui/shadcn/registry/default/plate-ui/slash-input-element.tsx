@@ -1,6 +1,6 @@
 import React, { type ComponentType, type SVGProps } from 'react';
 
-import type { PlateEditor } from '@udecode/plate-common/react';
+import type { PlateEditor } from '@udecode/plate/react';
 
 import { withRef } from '@udecode/cn';
 import { DatePlugin } from '@udecode/plate-date/react';

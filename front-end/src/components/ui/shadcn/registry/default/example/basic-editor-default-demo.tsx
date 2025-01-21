@@ -4,7 +4,7 @@ import {
   Plate,
   PlateContent,
   usePlateEditor,
-} from '@udecode/plate-common/react';
+} from '@udecode/plate/react';
 
 export default function BasicEditorDefaultDemo() {
   const editor = usePlateEditor();

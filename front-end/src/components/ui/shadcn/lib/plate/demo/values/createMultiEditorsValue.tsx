@@ -1,5 +1,5 @@
 /** @jsxRuntime classic */
-import type { TDescendant } from '@udecode/plate-common';
+import type { TDescendant } from '@udecode/plate';
 
 /** @jsx jsx */
 import { jsx } from '@udecode/plate-test-utils';

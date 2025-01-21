@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from 'react'
 import { Logger } from 'react-logger-lib'
 import { t } from "i18next"
@@ -15,7 +17,7 @@ import { Avatar, AvatarFallback, AvatarImage, } from "@/components/ui/avatar"
 import { Card, CardContent, } from "@/components/ui/card"
 import { ScrollArea, } from '@/components/ui/scroll-area'
    
-import { Icons } from '@/src/constants/Icons'
+import { Icons } from '@/constants/Icons'
 
 interface ContentProps {
     avatarUrl?: string,

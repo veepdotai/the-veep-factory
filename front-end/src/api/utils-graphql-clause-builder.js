@@ -99,6 +99,7 @@ export const UtilsGraphQLClauseBuilder = {
 				tvfCategory
 				tvfSubCategory
 				tvfArtefactType
+				tvfMetadata
 			  }
 			}
 		  }

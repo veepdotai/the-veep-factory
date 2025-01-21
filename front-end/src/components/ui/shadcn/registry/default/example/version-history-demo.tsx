@@ -3,12 +3,12 @@ import React from 'react';
 import { cn } from '@udecode/cn';
 import { BoldPlugin, ItalicPlugin } from '@udecode/plate-basic-marks/react';
 import { SoftBreakPlugin } from '@udecode/plate-break/react';
-import { type Value, createSlatePlugin, isInline } from '@udecode/plate-common';
+import { type Value, createSlatePlugin, isInline } from '@udecode/plate';
 import {
   ParagraphPlugin,
   createPlatePlugin,
   toPlatePlugin,
-} from '@udecode/plate-common/react';
+} from '@udecode/plate/react';
 import {
   type PlateElementProps,
   type PlateLeafProps,
@@ -19,7 +19,7 @@ import {
   PlateLeaf,
   createPlateEditor,
   usePlateEditor,
-} from '@udecode/plate-common/react';
+} from '@udecode/plate/react';
 import {
   type DiffOperation,
   type DiffUpdate,

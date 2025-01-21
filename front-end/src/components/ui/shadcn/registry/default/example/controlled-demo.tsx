@@ -5,7 +5,7 @@ import {
   focusEditor,
   focusEditorEdge,
   usePlateEditor,
-} from '@udecode/plate-common/react';
+} from '@udecode/plate/react';
 
 import { Button } from '@/registry/default/plate-ui/button';
 import { Editor } from '@/registry/default/plate-ui/editor';

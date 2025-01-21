@@ -5,7 +5,7 @@ import { CodeBlockPlugin } from '@udecode/plate-code-block/react';
 import {
   ParagraphPlugin,
   createNodesWithHOC,
-} from '@udecode/plate-common/react';
+} from '@udecode/plate/react';
 import {
   type WithDraggableOptions,
   withDraggable as withDraggablePrimitive,

@@ -2,7 +2,7 @@
 
 import { BasicElementsPlugin } from '@udecode/plate-basic-elements/react';
 import { BasicMarksPlugin } from '@udecode/plate-basic-marks/react';
-import { Plate, usePlateEditor } from '@udecode/plate-common/react';
+import { Plate, usePlateEditor } from '@udecode/plate/react';
 
 import { PlateUI } from '@/plate/demo/plate-ui';
 import { Editor } from '@/registry/default/plate-ui/editor';

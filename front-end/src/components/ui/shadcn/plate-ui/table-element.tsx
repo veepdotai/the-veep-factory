@@ -5,14 +5,14 @@ import type { TTableElement } from '@udecode/plate-table';
 
 import { PopoverAnchor } from '@radix-ui/react-popover';
 import { cn, withRef } from '@udecode/cn';
-import { isSelectionExpanded } from '@udecode/plate-common';
+import { isSelectionExpanded } from '@udecode/plate';
 import {
   useEditorRef,
   useEditorSelector,
   useElement,
   useRemoveNodeButton,
   withHOC,
-} from '@udecode/plate-common/react';
+} from '@udecode/plate/react';
 import {
   TableProvider,
   mergeTableCells,

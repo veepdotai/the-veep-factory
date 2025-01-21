@@ -15,7 +15,7 @@ import { Calendar as CalendarIcon } from "lucide-react"
 import { Calendar } from "src/components/ui/shadcn/calendar"
 import { Input } from "src/components/ui/shadcn/input"
 import { Textarea } from "src/components/ui/shadcn/textarea"
-import { UtilsGraphQLObject } from '@/src/api/utils-graphql-object'
+import { UtilsGraphQLObject } from '@/api/utils-graphql-object'
 
 export const UtilsFormCommon = {
     log: Logger.of("UtilsFormCommon"),

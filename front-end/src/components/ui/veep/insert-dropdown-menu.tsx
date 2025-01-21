@@ -3,12 +3,12 @@ import React from 'react';
 import type { DropdownMenuProps } from '@radix-ui/react-dropdown-menu';
 
 import { BlockquotePlugin } from '@udecode/plate-block-quote/react';
-import { insertEmptyElement } from '@udecode/plate-common';
+import { insertEmptyElement } from '@udecode/plate';
 import {
   ParagraphPlugin,
   focusEditor,
   useEditorRef,
-} from '@udecode/plate-common/react';
+} from '@udecode/plate/react';
 import { HEADING_KEYS } from '@udecode/plate-heading';
 import { HorizontalRulePlugin } from '@udecode/plate-horizontal-rule/react';
 import { LinkPlugin, triggerFloatingLink } from '@udecode/plate-link/react';

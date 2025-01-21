@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 import { Logger } from 'react-logger-lib';
 import md5 from 'js-md5';
 import { t } from 'i18next';
 import parse from 'html-react-parser';
 
-import { Utils } from '@/src/components/lib/utils';
+import { Utils } from '@/components/lib/utils';
 
 import EKeyLib from '../../../lib/util-ekey';
 import Veeplet from '../../../lib/class-veeplet'
@@ -72,7 +72,7 @@ export default function AllStepsOneByOneContent( { prompt, data, cid } ) {
         let innerCN = "prompt ps-5 text-sm text-wrap"
 
         return (
-          <>
+          <Fragment key={_promptId}>
             { contentId ?
                   <>
                     <div className={inputCN}>
@@ -105,7 +105,7 @@ export default function AllStepsOneByOneContent( { prompt, data, cid } ) {
               :
                   <></>
           }
-        </>
+        </Fragment>
         )
       });
 

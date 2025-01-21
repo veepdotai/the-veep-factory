@@ -1,20 +1,7 @@
 {
   "compilerOptions": {
+    "target": "ES2017",
     "baseUrl": "./",
-    "paths": {
-      "@/*": ["*"],
-      "@/constants/*": ["src/constants/*"],
-      "@/components/ui/*": ["src/components/ui/shadcn/*"],
-      "@/components/ui/veep/*": ["src/components/ui/veep/*"],
-      "@/components/context/*": ["src/components/ui/shadcn/context/*"],
-      "@/components/plate-ui/*": ["src/components/ui/shadcn/plate-ui/*"],
-      "@/components/icons": ["src/components/ui/shadcn/plate-ui/icons.tsx"],
-      "@/lib/utils": ["src/components/ui/shadcn/utils"],
-      "@/hooks/*": ["src/components/ui/shadcn/hooks/*"],
-      "@/registry/*": ["src/components/ui/shadcn/registry/*"],
-      "@/config/*": ["src/components/ui/shadcn/config/*"],
-      "@/plate/*": ["src/components/ui/shadcn/lib/plate/*"],
-    },
     "lib": [
       "dom",
       "dom.iterable",
@@ -31,21 +18,57 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
+    "strictNullChecks": true,
     "plugins": [
       {
         "name": "next"
       }
     ],
-    "strictNullChecks": true
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@/constants/*": [
+        "src/constants/*"
+      ],
+      "@/components/ui/*": [
+        "src/components/ui/shadcn/*"
+      ],
+      "@/components/ui/veep/*": [
+        "src/components/ui/veep/*"
+      ],
+      "@/components/context/*": [
+        "src/components/ui/shadcn/context/*"
+      ],
+      "@/components/plate-ui/*": [
+        "src/components/plate-ui/*"
+      ],
+      "@/components/icons": [
+        "src/components/ui/shadcn/plate-ui/icons.tsx"
+      ],
+      "@/lib/utils": [
+        "src/components/ui/shadcn/utils"
+      ],
+      "@/hooks/*": [
+        "src/hooks/*"
+      ],
+      "@/registry/*": [
+        "src/components/ui/shadcn/registry/*"
+      ],
+      "@/config/*": [
+        "src/components/ui/shadcn/config/*"
+      ],
+      "@/plate/*": [
+        "src/components/ui/shadcn/lib/plate/*"
+      ]
+    }
   },
   "include": [
-    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/**/*.js",
-    "src/**/*.jsx",
-    "dist/types/**/*.ts",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "next-env.d.ts",
+    "dist/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

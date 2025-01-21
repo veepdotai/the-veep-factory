@@ -3,7 +3,7 @@ import {
   SubscriptPlugin,
   SuperscriptPlugin,
 } from '@udecode/plate-basic-marks/react';
-import { focusEditor, useEditorRef } from '@udecode/plate-common/react';
+import { focusEditor, useEditorRef } from '@udecode/plate/react';
 
 import { Icons } from '@/components/icons';
 

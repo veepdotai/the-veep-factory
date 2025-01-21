@@ -3,8 +3,8 @@ import React from 'react';
 import type { TMentionElement } from '@udecode/plate-mention';
 
 import { cn, withRef } from '@udecode/cn';
-import { getHandler } from '@udecode/plate-common';
-import { useElement } from '@udecode/plate-common/react';
+import { getHandler } from '@udecode/plate';
+import { useElement } from '@udecode/plate/react';
 import { IS_APPLE } from '@udecode/utils';
 import { useFocused, useSelected } from 'slate-react';
 

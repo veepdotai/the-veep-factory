@@ -14,11 +14,11 @@ import type { DropdownMenuProps } from '@radix-ui/react-dropdown-menu';
 import { t } from 'i18next';
 import PubSub from 'pubsub-js'
 
-import { collapseSelection } from '@udecode/plate-common';
-import { focusEditor, useEditorRef } from '@udecode/plate-common/react';
+import { collapseSelection } from '@udecode/plate';
+import { focusEditor, useEditorRef } from '@udecode/plate/react';
 
 import { Icons } from '@/components/icons';
-import { Icons as MyIcons } from '@/src/constants/Icons';
+import { Icons as MyIcons } from '@/constants/Icons';
 
 import {
   DropdownMenu,

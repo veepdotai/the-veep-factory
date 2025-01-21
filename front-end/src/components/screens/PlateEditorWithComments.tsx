@@ -31,13 +31,13 @@ import {
   isBlockAboveEmpty,
   isSelectionAtBlockStart,
   someNode,
-} from '@udecode/plate-common';
+} from '@udecode/plate';
 import {
   createPlateEditor,
   ParagraphPlugin,
   Plate,
   PlateLeaf,
-} from '@udecode/plate-common/react';
+} from '@udecode/plate/react';
 import { DndPlugin } from '@udecode/plate-dnd';
 import { DocxPlugin } from '@udecode/plate-docx';
 import { EmojiPlugin } from '@udecode/plate-emoji/react';

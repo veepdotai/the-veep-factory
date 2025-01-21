@@ -7,7 +7,7 @@ import {
   CloudImagePlugin,
   CloudPlugin,
 } from '@udecode/plate-cloud';
-import { Plate } from '@udecode/plate-common/react';
+import { Plate } from '@udecode/plate/react';
 import { usePlateEditor } from '@udecode/plate-core/react';
 
 import { uploadStoreInitialValue } from '@/plate/demo/cloud/uploadStoreInitialValue';

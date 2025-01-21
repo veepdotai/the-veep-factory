@@ -2,12 +2,12 @@ import React from 'react';
 
 import type { DropdownMenuProps } from '@radix-ui/react-dropdown-menu';
 
-import { someNode } from '@udecode/plate-common';
+import { someNode } from '@udecode/plate';
 import {
   focusEditor,
   useEditorPlugin,
   useEditorSelector,
-} from '@udecode/plate-common/react';
+} from '@udecode/plate/react';
 import { deleteTable, insertTableRow } from '@udecode/plate-table';
 import {
   TablePlugin,

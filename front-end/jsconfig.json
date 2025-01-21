@@ -2,7 +2,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "src/*": ["src/*"],
+      "@/*": ["./*"],
+      "@/api/*": ["src/api/*"],
       "@/constants/*": ["src/constants/*"],
       "@/components/*": ["src/components/*"],
       "@/components/ui/*": ["src/components/ui/shadcn/*"],

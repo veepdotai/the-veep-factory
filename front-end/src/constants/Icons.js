@@ -82,6 +82,7 @@ export const Icons = {
     PDFView:            <Md.MdPictureAsPdf {...attr} />,
     "pdf-export":       <Md.MdPictureAsPdf {...attr} />,
     "config-pdf":       <Md.MdPictureAsPdf {...attr} />,
+    "pdf-config":       <Md.MdPictureAsPdf {...attr} />,
     "config-veeplet":   <Md.MdOutlineDisplaySettings {...attr} />,
     workspace:          <GiOrganigram {...attr} />,
 //    exit:               <Icon.MdLogout {...attr} />,

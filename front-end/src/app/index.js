@@ -148,7 +148,9 @@ export default function Index() {
 
                   {/*<Row><Header /></Row>*/}
                   <Row style={{height: "100%"}}>
-                    <Main credits={credits} current={current}/>
+                    <>
+                      <Main credits={credits} current={current}/>
+                    </>
                   </Row>
                   {/*<Row><Footer /></Row>*/}
                   </div>

@@ -3,10 +3,10 @@
 import { useEffect, useState } from 'react';
 import { Logger } from 'react-logger-lib';
 import { t } from 'i18next'
-import { ScrollArea, ScrollBar } from '@/src/components/ui/shadcn/scroll-area';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 import { withProps } from '@udecode/cn';
-import { createPlateEditor, Plate, ParagraphPlugin, PlateElement, PlateLeaf } from '@udecode/plate-common/react';
+import { createPlateEditor, Plate, ParagraphPlugin, PlateElement, PlateLeaf } from '@udecode/plate/react';
 import { BlockquotePlugin } from '@udecode/plate-block-quote/react';
 import { CodeBlockPlugin, CodeLinePlugin, CodeSyntaxPlugin } from '@udecode/plate-code-block/react';
 
@@ -88,8 +88,8 @@ import { FloatingToolbarButtons } from '@/components/ui/veep/floating-toolbar-bu
 //import { PlaygroundFixedToolbarButtons } from '@/components/plate-ui/playground-fixed-toolbar-buttons';
 //import { PlaygroundFloatingToolbarButtons } from '@/components/plate-ui/playground-floating-toolbar-buttons';
 
-import { withPlaceholders } from '@/components/plate-ui/placeholder';
-import { withDraggables } from '@/components/plate-ui/with-draggables';
+//import { withPlaceholders } from '@/components/plate-ui/placeholder';
+//import { withDraggables } from '@/components/plate-ui/with-draggables';
 import { EmojiInputElement } from '@/components/plate-ui/emoji-input-element';
 import { TooltipProvider } from '@/components/plate-ui/tooltip';
 
@@ -234,8 +234,9 @@ export function PlateEditor( {input, contentId = null, attrName = null, custom =
           JuicePlugin,
         ],
         override: {
-          components: withDraggables(withPlaceholders(({
-            [BlockquotePlugin.key]: BlockquoteElement,
+          //components: withDraggables(withPlaceholders(({
+          components: ({
+              [BlockquotePlugin.key]: BlockquoteElement,
             [CodeBlockPlugin.key]: CodeBlockElement,
             [CodeLinePlugin.key]: CodeLineElement,
             [CodeSyntaxPlugin.key]: CodeSyntaxLeaf,
@@ -275,7 +276,7 @@ export function PlateEditor( {input, contentId = null, attrName = null, custom =
             [SubscriptPlugin.key]: withProps(PlateLeaf, { as: 'sub' }),
             [SuperscriptPlugin.key]: withProps(PlateLeaf, { as: 'sup' }),
             [UnderlinePlugin.key]: withProps(PlateLeaf, { as: 'u' }),
-          }))),
+          }),
         },
         value: _content,
       })

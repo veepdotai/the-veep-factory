@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, Fragment } from 'react'
 import { Logger } from 'react-logger-lib'
 import { t } from 'i18next';
 import { cn } from "@/lib/utils"
@@ -15,7 +15,7 @@ import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, Me
 import { Popover, PopoverContent, PopoverTrigger } from "src/components/ui/shadcn/popover"
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "src/components/ui/shadcn/tooltip"
 
-import { Icons } from '@/src/constants/Icons'
+import { Icons } from '@/constants/Icons'
 import { Separator } from 'src/components/ui/shadcn/separator';
 
 export default function ContentActions( {actions = null, title = null, icon = null, viewType = "menu"} ) {
@@ -30,7 +30,7 @@ export default function ContentActions( {actions = null, title = null, icon = nu
   function getActionMenuItem(title, icon, action, shortcut) {
     let shortcutChar = ("Mac" == useOSDetection() && '⌘') || "CTRL"
     return (
-      <MenubarItem>
+      <MenubarItem key={title}>
         {Icons[icon]}{' '} {title} <MenubarShortcut>{shortcutChar} {shortcut}</MenubarShortcut>
       </MenubarItem>
     )
@@ -52,7 +52,7 @@ export default function ContentActions( {actions = null, title = null, icon = nu
   function getActionNavigationMenuItem(title, icon, action, shortcut) {
     let shortcutChar = ("Mac" == useOSDetection() && '⌘') || "CTRL"
     return (
-      <NavigationMenuLink asChild>
+      <NavigationMenuLink key={title} asChild>
         <a className="text-sm flex h-full w-full select-none justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
           href="/"
         >
@@ -79,15 +79,15 @@ export default function ContentActions( {actions = null, title = null, icon = nu
 
   function getActionsToolbar(actions) {
     return (
-      <>
+      <Fragment key="actions-toolbar">
         <TooltipProvider delayDuration={0}>
         <div className="flex h-full flex-col ms-auto">
           <div className="flex items-center p-2">
 
             <div className="flex items-center gap-2">
-              {actions.map((action) => {
+              {actions.map((action, i) => {
                 if ("separator" == action.type) {
-                  return <Separator orientation="vertical" className="mx-1 h-6" />
+                  return <Separator key={`separator-${i}`} orientation="vertical" className="mx-1 h-6" />
                 }
 
                 if (action.action) {
@@ -110,7 +110,7 @@ export default function ContentActions( {actions = null, title = null, icon = nu
           </div>
         </div>
         </TooltipProvider>
-      </>
+      </Fragment>
     )
 
   }
@@ -182,7 +182,7 @@ const ContentActionsUtils = {
 
   getTTWithButton: function({title, action = undefined, icon, displayIcon = true, displayTitle = false, disabled = false}: ContentActionsUtilsProps) {
     return (
-      <Tooltip>
+      <Tooltip key={title}>
         <TooltipTrigger asChild>
           {CAU.getButton({title: title, action: action, icon: icon, displayIcon: displayIcon, displayTitle: displayTitle, disabled: disabled})}
         </TooltipTrigger>

@@ -1,4 +1,4 @@
-import type { TElement, TText } from '@udecode/plate-common';
+import type { TElement, TText } from '@udecode/plate';
 
 import {
   BulletedListPlugin,

@@ -8,7 +8,7 @@ import {
   UnderlinePlugin,
 } from '@udecode/plate-basic-marks/react';
 import { CommentsPlugin } from '@udecode/plate-comments/react';
-import { useEditorReadOnly } from '@udecode/plate-common/react';
+import { useEditorReadOnly } from '@udecode/plate/react';
 import { LinkPlugin } from '@udecode/plate-link/react';
 
 import { CheckPlugin } from '@/components/context/check-plugin';

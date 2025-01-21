@@ -5,7 +5,7 @@ import {
   createPlatePlugin,
   findEventRange,
   useEditorRef,
-} from '@udecode/plate-common/react';
+} from '@udecode/plate/react';
 import {
   type CursorData,
   type CursorOverlayProps,

@@ -2,7 +2,6 @@ import { useContext, useRef, useState, useEffect } from 'react';
 import { Button, Col, Container, Modal, Row, Form } from 'react-bootstrap';
 
 import { Logger } from 'react-logger-lib';
-import axios from 'axios';
 import PubSub from 'pubsub-js';
 import AudioRecorderPolyfill from 'audio-recorder-polyfill-next';
 import mpegEncoder from 'audio-recorder-polyfill/mpeg-encoder';

@@ -17,12 +17,12 @@ import {
   CodeSyntaxPlugin,
 } from '@udecode/plate-code-block/react';
 import { CommentsPlugin } from '@udecode/plate-comments/react';
-import { ParagraphPlugin } from '@udecode/plate-common/react';
+import { ParagraphPlugin } from '@udecode/plate/react';
 import {
   type NodeComponent,
   PlateElement,
   PlateLeaf,
-} from '@udecode/plate-common/react';
+} from '@udecode/plate/react';
 import { DatePlugin } from '@udecode/plate-date/react';
 import { EmojiInputPlugin } from '@udecode/plate-emoji/react';
 import { ExcalidrawPlugin } from '@udecode/plate-excalidraw/react';

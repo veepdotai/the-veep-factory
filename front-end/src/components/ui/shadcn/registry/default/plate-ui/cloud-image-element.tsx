@@ -10,7 +10,7 @@ import {
 import {
   type PlateElementProps,
   PlateElement,
-} from '@udecode/plate-common/react';
+} from '@udecode/plate/react';
 
 import { ResizeControls } from './cloud-resize-controls';
 import { StatusBar } from './cloud-status-bar';

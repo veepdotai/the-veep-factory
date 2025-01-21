@@ -9,7 +9,7 @@ import {
   UnderlinePlugin,
 } from '@udecode/plate-basic-marks/react';
 import { CommentsPlugin } from '@udecode/plate-comments/react';
-import { useEditorReadOnly } from '@udecode/plate-common/react';
+import { useEditorReadOnly } from '@udecode/plate/react';
 import { EmojiPlugin } from '@udecode/plate-emoji/react';
 import {
   FontBackgroundColorPlugin,

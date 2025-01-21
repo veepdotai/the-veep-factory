@@ -7,7 +7,7 @@ import {
   StrikethroughPlugin,
   UnderlinePlugin,
 } from '@udecode/plate-basic-marks/react';
-import { useEditorReadOnly } from '@udecode/plate-common/react';
+import { useEditorReadOnly } from '@udecode/plate/react';
 
 import { Icons } from '@/components/icons';
 import { MarkToolbarButton } from '@/components/plate-ui/mark-toolbar-button';

@@ -1,6 +1,6 @@
 import type { CursorData, CursorState } from '@udecode/plate-cursor';
 
-import { createPlatePlugin, findEventRange } from '@udecode/plate-common/react';
+import { createPlatePlugin, findEventRange } from '@udecode/plate/react';
 import { DndPlugin } from '@udecode/plate-dnd';
 
 export const DragOverCursorPlugin = createPlatePlugin({

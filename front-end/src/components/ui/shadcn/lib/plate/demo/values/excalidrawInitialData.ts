@@ -1,4 +1,4 @@
-import type { TNodeProps } from '@udecode/plate-common';
+import type { TNodeProps } from '@udecode/plate';
 import type { TExcalidrawElement } from '@udecode/plate-excalidraw';
 
 export const excalidrawInitialData: TNodeProps<TExcalidrawElement> = {

@@ -94,21 +94,21 @@ function OffCanvasMenu({ name, ...props }) {
 
             { direction == "horizontal" ? // smartphone
                 <Container>
-                    <MenuItem alwaysVisible={true} itemKey="credits" itemLabel={t("Credits")} direction={direction} handleClose={handleClose} />
+                    <MenuItem key={"credits"} alwaysVisible={true} itemKey="credits" itemLabel={t("Credits")} direction={direction} handleClose={handleClose} />
 
-                    <MenuItem alwaysVisible={true} itemKey="userPreferences" itemLabel={t("UserPreferences")} direction={direction} handleClose={handleClose} />
-                    { isManager ? <MenuItem alwaysVisible={true} itemKey="appPreferences" itemLabel={t("AppPreferences")} direction={direction} handleClose={handleClose} />:<></>}
-                    <MenuItem alwaysVisible={true} itemKey="add-content" itemLabel={t("AddContent")} direction={direction} handleClose={handleClose} />
-                    <MenuItem alwaysVisible={true} itemKey="support" itemLabel={t("Support")} direction={direction} handleClose={handleClose} />
-                    <MenuItem alwaysVisible={true} itemKey="about" itemLabel={t("About")} direction={direction} handleClose={handleClose} />
+                    <MenuItem key={"userPreferences"}  alwaysVisible={true} itemKey="userPreferences" itemLabel={t("UserPreferences")} direction={direction} handleClose={handleClose} />
+                    { isManager ? <MenuItem key={"appPreferences"}  alwaysVisible={true} itemKey="appPreferences" itemLabel={t("AppPreferences")} direction={direction} handleClose={handleClose} />:<></>}
+                    <MenuItem key={"add-content"}  alwaysVisible={true} itemKey="add-content" itemLabel={t("AddContent")} direction={direction} handleClose={handleClose} />
+                    <MenuItem key={"support"}  alwaysVisible={true} itemKey="support" itemLabel={t("Support")} direction={direction} handleClose={handleClose} />
+                    <MenuItem key={"about"}  alwaysVisible={true} itemKey="about" itemLabel={t("About")} direction={direction} handleClose={handleClose} />
                     <Exit alwaysVisible={true} direction={direction} handleClose={handleClose} />            
                 </Container>
               :
                 <Container className="gap-5">
-                    <MenuItem alwaysVisible={true} itemKey="credits" itemLabel={t("Credits")} direction={direction} handleClose={handleClose} />
-                    <MenuItem alwaysVisible={true} itemKey="userPreferences" itemLabel={t("UserPreferences")} direction={direction} handleClose={handleClose} />
-                    { isManager ? <MenuItem alwaysVisible={true} itemKey="appPreferences" itemLabel={t("AppPreferences")} direction={direction} handleClose={handleClose} />:<></>}
-                    <MenuItem alwaysVisible={true} itemKey="about" itemLabel={t("About")} direction={direction} handleClose={handleClose} />
+                    <MenuItem key={"credits"}  alwaysVisible={true} itemKey="credits" itemLabel={t("Credits")} direction={direction} handleClose={handleClose} />
+                    <MenuItem key={"userPreferences"}  alwaysVisible={true} itemKey="userPreferences" itemLabel={t("UserPreferences")} direction={direction} handleClose={handleClose} />
+                    { isManager ? <MenuItem key={"appPreferences"}  alwaysVisible={true} itemKey="appPreferences" itemLabel={t("AppPreferences")} direction={direction} handleClose={handleClose} />:<></>}
+                    <MenuItem key={"about"}  alwaysVisible={true} itemKey="about" itemLabel={t("About")} direction={direction} handleClose={handleClose} />
                     <Exit alwaysVisible={true} direction={direction} handleClose={handleClose} />            
                 </Container>
             }

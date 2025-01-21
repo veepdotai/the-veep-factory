@@ -2,7 +2,7 @@
 
 import type { WithRequiredKey } from '@udecode/plate-core';
 
-import { useEditorRef } from '@udecode/plate-common/react';
+import { useEditorRef } from '@udecode/plate/react';
 
 import { useDemoId } from '@/registry/default/example/playground-demo';
 
