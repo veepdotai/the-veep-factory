@@ -110,7 +110,9 @@ export const UtilsFormCommon = {
         log(JSON.stringify(field))
         let lcn = fieldOptions?.cn || "" 
         if (fieldType === "input") {
+            let fieldValue = fieldValues ?? undefined
             return <Input className={cn} placeholder={t(fieldName + "PlaceHolder")} {...field} />
+            //return <Input className={cn} placeholder={t(fieldName + "PlaceHolder")} {...field} value={fieldValue} />
         } else if (fieldType === "textarea") {
             return (
                 <Textarea className={lcn || "min-h-[200px]"} placeholder={t(fieldName + "PlaceHolder")} {...field} />

@@ -302,10 +302,11 @@ export function PlateEditor( {input, contentId = null, attrName = null, custom =
     }
   }
 
-  function getEditorElement() {
+  function getEditorElement(style = "", variant = "") {
     return (
       <Editor
-        style={editorWindowSpacing}
+        style={style}
+        variant={variant}
         className={`${cn} mx-auto mt-2 rounded-none focus-visible:ring-none focus-visible:ring-1 focus-visible:ring-offset-0`}
       />
     )
@@ -337,9 +338,11 @@ export function PlateEditor( {input, contentId = null, attrName = null, custom =
     }
   }
   
-  let editorWindowSpacing = {
-    padding: "2rem"
+  let style = {
+    padding: "2rem !important" //editorWindowSpacing
   }
+
+  let variant = "none"
 
   return (
     <>
@@ -351,7 +354,7 @@ export function PlateEditor( {input, contentId = null, attrName = null, custom =
                   const content = JSON.stringify(value.value);
                   setEditorContent(contentId, content)
                 }}
-                className='dis_focus:ring-0 dis_focus:ring-offset-0'
+                className='p-2 toto dis_focus:ring-0 dis_focus:ring-offset-0'
               >
                 <FixedToolbar>
                   <FixedToolbarButtons operations={operations} />
@@ -360,10 +363,10 @@ export function PlateEditor( {input, contentId = null, attrName = null, custom =
                 {"scroll" == viewType ?
                     <ScrollArea type='auto' className="w-100 whitespace-nowrap h-auto">
                       <ScrollBar orientation="vertical" />              
-                      {getEditorElement()}
+                      {getEditorElement(style, variant)}
                     </ScrollArea>
                   :
-                    <>{getEditorElement()}</>
+                    <>{getEditorElement(style, variant)}</>
                 }
 
               <FloatingToolbar>

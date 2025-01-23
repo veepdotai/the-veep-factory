@@ -45,6 +45,7 @@ export default function SocialNetworkPreview({viewType = "LinkedIn", content}) {
         let allLines = content.content.split(/\n/)
 
         let author = content.author
+        let mediaUrl = /*content.mediaUrl ||*/ "https://static.vecteezy.com/system/resources/previews/005/909/455/large_2x/annual-report-template-free-vector.jpg"
 
         return (
             <Card className="w-100 max-h-[500px]">
@@ -63,10 +64,10 @@ export default function SocialNetworkPreview({viewType = "LinkedIn", content}) {
                         </div>
                         <div id="rootLinkedinContent" className="mt-2 text-slate-800 text-xs">
                             <div id="linkedinContent">
-                                { ! condensedView && allLines.map((line, i) => <p className="">{line}&nbsp;</p>)}
+                                { ! condensedView && allLines.map((line, i) => <p key={i} className="">{line}&nbsp;</p>)}
                                 { condensedView && condensedLines.map((line, i) => {
                                     return (
-                                        <p className="">
+                                        <p key={i} className="">
                                             {line}
                                             { i == condensedLines.length - 1 &&
                                                 <a className="cursor-pointer hover:text-underline" onClick={(e) => {setCondensedView(false)}}>
@@ -79,16 +80,16 @@ export default function SocialNetworkPreview({viewType = "LinkedIn", content}) {
                             </div>
                         </div>
                         <div className='w-100'>
-                            { content?.mediaUrl?.match(/\.pdf$/i) &&
-                                <Document file={content.mediaUrl}>
+                            { mediaUrl?.match(/\.pdf$/i) &&
+                                <Document file={mediaUrl}>
                                     <Page pageNumber={1} height={525} />
                                 </Document>
                             }
-                            { content?.mediaUrl && <img src={content.mediaUrl} /> }
+                            { mediaUrl && <img src={mediaUrl} /> }
                         </div>
                         <div className="flex justify-between w-100 pt-1">
                             {["Up", "Support", "Publish", "Share"].map((action) => 
-                                <a onClick={() => alert(t("JustPreview"))} className="px-3 py-1 rounded-1 hover:cursor-pointer hover:bg-slate-100 text-xs d-inline align-middle">
+                                <a key={action} onClick={() => alert(t("JustPreview"))} className="px-3 py-1 rounded-1 hover:cursor-pointer hover:bg-slate-100 text-xs d-inline align-middle">
                                     {Icons[action.toLowerCase()]} {t("LI" + action)}
                                 </a>)
                             }

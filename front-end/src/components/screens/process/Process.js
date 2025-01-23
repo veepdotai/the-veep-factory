@@ -54,6 +54,7 @@ export default function Process( props ) {
                 navbars.map((item) => {
                     return (
                         <DropdownOrNavItem
+                            key={item.name}
                             id={`process-menu-${item.name}`}
                             layout={size}
                             eventKey={item.name}
@@ -124,7 +125,7 @@ export default function Process( props ) {
                     navbars ? /* Tab body update */
                             navbars.map((item) => {
                                 return (
-                                        <Result
+                                        <Result key={item.name}
                                             name={item.name}
                                             option={item.option}
                                             title={item.title}

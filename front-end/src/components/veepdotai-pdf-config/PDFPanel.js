@@ -1,9 +1,9 @@
 'use client'
 
-import ConfigPanel from './components/ConfigPanel';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Logger } from 'react-logger-lib'
-import PubSub from 'pubsub-js'
+import { t } from 'i18next'
+
 import {ResizableHandle, ResizablePanel, ResizablePanelGroup} from 'src/components/ui/shadcn/resizable';
 import { ScrollArea, ScrollBar } from "src/components/ui/shadcn/scroll-area"
 
@@ -29,12 +29,15 @@ export default function PDFPanel( {cid, initParams, initContent, displayInfosPan
     const [params, setParams] = useState(initParams || new PDFParams())
     const [content, setContent] = useState(initContent == undefined ? convert(" ") : convert(initContent))
 
-    log.trace(`infosPanel: params: ${JSON.stringify(params)}`)
-    log.trace(`infosPanel: content; ${JSON.stringify(content)}`)
+    log.trace(`infosPanel: style... initContent: ${JSON.stringify(initContent)}`)
+    log.trace(`infosPanel: style...  params: ${JSON.stringify(params)}`)
+    log.trace(`infosPanel: style...  content: ${JSON.stringify(content)}`)
+    log.trace(`infosPanel: style...  content && params: ${(content && params) ? true : false}`)
 
     let displayConfigPanel = displayInfosPanel
-
-    function updateInfosPanel(topic, newParams) {
+/*
+    function updateInfosPanel(topic, newParams) {      
+      log.trace(`updateInfosPanel: style... content: ${JSON.stringify(content)}`)
       log.trace(`updateInfosPanel: newParams: ${JSON.stringify(newParams)}`)
       setParams(newParams)
     }
@@ -42,34 +45,42 @@ export default function PDFPanel( {cid, initParams, initContent, displayInfosPan
     useEffect(() => {
       PubSub.subscribe("INFOS_PANEL_UPDATED", updateInfosPanel)
     }, [])
-
+*/
     return (
         <div className='h-full bottom-0'>
-          { params ?
+          { (content && params) ?
               isDesktop ?
-                  <ResizablePanelGroup direction="horizontal" className='h-full bottom-0'>
-                      <ResizablePanel className='bottom-0'>
-                          {/*<ConfigPanel content={infosPanel.content} handleCompilePDF={handleCompilePDF} params={infosPanel.params}/>*/}
-                          <PDFExportForm cid={cid} params={params} />
-                      </ResizablePanel>
+                    <ResizablePanelGroup direction="horizontal" className='h-full bottom-0'>
+                        <ResizablePanel className='bottom-0'>
+                            {/*<ConfigPanel content={infosPanel.content} handleCompilePDF={handleCompilePDF} params={infosPanel.params}/>*/}
+                            <PDFExportForm cid={cid} params={params} />
+                        </ResizablePanel>
 
-                      <ResizableHandle/>
+                        <ResizableHandle/>
 
-                      <ResizablePanel defaultSize={60} className='vh-100 bottom-0'>
-                          <PDF content={content} params={params}/>
-                      </ResizablePanel>
-                  </ResizablePanelGroup>
-                :
-                  <ScrollArea className="w-100 whitespace-nowrap h-full">
-                    <ScrollBar orientation='vertical' />
+                        <ResizablePanel defaultSize={60} className='vh-100 bottom-0'>
+                            { content?.length > 1 ?
+                                    <PDF initContent={content} initParams={params}/>
+                                :
+                                    <>{t("NoContent")}</>
+                            }
+                        </ResizablePanel>
+                    </ResizablePanelGroup>
+                  :
+                    <ScrollArea className="w-100 whitespace-nowrap h-full">
+                      <ScrollBar orientation='vertical' />
 
-                    <div class="columns-1">
-                      <PDFExportForm cid={cid} params={params} />
-                      <PDF content={content} params={params}/>
-                    </div>
-                  </ScrollArea>
+                      <div class="columns-1">
+                        <PDFExportForm cid={cid} params={params} />
+                            { content?.length > 1 ?
+                                    <PDF initContent={content} initParams={params}/>
+                                :
+                                    <>{t("NoContent")}</>
+                            }
+                      </div>
+                    </ScrollArea>
               :
-                <>{t("NoDataAvailable")}</>
+                  <>{t("NoDataAvailable")}</>
           }
         </div>
     );

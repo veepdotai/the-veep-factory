@@ -72,7 +72,7 @@ export function FloatingToolbarAIDropdownMenu(props: DropdownMenuProps) {
         align="start"
       >
         { actions.map((row) => 
-            <DropdownMenuItem onSelect={row.action}>
+            <DropdownMenuItem key={row.title} onSelect={row.action}>
               {/*<Icons.bg className="mr-2 size-5" />*/}
               {Icons[row.icon]}
               {row.title}

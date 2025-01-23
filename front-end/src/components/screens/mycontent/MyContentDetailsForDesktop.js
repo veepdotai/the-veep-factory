@@ -145,14 +145,14 @@ export default class MyContentDetailsForDesktop {
     log("content is now json: " + JSON.stringify(content));
 
     return (
-        <PDFViewer cid={contentId} content={content} data={data} />
+        <LayoutPanel cid={contentId} content={content} data={data} />
     )
   }
 
 }
 
-export function PDFViewer( {cid, content, data} ) {
-  let log = Logger.of(PDFViewer.name);
+export function LayoutPanel( {cid, content, data} ) {
+  let log = Logger.of(LayoutPanel.name);
 
   if (cid) {
     log.trace("data: " + JSON.stringify(data))

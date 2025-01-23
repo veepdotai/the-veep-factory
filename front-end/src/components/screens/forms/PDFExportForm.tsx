@@ -50,7 +50,7 @@ export default function PDFExportForm( {cid, params} ) {
       log.trace('updateFormDisplay: metadata: ' + JSON.stringify(metadata))
 
       let newParams = {cid: cid, ...metadata, ...params}
-      log.trace(`onSubmit: newParams3FormDisplay: ${JSON.stringify(newParams)}`)
+      log.trace(`onSubmit: newParamsFormDisplay: ${JSON.stringify(newParams)}`)
       //PubSub.publish("INFOS_PANEL_UPDATED", newParams)
 
       return UFC.updateForm(form, topic, metadata)  

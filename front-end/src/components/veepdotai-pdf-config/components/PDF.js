@@ -1,13 +1,15 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { Logger } from 'react-logger-lib';
-import { Link, Page, Text, Image, View, Document, StyleSheet } from '@react-pdf/renderer';
+import { PDFViewer, Link, Page, Text, Image, View, Document, StyleSheet } from '@react-pdf/renderer';
 import { t } from 'i18next';
 import dynamic from 'next/dynamic';
 import { useMediaQuery } from 'usehooks-ts';
 
-const dynamicProps = {ssr: false, loading: () => <p>{t("Loading...")}</p>}
+//const dynamicProps = {ssr: false, loading: () => <p>{t("Loading...")}</p>}
 
-const PDFViewer = dynamic(() => import("./PDFViewer"), {ssr: false, loading: () => <p>{t("Loading...")}</p>});  
+//const PDFViewer = dynamic(() => import("./PDFViewer"), {ssr: false, loading: () => <p>Loading...</p>});  
 //const PDFViewer = dynamic(() => import("@react-pdf/renderer").then((mod) => mod.PDFViewer), {ssr: false, loading: () => <p>{t("Loading...")}</p>});  
 //const PDFViewer = dynamic(() => import("@react-pdf/renderer").then((mod) => mod.PDFViewer), dynamicProps);  
 
@@ -16,22 +18,51 @@ const PDFViewer = dynamic(() => import("./PDFViewer"), {ssr: false, loading: () 
  * @param {*} props contains a content String (either markdown or JSON) and an instance of PDFParams
  * @returns a pdf renderer with the new pdf inside
  */
-export function PDF( props ) {
+export function PDF( {initContent, initParams} ) {
   const log = Logger.of(PDF.name)
 
   const isDesktop = useMediaQuery("(min-width: 768px)");
+  const [content, setContent] = useState(initContent)
+  const [params, setParams] = useState(initParams)
 
-  log.trace("style... parameters: " + JSON.stringify(props.params))
+  log.trace("style... initContent: ", initContent)
+  log.trace("style... initParams: ", initParams)
+
+  log.trace("style... initContent: ", content)
+  log.trace("style... initParams: ", params)
+
+  function updateInfosPanel(topic, newParams) {      
+    log.trace(`updateInfosPanel: style... content:`, content)
+    log.trace(`updateInfosPanel: newParams:`, newParams)
+    setParams(newParams)
+  }
+
+  useEffect(() => {
+    PubSub.subscribe("INFOS_PANEL_UPDATED", updateInfosPanel)
+  }, [])
+
+
+  /*
+          <PDFViewer width={'100%'} height={isDesktop ? '100%' : '800px'}>
+            <PDFDocument
+                    content={content}
+                    params={params}
+            />
+          </PDFViewer>
+  */
   return (
     <>
-      <PDFViewer width={'100%'} height={isDesktop ? '100%' : '800px'}>
-          <PDFDocument
-            content={props.content}
-            params={props.params}
-          />
-      </PDFViewer>
+      { (content.length && params) ?
+          <PDFViewer width={'100%'} height={isDesktop ? '100%' : '800px'}>
+            <PDFDocument
+                    content={content}
+                    params={params}
+            />
+          </PDFViewer>
+        :
+          <>Loading...</>
+      }
     </>
-
   )
 }
 
@@ -143,6 +174,8 @@ export function PDFDocument({content, params}) {
    */
   function contentPages() {
     //With a new page every new title
+    //if (content?.length == 1) return (<></>)
+
     if (data?.newPage && content?.length > 0) {
       let bookmark = content[0]?.length > 0 ? t(content[0][1]) : t("Content")
       return (
@@ -199,7 +232,7 @@ export function PDFDocument({content, params}) {
       )
     }
     else {
-      return (<></>)
+      return (<Page><View><Text>No data</Text></View></Page>)
     }
   }
 
@@ -217,7 +250,7 @@ export function PDFDocument({content, params}) {
       return (
         <>
           {/*<Text style={data.styles?.subtitle}>{subtitle[0]}</Text>*/}
-          <Text style={data.styles['title' + i]}>{subtitle[0]}</Text>
+          <Text key={subtitle} style={data.styles['title' + i]}>{subtitle[0]}</Text>
             {subtitle.length > 1 ?
                 <>{typeof(subtitle[1]) == "string"
                     ? <Text style={data.styles?.text}>{subtitle[1]}</Text>
@@ -242,7 +275,7 @@ export function PDFDocument({content, params}) {
     log.trace("lastPage: processing...");
 
     return (
-      <Page style={data.styles?.lastPage} id="backCover" bookmark={t("BackCover")} size={data?.dimensions}>
+      <Page key={number} style={data.styles?.lastPage} id="backCover" bookmark={t("BackCover")} size={data?.dimensions}>
         <Text style={data.styles?.title}>{data?.backCover[number][3]}</Text>
         <Text style={data.styles?.backPageContent}>{data?.backCover[number][2]}</Text>
         {background(data?.backCover[number][1])}

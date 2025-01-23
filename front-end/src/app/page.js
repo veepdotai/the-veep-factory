@@ -2,9 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useCookies, CookiesProvider } from 'react-cookie';
-import { Image, Spinner } from 'react-bootstrap';
 import { Logger } from 'react-logger-lib';
-import { t } from 'i18next';
 
 import 'src/styles/global.css';
 import "src/styles/video-react.css";

@@ -56,7 +56,7 @@ export default function PromptDialog() {
             <div className='flex justify-end'>
               {infos?.actions?.map((action, i) => {
                 return (
-                  <Button className="me-2 w-[100px]" onClick={() => process(action?.click)}>
+                  <Button key={action.label} className="me-2 w-[100px]" onClick={() => process(action?.click)}>
                     {action.label}
                   </Button>
                 )

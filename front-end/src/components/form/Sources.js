@@ -60,7 +60,7 @@ export default function Sources( props ) {
     function format(contents) {
         return (
             <ul>
-                {contents.map((row) => <li>{row.content}</li>)}
+                {contents.map((row, i) => <li key={i}>{row.content}</li>)}
             </ul>
         )
     }
@@ -75,7 +75,7 @@ export default function Sources( props ) {
                             {
                                 source.contents.length > 0 ?
                                     <ul>
-                                        {source.contents.map((item) => <li>{Icons[item.icon]} {item.title}</li>)}
+                                        {source.contents.map((item) => <li key={item.title} >{Icons[item.icon]} {item.title}</li>)}
                                     </ul>
                                 :
                                     <div className="text-center text-slate-500">{t("NotAvailableData")}</div>

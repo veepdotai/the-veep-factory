@@ -166,17 +166,14 @@ function DisplayLogs({conf}) {
                     }
 
                     return (
-                        <>
-                            {/*<li>{rowData.date} / {rowData.time} / {rowData.log} /</li>*/}
-                            <p key={row}>
-                                {rowData.time} / {
-                                    row.match(/http/) ? 
-                                            <><a href={href}>{rowData.log}</a></>
-                                        :
-                                            <>{rowData.log}</>
-                                }
-                            </p>
-                        </>
+                        <p key={rowData.time}>
+                            {rowData.time} / {
+                                row.match(/http/) ? 
+                                        <><a href={href}>{rowData.log}</a></>
+                                    :
+                                        <>{rowData.log}</>
+                            }
+                        </p>
                     )
                 }
             })}

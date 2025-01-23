@@ -1,5 +1,4 @@
 import { Logger } from 'react-logger-lib';
-import { t } from 'i18next';
 import { Container } from 'react-bootstrap';
 import PDFPanel from 'src/components/veepdotai-pdf-config/PDFPanel'
 

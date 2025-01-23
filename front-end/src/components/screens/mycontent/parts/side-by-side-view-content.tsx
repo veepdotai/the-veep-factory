@@ -95,8 +95,11 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
     }
 
     function getContentWithCarousel(contents) {
-      return (
+      /*
         <Carousel opts={{align: "start",}} className="w-full max-w-screen-full">
+      */
+      return (
+        <Carousel opts={{align: "start",}} className="toto w-fullq w-[800px] max-w-screen-fullq">
           <CarouselContent className="-ml-1">
             {contents}
           </CarouselContent>
