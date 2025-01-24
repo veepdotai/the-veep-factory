@@ -79,11 +79,13 @@ class Generation_Process {
         $nbPhases = 10;
         Veepdotai_Util::set_option( 'ai-section-edcal0-prompt', '' );
         Veepdotai_Util::set_option( 'ai-section-edcal0-transcription', '' );
+        /*
         for( $i = 0; $i < $nbPhases + 1; $i++ ) {
             Veepdotai_Util::set_option( "ai-section-edcal1-phase${i}", '' );
             Veepdotai_Util::set_option( "ai-section-edcal1-phase${i}Content", '' );
             Veepdotai_Util::set_option( "ai-section-edcal1-phase${i}Details", '' );    
         }
+        */
 
     }
 
@@ -291,7 +293,7 @@ class Generation_Process {
             if ( $lsd === "TranscriptionChecked") {
                 // If last step done was TranscriptionChecked, we must continue
                 // at least one step
-                self::log( __METHOD__ . ": this step must be done. Let's do it!");
+                self::log( __METHOD__ . ": phase ${i}/${label}/${label_encoded} step is going to be done.");
             } else {
 
                 if ( $i < $lsd ) {
@@ -313,9 +315,9 @@ class Generation_Process {
                 }
 
                 self::log( __METHOD__ . ": phase ${i}/${label}/${label_encoded} step is going to be done.");
-
             }
 
+            // The step must be done so we do it!
             $new_content_id = self::generate($content_id, $pid, $veeplet, $instructions, "_PHASE${label_encoded}_GENERATION_", "ai-section-edcal1-phase${label_encoded}", $result, $i, $label_encoded);
 //            $content = $res->choices[0]->message->content;
 //            $new_content_id = self::save_generation( $content_id, "", $result, $content, $res, "veepdotaiPhase", $i, $label_encoded);
@@ -323,7 +325,7 @@ class Generation_Process {
             self::log( __METHOD__ . ": write_generation_details - content_id: {$new_content_id}" );
             do_action( "write_generation_details", $user, $new_content_id );
 
-            //$lsd = self::update_last_step_done( $i, $content_id );
+            // $lsd = self::update_last_step_done( $i, $content_id );
             $lsd = $i;
             //self::log( "Post id after update: " . $new_content_id );
         }
@@ -444,7 +446,7 @@ class Generation_Process {
      * topic is label_encoded
      */
     //public static function generate( $pid, $instructions, $topic, $option ) {
-    public static function generate( $content_id, $pid, $veeplet, $instructions, $topic, $option, $result, $id, $label_encoded ) {
+    public static function generate( $content_id, $pid, $veeplet, $instructions, $topic, $option, $result, $i, $label_encoded ) {
         /**
          * Process generation
          */
@@ -453,7 +455,8 @@ class Generation_Process {
         $start = gettimeofday(true);
         self::log_step_started2( $pid, $topic );
 
-        $res = self::generate_text( $pid, $veeplet, $instructions, null );
+        // $i = current step
+        $res = self::generate_text( $pid, $veeplet, $instructions, null, $i );
 
         $content = $res->choices[0]->message->content;
         //Veepdotai_Util::save_extracted_data( $data, $key );
@@ -473,7 +476,7 @@ class Generation_Process {
      * This method replaces all the occurrences of prompts names by their
      * corresponding generated content 
      */
-    public static function replace_placeholders( $inspiration, $veeplet, $_prompt ) {
+    public static function replace_placeholders( $inspiration, $veeplet, $_prompt, $current_step ) {
         $max = 30;
 
         $chain_input = $veeplet['prompts']['chain'];
@@ -484,11 +487,13 @@ class Generation_Process {
         // Replace {{inspiration}} placeholder
         $prompt = preg_replace("/(\{\{inspiration\}\})/", "$inspiration", $_prompt);
         $prompt = preg_replace("/(\{\{NOW\}\})/", date_format( date_create(), 'Y-m-d\TH:i:s' ), $prompt);
-        $done = false;
+        self::log( __METHOD__ . ": first prompt substitutions (inspiration + NOW): $prompt");
 
+        $done = false;
+        
         // Replace g* placeholders
         //for($i = 0; $i < $max && ! $done; $i++) {
-        for( $i = 0; $i < count( $chain ) && ! $done; $i++ ) {
+        for( $i = 0; $i < $current_step && $i < count( $chain ) && ! $done; $i++ ) {
             $label = $chain[$i];
             $label_encoded = Veepdotai_Util::encode_prompt_id( $label );
             self::log( __METHOD__ . ": processing: $label/$label_encoded");
@@ -511,17 +516,16 @@ class Generation_Process {
     }
 
     /**
-     * Variables, computed from previous transformations, are replaced in new prompts.
-     * While the *-phase$i is not null, substitution continues at least 10 times
+     * 
      */
-    public static function generate_text( $pid, $veeplet, $instructions, $idea = null ) {
+    public static function prepare_ai_request( $pid, $veeplet, $instructions, $current_step ) {
         // We could imagine to restrict the number of phases according the user subscription
         $inspiration = Veepdotai_Util::get_option('ai-section-edcal0-transcription');
         self::log( __METHOD__ . ": inspiration: $inspiration.\n" );
 
         $_prompt = $instructions['prompt'];
 
-        $prompt = self::replace_placeholders( $inspiration, $veeplet, $_prompt );
+        $prompt = self::replace_placeholders( $inspiration, $veeplet, $_prompt, $current_step );
         self::log( __METHOD__ . ": transformed (strtr) prompt: " . $prompt );
 
         self::log( __METHOD__ . ": getting content from AI.");
@@ -562,10 +566,10 @@ class Generation_Process {
         }
 
         if ( $llm_engine == "openai" ) {
-			$llm_ai_key = Veepdotai_Util::get_option( 'openai-api-key' );
-		} else {
-			$llm_ai_key = Veepdotai_Util::get_option( 'mistral-api-key' );
-		}
+            $llm_ai_key = Veepdotai_Util::get_option( 'openai-api-key' );
+        } else {
+            $llm_ai_key = Veepdotai_Util::get_option( 'mistral-api-key' );
+        }
 
         $temperature = isset( $instructions['temperature'] ) ? $instructions['temperature'] : 0.7;
         $max_tokens = isset( $instructions['max_tokens'] ) ? $instructions['max_tokens'] : 4096;
@@ -587,7 +591,26 @@ class Generation_Process {
             'frequency_penalty' => $frequency_penalty ? $frequency_penalty : 0,
             'presence_penalty' => $presence_penalty ? $presence_penalty : 0.6
         ];
-        $raw = Veepdotai_Util::get_content_from_ai( $llm_engine, $params, $llm_ai_key );
+
+        return [
+            "llm_engine" => $llm_engine,
+            "params" => $params,
+            "llm_ai_key" =>  $llm_ai_key
+        ];
+    }
+
+    /**
+     * Variables, computed from previous transformations, are replaced in new prompts.
+     * While the *-phase$i is not null, substitution continues at least 10 times
+     */
+    public static function generate_text( $pid, $veeplet, $instructions, $idea = null, $current_step ) {
+
+        $ai_request_params = self::prepare_ai_request( $pid, $veeplet, $instructions, $current_step );
+        $raw = Veepdotai_Util::get_content_from_ai( 
+            $ai_request_params[ "llm_engine" ],
+            $ai_request_params[ "params" ],
+            $ai_request_params[ "llm_ai_key" ]
+        );
 
         self::log(  __METHOD__ . ": raw: " . print_r($raw, true) );
 
@@ -598,6 +621,7 @@ class Generation_Process {
 
     /**
      * Saves information about generation:
+     * - updates last step done
      * - generated content
      * - generation details
      * It is not necessary to store the encoded label because the prompt is stored
@@ -614,6 +638,8 @@ class Generation_Process {
         self::log( __METHOD__ . ": computed_title: " . print_r( $computed_title, true ) );
 
         $elements = self::extract_elements( $content );
+        self::log( __METHOD__ . ": elements: " . print_r( $elements, true ) );
+
         $only_content = $elements["content"];
         if ( $option ) {
             Veepdotai_Util::set_option( $option, $only_content );
@@ -656,8 +682,26 @@ class Generation_Process {
         self::log( __METHOD__ . ": parent post_array: " . print_r( $post_array, true ) );
         $id = wp_update_post( $post_array );
 
-        return $content_id;
-        //return $id;
+        return $content_id; // The child that has been created
+        //return $id; // The parent
+    }
+
+    public static function extract_metadata( $raw_metadata ) {
+        $metadata = [];
+        // Extracts metadata from each line or raw_metadata
+        $lines = explode( "\n", $raw_metadata );
+        
+        for($i = 0; $i < count( $lines ); $i++) {
+            $line =  $lines[$i];
+            if ( $line ) { // some lines may be empty
+                preg_match_all("/([^:]*)\S*:\S*(.*)/", $lines[$i], $matches);
+                if ( count( $matches ) == 3 && $matches[1] && $matches[2]) {
+                    $metadata[ $matches[1][0] ] = $matches[2][0];
+                }
+            }
+        }
+        //print_r( $metadata );
+        return $metadata;
     }
 
     /**
@@ -672,38 +716,27 @@ class Generation_Process {
      */
     public static function extract_elements( $content ) {
 
-        function extract_metadata( $raw_metadata ) {
-            $metadata = [];
-            // Extracts metadata from each line or raw_metadata
-            $lines = explode( "\n", $raw_metadata );
-            
-            for($i = 0; $i < count( $lines ); $i++) {
-                $line =  $lines[$i];
-                if ( $line ) { // some lines may be empty
-                    preg_match_all("/([^:]*)\S*:\S*(.*)/", $lines[$i], $matches);
-                    if ( count( $matches ) == 3 && $matches[1] && $matches[2]) {
-                        $metadata[ $matches[1][0] ] = $matches[2][0];
-                    }
-                }
-            }
-            //print_r( $metadata );
-            return $metadata;
-        }
         
         $open = preg_quote( '--x-- /start metadata' );
         $close = preg_quote( '--x-- /end metadata' );
+        $matches = [];
 
         $pattern =  "~(.*)$open\r?\n(.+)$close~misU";
         preg_match_all( $pattern, $content, $matches);
-        $content = "";
+
+        self::log( __METHOD__ . ": matches: " . print_r( $matches, true ) );
+
         $metadata = [];
-        if ( count( $matches ) == 2 ) { // Content only, no metadata
-            $content = $matches[1][0];
-        } else if ( count( $matches ) == 3 ) { // Content and metadata
-            $content = $matches[1][0];
-            $raw_metadata = $matches[2][0]; // $matches[1] contains start delimiter
-            if ( $raw_metadata ) {
-                $metadata = extract_metadata( $raw_metadata );
+        if ( $matches[0] == [] ) {
+            // No match
+            self::log( __METHOD__ . ": matches?:No match, no custom metadata computed during the prompt execution." );
+        } else {
+            $content = $matches[1][0];      // There is always some content, may be empty
+            if ( count( $matches ) == 3 ) { // Content and metadata
+                $raw_metadata = $matches[2][0]; // $matches[1] contains start delimiter
+                if ( $raw_metadata ) {
+                    $metadata = self::extract_metadata( $raw_metadata );
+                }
             }
         }
 
