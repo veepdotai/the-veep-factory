@@ -20,7 +20,7 @@ export default function UploadSelector() {
   return (
     <Container className=''>
       <Row className='m-3 ms-0 me-0'>
-        {getInputWidget("micro")}
+        {/*getInputWidget("micro")*/}
         {getInputWidget("file")}
         {getInputWidget("text")}
         {getInputWidget("url")}

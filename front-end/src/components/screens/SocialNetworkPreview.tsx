@@ -34,6 +34,10 @@ export default function SocialNetworkPreview({viewType = "LinkedIn", content}) {
     const [condensedView, setCondensedView] = useState(true)
 
     function getLinkedInContent(content: ContentProps) {
+        if (! content.content || typeof content.content !== "string") {
+            return <>{t("NoContent")}</>
+        }
+
         let dotChar = <div className="d-inline text-strong txt-sm">·</div>
         let textStyle = "text-xs text-slate-500"
 

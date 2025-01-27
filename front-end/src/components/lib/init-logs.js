@@ -110,6 +110,7 @@ export default function initAppJSLogs(level = "NONE") {
     localStorage.setItem('TextForm', level);
     localStorage.setItem('UploadForm', level);
     localStorage.setItem('UploadRDU', level);
+    localStorage.setItem('UploadRFU', level);
     localStorage.setItem('UrlForm', level);
     localStorage.setItem('VocalForm', level);
     localStorage.setItem('UploadLib', level);

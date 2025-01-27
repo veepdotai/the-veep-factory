@@ -18,11 +18,11 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
     const MAX = ["xl", "lg", "md", "sm", "xs"]
 
     function format(_content, _parse = false) {
-        if (_content) {
+        if (_content && typeof _content === "string") {
           if (! _parse) {
-            return _content.replace(/\n/g, "<br />");
+            return _content?.replace(/\n/g, "<br />");
           } else {
-            return parse(_content.replace(/\n/g, "<br />"));
+            return parse(_content?.replace(/\n/g, "<br />"));
           }
         } else {
           return "";

@@ -1,18 +1,22 @@
 
-import { useContext } from 'react';
-import { Container } from 'react-bootstrap';
+import { useContext, useState } from 'react';
+import { Button, Container } from 'react-bootstrap';
 import { Logger } from 'react-logger-lib';
 import toast from 'react-hot-toast';
 import { t } from 'i18next';
-import 'react-dropzone-uploader/dist/styles.css'
-import Dropzone from 'react-dropzone-uploader'
+
+import { FilePond, registerPlugin } from 'react-filepond'
+import 'filepond/dist/filepond.min.css'
+import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation'
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 
 import { UploadLib } from '../lib/util-upload-form.js';
 import { VeepletContext } from 'src/context/VeepletProvider.js';
 import { ContentIdContext } from 'src/context/ContentIdProvider';
 
-export default function UploadRDU( {...props} ) {
-    const log = Logger.of(UploadRDU.name);
+export default function UploadRFU( {...props} ) {
+    const log = Logger.of(UploadRFU.name);
 
     let conf = props.conf;
 
@@ -22,20 +26,40 @@ export default function UploadRDU( {...props} ) {
     const { veeplet, setVeeplet } = useContext(VeepletContext);
     const { contentId, setContentId } = useContext(ContentIdContext);
 
+    const [submitButtonIsEnabled, setSubmitButtonIsEnabled] = useState(true);
+    const [submitButtonIsHidden, setSubmitButtonIsHidden] = useState(false);
+    
+    registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
+
+    const [files, setFiles] = useState([])
+
     // receives array of files that are done uploading when submit button is clicked
-    const handleSubmit = (files, allFiles) => {
-        let fd = new FormData();
+    const handleSubmit = () => {
+        log.trace(`handleSubmit`, files)
 
-        fd.append(
-            "veepdotai-ai-input-file",
-            files[0].file,
-            files[0].meta.name
-        );
-        log.trace("onFileUpload: selectedFile: " + files[0].meta.name);
+        if (files) {
+            let file = files[0].file
+            let name = file.name
 
-        PubSub.publish("FILE_ADDED", { "veepdot-ai-input-file": files[0] })
-        UploadLib.sendRecording(conf, fd, veeplet, setContentId);
-        allFiles.forEach(f => f.remove())
+            let fd = new FormData();
+            fd.append(
+                "veepdotai-ai-input-file",
+                file,
+                name
+            );
+            log.trace("onFileUpload: selectedFile: " + name);
+    
+            PubSub.publish("FILE_ADDED", { "veepdot-ai-input-file": file })
+            UploadLib.sendRecording(conf, fd, veeplet, setContentId);
+            //allFiles.forEach(f => f.remove())
+            setFiles([])
+        }
+    }
+
+    function handleUpdateFiles(files) {
+        log.trace(`handleUpdateFiles`, files)
+        setFiles(files)
+        return true
     }
 
     function handleChangeStatus({meta, status}, files) {
@@ -111,22 +135,21 @@ export default function UploadRDU( {...props} ) {
                 veeplet ?
                     <>
                         <Container className='w-100 text-center'>
-                            <Dropzone
-                                //getUploadParams={getUploadParams}
-                                onChangeStatus={handleChangeStatus}
-                                onSubmit={handleSubmit}
-                                //accept="video/*,image/*,.doc,.docx,.xlsx,.pptx,.odt,.ods,.odp,.txt,.pdf"
-                                inputContent={t("InputContent")}
-                                inputWithFilesContent={t("InputWithFilesContent")}
-                                maxFiles={1}
-                                multiple={false}
-                                canCancel={false}
-                                styles={{
-                                    dropzoneActive: { borderColor: 'green' },
-                                    //dropzoneReject: { borderColor: 'red' },
-                                }}
-                                validate={checkFile}
+                            <FilePond
+                                files={files}
+                                onupdatefiles={handleUpdateFiles}
+                                allowMultiple={false}
+                                //server="/api"
+                                instantUpload={false}
+                                labelIdle={t("InputWithFilesContent")}
                             />
+
+                            <Button className={'w-100 ' + (submitButtonIsHidden ? 'd-none' : '')}
+                                    disabled={! submitButtonIsEnabled || props.credits < REQUIRED_CREDITS_MIN}
+                                    variant="primary"
+                                    onClick={handleSubmit}>
+                                {t("EditorialCalendar.useThisRecord")}
+                            </Button>
                         </Container>
                         <Container style={{fontSize: "0.75rem"}} className='w-100 mt-3'>
                             <ul>
@@ -143,3 +166,4 @@ export default function UploadRDU( {...props} ) {
         </>
     );
 };
+
