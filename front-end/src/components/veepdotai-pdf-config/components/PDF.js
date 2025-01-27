@@ -52,7 +52,7 @@ export function PDF( {initContent, initParams} ) {
   */
   return (
     <>
-      { (content.length && params) ?
+      { (content?.length && params) ?
           <PDFViewer width={'100%'} height={isDesktop ? '100%' : '800px'}>
             <PDFDocument
                     content={content}
@@ -91,7 +91,7 @@ export function PDFDocument({content, params}) {
     backgroundImageCover: params?.backgroundImgCover,
     footer: params?.footer,
     backCover: params?.backCover || [],
-    dimensions: params?.dimensions,
+    dimensions: params?.dimensions || "A4",
     displayHeader: params?.displayHeader,
     displayFooter: params?.displayFooter,
     styles: params?.styles || {},
@@ -106,20 +106,46 @@ export function PDFDocument({content, params}) {
   function firstPage() {
     log.trace("firstPage: processing...");
 
+    log.trace("data: ", data)
+    /*
     return (
-      <Page key={"page-" + data.title} style={data.styles?.firstPage} bookmark={t("CoverPage")} size={data?.dimensions}>
+      <Page key={"page-" + data?.title} style={data?.styles?.firstPage} bookmark={t("CoverPage")} size={data?.dimensions}>
         
         {getInlineContent("title", "title")}
         {getInlineContent("subtitle", "subtitle")}
 
-        <Image key={data?.featuredImage} style={data.styles?.featuredImage} src={data?.featuredImage} />
+        <Image key={data?.featuredImage} style={data?.styles?.featuredImage} src={data?.featuredImage} />
 
-        <View key={"view-" + data.title} style={data.styles?.metadataBlock}>
+        <View key={"view-" + data?.title} style={data?.styles?.metadataBlock}>
+          {/ *getInlineContentWithLabel(45, t("Company"), data?.companyName, "company")* /}
+          {getInlineContentWithLabel(30, t("OrganizationName"), data?.organizationName, "organizationName", data?.styles)}
+          {getInlineContentWithLabel(30, t("Author"), data?.author, "author", data?.styles)}
+          {getInlineContentWithLabel(15, t("Version"), data?.version, "version", data?.styles)}
+          {getInlineContentWithLabel(0, t("Date"), data?.date, "date", data?.styles)}
+        </View>
+
+        {data?.backgroundImageCover == "./assets/images/nothing.png" ? background(data?.backgroundImage) : background(data?.backgroundImageCover)}
+
+        {/ *footer()* /}
+      </Page>
+    )
+    */
+    let title = data?.title?.replace(/[^a-zA-Z0-9]/g, "")
+    log.trace("jcktitle: ", title)
+    return (
+      <Page style={data?.styles?.firstPage} bookmark={t("CoverPage")} size={data?.dimensions || "A4"}>
+        
+        {getInlineContent("title", "title")}
+        {getInlineContent("subtitle", "subtitle")}
+
+        { data?.featuredImage && <Image key={data?.featuredImage} style={data?.styles?.featuredImage} src={data?.featuredImage} /> }
+
+        <View style={data?.styles?.metadataBlock}>
           {/*getInlineContentWithLabel(45, t("Company"), data?.companyName, "company")*/}
-          {getInlineContentWithLabel(30, t("OrganizationName"), data?.organizationName, "organizationName", data.styles)}
-          {getInlineContentWithLabel(30, t("Author"), data?.author, "author", data.styles)}
-          {getInlineContentWithLabel(15, t("Version"), data?.version, "version", data.styles)}
-          {getInlineContentWithLabel(0, t("Date"), data?.date, "date", data.styles)}
+          {getInlineContentWithLabel(30, t("OrganizationName"), data?.organizationName, "organizationName", data?.styles)}
+          {getInlineContentWithLabel(30, t("Author"), data?.author, "author", data?.styles)}
+          {getInlineContentWithLabel(15, t("Version"), data?.version, "version", data?.styles)}
+          {getInlineContentWithLabel(0, t("Date"), data?.date, "date", data?.styles)}
         </View>
 
         {data?.backgroundImageCover == "./assets/images/nothing.png" ? background(data?.backgroundImage) : background(data?.backgroundImageCover)}
@@ -127,6 +153,7 @@ export function PDFDocument({content, params}) {
         {/*footer()*/}
       </Page>
     )
+
   }
 
   /**
@@ -374,7 +401,7 @@ export function PDFDocument({content, params}) {
     return (
       <>
         { name ?
-          <Text key={name} style={styleName}>{data[name]}</Text>
+          <Text key={name} style={styleName}>{data ? data[name] : ""}</Text>
           :
           <></>
         }
@@ -413,7 +440,7 @@ export function PDFDocument({content, params}) {
   return (
     <>
     {
-      content && params ?
+      (content && params) ?
         <Document>
           {firstPage()}
           {data?.toc ? toc() : (<></>)}
