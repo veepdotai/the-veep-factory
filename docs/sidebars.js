@@ -17,6 +17,17 @@ const sidebars = {
   tutorialSidebar: [
     'overview',
     {
+      'What is Veep?': [
+        'app/part-overview',
+        'app/part-specification',
+        'app/part-configuration-selection',
+        'app/part-generation',
+        'app/part-edition',
+        'app/part-publication',
+//        'app/part-monitoring',
+      ]
+    },
+    {
       'Getting started': [
         'getting_started/gs-user-quickstart',
         'getting_started/gs-expert-quickstart',
@@ -48,51 +59,60 @@ const sidebars = {
       ]
     },
     {
-      'What is Veep?': [
-        'app/part-overview',
-        'app/part-specification',
-        'app/part-configuration-selection',
-        'app/part-generation',
-        'app/part-edition',
-        'app/part-publication',
-//        'app/part-monitoring',
-      ]
-    },
-    {
       'User Documentation': [
+        'manuals/user_manual/user-overview',
         {
           'Menu': [
-            'user/menu/user-dashboard',
-            'user/menu/user-mycontents',
-            'user/menu/user-mycontents-details',
-            'user/menu/user-assistant-creation',
-            'user/menu/user-catalog',
-            'user/menu/user-creation'  
+            'manuals/user_manual/menu/user-dashboard',
+            'manuals/user_manual/menu/user-mycontents',
+            'manuals/user_manual/menu/user-mycontents-details',
+            'manuals/user_manual/menu/user-assistant-creation',
+            'manuals/user_manual/menu/user-catalog',
+            'manuals/user_manual/menu/user-creation',
+          ],
+          'Features': [
+            'manuals/user_manual/features/configuration',
+            'manuals/user_manual/features/prompts-catalog',
+            'manuals/user_manual/features/generation',
+            'manuals/user_manual/features/view',
+            'manuals/user_manual/features/publication',
           ]
         }
       ]
     },
     {
+      'Designer Documentation': [
+        'manuals/designer_manual/designer-overview',
+        'manuals/designer_manual/presentation',
+        'manuals/designer_manual/display',
+        'manuals/designer_manual/css',
+      ]
+    },
+    {
+      'Admin Documentation': [
+        'manuals/admin_manual/admin-overview',
+      ]
+    },
+    {
       'Dev Documentation': [
-        'developer/dev-overview',
+        'manuals/dev_manual/dev-overview',
         {
           'Frontend': [
-            'developer/frontend/dev-frontend-overview',
+            'manuals/dev_manual/frontend/dev-frontend-overview',
           ]
         },
         {
           'Backend': [
-            'developer/backend/dev-backend-overview',
+            'manuals/dev_manual/backend/dev-backend-overview',
             {
               'Wordpress':[
-                'developer/backend/wordpress/dev-backend-wordpress-overview',
+                'manuals/dev_manual/backend/wordpress/dev-backend-wordpress-overview',
               ]
             }
           ]
         },
       ]
     },
-    'features',
     {
       type: 'html',
       value: '<hr />'

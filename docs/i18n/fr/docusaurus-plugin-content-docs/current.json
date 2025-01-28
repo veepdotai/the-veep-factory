@@ -1,0 +1,54 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.What is Veep?": {
+    "message": "Qu'est-ce que Veep?",
+    "description": "The label for category What is Veep? in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Getting started": {
+    "message": "Premiers pas",
+    "description": "The label for category Getting started in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.As User": {
+    "message": "Utilisateur",
+    "description": "The label for category As User in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.As Expert": {
+    "message": "Expert",
+    "description": "The label for category As Expert in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.User Documentation": {
+    "message": "Doc. utilisateur",
+    "description": "The label for category User Documentation in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Menu": {
+    "message": "Menu",
+    "description": "The label for category Menu in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Features": {
+    "message": "Fonctionnalités",
+    "description": "The label for category Features in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Dev Documentation": {
+    "message": "Doc. développeur",
+    "description": "The label for category Dev Documentation in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Frontend": {
+    "message": "Interface client",
+    "description": "The label for category Frontend in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Backend": {
+    "message": "Serveurs",
+    "description": "The label for category Backend in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Wordpress": {
+    "message": "Wordpress",
+    "description": "The label for category Wordpress in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Resources": {
+    "message": "Ressources",
+    "description": "The label for category Resources in sidebar tutorialSidebar"
+  }
+}

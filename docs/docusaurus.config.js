@@ -24,7 +24,7 @@ const config = {
 
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ['en', 'fr'],
   },
   deploymentBranch: 'gh-pages',
 
@@ -96,6 +96,10 @@ const config = {
           src: 'img/veep.ai-wnb.png',
         },
         items: [
+          {
+            type: 'localeDropdown',
+            position: 'left',
+          },
           {
             label: 'Docs',
             type: 'docSidebar',

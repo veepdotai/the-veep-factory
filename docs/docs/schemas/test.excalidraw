@@ -1,0 +1,116 @@
+{
+    "elements": [
+      {
+        "id": "UserX",
+        "type": "text",
+        "x": 400,
+        "y": 100,
+        "text": "User X",
+        "fontSize": 20,
+        "width": 100,
+        "height": 30,
+        "backgroundColor": "#ffffff",
+        "color": "#000000",
+        "strokeWidth": 1,
+        "strokeColor": "#000000",
+        "opacity": 100,
+        "angle": 0,
+        "fillStyle": "solid",
+        "fontFamily": 1,
+        "textAlign": "center",
+        "verticalAlign": "middle"
+      },
+      {
+        "id": "Login",
+        "type": "rectangle",
+        "x": 250,
+        "y": 200,
+        "width": 100,
+        "height": 50,
+        "backgroundColor": "#ffffff",
+        "strokeColor": "#000000",
+        "strokeWidth": 1,
+        "fillStyle": "solid"
+      },
+      {
+        "id": "Admin",
+        "type": "rectangle",
+        "x": 400,
+        "y": 200,
+        "width": 150,
+        "height": 50,
+        "backgroundColor": "#ffffff",
+        "strokeColor": "#000000",
+        "strokeWidth": 1,
+        "fillStyle": "solid"
+      },
+      {
+        "id": "Config",
+        "type": "rectangle",
+        "x": 600,
+        "y": 200,
+        "width": 150,
+        "height": 50,
+        "backgroundColor": "#ffffff",
+        "strokeColor": "#000000",
+        "strokeWidth": 1,
+        "fillStyle": "solid"
+      },
+      {
+        "id": "line1",
+        "type": "line",
+        "x": 400,
+        "y": 130,
+        "points": [
+          [0, 0],
+          [0, 70]
+        ],
+        "strokeColor": "#000000",
+        "strokeWidth": 2,
+        "endArrow": true
+      },
+      {
+        "id": "line2",
+        "type": "line",
+        "x": 307,
+        "y": 150,
+        "points": [
+          [0, 0],
+          [70, 0]
+        ],
+        "strokeColor": "#000000",
+        "strokeWidth": 2,
+        "endArrow": true
+      },
+      {
+        "id": "line3",
+        "type": "line",
+        "x": 457,
+        "y": 150,
+        "points": [
+          [0, 0],
+          [130, 0]
+        ],
+        "strokeColor": "#000000",
+        "strokeWidth": 2,
+        "endArrow": true
+      },
+      {
+        "id": "line4",
+        "type": "line",
+        "x": 657,
+        "y": 150,
+        "points": [
+          [0, 0],
+          [130, 0]
+        ],
+        "strokeColor": "#000000",
+        "strokeWidth": 2,
+        "endArrow": true
+      }
+    ],
+    "appState": {
+      "viewBackgroundColor": "#ffffff"
+    }
+  }
+  
