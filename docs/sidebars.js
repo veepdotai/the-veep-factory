@@ -15,9 +15,9 @@
 const sidebars = {
   // By default, Docusaurus generates a sidebar from the docs folder structure
   tutorialSidebar: [
-    'overview',
     {
       'Quick start': [
+        'overview',
         'quick_start/qs-user-quickstart',
         'quick_start/qs-expert-quickstart',
         'quick_start/qs-designer-quickstart',

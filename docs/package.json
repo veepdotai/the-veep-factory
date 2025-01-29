@@ -22,6 +22,7 @@
     "@docusaurus/theme-mermaid": "^3.5.2",
     "@mdx-js/react": "^3.0.0",
     "clsx": "^2.0.0",
+    "docusaurus-i18n": "^1.1.4",
     "docusaurus-plugin-image-zoom": "^2.0.0",
     "docusaurus-plugin-matomo": "^0.0.8",
     "prism-react-renderer": "^2.3.0",
