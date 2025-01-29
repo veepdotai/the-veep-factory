@@ -9,7 +9,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Veep.AI',
-  tagline: 'Authentic. Automatic. Contents. AI Based.',
+  tagline: 'Build, Deploy and Monetize Your Vertical AI.',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -23,8 +23,8 @@ const config = {
   onBrokenMarkdownLinks: 'warn',
 
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en', 'fr'],
+    defaultLocale: 'fr',
+    locales: ['fr', 'en'],
   },
   deploymentBranch: 'gh-pages',
 
