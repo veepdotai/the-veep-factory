@@ -3,48 +3,46 @@ id: part-specification
 title: Specification (Context)
 hide_table_of_contents: false
 pagination_label: Context
-#custom_edit_url: https://github.com/facebook/docusaurus/edit/main/docs/api-doc-markdown.md
 description: How do I find you when I cannot solve this problem
 keywords:
   - app
   - context
-tags: [context]
-#image: https://i.imgur.com/mErPwqL.png
+tags:
+  - context
 last_update:
   date: 10/27/2024
   author: Jean-Christophe Kermagoret
+_i18n_hash: a0be70397ccc83993037278bf9d7020b
 ---
+# Spécification : Configuration du Contexte
 
-# Specification: Context Configuration
+Lorsque vous discutez un peu avec une IA, vous réalisez rapidement que la génération est intéressante mais également générique. Pour rendre les choses plus pertinentes, vous lui demandez de détailler sa réponse pour telle ou telle situation.
 
-When you chat a little bit with an AI, you quickly notice generation is interesting but it is generic too. To make things more releveant, you ask it to detail its answer for such or such situation.
+Cette situation EST le contexte. Il permet à l'IA d'utiliser des informations en rapport avec vos véritables besoins.
 
-This situation IS the context. It enables the AI to use information in relation with your real needs.
+Le contexte est généralement structuré autour d'un commun et d'un spécifique.
+* Le contexte commun concerne qui vous êtes, d'où vous venez, où vous allez...
+* Le contexte spécifique porte sur qui vous êtes (en tant que personne), votre rôle dans l'organisation, votre tâche et enfin la situation (projet, tâche...), ce que vous faites et maintenant.
 
-The context is generally structured around a common and a specific one.
-* Common context is about who you are, where do you come from, where you are going...
-* Specific context is about who you are (as person), your role in the organization, you task and fianlly the situation (project, task...), what you are doing that and now.
+Les informations initiales que vous donnez à l'IA, à partir desquelles elle agira pour créer l'artefact, sont ce que nous pourrions appeler l'inspiration. L'inspiration est, d'une certaine manière, le contexte ultime.
 
-The initial information you give to the AI, from which it will act to create the artefact and is what we we could call inspiration. Inspiration is, in a certain way, the ultimate context.
-
-## Common Context
+## Contexte Commun
 
 <div class="zoom screenshot">
-![Veep Context](../images/veep-3.0-context-editorial.png)
+![Contexte Veep](../images/veep-3.0-context-editorial.png)
 </div>
 
-It is composed of generalities about your values, your project's pitch and also more detailed information about your audience, the style you want to use, all elements that will finally constitue an editorial line.
+Il est composé de généralités sur vos valeurs, le pitch de votre projet et aussi des informations plus détaillées sur votre public, le style que vous souhaitez utiliser, tous les éléments qui constitueront finalement une ligne éditoriale.
 
-Veep currently provides you a form with the following informations you have to fill:
-* Brand values
-* Pitch: benefits, pains, products and solutions, competitive advantages
-* Content: activity sector, keywords
-* Audience: For who your projet solves pains and provide benefits you identified
-* Elements of style: vocabulary, syntax, point of view, tone...
+Veep vous propose actuellement un formulaire avec les informations suivantes que vous devez remplir :
+* Valeurs de la marque
+* Pitch : avantages, douleurs, produits et solutions, avantages concurrentiels
+* Contenu : secteur d'activité, mots-clés
+* Public : Pour qui votre projet résout des douleurs et fournit des avantages que vous avez identifiés
+* Éléments de style : vocabulaire, syntaxe, point de vue, ton...
 
-## Specific Context
+## Contexte Spécifique
 
-Specific context may just be a more detailed common context.
+Le contexte spécifique peut simplement être un contexte commun plus détaillé.
 
-TBD
-
+À définir.

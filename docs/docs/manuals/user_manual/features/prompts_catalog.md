@@ -2,36 +2,36 @@
 id: prompts-catalog
 title: Catalogue de prompts
 hide_table_of_contents: false
-#custom_edit_url: https://github.com/facebook/docusaurus/edit/main/docs/api-doc-markdown.md
 description: Is there a list of all the features?
 keywords:
   - veepdotai
   - features
   - catalogue de prompts
-tags: [features, prompts catalog]
-#image: https://i.imgur.com/mErPwqL.png
+tags:
+  - features
+  - prompts catalog
 last_update:
   date: 01/27/2025
   author: Jean-Christophe Kermagoret
+_i18n_hash: 53c66b44b3a2cf34ba95a5e91c06806a
 ---
-
-# Prompts editor
+# Éditeur de recommandations
 
 ## Catalogue
 
-* By domain/subdomain
-* By category/subcategory
-* Pipeline (set of prompts) Definition
+* Par domaine/sous-domaine
+* Par catégorie/sous-catégorie
+* Définition du pipeline (ensemble de recommandations)
 
-## Prompt Editor
+## Éditeur de recommandations
 
-* Prompt Form
-* Prompt Editor
-* Prompt Default Configuration
-* Prompt Custom Configuration
-* Computation pipeline
-* Output pipeline
-* Input variables
-* Output variables
-* Input variables substitution
-* Previous prompt Substitution of output variables
+* Formulaire de recommandations
+* Éditeur de recommandations
+* Configuration par défaut des recommandations
+* Configuration personnalisée des recommandations
+* Pipeline de calcul
+* Pipeline de sortie
+* Variables d'entrée
+* Variables de sortie
+* Substitution des variables d'entrée
+* Substitution des variables de sortie par la recommandation précédente

@@ -1,70 +1,55 @@
 ---
 id: view
-title: Vue
+title: View
 hide_table_of_contents: false
-#custom_edit_url: https://github.com/facebook/docusaurus/edit/main/docs/api-doc-markdown.md
 description: Is there a list of all the features?
 keywords:
   - veepdotai
   - features
-  - vue
-tags: [features, vue]
-#image: https://i.imgur.com/mErPwqL.png
+  - view
+tags:
+  - features
+  - view
 last_update:
   date: 01/27/2025
   author: Jean-Christophe Kermagoret
+_i18n_hash: 22a49fec9cd2fbe38ae549d4c1e23728
 ---
+# Vue
 
-# View
+## Vue en tableau :
 
-## Sources
+### Sources
 
-### Generated Content
+### Contenu généré
 
-### Filtering
+### Filtrage
 
-### Action on multiple items
+### Actions sur plusieurs éléments
 
-### Rename/Remove/Details
+### Renommer/Supprimer/Détails
 
 
-## Details View
+## Vue détaillée
 
 ### Transcription
 
-### Pipeline auditing
+### Audit de pipeline
 
-### Pipeline progression
+### Progression du pipeline
 
-### Aggregated view (text editor view)
+### Vue agrégée (vue éditeur de texte)
 
-### Metadata view
+### Vue des métadonnées
 
-### Comparison view
+### Vue de comparaison
 
-### Calendar view
+### Vue calendrier
 
-### LinkedIn preview
+### Prévisualisation LinkedIn
 
-### Instagram preview
+### Prévisualisation Instagram
 
-### Facebook preview
+### Prévisualisation Facebook
 
-### PDF preview
-
-
-## One content view
-
-### WYSIWYG editor
-
-### Save support
-
-### AI actions support
-
-### Custom AI actions support
-
-### TOC
-
-### Excalidraw support
-
-### Kroki support
+### Prévisualisation PDF

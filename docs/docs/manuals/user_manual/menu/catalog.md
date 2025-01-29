@@ -18,8 +18,6 @@ last_update:
 
 # Catalog
 
-English version
-
 Vous pouvez consulter la liste des veeplets disponibles. Une veeplet est une séquence d'instructions permetttant de créer un contenu ou document en une ou plusieurs étapes.
 
 Les veeplets sont classés en catégories et sous-catégories. Par exemple :

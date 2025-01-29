@@ -2,70 +2,69 @@
 id: generation
 title: Génération
 hide_table_of_contents: false
-#custom_edit_url: https://github.com/facebook/docusaurus/edit/main/docs/api-doc-markdown.md
 description: Is there a list of all the features?
 keywords:
   - veepdotai
   - features
   - generation
-tags: [features, generation]
-#image: https://i.imgur.com/mErPwqL.png
+tags:
+  - features
+  - generation
 last_update:
   date: 01/27/2025
   author: Jean-Christophe Kermagoret
+_i18n_hash: 2b5bc3b65a7fa8495a177575f772f70f
 ---
-
-# Generation
+# Génération
 
 ## Sources
 
-### Stream
+### Flux
 
-### File
+### Fichier
 
-### Text
+### Texte
 
-### Url
+### URL
 
-## Prompt Transformation
+## Transformation de l'invite
 
-### Input variables
+### Variables d'entrée
 
-### Output variables
+### Variables de sortie
 
-### Input variables substitution
+### Substitution des variables d'entrée
 
-### Previous prompt Substitution of output variables
+### Substitution des variables de sortie dans l'invite précédente
 
-### Pipeline progression
+### Progression du pipeline
 
-### Content update through editor while pipeline execution
+### Mise à jour du contenu via l'éditeur pendant l'exécution du pipeline
 
-## Target Content Generation:
+## Génération de contenu cible :
 
-### Web article
+### Article web
 
-### Web article with SEO
+### Article web avec SEO
 
-### LinkedIn Post
+### Publication LinkedIn
 
-### Facebook Post
+### Publication Facebook
 
-### Instagram post
+### Publication Instagram
 
-### Carousel in PDF format
+### Carrousel au format PDF
 
-### Carousel in image format
+### Carrousel au format image
 
-### Carousel in video format
+### Carrousel au format vidéo
 
-### Meeting notes
+### Notes de réunion
 
-### Case study
+### Étude de cas
 
-### White paper
+### Livre blanc
 
-### User feedback
+### Retours d'utilisateur
 
-### Metadata generation
-
+### Génération de métadonnées
