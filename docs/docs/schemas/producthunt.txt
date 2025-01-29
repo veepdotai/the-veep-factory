@@ -1,4 +1,0 @@
-Marketing meets Authenticity, AI and OSS
-Marketing with Veep.AI: Authenticity + AI + OSS
-
-Tell a story (project, anecdote…) with voice then generate long-form authentic marketing contents, with AI, such as case studies, ad-hoc contents for sales... All of this in open source, so you can build your own authentic content factory.

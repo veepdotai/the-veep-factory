@@ -3,6 +3,10 @@
     "message": "Next",
     "description": "The label for version current"
   },
+  "sidebar.tutorialSidebar.category.Quick start": {
+    "message": "En bref",
+    "description": "The label for category Quick start in sidebar tutorialSidebar"
+  },
   "sidebar.tutorialSidebar.category.What is Veep?": {
     "message": "Qu'est-ce que Veep?",
     "description": "The label for category What is Veep? in sidebar tutorialSidebar"
@@ -34,6 +38,14 @@
   "sidebar.tutorialSidebar.category.Dev Documentation": {
     "message": "Doc. développeur",
     "description": "The label for category Dev Documentation in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Admin Documentation": {
+    "message": "Doc. administrateur",
+    "description": "The label for category Admin Documentation in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Designer Documentation": {
+    "message": "Doc. designer",
+    "description": "The label for category Designer Documentation in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Frontend": {
     "message": "Interface client",
