@@ -32,15 +32,17 @@ export default function Index() {
   const log = Logger.of(Index.name);
 
   const { profile } = useContext(ProfileContext);
+  
+  const DEFAULT_ACTIVE_KEY = "home"
 
   const [cookies] = useCookies(['JWT']);
   const [credits, setCredits] = useState();
   //const [current, setCurrent] = useState();
-  const [current, setCurrent] = useState("contents");
+  const [current, setCurrent] = useState(DEFAULT_ACTIVE_KEY);
   const [isManager, setIsManager] = useState(false);
 
   const [activeTab, setActiveTab] = useState({})
-  const [defaultActiveKey, setDefaultActiveKey] = useState({defaultActiveKey: "contents"})
+  const [defaultActiveKey, setDefaultActiveKey] = useState({defaultActiveKey: DEFAULT_ACTIVE_KEY})
 
   const size = useBreakpoint();
   const [menuDirection, setMenuDirection] = useState();

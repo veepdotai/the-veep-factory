@@ -55,23 +55,20 @@ export const UtilsMenu = {
         id: "common",
         title: "",
         items: [
-/*
+            { id: 'home', dontcreate: true, label: t("Dashboard")},
+            /*
             {
               id: 'digitalTwin', label: t("MyDigitalTwin"),
               query: {
                 view: t("RecentActivities"), status: "DRAFT", interval: {after: "2024-11-01", before: "2024-11-30"}
               }
             },
-*/
+            */
             //{id: 'assistant', label: t("CreateAssistant")},
             {id: 'add-content', dontcreate: true, label: t("CreateContent")},
-            {
-              id: 'contents', label: t("MyContents"),
-              query: {
-                view: t("AllContents"), status: "DRAFT"
-              }
-            },
-            {id: 'separator', label: ""},        
+//            {id: 'contents', dontcreate: false, label: t("MyContents"), query: { view: t("AllContents"), status: "DRAFT" }},
+            {id: 'contents', dontcreate: false, label: t("MyContents")},
+//            {id: 'separator', label: ""},        
         ]
     }]
 
@@ -144,7 +141,6 @@ export const UtilsMenu = {
                       <></>
 
                   }
-                  {/*<Button onClick={() => PubSub.publish("CALENDAR_VIEW", null)}>Open Calendar</Button>*/}
                   <MyContent 
                     view={row?.query?.view}
                     status={row?.query?.status}

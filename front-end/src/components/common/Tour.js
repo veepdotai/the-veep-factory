@@ -8,13 +8,17 @@ import 'driver.js/dist/driver.css';
 
 import { Icons } from "src/constants/Icons";
 
-const tour = {
-    "home": [ 'home/Dashboard', 'contents/AddContent', 'add-content/MyContents']
-}
 
 export default function Tour( props ) {
     const log = Logger.of(Tour.name);
 
+    const tour = {
+        "welcome": [ 'contents/AddContent', 'add-content/MyContents'],
+        "home": [ 'help/AddContent', 'add-content/MyContents'],
+        "add-content": [ 'contents/AddContent', 'add-content/MyContents'],
+        "dpt-marketing": [ 'contents/AddContent', 'add-content/MyContents'],
+    }
+        
     function getTour(name) {
         log.trace(`getTour: name: ${name}`);
         let steps = tour[name]?.map((bigStep) => getStep(bigStep.split('/')[0], bigStep.split('/')[1]));
@@ -52,6 +56,6 @@ export default function Tour( props ) {
     }
 
     return (
-        <div className='text-right' onClick={handleClick}>{Icons.tour}</div>
+        <div className='cursor-pointer' onClick={handleClick}>{Icons.tour}</div>
     )
 }

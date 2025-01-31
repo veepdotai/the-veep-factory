@@ -70,6 +70,7 @@ export default function Main({credits, current}) {
     {id: "config-post", title: t("ConfigPostTitle"), subtitle: t("ConfigPostSubtitle"), content: <VContentForm />},
     {id: "editorial-line", title: t("EditorialLineTitle"), subtitle: t("EditorialLineSubtitle"), content: <EditorialLine />},
     {id: "pdf-export", title: t("PdfExportTitle"), subtitle: t("PdfExportSubtitle"), content: <PDFExportForm />},
+
     {id: "credits", title: t("CreditsTitle"), subtitle: t("CreditsSubtitle"), content: <Credits />},
     {id: "user-preferences", title: t("UserPreferencesTitle"), subtitle: t("UserPreferencesSubtitle"), content: <UserParameters />},
     {id: "app-preferences", title: t("AppPreferencesTitle"), subtitle: t("AppPreferencesSubtitle"), content: <AppParameters />},
@@ -80,11 +81,7 @@ export default function Main({credits, current}) {
     {id: "infos", title: t("infosTitle"), subtitle: t("InfosSubtitle"), content: 
       <>
         <Logs />
-        { isDesktop ?
-          <Playground />
-        :
-          <></>
-        }
+        { isDesktop ? <Playground /> : <></>}
       </>
     },
 /*
@@ -94,19 +91,19 @@ export default function Main({credits, current}) {
 */
 ]
   return (
-
+    <>
+      {/* Create and initialize main parts */}
       <Tab.Content className="p-0">
         {UtilsMenu.createPaneFromMenuItem(UtilsMenu.getGenericMenu(), home)}
-
         {UtilsMenu.createPaneFromMenuItem(UtilsMenu.getMainContentMenu(), home)}
-        
         {panes.map((pane, i) =>
-          <Tab.Pane key={pane.id} eventKey={pane.id}>
-            <ScreenHeading name={pane.id} title={pane.title} subtitle={pane.subtitle} />
-            {typeof pane.content == "function" ? pane.content() : pane.content}
-          </Tab.Pane>
+            <Tab.Pane key={pane.id} eventKey={pane.id}>
+              <ScreenHeading name={pane.id} key={pane.id} title={pane.title} subtitle={pane.subtitle} />
+              {typeof pane.content == "function" ? pane.content() : pane.content}
+            </Tab.Pane>
         )}
 
       </Tab.Content>
+    </>
   );
 }

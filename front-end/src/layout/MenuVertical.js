@@ -127,9 +127,9 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                             <>
                                 {getAccordionItem("content", getMenuTitle(t("Creation")),
                                     <>
-                                        <MenuItem key={"content"} itemKey="contents" itemLabel={t("MyContents")} />
+                                        <MenuItem key={"contents"} itemKey="contents" itemLabel={t("MyContents")} />
                                         {/*<MenuItem itemKey="add-content" itemLabel={t("DocModels")} direction={direction} />*/}
-                                        <MenuItem key={"add-content"} itemKey="add-content" itemLabel={t("AddContent")} direction={direction} />
+                                        {/*<MenuItem key={"add-content"} itemKey="add-content" itemLabel={t("AddContent")} direction={direction} />*/}
                                     </>
                                 )}
                             </>
