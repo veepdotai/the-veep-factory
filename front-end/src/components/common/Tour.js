@@ -7,26 +7,30 @@ import { driver } from 'driver.js';
 import 'driver.js/dist/driver.css';
 
 import { Icons } from "src/constants/Icons";
+import { Utils } from '../lib/utils';
 
 
 export default function Tour( props ) {
     const log = Logger.of(Tour.name);
 
     const tour = {
-        "welcome": [ 'contents/AddContent', 'add-content/MyContents'],
-        "home": [ 'help/AddContent', 'add-content/MyContents'],
-        "add-content": [ 'contents/AddContent', 'add-content/MyContents'],
-        "dpt-marketing": [ 'contents/AddContent', 'add-content/MyContents'],
+        "home": [ 'home', 'add-content', 'contents'],
+        "add-content": [ 'add-content', 'catalog-shared', 'catalog-personal'],
+        "contents": [ 'contents/AddContent', 'add-content/MyContents'],
+        "dpt-marketing": [ 'add-content', 'dpt-marketing-catalog-shared', 'dpt-marketing-catalog-personal'],
     }
-        
+
     function getTour(name) {
         log.trace(`getTour: name: ${name}`);
+        /*
         let steps = tour[name]?.map((bigStep) => getStep(bigStep.split('/')[0], bigStep.split('/')[1]));
         if (! steps) {
             steps = [getStep("none", "TBD")];
         }
 
         return steps;
+        */
+       return tour[name].map((stepName) => getStep(stepName, Utils.camelize(stepName)))
     }
 
     function getStep(id, name) {
@@ -34,8 +38,8 @@ export default function Tour( props ) {
         return {
             element: `#${id}`,
             popover: {
-              title: t(`${name}Menu`),
-              description: t(`${name}Menu`)
+              title: t(`${name}TitleTour`),
+              description: t(`${name}DescTour`)
             }
         }
     }

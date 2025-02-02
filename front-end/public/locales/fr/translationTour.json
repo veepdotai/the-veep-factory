@@ -1,0 +1,15 @@
+{
+  "HomeTitleTour": "Tableau de bord", 
+  "HomeDescTour": "Accès aux tutoriels + dernières infos (news, bugs...). En cliquant sur la flêche, une autre page s'ouvre.<br/>Pour quitter ce mode d'assistante, il suffit de cliquer à l'extérieur de cette fenêtre.",
+  "AddContentTitleTour": "Créer un contenu",
+  "AddContentDescTour": "Affiche le catalogue de fonctions IA classées par domaine/sous-domaine et catégorie/sous-catégorie afin de créer le contenu souhaité.",
+  "ContentsTitleTour": "Mes contenus",
+  "ContentsDescTour": "Affiche tous les contenus générés par l'auteur à l'aide des agents. Il est possible de les trier, les filtrer, consulter les détails, les renommer, les supprimer...",
+  
+  "CatalogSharedTitleTour": "Modèles par défaut",
+  "CatalogSharedDescTour": "Liste de fonctions IA disponibles par défaut. Elles sont triés via des onglets par domaine/sous-domaine ou catégorie/sous-catégorie",
+
+  "CatalogPersonalTitleTour": "Mes modèles",
+  "CatalogPersonalDescTour": "Ces modèles ont été ajoutés depuis les modèles par défaut pour être adaptés. Il est alors possible de modifier toutes les informations, depuis le nom de la fonction IA jusquà ses informations de classement ou les prompts."
+
+}

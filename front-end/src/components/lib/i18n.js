@@ -5,10 +5,12 @@ import LanguageDetector from 'i18next-browser-languagedetector'
 import fr from '/public/locales/fr/translation.json'
 import frForm from '/public/locales/fr/translationForm.json'
 import frPDFExportForm from '/public/locales/fr/translationPDFExportForm.json'
+import frTour from '/public/locales/fr/translationTour.json'
 
 import en from '/public/locales/en/translation.json'
 import enForm from '/public/locales/en/translationForm.json'
 import enPDFExportForm from '/public/locales/en/translationPDFExportForm.json'
+import enTour from '/public/locales/en/translationTour.json'
 
 /*
   import { useTranslation } from 'react-i18next'
@@ -27,11 +29,11 @@ import enPDFExportForm from '/public/locales/en/translationPDFExportForm.json'
     fallbackLng: 'en',
     resources: {
       en: {
-        translation: {...en, ...enForm, ...enPDFExportForm}
+        translation: {...en, ...enForm, ...enPDFExportForm, ...enTour}
       },
 
       fr: {
-        translation: {...fr, ...frForm, ...frPDFExportForm},
+        translation: {...fr, ...frForm, ...frPDFExportForm, ...frTour},
       },
 
     },

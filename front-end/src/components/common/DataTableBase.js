@@ -5,6 +5,7 @@ import DataTableComponent from '../screens/mycontent/datatable/react-dtc/content
 import DataTableTanStack from '../screens/mycontent/datatable/shadcn-dt-tanstack/content/page'
 
 import { Icons } from '@/constants/Icons'
+import { cn } from '@/lib/utils'
 
 function getDataTableContent(props, cns) {
 	return (
@@ -54,7 +55,7 @@ function DataTableBase( props ) {
 						<h2 className="text-2xl font-bold tracking-tight">{t("WelcomeBack")}</h2>
 				</div>
 			*/}
-			<div className="${cns.cnForTablePresentation} d-flex mt-4 space-y-2">
+			<div className={cn(cns.cnForTablePresentation, "d-flex mt-4 space-y-2")}>
 				<Button variant="ghost" className=" justify-end" onClick={handleRefresh}>{Icons.refresh}</Button>
 				<p className="text-muted-foreground">{t("CurrentContentsList")}</p>
 			</div>

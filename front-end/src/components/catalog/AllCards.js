@@ -27,7 +27,7 @@ import { Constants } from "src/constants/Constants";
  * @returns the available prompts for this type and the category if provided
  * or all the categories otherwise
  */
-export default function AllCards( { type, title, formScreen = null, cat = null, firstTab = null }) {
+export default function AllCards( { type, id, title, formScreen = null, cat = null, firstTab = null }) {
   const log = Logger.of(AllCards.name);
 
   let defaultEventKey = type + "-first";
@@ -166,27 +166,27 @@ export default function AllCards( { type, title, formScreen = null, cat = null, 
   useEffect(() => {
     // Create a function main() ?
     setCategories(getCategories(directory));
-    log.trace("categories: " + JSON.stringify(categories));
+    log.trace("categories: ", categories);
 
     if (categories && categories != []) {
-      log.trace('useEffect: categories: ' + JSON.stringify(categories));
+      log.trace('useEffect: categories: ', categories);
     }
   }, [categories]);
 
   useEffect(() => {
     // Create a function main() ?
     setCategories(getCategories(directory));
-    log.trace("Categories: " + JSON.stringify(categories));
+    log.trace("Categories: ", categories);
 
     
     //categories.forEach(
-    //  (cat) => log.trace("Main.AIsByCategory: " + cat + " / " + JSON.stringify(getAIsByCategory(cat)))
+    //  (cat) => log.trace("Main.AIsByCategory: " + cat + " / ", getAIsByCategory(cat))
     //);
   }, [directory])
 */    
   useEffect(() => {
-    log.trace("personalCatalog: " + JSON.stringify(personalCatalog));
-    log.trace("sharedCatalog: " + JSON.stringify(sharedCatalog));
+    log.trace("personalCatalog: ", personalCatalog);
+    log.trace("sharedCatalog: ", sharedCatalog);
     if ("shared" == type) {
       setDirectory([...sharedCatalog]);
     } else {
@@ -217,20 +217,22 @@ export default function AllCards( { type, title, formScreen = null, cat = null, 
   }, [])
   
 
+  //let categoriesByCat = 
+
   return (
     <>
       {
         display ? 
           <>
-            <Card className='mt-2'>
-              <Card.Header>{title}</Card.Header>
+            <Card key={id} id={id} className='mt-2'>
+              <Card.Header id={id + "-title"}>{title}</Card.Header>
               <Card.Body>
                 { directory ?
                 <>
-                {
+                {/*
                     getAIsByOneCategory("Marketing")
                   
-                }
+                */}
                   <Tabs defaultValue={defaultEventKey}>
                       <Row>
                         <Col className="pt">
@@ -244,7 +246,7 @@ export default function AllCards( { type, title, formScreen = null, cat = null, 
                       </Row>
                       <ScrollArea className="w-full rounded-md border">
                         <Row>
-                          {showContents(getCategories(directory), defaultEventKey)}
+                          {showContents(getCategories(directory, cat), defaultEventKey)}
                         </Row>
                         <ScrollBar orientation="horizontal" />
                       </ScrollArea>

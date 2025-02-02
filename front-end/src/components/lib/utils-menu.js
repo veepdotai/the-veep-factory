@@ -66,7 +66,6 @@ export const UtilsMenu = {
             */
             //{id: 'assistant', label: t("CreateAssistant")},
             {id: 'add-content', dontcreate: true, label: t("CreateContent")},
-//            {id: 'contents', dontcreate: false, label: t("MyContents"), query: { view: t("AllContents"), status: "DRAFT" }},
             {id: 'contents', dontcreate: false, label: t("MyContents")},
 //            {id: 'separator', label: ""},        
         ]
@@ -134,7 +133,7 @@ export const UtilsMenu = {
                 <Container className='p-0'>
                   {row.displayAgents ?
                       <>
-                        <AllCards id="catalog-shared" type="personal" title={t("VeepVeeplets")} cat={row.name} form={home} />
+                        <AllCards id={row?.id + "-catalog-shared"} type="personal" title={t("VeepVeeplets")} cat={row.name} form={home} />
                         {/* <Home credits={credits} current={current} /> */}
                       </>
                     :

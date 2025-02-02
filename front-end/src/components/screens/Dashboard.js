@@ -1,20 +1,16 @@
 import { useEffect, useState } from 'react'
 
 import { Logger } from 'react-logger-lib'
-import Markdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
-
-import PubSub from 'pubsub-js'
 
 import { t } from 'i18next'
-import { Container } from 'react-bootstrap'
 import { useCookies } from 'react-cookie'
 
 import { Constants } from '@/constants/Constants'
-import { UtilsGraphQL } from "src/api/utils-graphql"
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, } from "src/components/ui/shadcn/card"
 import { Button } from 'src/components/ui/shadcn/button'
+import { Icons } from '@/constants/Icons'
+import { cn } from '@/lib/utils'
 
 export default function Dashboard() {
     const log = Logger.of(Dashboard.name);
@@ -65,7 +61,7 @@ export default function Dashboard() {
                             subtitle: "text-1xl font-sans",
                             description: "font-normal",
                         },
-                        label: "Discover",
+                        icon: "right",
                         href: `https://docs.veep.ai/getting_started/gs-user-overview`
                     },
                     {
@@ -73,7 +69,6 @@ export default function Dashboard() {
                         title: "Tailor Veep to Your Business",
                         subtitle: "",
                         description: "Create content that's on-brand and uses your unique tone and voice.",
-                        label: "Define Your Brand Voice",
                         href: "https://docs.veep.ai/getting_started/gs-user-overview"
                     }
                 ]
@@ -90,7 +85,6 @@ export default function Dashboard() {
                         title: "Discover Veep Configuration",
                         subtitle: "",
                         description: "Veep can be configured to create specific assistants' catalog.",
-                        label: "Discover",
                         href: "https://docs.veep.ai/getting_started/gs-expert-quickstart"
                     },
                     {
@@ -98,7 +92,6 @@ export default function Dashboard() {
                         title: "Tailor Configuration",
                         subtitle: "",
                         description: "Configure an assistant (veeplet)",
-                        label: "Configure",
                         href: "https://docs.veep.ai/getting_started/gs-expert-overview"
                     }
                 ]
@@ -114,7 +107,6 @@ export default function Dashboard() {
                         title: "Discover Chat",
                         subtitle: "",
                         description: "Chat acts as your AI assistant to help you with everyday tasks like writing, brainstorming, researching, and much more.",
-                        label: "Discover",
                         href: "https://www.google.com"
                     },
                     {
@@ -122,7 +114,6 @@ export default function Dashboard() {
                         title: "Tailor Chat to your Brand Voice",
                         subtitle: "",
                         description: "Create content that's on-brand and uses your unique tone and voice.",
-                        label: "Define Your Brand Voice",
                         href: "https://www.google.com"
                     }
                 ]
@@ -156,18 +147,24 @@ export default function Dashboard() {
      */
     //function getCard({id, title, subtitle, description, label, href}) {
     function getCard(cheatSheet) {
-            return (
-            <Card key={cheatSheet.id} id={cheatSheet.id} style={getVOD2("lst", cheatSheet)} className={getVOD2("lcn", cheatSheet)}>
-                <CardHeader className="mb-2">
-                    <CardTitle className={getVOD2("title", cheatSheet)}>{cheatSheet.title}</CardTitle>
-                    {cheatSheet.subtitle && <CardSubtitle className={getVOD2("subtitle", cheatSheet)}>{cheatSheet.subtitle}</CardSubtitle>}
-                    {/*cheatSheet.description && <CardDescription className={getVOD2("description", cheatSheet)}></CardDescription>*/}
-                </CardHeader>
-                <CardContent className="text-md h-16">
-                    {cheatSheet.description}
-                </CardContent>
-                <CardFooter>
-                    <Button asChild><a className="button" target="_blank" href={cheatSheet.href}>{cheatSheet.label}</a></Button>
+        return (
+            <Card key={cheatSheet.id} id={cheatSheet.id} style={getVOD2("lst", cheatSheet)} className={cn("d-flex flex-col", getVOD2("lcn", cheatSheet))}>
+                <div class="flex-1">
+                    <CardHeader className="mb-2">
+                        <CardTitle className={getVOD2("title", cheatSheet)}>{cheatSheet.title}</CardTitle>
+                        {cheatSheet.subtitle && <CardSubtitle className={getVOD2("subtitle", cheatSheet)}>{cheatSheet.subtitle}</CardSubtitle>}
+                        {/*cheatSheet.description && <CardDescription className={getVOD2("description", cheatSheet)}></CardDescription>*/}
+                    </CardHeader>
+                    <CardContent className="text-md h-16">
+                        {cheatSheet.description}
+                    </CardContent>
+                </div>
+                <CardFooter className="justify-end">
+                    <Button asChild>
+                        <a className="button" target="_blank" href={cheatSheet.href}>
+                            {cheatSheet?.icon ? Icons[cheatSheet.icon] : Icons["right"]}{cheatSheet?.label}
+                        </a>
+                    </Button>
                 </CardFooter>
             </Card>
         )

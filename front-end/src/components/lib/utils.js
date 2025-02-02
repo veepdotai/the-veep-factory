@@ -8,6 +8,18 @@ import { t } from 'i18next';
 export const Utils = {
 	log: Logger.of("Utils"),
 
+	camelize: function(str) {
+		if (str.match(/-/)) {
+			return str.match(/([^-]+)/g).map((part) => Utils.capitalize(part)).join("")
+		} else {
+			return Utils.capitalize(str)
+		}
+	},
+
+	capitalize: function(str) {
+		return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+	},
+
 	isManager: function(profile) {
 		try {
 			return JSON.stringify(profile.roles)?.indexOf('veepdotai_role_admin') != -1;

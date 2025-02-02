@@ -56,6 +56,7 @@ export const Icons = {
     credits:            <Md.MdEuroSymbol {...attr}  />,
     dashboard:          <Md.MdDashboard {...attr}  />,
     editor:             <Md.MdOutlineModeEdit {...attr}  />,
+    right:              <Md.MdKeyboardDoubleArrowRight {...attr}  />,
     world: (size) => <BiWorld {...attr} size={size}  />,    
     portrait:           <Md.MdOutlineCropPortrait {...attr}  />,
     home:               <Md.MdOutlineHome {...attr}  />,

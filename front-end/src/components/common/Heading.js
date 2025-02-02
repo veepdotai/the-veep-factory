@@ -14,7 +14,7 @@ export function ScreenHeading( {name, key = null, title, subtitle}) {
 
 }
 
-export function Heading( props ) {
+export function Heading(props) {
     const log = Logger.of(Heading.name);
 
     return (
@@ -27,7 +27,7 @@ export function Heading( props ) {
                 :
                     <Container className={props.className}>
                         <div className="me-2">{props.children}</div>
-                        <Tour className="ms-2" name={`${props?.name}/${props?.key}`} />
+                        <Tour className="ms-2" name={`${props?.name}`} />
                     </Container>    
             }
         </Stack>

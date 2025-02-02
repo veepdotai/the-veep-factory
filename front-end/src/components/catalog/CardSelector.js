@@ -13,8 +13,8 @@ export default function CardSelector() {
   const [skillsLevel, setSkillsLevel] = useState();
   return (
     <>
-      <AllCards view={skillsLevel} id="catalog-shared" type="shared" title={t("VeepVeeplets")}/>
-      <AllCards view={skillsLevel} id="catalog-personal" type="personal" title={t("MyVeeplets")}/>
+      <AllCards view={skillsLevel} id={"catalog-shared"} type="shared" title={t("VeepVeeplets")}/>
+      <AllCards view={skillsLevel} id={"catalog-personal"} type="personal" title={t("MyVeeplets")}/>
     </>
   )
 

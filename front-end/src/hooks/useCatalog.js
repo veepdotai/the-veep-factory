@@ -26,14 +26,14 @@ const useCatalog = (cookies, catalogType, setF) => {
 
       let veeplet = new Veeplet(TOML.parse(veepletString));
 
-      log.trace("getCatalog: veeplet: " + JSON.stringify(veeplet));
+      log.trace("getCatalog: veeplet: ", veeplet);
 
       return veeplet.getExtractForCatalog();
     })
 
-    log.trace("getCatalog: directory before filter: " + JSON.stringify(directory));
-    directory?.map((row) => Object.keys(row) != "");
-    log.trace("getCatalog: directory after filter: " + JSON.stringify(directory));
+    log.trace("getCatalog: directory before filter: directory: ", directory);
+    let newDirectory = directory?.map((row) => Object.keys(row) != "");
+    log.trace("getCatalog: directory after filter: newDirectory: ", newDirectory);
 
     return directory;
   }
@@ -45,13 +45,13 @@ const useCatalog = (cookies, catalogType, setF) => {
         params,
         config
     ).then(function (res) {
-        log.trace("getCatalogData: res: " + JSON.stringify(res));
+        log.trace("getCatalogData: res: ", res);
 
         let catalog = res.data.catalog;
-        log.trace("getCatalogData: data: " + JSON.stringify(catalog));
+        log.trace("getCatalogData: data: ", catalog);
 
         let directory = getCatalog(catalog.veeplets);
-        log.trace("getCatalogData: catalog: " + JSON.stringify(directory));
+        log.trace("getCatalogData: directory: ", directory);
         
         setF(directory);
 

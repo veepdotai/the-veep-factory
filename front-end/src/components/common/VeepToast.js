@@ -8,6 +8,7 @@ import { Fireworks } from '@fireworks-js/react';
 import { toast } from 'react-hot-toast';
 import { Constants } from "src/constants/Constants";
 import EKeyLib from '../lib/util-ekey';
+import { Utils } from '../lib/utils';
 
 //import Notifier from 'react-desktop-notification';
 
@@ -45,7 +46,7 @@ export default function VeepToast() {
     }
     setMessage({
       imageSrc: Constants.ROOT + '/assets/images/veep.ai-wnb.png',
-      headerTitle: capitalize(data.replace(/.*\s_([^\s]*_(STARTED|FINISHED))_.*/, "$1").replace(/_/g," ")),
+      headerTitle: Utils.capitalize(data.replace(/.*\s_([^\s]*_(STARTED|FINISHED))_.*/, "$1").replace(/_/g," ")),
       //headerSubtitle: data.replace(/.*_(STARTED|FINISHED)_.*/, "$1"),
       //headerSubtitle: t("Process.NewContentReady"),
       body: t("Process.NewContentReady"),
