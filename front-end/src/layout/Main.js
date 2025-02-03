@@ -98,7 +98,7 @@ export default function Main({credits, current}) {
         {UtilsMenu.createPaneFromMenuItem(UtilsMenu.getMainContentMenu(), home)}
         {panes.map((pane, i) =>
             <Tab.Pane key={pane.id} eventKey={pane.id}>
-              <ScreenHeading name={pane.id} key={pane.id} title={pane.title} subtitle={pane.subtitle} />
+              <ScreenHeading name={pane.id} akey={pane.id} title={pane.title} subtitle={pane.subtitle} />
               {typeof pane.content == "function" ? pane.content() : pane.content}
             </Tab.Pane>
         )}

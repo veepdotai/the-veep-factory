@@ -22,13 +22,13 @@ const ContentCardActions = {
   handleSave: function(params) {
     let log = ContentCardActions.log
 
-    log.trace(`contentId: ${params.contentId}`);
-    log.trace(`attrName: ${params.attrName}`);
-    log.trace(`content: ${params.content}`);
-    log.trace(`custom: ${params.custom}`);
+    log.trace("contentId: ", params.contentId);
+    log.trace("attrName: ", params.attrName);
+    log.trace("content: ", params.content);
+    log.trace("custom: ", params.custom);
 
     let conf = params.conf
-    log.trace( "conf: " + JSON.stringify(conf));
+    log.trace( "conf: ", conf);
 
     let fd = new FormData();
     fd.append("contentId", params.contentId);

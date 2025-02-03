@@ -79,14 +79,6 @@ class Generation_Process {
         $nbPhases = 10;
         Veepdotai_Util::set_option( 'ai-section-edcal0-prompt', '' );
         Veepdotai_Util::set_option( 'ai-section-edcal0-transcription', '' );
-        /*
-        for( $i = 0; $i < $nbPhases + 1; $i++ ) {
-            Veepdotai_Util::set_option( "ai-section-edcal1-phase${i}", '' );
-            Veepdotai_Util::set_option( "ai-section-edcal1-phase${i}Content", '' );
-            Veepdotai_Util::set_option( "ai-section-edcal1-phase${i}Details", '' );    
-        }
-        */
-
     }
 
     public static function start_process() {
@@ -168,6 +160,8 @@ class Generation_Process {
         }
 
         $content_id = self::save_metadata( $metadata, $chain_id );
+        Veepdotai_Util::set_option( 'ai-section-edcal0-transcription-id', $content_id );
+
         self::log( __METHOD__ . ": post id after creation: id: " . $content_id );
 
         self::log_step_finished2( $pid, "_TRANSCRIPTION_", "cid:${content_id}");
@@ -282,8 +276,10 @@ class Generation_Process {
 
             self::log( __METHOD__ . ": i: ${i}: label: ${label}: key: ${label_encoded}.");
 
+            /*
             $current_chain = $label;
             self::log( __METHOD__ . ": current_chain: ${label}.");
+            */
 
             $instructions = $prompts[ $label_encoded ];
             $prompt = $instructions['prompt'];
@@ -319,21 +315,14 @@ class Generation_Process {
 
             // The step must be done so we do it!
             $new_content_id = self::generate($content_id, $pid, $veeplet, $instructions, "_PHASE${label_encoded}_GENERATION_", "ai-section-edcal1-phase${label_encoded}", $result, $i, $label_encoded);
-//            $content = $res->choices[0]->message->content;
-//            $new_content_id = self::save_generation( $content_id, "", $result, $content, $res, "veepdotaiPhase", $i, $label_encoded);
 
             self::log( __METHOD__ . ": write_generation_details - content_id: {$new_content_id}" );
             do_action( "write_generation_details", $user, $new_content_id );
 
-            // $lsd = self::update_last_step_done( $i, $content_id );
             $lsd = $i;
-            //self::log( "Post id after update: " . $new_content_id );
         }
 
         self::log_step_finished2( $pid, "_CONTENT_GENERATION_");
-
-//        $result = Veepdotai_Util::generate_html_from_markdown ( $result );
-        //$result = self::produce_outcome( $content_id );
 
         return null;            
     }
@@ -641,9 +630,6 @@ class Generation_Process {
         self::log( __METHOD__ . ": elements: " . print_r( $elements, true ) );
 
         $only_content = $elements["content"];
-        if ( $option ) {
-            Veepdotai_Util::set_option( $option, $only_content );
-        }
 
         // Create metadata
         $custom_metadata = $elements["metadata"];
@@ -651,6 +637,7 @@ class Generation_Process {
             //"${prefix}${i}Content" => $label_encoded . "\n" . $content,
             "veepdotaiContent" => $only_content,
             "veepdotaiDetails" => json_encode( $res ),
+            "veepdotaiLabelEncoded" => $label_encoded,            
             "veepdotaiParent" => $id
         );
         $metadata = array_merge(
@@ -668,6 +655,11 @@ class Generation_Process {
         );
         self::log( __METHOD__ . ": child post_array: " . print_r( $post_array, true ) );
         $content_id = wp_insert_post( $post_array );
+
+        if ( $option ) {
+            Veepdotai_Util::set_option( $option, $only_content );
+            Veepdotai_Util::set_option( $option . "-id", $content_id );
+        }
 
         // Update parent to reflect current step
         // Doesn't need a post type because the item already exists

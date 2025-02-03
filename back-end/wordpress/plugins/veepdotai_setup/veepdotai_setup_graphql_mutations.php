@@ -212,6 +212,9 @@ _EOM_;
 	return $response;
 }
 
+/**
+ * Save provided option name with new value. If the option old name is provided, it is deleted.
+ */
 function register_save_data() {
 	register_graphql_mutation( 'saveData', [
 
@@ -286,6 +289,9 @@ function register_save_data() {
 	] );
 }
 
+/**
+ * Gets provided option value
+ */
 function register_list_data() {
 	register_graphql_mutation( 'listData', [
 
@@ -342,7 +348,7 @@ function register_list_data() {
 }
 
 /**
- * Save tvfMetadata object
+ * Save title, metadata and tvfMetadata (tvfMetadata name with value) object
  */
 function register_save_metadata() {
 	register_graphql_mutation( 'saveMetadata', [
@@ -434,6 +440,9 @@ function register_save_metadata() {
 	] );
 }
 
+/**
+ * Gets tvfMetadata 
+ */
 function register_list_metadata() {
 	register_graphql_mutation( 'listMetadata', [
 
@@ -470,7 +479,7 @@ function register_list_metadata() {
 			log( "$fn: user: " . print_r( $user, true) . "." );
 	
 			$result = get_post_meta( $contentId, "tvfMetadata", true );
-			log( "$fn: metadata: result: $result" );
+			log( "$fn: tvfMetadata: result: $result" );
 
 			$data = [];
 			if ( $result ) {

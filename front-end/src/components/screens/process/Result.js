@@ -65,8 +65,8 @@ export default function Result( props ) {
         fetch(conf.service, {...conf.options, "mode": "cors"})
             .then((res) => res.json())
             .then((data) => {
-                log.info("getData: fetch: Data: " + JSON.stringify(data));
-                log.info("getData: fetch: Current: " + current);
+                log.info("getData: fetch: Data: ", data);
+                log.info("getData: fetch: Current: ", current);
 
                 let content = "";
                 if (option.match(/^prefix:/)) {
@@ -83,18 +83,22 @@ export default function Result( props ) {
                         let result2 = "## " + optionName + "\n"
                                         + optionValue + "\n";
 
-                        log.trace("getData: fetch: mixed options: " + result);
+                        log.trace("getData: fetch: mixed options: ", result);
                         return result + "";
                     });
-                    log.trace("getData: fetch: mixed options: content: " + content);
-                    log.trace("getData: fetch: mixed options: JSON.stringify(content): " + JSON.stringify(content));
+                    log.trace("getData: fetch: mixed options: content: ", content);
+                    log.trace("getData: fetch: mixed options: JSON.stringify(content): ", JSON.stringify(content));
                     let finalContent = content.join("\n");
-                    log.trace("getData: fetch: mixed options: final content: " + finalContent);
-                    log.trace("getData: fetch: mixed options: final content type: " + typeof finalContent);
+                    log.trace("getData: fetch: mixed options: final content: ", finalContent);
+                    log.trace("getData: fetch: mixed options: final content type: ", typeof finalContent);
                     setInitialContent(finalContent);
                     setContent((finalContent + "").replace(/(\r\n|\n)/g, "<br />"));
                 } else {
-                    content = data[option]; 
+                    content = data[option]
+                    //cid = data[option + "-id"]
+                    //log.trace("XXXgetData: option:", option)
+                    //log.trace("XXXgetData: cid:", cid)
+
                     if ( "ai-section-edcal0-transcription" == option
                             && content == "") {
                         PubSub.publish("_ERROR_TRANSCRIPTION_IS_EMPTY", null);
@@ -109,10 +113,14 @@ export default function Result( props ) {
                         setInitialContent(content);
                         setContent(content.replace(/(\r\n|\n)/g, "<br />"));
                         let labelEncoded = topic.replace(/.*PHASE([0-9a-zA-Z+/]*)_.*/, "$1")
-                        log.trace("getData: fetch: labelEncoded: " + labelEncoded);
+                        log.trace("getData: fetch: labelEncoded: ", labelEncoded);
                         setLabelEncoded(labelEncoded)
                     }
                     PubSub.publish("_CONTENT_", content);
+
+                    // Useful to update content when saved
+                    //log.trace("Publishing to _CONTENT_CID_" + cid)
+                    //PubSub.publish("_CONTENT_CID_" + cid, content);
                 }
 
                 if (resume) {
@@ -175,6 +183,11 @@ export default function Result( props ) {
         )
     }
 
+    function updateContent(topic, content) {
+        log.trace("Updating with topic XXX: ", topic, " following content: ", content)
+        setContent(content)
+    }
+
     useEffect(() => {
         log.info('Subscribing to RESET');
         PubSub.subscribe("RESET", reset);
@@ -201,6 +214,15 @@ export default function Result( props ) {
         //display( message, 'progressiveContent');
     }, [])
 
+    useEffect(() => {
+        if (contentId) {
+            // We only update the right tab
+            log.info('Subscribing to ' + "_CONTENT_CID_" + contentId);
+            PubSub.subscribe("_CONTENT_CID_" + contentId, updateContent);
+        }
+    }, [contentId])
+    
+    
     return (
         <TabsContent id={`process-contents-${name}`} value={name}>
             <Card id="results" className='h-100 border-0 overflow-auto'>

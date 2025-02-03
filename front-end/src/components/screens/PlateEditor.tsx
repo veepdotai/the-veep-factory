@@ -1,5 +1,7 @@
 "use client";
 
+import PubSub from 'pubsub-js'
+
 import { useEffect, useState } from 'react';
 import { Logger } from 'react-logger-lib';
 import { t } from 'i18next'
@@ -312,29 +314,35 @@ export function PlateEditor( {input, contentId = null, attrName = null, custom =
     )
   }
 
-  log.trace("input: " + input)
+  log.trace("input: ", input)
 
   let editor
   useEffect(() => {
     editor = getEditor()
     if (input) {
       if (typeof input === "string" && input.startsWith("[{")) {
-        log.trace("input is not a string: " + input)
+        // Input is in CRT format
+        log.trace("input is not a string: ", input)
         updateContent(input)
       } else {
-        log.trace("input is a string: " + input)
+        log.trace("input is a string: ", input)
         const value = editor.api.markdown.deserialize(input);
-        log.trace("Editor: " + JSON.stringify(value))
+        log.trace("Editor: ", value)
         setContent(value)
       }
     }
   }, [])
   
   let operations = {
-    handleSave: () =>{
+    handleSave: () => {
       updateContent(getEditorContent(contentId))
-      let plateContentAsString = Utils.convertDoubleQuotesToQuotesInJSON(getEditorContent(contentId))
-      MergedContent.saveItPlease(contentId, attrName, plateContentAsString, custom)
+      let plateContentAsCRTString = Utils.convertDoubleQuotesToQuotesInJSON(getEditorContent(contentId))
+      let plateContentAsMarkdown = Utils.convertCrtToMarkdown(plateContentAsCRTString)
+
+      // Update the component
+      log.trace("Publishing to _CONTENT_CID_" + contentId + " topic the following content: ", plateContentAsMarkdown)
+      PubSub.publish("_CONTENT_CID_" + contentId, plateContentAsMarkdown)
+      MergedContent.saveItPlease(contentId, attrName, plateContentAsMarkdown, custom)
     }
   }
   

@@ -61,7 +61,7 @@ class Veepdotai_Options_REST_Controller extends WP_REST_Controller {
         $user = wp_get_current_user()->user_login;
         self::log( "debug", "/options/get_item: $user." );
 
-        // /veepdotai_rest/v1/options/ai-section-edstrat0-strategy
+        // /veepdotai_rest/v1/options/ai-section-edcal0-transcription
         $option_name = sanitize_text_field( $request['option'] );
         $option_prefix = sanitize_text_field( $request['prefix'] );
 
@@ -86,7 +86,11 @@ class Veepdotai_Options_REST_Controller extends WP_REST_Controller {
     
             $result = $results;
         } else {
-            $result = [ $option_name => Veepdotai_Util::get_option( $option_name ) ];
+            $option_name_id = $option_name . "-id";
+            $result = [
+                $option_name => Veepdotai_Util::get_option( $option_name ),
+                $option_name_id => Veepdotai_Util::get_option( $option_name_id )
+            ];
         }
 
         return rest_ensure_response( $result );

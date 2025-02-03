@@ -5,6 +5,7 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { useCookies } from 'react-cookie';
 import toast from 'react-hot-toast'
 import { t } from 'i18next';
+import PubSub from 'pubsub-js'
 
 import { fr } from 'date-fns/locale'
 import { setDefaultOptions } from 'date-fns';
@@ -192,7 +193,7 @@ export default function Content( {contentId, title, attrName = null, content = "
   function remove() { ContentCardActions.remove() }
 
   function handleSave(topic, params) {
-    log.trace(`handleSave: topic: ${topic} / params: ${JSON.stringify(params)}`);
+    log.trace("handleSave: topic: ", topic, " / params: ", params);
     ContentCardActions.handleSave({
       content: params.content,
       contentId: params.cid,

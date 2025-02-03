@@ -144,16 +144,27 @@ class Veepdotai_Contents_REST_Controller extends WP_REST_Controller {
             // update all the post.
             die("Not implemented.");
         } else if ( $attr_name == "post_content" ) {
-            $post_array = array(
-                "ID" => $id,
-                "post_content" => $content,
-            );
-            $output = wp_update_post( $post_array );
 
             if ( $label_encoded == "transcription" ) {
+                // We don't update veepdotaiResource when it's text because we want to keep original provided content
+                $post_array = array(
+                    "ID" => $id,
+                    "meta_input" => [
+                        "veepdotaiTranscription" => $content
+                    ]
+                );
+                $output = wp_update_post( $post_array );
                 Veepdotai_Util::set_option( "ai-section-edcal0-${label_encoded}", $content );
+                Veepdotai_Util::set_option( "ai-section-edcal0-${label_encoded}-id", $id );
             } else if ( $label_encoded ) {
+                // We don't update veepdotaiContent because we want to keep original generated content
+                $post_array = array(
+                    "ID" => $id,
+                    "post_content" => $content
+                );
+                $output = wp_update_post( $post_array );
                 Veepdotai_Util::set_option( "ai-section-edcal1-phase${label_encoded}", $content );       
+                Veepdotai_Util::set_option( "ai-section-edcal1-phase${label_encoded}-id", $id );       
             }
 
         } else if ( $attr_name == "veepdotaiContent" ) {

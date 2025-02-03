@@ -179,6 +179,12 @@ function register_SystemMetadataFields( $baseType ) {
 		 	return ! empty( $value ) ? $value : '';
 	   }
 	]);
+	register_graphql_field( $baseType, 'veepdotaiLabelEncoded', [ 'type' => 'String',
+	   'resolve' => function( $post ) {
+			$value = get_post_meta( $post->ID, "veepdotaiLabelEncoded", true );
+		 	return ! empty( $value ) ? $value : '';
+	   }
+	]);
 	register_graphql_field( $baseType, 'veepdotaiParent', [ 'type' => 'String',
 	   'resolve' => function( $post ) {
 			$value = get_post_meta( $post->ID, "veepdotaiParent", true );

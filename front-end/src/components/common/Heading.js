@@ -3,11 +3,11 @@ import { Container, Stack } from 'react-bootstrap';
 import { Logger } from 'react-logger-lib';
 import Tour from './Tour';
 
-export function ScreenHeading( {name, key = null, title, subtitle}) {
+export function ScreenHeading( {name, akey = null, title, subtitle}) {
     let viewType = "inline"
     return (    
         <Container className="w-full border-bottom m-0">
-            <Heading name={name} key={key} viewType={viewType} className="p-0 pt-2 pb-2 fs-4 d-flex">{title}</Heading>
+            <Heading name={name} akey={akey} viewType={viewType} className="p-0 pt-2 pb-2 fs-4 d-flex">{title}</Heading>
             {/*<Heading className="p-0 mt-0-2 fs-7 font-italic text-secondary">{subtitle}</Heading>*/}
         </Container>
     )
@@ -22,7 +22,7 @@ export function Heading(props) {
             { props?.viewType == "top-right" ?
                     <>
                         <Container className={props.className}>{props.children}</Container>
-                        <Tour className="ms-auto" name={`${props?.name}/${props?.key}`} />
+                        <Tour className="ms-auto" name={`${props?.name}/${props?.akey}`} />
                     </>
                 :
                     <Container className={props.className}>
