@@ -139,7 +139,7 @@ export const UtilsGraphQL = {
 		  }    
 		`;
 	
-		log.trace(`update: id: ${row.id}, ${attrWithValue}, query: ${q}`)
+		log.trace("update: id:", row.id, "attrName: ", attrName, "attrValue: ", attrValue, "query: ", q, "attrNameWithValue: ", attrWithValue)
 		return UtilsGraphQL
 			.client(graphqlURI, cookies)
 			.mutate({

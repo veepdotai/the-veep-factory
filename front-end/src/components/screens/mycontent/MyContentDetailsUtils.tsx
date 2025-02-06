@@ -200,20 +200,26 @@ export default class MyContentDetailsUtils {
     let date = new Date()
     for(var i = 0; i < children.edges.length; i++) {
       let n = children.edges[i].node
-      log(`n[${i}].title: ${n.title}`)
+      MyContentDetailsUtils.log.trace("getCalendarView: n: ", n)
+      let start = n?.tvfPubDate ? new Date(n.tvfPubDate) : addDays(date, i)
+      let end = addHours(start, 1)
+      let type = n?.type ? n.type : "TOFU"
+      let title = n?.title
+      let desc = n?.content ? n.content.substring(0, 200) : title
       events[i] = {
-        id: n.databaseId,
-        title: n.title,
-        start: n.tvfPubDate || addDays(date, i),
-        end: n.tvfPubDate || addHours(addDays(date, i), 1),
+        id: n?.databaseId,
+        title: title,
+        start: start,
+        end: end,
+        desc: desc,
+        content: n?.content,
+        author: `${parent.author?.node.firstName} ${parent.author?.node.lastName}`,
         isDraggable: true,
-        type: "TOFU",
+        type: type,
         //resource: 1,
         //allDay: false,
-        desc: n.title,
-        content: n.content,
-        author: `${parent.author?.node.firstName} ${parent.author?.node.lastName}`
       }
+      MyContentDetailsUtils.log.trace("getCalendarView: events[" + i + "]", events[i])
     }
     return (
       <>

@@ -16,6 +16,10 @@ import './EditorialCalendar/styles.css'
 import Loading from '../common/Loading'
 import { CommonFacetedFilter } from './mycontent/datatable/shadcn-dt-tanstack/core/common-faceted-filter'
 import SocialNetworkPreview from './SocialNetworkPreview'
+import { UtilsGraphQL } from '@/api/utils-graphql'
+import { useCookies } from 'react-cookie'
+import { Constants } from '@/constants/Constants'
+import { UtilsGraphQLObject } from '@/api/utils-graphql-object'
 
 export interface CalendarProps {
     id: string,
@@ -39,8 +43,18 @@ export default function EditorialCalendar({events}) {
     const log = Logger.of(EditorialCalendar.name)
     const DnDCalendar = withDragAndDrop(Calendar)
 
+    const [cookies] = useCookies(['JWT']);
+    const graphqlURI = Constants.WORDPRESS_GRAPHQL_ENDPOINT
     const localizer = dayjsLocalizer(dayjs)
     const defaultDate = new Date()
+    const defaultConf = {
+        defaultClassName: "text-sm",
+        defaultCulture: "fr",
+        defaultView: Views.MONTH,
+        defaultDate: new Date(),
+        defaultStyle: { height: 600 }
+    }
+    const defaultView = Views.MONTH
     const data = []
 
     function getContentPreview(content) {
@@ -57,6 +71,7 @@ export default function EditorialCalendar({events}) {
     }
 
     const [myEvents, setMyEvents] = useState(events)
+    const [conf, setConf] = useState(defaultConf)
 
     const selectEvent = useCallback((event) => {
         log.trace("title", event)
@@ -103,11 +118,28 @@ export default function EditorialCalendar({events}) {
             event.allDay = false;
         }
   
-        setMyEvents((prev) => {
-            const existing = prev.find((ev) => ev.id === event.id) ?? {}
-            const filtered = prev.filter((ev) => ev.id !== event.id)
-            return [...filtered, { ...existing, start, end, allDay: event.allDay }]
-        })
+        log.trace("EditorialCalendar: moveEvent: event.id: ", event.id, "start: ", start, "ISOString: ", start.toISOString(), "end: ", end)
+        //UtilsGraphQL.update(graphqlURI, cookies, {id: event.id}, "tvfPubDate", start.toISOString())
+        UtilsGraphQLObject
+            .saveMetadata(graphqlURI, cookies, event.id, null, null, null, "tvfPubDate", start.toISOString())
+/*
+            .then((result) => {
+                setMyEvents((prev) => {
+                    const existing = prev.find((ev) => ev.id === event.id) ?? {}
+                    const filtered = prev.filter((ev) => ev.id !== event.id)
+                    return [...filtered, { ...existing, start, end, allDay: event.allDay }]
+                })
+        
+                return result}
+            )
+            .catch((e) => alert('coucou'))
+*/
+            setMyEvents((prev) => {
+                const existing = prev.find((ev) => ev.id === event.id) ?? {}
+                const filtered = prev.filter((ev) => ev.id !== event.id)
+                return [...filtered, { ...existing, start, end, allDay: event.allDay }]
+            })
+
       },
       [setMyEvents]
     )
@@ -203,18 +235,26 @@ export default function EditorialCalendar({events}) {
 
     function getTitle(e) {
         let title = (e.type ? e.type + " - " : "") + e.title
-        return title
+        let max = 100
+        if (Views.AGENDA == conf.defaultView) {
+            return e.desc?.substring(0,100) ?? title
+        } else {
+            return title
+        }
     }
 
     return (
         <>
             {/*className="h-screen"*/}
             {/*resources={[{id: 1, title: "Room A"}, {id: 2, title: "Room B"}, {id: 4095, title: "Room C"}]*/}
-            {getSearchBar()}
+            {/*getSearchBar()*/}
             { myEvents ?
                 <DnDCalendar
-                    className="text-sm"
-                    culture="fr"
+                    className={conf.defaultClassName}
+                    culture={conf.defaultCulture}
+                    defaultDate={conf.defaultDate}
+                    defaultView={conf.defaultView}
+                    style={conf.defaultStyle}
                     messages={{
                         today: t("Today"),
                         previous: '<',
@@ -226,8 +266,6 @@ export default function EditorialCalendar({events}) {
                         agenda: t('Agenda'), // Ordre du jour
                         showMore: (total) => t("ShowMore", {showMore: total}),
                     }}
-                    defaultDate={defaultDate}
-                    defaultView={Views.WEEK}
                     localizer={localizer}
                     events={myEvents}
                     draggableAccessor={(e) => true}
@@ -238,18 +276,19 @@ export default function EditorialCalendar({events}) {
                     onSelectSlot={selectSlot}
                     onEventDrop={moveEvent}
                     onEventResize={resizeEvent}
+                    onView={(newView) => setConf({...conf, defaultView: newView})}
+                    onNavigate={(newDate) => setConf({...conf, defaultDate: newDate})}
                     resizable
                     step={30}
                     timeslots={4}
                     selectable
                     showMultiDayTimes
                     popup
-                    style={{ height: 600 }}
                     navigate={[Navigate.PREVIOUS, Navigate.NEXT, Navigate.TODAY, Navigate.DATE]}
                     views={[Views.MONTH, Views.WEEK, Views.WORK_WEEK, Views.DAY, Views.AGENDA]}
                     components={components}
                     eventPropGetter={eventPropGetter}
-                    tooltipAccessor={(e) => e.title}
+                    tooltipAccessor={(e) => e.desc}
                     titleAccessor={(e) => getTitle(e)}
                     drilldownView="day"
                     />

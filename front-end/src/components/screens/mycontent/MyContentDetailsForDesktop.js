@@ -98,7 +98,7 @@ export default class MyContentDetailsForDesktop {
                   <MyContentDetailsForDesktop.TT id="m2" title={t("SideBySideView")}>{Icons.comparedView}</MyContentDetailsForDesktop.TT>
               </TabsTrigger>
               <TabsTrigger key="details-menu-calendar-content" id="details-menu-calendar-content" value="calendar-content">
-                  <MyContentDetailsForDesktop.TT id="m4" title={t("SideBySideView")}>{Icons['editorial-calendar']}</MyContentDetailsForDesktop.TT>
+                  <MyContentDetailsForDesktop.TT id="m4" title={t("CalendarView")}>{Icons['editorial-calendar']}</MyContentDetailsForDesktop.TT>
               </TabsTrigger>
             </div>
           </TabsList>
