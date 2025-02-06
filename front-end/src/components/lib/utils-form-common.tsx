@@ -67,12 +67,46 @@ export const UtilsFormCommon = {
   
     // It is form display, not an update in the database
     updateForm: function(form, topic, message) {
-        let log = (msg) => UtilsFormCommon.log.trace("updateForm: " + msg)
+        //let log = (msg) => UtilsFormCommon.log.trace("updateForm: " + msg)
+        let log = UtilsFormCommon.log
 
-        log("message: " + JSON.stringify(message))
+        log.trace("message: ", message)
         form.reset(message)
     },
 
+    // It is form display, not an update in the database
+    updateStringForm: function(form, topic, message) {
+        //let log = (msg) => UtilsFormCommon.log.trace("updateForm: " + msg)
+        let log = UtilsFormCommon.log
+        log.trace("updateStringForm: topic: ", topic)
+
+        let metadata = null
+        if ("200" == message?.status || message?.result) {
+            metadata = message.result
+            log.trace("updateStringForm: message.result: ", message?.result)
+        } else {
+            metadata = message
+            log.trace("updateStringForm: message.result: ", message?.result)
+        }
+        log.trace("updateStringForm: metadata: ", metadata)
+
+        if (typeof metadata == "string" && metadata) {
+            metadata = JSON.parse(metadata)
+            log.trace("updateStringForm: metadata (object): ", metadata)
+            metadata = metadata?.result?.replace(/_EOL_/g, "\n").replace(/_G_/g, '"')
+            if (metadata) {
+                metadata = JSON.parse(metadata)
+            }
+            log.trace("updateStringForm: ", "metadata: ", metadata)
+        }
+        
+        if (metadata) {
+            form.reset(metadata)
+        } else {
+            alert("Error while updating data")
+        }
+    },
+    
     updateFormOld: function(form, topic, message) {
         let log = (msg) => UtilsFormCommon.log.trace("updateForm: " + msg)
 

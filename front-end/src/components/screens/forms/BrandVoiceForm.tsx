@@ -41,7 +41,8 @@ export default function BrandVoiceForm() {
     })
     
     function updateForm(topic, message) {
-      return UFC.updateForm(form, topic, message)
+      log.trace("updateForm: ", "topic: ", topic, "message: ", message)
+      return UFC.updateStringForm(form, topic, message)
     }
 
     //function onSubmit(data: z.infer<typeof FormSchema>) {

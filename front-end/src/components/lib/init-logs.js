@@ -115,6 +115,7 @@ export default function initAppJSLogs(level = "NONE") {
     localStorage.setItem('VocalForm', level);
     localStorage.setItem('UploadLib', level);
     localStorage.setItem('EditorialLineForm', level);
+    localStorage.setItem('BrandVoiceForm', level);
 
     localStorage.setItem('ContentActions', level);
 
