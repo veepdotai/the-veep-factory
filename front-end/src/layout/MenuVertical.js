@@ -135,16 +135,17 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                             </>
                     }
 
+                    {getAccordionItem("verticalAIParams", getMenuTitle(t("VerticalAiParams")),
+                        <>
+                            <MenuItem key={"brand-voice"} itemKey="brand-voice" itemLabel={t("BrandVoice")} direction={direction} />
+                            <MenuItem key={"editorial-line"}  itemKey="editorial-line" itemLabel={t("EditorialLine")} direction={direction} />
+
+                            <MenuItem key={"pdf-export"} itemKey="pdf-export" itemLabel={t("PDFExport")} direction={direction} />
+                        </>
+                    )}
+                    
                     { ! isNormalUser ?
                             <>
-                                {getAccordionItem("context", getMenuTitle(t("Context")),
-                                    <>
-                                        <MenuItem key={"brand-voice"} itemKey="brand-voice" itemLabel={t("BrandVoice")} direction={direction} />
-                                        <MenuItem key={"editorial-line"}  itemKey="editorial-line" itemLabel={t("EditorialLine")} direction={direction} />
-
-                                        <MenuItem key={"pdf-export"} itemKey="pdf-export" itemLabel={t("PDFExport")} direction={direction} />
-                                    </>
-                                )}
 
                                 {getAccordionItem("tools", getMenuTitle(t("Tools")),
                                     <>
