@@ -1,5 +1,6 @@
 {
     "require": {
-        "yosymfony/toml": "^1.0"
+        "yosymfony/toml": "^1.0",
+        "mustache/mustache": "^2.14"
     }
 }

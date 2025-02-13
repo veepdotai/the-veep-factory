@@ -23,7 +23,5 @@ define( 'VEEPDOTAI_DSL_PLUGIN_DIR', plugin_dir_path(__FILE__) );
 require "vendor/autoload.php";
 require "class-veepdotai-dsl.php";
 
-function veepdotai_dsl() {
-}
-
-//veepdotai_dsl();
+# uncomment eventually when in test mode
+# Veepdotai_DSL::test();

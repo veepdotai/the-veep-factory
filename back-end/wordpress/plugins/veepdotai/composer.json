@@ -7,7 +7,8 @@
         "delight-im/str": "^2.20",
         "ginsen/img-finder": "^4.0",
         "inpsyde/wonolog": "^1.0",
-        "stripe/stripe-php": "^13.3"
+        "stripe/stripe-php": "^13.3",
+        "mustache/mustache": "^2.14"
     },
     "autoload": {
         "psr-4": {

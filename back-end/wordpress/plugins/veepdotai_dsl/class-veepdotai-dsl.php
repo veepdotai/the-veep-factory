@@ -26,11 +26,12 @@ $inspiration = "";
 class Veepdotai_DSL {
 
 	public static function log( $channel, $o = null) {
+		$log_file = "/tmp/veepdotai_dsl.log";
 		$date = gettimeofday(true);
 		if ( ! $o ) {
-			error_log( "\n$date: $channel:\n", 3, "/tmp/openai.log");
+			error_log( "\n$date: $channel:\n", 3, $log_file);
 		} else {
-			error_log( "\n$date: $channel:\n" . print_r( $o, true) . "\n", 3, "/tmp/openai.log");
+			error_log( "\n$date: $channel:\n" . print_r( $o, true) . "\n", 3, $log_file);
 		}
 	}
 

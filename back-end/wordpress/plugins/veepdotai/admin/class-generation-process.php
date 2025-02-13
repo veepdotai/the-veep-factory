@@ -351,7 +351,9 @@ class Generation_Process {
     }
 
     /**
-     * Analyze veeplet definition
+     * Gets veeplet definition from toml definition
+     * 
+     * Returns veeplet object
      */
     public static function analyze_prompt( $root_string ) {
         if ( ! ( $root_string && preg_match( "/^\[(veepdotai|metadata|details)/", $root_string ) ) ) {
@@ -468,19 +470,122 @@ class Generation_Process {
     public static function replace_placeholders( $inspiration, $veeplet, $_prompt, $current_step ) {
         $max = 30;
 
+        function get_context( $context ) {
+            $json_raw = Veepdotai_Util::get_option( $context );
+            Generation_Process::log( __METHOD__ . ": specific context: jckermagoret-veepdotai-$context: ", $json_raw );
+            $json_string = preg_replace("/_EOL_/", "\n", $json_raw );
+            $json_string = preg_replace("/_G_/", '"', $json_string );
+            Generation_Process::log( __METHOD__ . ": context1 (string): " . $json_string );
+
+            $json_o = (array) json_decode( $json_string );
+            Generation_Process::log( __METHOD__ . ": context2 (array): " . print_r( $json_o, true) );
+    
+            return $json_o;
+        }
+
+        // Gets the context from option
+        $brand_voice = get_context( "brandVoice" );
+        $editorial_line = get_context( "editorialLine" );
+        //$brandVoice = Veepdotai_Util::get_option("brandVoice")
+
+        // Replaces {{inspiration}} placeholder
+        $general = [
+            "inspiration" => $inspiration,
+            "NOW" => date_format( date_create(), 'Y-m-d\TH:i:s' ),
+        ];
+
+        # $context = array_merge( $general, $brand_voice );
+        $context = array_merge( $general, $brand_voice, $editorial_line );
+        self::log( __METHOD__ . ": context: " . print_r( $context, true ));
+
+        //$prompt = preg_replace("/(\{\{inspiration\}\})/", "$inspiration", $_prompt);
+        //$prompt = preg_replace("/(\{\{NOW\}\})/", date_format( date_create(), 'Y-m-d\TH:i:s' ), $prompt);
+
+        $m = new Mustache_Engine(array('entity_flags' => ENT_QUOTES));
+        $prompt = $m->render( $_prompt, $context );
+
+        self::log( __METHOD__ . ": prompt substitutions (inspiration + NOW + context.*): $prompt");
+
+        // Gets all the output elements to get their content to replace  
+        $chain_input = $veeplet['prompts']['chain'];
+        $chain = Veepdotai_Util::get_chain( $chain_input );
+        self::log( __METHOD__ . ": chain_input: " . print_r( $chain_input, true )
+                    . " => chain: " . print_r( $chain, true ));
+                
+        $done = false;
+        
+        // Replaces each part corresponding to the previoulsy computed elements
+        //for($i = 0; $i < $max && ! $done; $i++) {
+        for( $i = 0; $i < $current_step && $i < count( $chain ) && ! $done; $i++ ) {
+            $label = $chain[$i];
+            $label_encoded = Veepdotai_Util::encode_prompt_id( $label );
+            self::log( __METHOD__ . ": processing: $label/$label_encoded");
+
+            //$phase_string = "ai-section-edcal1-phase$i";
+            $phase_name = "ai-section-edcal1-phase${label_encoded}";
+            $phase = Veepdotai_Util::get_option( $phase_name );
+            self::log( __METHOD__ . ": processing: $phase_name/$phase");
+            if ( $phase ) {
+                self::log( __METHOD__ . ": intermediary results: $label/$label_encoded/$phase");
+    
+                $prompt = preg_replace("/(\{\{$label\}\})/", "$phase", $prompt);
+                self::log( __METHOD__ . ": prompt: $prompt.");    
+            } else {
+                $done = true;
+            }
+        }
+
+        $label = $chain[$current_step];
+        $label_encoded = Veepdotai_Util::encode_prompt_id( $label );
+        $phase_name = "ai-section-edcal1-phase${label_encoded}";
+        $phase = Veepdotai_Util::get_option( $phase_name );
+
+        self::log( __METHOD__ . ": option name: ai-section-edcal1-phase${label_encoded}.");    
+        Veepdotai_Util::set_option( "ai-section-edcal1-phase${label_encoded}", $prompt );
+
+        return $prompt;
+    }
+
+    public static function replace_placeholders2( $inspiration, $veeplet, $_prompt, $current_step ) {
+        $max = 30;
+
+        function get_context( $context ) {
+            $json_raw = Veepdotai_Util::get_option( $context );
+            $json_string = preg_replace("/_EOL_/", "\n", $json_raw);
+            $json_string = preg_replace("/_G_/", '"', $json_string);
+            $json_o = (array) json_decode( $json_string );
+            echo "json_raw: " . $json_raw . "<br/>";
+            echo "json_string: " . $json_string . "<br/>";
+    
+            return $json_o;
+        }
+
+        // Gets the context from option
+        $brand_voice = get_context( "brandVoice" );
+        $editorial_line = get_context( "editorialLine" );
+        //$brandVoice = Veepdotai_Util::get_option("brandVoice")
+
+        // Gets all the output elements to get their content to replace  
         $chain_input = $veeplet['prompts']['chain'];
         $chain = Veepdotai_Util::get_chain( $chain_input );
         self::log( __METHOD__ . ": chain_input: " . print_r( $chain_input, true )
                     . " => chain: " . print_r( $chain, true ));
         
-        // Replace {{inspiration}} placeholder
+        // Replaces {{inspiration}} placeholder
         $prompt = preg_replace("/(\{\{inspiration\}\})/", "$inspiration", $_prompt);
         $prompt = preg_replace("/(\{\{NOW\}\})/", date_format( date_create(), 'Y-m-d\TH:i:s' ), $prompt);
-        self::log( __METHOD__ . ": first prompt substitutions (inspiration + NOW): $prompt");
+
+        $prompt = preg_replace("/(\{\{brandVoice\}\})/", "", $prompt);
+        $prompt = preg_replace("/(\{\{editorialLine\}\})/", "", $prompt);
+
+        $m = new Mustache_Engine(array('entity_flags' => ENT_QUOTES));
+        $promt = $m->render($template, $prompt);
+
+        self::log( __METHOD__ . ": prompt substitutions (inspiration + NOW + context.*): $prompt");
 
         $done = false;
         
-        // Replace g* placeholders
+        // Replaces each part corresponding to the previoulsy computed elements
         //for($i = 0; $i < $max && ! $done; $i++) {
         for( $i = 0; $i < $current_step && $i < count( $chain ) && ! $done; $i++ ) {
             $label = $chain[$i];
@@ -603,6 +708,8 @@ class Generation_Process {
 
         self::log(  __METHOD__ . ": raw: " . print_r($raw, true) );
 
+        $ai_request_params[ "llm_ai_key" ] = md5(substr($ai_request_params[ "llm_ai_key" ], -16)); // We just need last figures
+        $id = Veepdotai_Util::store_data( json_encode( $ai_request_params ), 'edcal-article-raw-0-request-params.json', $pid );
         $id = Veepdotai_Util::store_data( $raw, 'edcal-article-raw-0.json', $pid );
 
         return json_decode( $raw );
@@ -708,12 +815,13 @@ class Generation_Process {
      */
     public static function extract_elements( $content ) {
 
+        self::log( __METHOD__ . ": content: " . print_r( $content, true ) );
         
         $open = preg_quote( '--x-- /start metadata' );
         $close = preg_quote( '--x-- /end metadata' );
         $matches = [];
 
-        $pattern =  "~(.*)$open\r?\n(.+)$close~misU";
+        $pattern =  "~(.*)$open\r?\n?(.+)$close~misU";
         preg_match_all( $pattern, $content, $matches);
 
         self::log( __METHOD__ . ": matches: " . print_r( $matches, true ) );
