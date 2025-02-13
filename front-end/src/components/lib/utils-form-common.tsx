@@ -93,17 +93,34 @@ export const UtilsFormCommon = {
         if (typeof metadata == "string" && metadata) {
             metadata = JSON.parse(metadata)
             log.trace("updateStringForm: metadata (object): ", metadata)
-            metadata = metadata?.result?.replace(/_EOL_/g, "\n").replace(/_G_/g, '"')
-            if (metadata) {
-                metadata = JSON.parse(metadata)
+            if (typeof metadata.result == "string") {
+                metadata = metadata?.result?.replace(/_EOL_/g, "\n").replace(/_G_/g, '"')
+                if (metadata) {
+                    metadata = JSON.parse(metadata)
+                }
+            } else {
+                // metadata.result may be a boolean
+                // what do we do in that case?
             }
             log.trace("updateStringForm: ", "metadata: ", metadata)
         }
         
         if (metadata) {
-            form.reset(metadata)
+            if (! ('result' in metadata)) {
+                log.trace("updateStringForm: before resetting form: ", "metadata: ", metadata)
+                form.reset(metadata)
+            } else if (metadata.result === true) {
+                // Data are updated
+                log.trace("updateStringForm: Data have been updated.")
+            } else if (metadata.result === false) {
+                // Data aren't updated
+                //alert("Error while updating data.")
+                log.trace("updateStringForm: Data have NOT been updated.")
+            }
         } else {
-            alert("Error while updating data")
+            // metadata == null or undefined
+            // We should raise an error?
+            log.trace("updateStringForm: metadata is null. What's happening? Houston, we have a problem.")
         }
     },
     
