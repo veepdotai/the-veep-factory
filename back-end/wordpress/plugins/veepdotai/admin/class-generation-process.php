@@ -795,7 +795,7 @@ class Generation_Process {
             if ( $line ) { // some lines may be empty
                 preg_match_all("/([^:]*)\S*:\S*(.*)/", $lines[$i], $matches);
                 if ( count( $matches ) == 3 && $matches[1] && $matches[2]) {
-                    $metadata[ $matches[1][0] ] = $matches[2][0];
+                    $metadata[ $matches[1][0] ] = trim( $matches[2][0] );
                 }
             }
         }
