@@ -62,6 +62,21 @@ function OffCanvasMenu({ name, ...props }) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  function menuItem({id, label = "", _alwaysVisible = true}) {
+    /*
+    <MenuItem key={"credits"} alwaysVisible={true} itemKey="credits" itemLabel={t("Credits")} direction={direction} handleClose={handleClose} />
+    */
+    return (
+      <MenuItem
+        key={id}
+        alwaysVisible={_alwaysVisible}
+        itemKey={id}
+        itemLabel={label || t(Utils.camelize(id))}
+        direction={direction}
+        handleClose={handleClose} />
+    )
+  }
+
   useEffect(() => {
     log.trace("Profile: " + JSON.stringify(profile));
     log.trace("Avatar url: " + profile.veepdotai_avatar_url);
@@ -94,21 +109,21 @@ function OffCanvasMenu({ name, ...props }) {
 
             { direction == "horizontal" ? // smartphone
                 <Container>
-                    <MenuItem key={"credits"} alwaysVisible={true} itemKey="credits" itemLabel={t("Credits")} direction={direction} handleClose={handleClose} />
+                    {menuItem({id: "credits"})}
 
-                    <MenuItem key={"userPreferences"}  alwaysVisible={true} itemKey="userPreferences" itemLabel={t("UserPreferences")} direction={direction} handleClose={handleClose} />
-                    { isManager ? <MenuItem key={"appPreferences"}  alwaysVisible={true} itemKey="appPreferences" itemLabel={t("AppPreferences")} direction={direction} handleClose={handleClose} />:<></>}
-                    <MenuItem key={"add-content"}  alwaysVisible={true} itemKey="add-content" itemLabel={t("AddContent")} direction={direction} handleClose={handleClose} />
-                    <MenuItem key={"support"}  alwaysVisible={true} itemKey="support" itemLabel={t("Support")} direction={direction} handleClose={handleClose} />
-                    <MenuItem key={"about"}  alwaysVisible={true} itemKey="about" itemLabel={t("About")} direction={direction} handleClose={handleClose} />
+                    {menuItem({id: "user-parameters"})}
+                    { isManager ? menuItem({id: "app-parameters"}) : <></>}
+                    {menuItem({id: "add-content"})}
+                    {menuItem({id: "support"})}
+                    {menuItem({id: "about"})}
                     <Exit alwaysVisible={true} direction={direction} handleClose={handleClose} />            
                 </Container>
               :
                 <Container className="gap-5">
-                    <MenuItem key={"credits"}  alwaysVisible={true} itemKey="credits" itemLabel={t("Credits")} direction={direction} handleClose={handleClose} />
-                    <MenuItem key={"userPreferences"}  alwaysVisible={true} itemKey="userPreferences" itemLabel={t("UserPreferences")} direction={direction} handleClose={handleClose} />
-                    { isManager ? <MenuItem key={"appPreferences"}  alwaysVisible={true} itemKey="appPreferences" itemLabel={t("AppPreferences")} direction={direction} handleClose={handleClose} />:<></>}
-                    <MenuItem key={"about"}  alwaysVisible={true} itemKey="about" itemLabel={t("About")} direction={direction} handleClose={handleClose} />
+                    {menuItem({id: "credits"})}
+                    {menuItem({id: "user-parameters"})}
+                    { isManager ? menuItem({id: "app-parameters"}) : <></>}
+                    {menuItem({id: "about"})}
                     <Exit alwaysVisible={true} direction={direction} handleClose={handleClose} />            
                 </Container>
             }

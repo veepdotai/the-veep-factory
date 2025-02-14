@@ -135,7 +135,7 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                             </>
                     }
 
-                    {getAccordionItem("verticalAIParams", getMenuTitle(t("VerticalAiParams")),
+                    {getAccordionItem("verticalAIParams", getMenuTitle(t("VerticalAIParams")),
                         <>
                             <MenuItem key={"brand-voice"} itemKey="brand-voice" itemLabel={t("BrandVoice")} direction={direction} />
                             <MenuItem key={"editorial-line"}  itemKey="editorial-line" itemLabel={t("EditorialLine")} direction={direction} />

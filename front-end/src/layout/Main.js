@@ -72,8 +72,8 @@ export default function Main({credits, current}) {
     {id: "pdf-export", title: t("PdfExportTitle"), subtitle: t("PdfExportSubtitle"), content: <PDFExportForm />},
 
     {id: "credits", title: t("CreditsTitle"), subtitle: t("CreditsSubtitle"), content: <Credits />},
-    {id: "user-preferences", title: t("UserPreferencesTitle"), subtitle: t("UserPreferencesSubtitle"), content: <UserParameters />},
-    {id: "app-preferences", title: t("AppPreferencesTitle"), subtitle: t("AppPreferencesSubtitle"), content: <AppParameters />},
+    {id: "user-parameters", title: t("UserPreferencesTitle"), subtitle: t("UserPreferencesSubtitle"), content: <UserParameters />},
+    {id: "app-parameters", title: t("AppPreferencesTitle"), subtitle: t("AppPreferencesSubtitle"), content: <AppParameters />},
     {id: "about", title: t("AboutTitle"), subtitle: t("AboutSubtitle"), content: <About />},
     {id: "profile", title: t("ProfileTitle"), subtitle: t("ProfileSubtitle"), content: <Profile />},
     {id: "pub-target", title: t("PubTargetTitle"), subtitle: t("PubTargetSubtitle"), content: <PubTarget />},
@@ -94,8 +94,11 @@ export default function Main({credits, current}) {
     <>
       {/* Create and initialize main parts */}
       <Tab.Content className="p-0">
+        {/* Create tabs */}
         {UtilsMenu.createPaneFromMenuItem(UtilsMenu.getGenericMenu(), home)}
         {UtilsMenu.createPaneFromMenuItem(UtilsMenu.getMainContentMenu(), home)}
+
+        {/* Create tabs container */}
         {panes.map((pane, i) =>
             <Tab.Pane key={pane.id} eventKey={pane.id}>
               <ScreenHeading name={pane.id} akey={pane.id} title={pane.title} subtitle={pane.subtitle} />
