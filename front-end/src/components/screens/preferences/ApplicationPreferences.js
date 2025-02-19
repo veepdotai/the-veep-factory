@@ -8,7 +8,6 @@ import GenericForm from '../../form/GenericForm';
 export default function ApplicationPreferences() {
   const log = Logger.of(ApplicationPreferences.name);
 
-
   const [fields, setFields] = useState();
 
   function setData(topic, message) {
@@ -26,7 +25,7 @@ export default function ApplicationPreferences() {
         fields ?
         <GenericForm title={t('Menu.ApplicationPreferences')} data={fields} />
         :
-        <></>
+        <>{t("NoAvailableData")}</>
       }
     </>
   )

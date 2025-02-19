@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
 import { Logger } from 'react-logger-lib';
 import PubSub from 'pubsub-js';
+import { t } from "i18next";
 
 import GenericForm from '../../form/GenericForm';
-import { t } from "i18next";
-import { useTranslation } from "react-i18next";
 
 export default function UserPreferences() {
   const log = Logger.of(UserPreferences.name);
-
 
   const [fields, setFields] = useState();
 
@@ -27,7 +25,7 @@ export default function UserPreferences() {
         fields ?
           <GenericForm title={t('Menu.UserPreferences')} data={fields} />
         :
-          <></>
+          <>{t("NoAvailableData")}</>
       }
     </>
   )
