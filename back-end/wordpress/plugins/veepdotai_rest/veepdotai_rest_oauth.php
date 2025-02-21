@@ -5,12 +5,7 @@ use GuzzleHttp\Client;
 
 define('CLIENT_ID', CONF_CLIENT_ID);
 define('CLIENT_SECRET', CONF_CLIENT_SECRET);
-
-//define('REDIRECT_URL', 'http://localhost/wp-json/veepdotai_rest/v1/oauth/');
-define('REDIRECT_URL', 'http://localhost:3000/linkedin');
-//define('REDIRECT_URL', 'http://localhost/?rest_route=/veepdotai_rest/v1/oauth/');
-//define('REDIRECT_URL', 'http://localhost/wp-content/plugins/veepdotai_publish_social/callback.php');
-//define('REDIRECT_URL', 'http://localhost/auth/v1/callback');
+define('CLIENT_REDIRECT_URI', CONF_CLIENT_REDIRECT_URI);
 define('SCOPE', 'r_emailaddress,r_liteprofile,w_member_social');
 
 class Veepdotai_OAuth_REST_Controller extends WP_REST_Controller {
@@ -71,6 +66,8 @@ class Veepdotai_OAuth_REST_Controller extends WP_REST_Controller {
         //$user = wp_get_current_user()->user_login;
 
         $code = sanitize_text_field( $request[ 'code' ] );
+        $redirect_uri = CONF_CLIENT_REDIRECT_URI ? CONF_CLIENT_REDIRECT_URI : sanitize_url( $request[ 'redirectUri' ] );
+        self::log( "debug", "get_item: redirect_uri: " . $redirect_uri);
 
         try {
             $client = new Client(['base_uri' => 'https://www.linkedin.com']);
@@ -78,7 +75,7 @@ class Veepdotai_OAuth_REST_Controller extends WP_REST_Controller {
                 'form_params' => [
                         "grant_type" => "authorization_code",
                         "code" => $code,
-                        "redirect_uri" => REDIRECT_URL,
+                        "redirect_uri" => $redirect_uri,
                         "client_id" => CLIENT_ID,
                         "client_secret" => CLIENT_SECRET,
                 ],

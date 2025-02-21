@@ -36,8 +36,8 @@ export default function initVeepdotaiApp(setCookie, setDone) {
             Constants.WORDPRESS_GRAPHQL_ENDPOINT = Constants.WORDPRESS_URL + '/graphql';
         }
 
-        if (Constants.REDIRECT_URL == null) {
-            Constants.REDIRECT_URL = Constants.APP_URL + '/linkedin';
+        if (Constants.LINKEDIN_CLIENT_REDIRECT_URI == null) {
+            Constants.LINKEDIN_CLIENT_REDIRECT_URI = Constants.APP_URL + '/linkedin';
         }
 
         if (Constants.COVER_URL == null) {

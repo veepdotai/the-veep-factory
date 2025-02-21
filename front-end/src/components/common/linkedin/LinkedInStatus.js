@@ -86,7 +86,7 @@ export default function LinkedInStatus() {
     //PubSub.subscribe("UPDATE_SOCIAL_NETWORKS_DATA", updateSocialNetworksData);
     //PubSub.subscribe("LINKEDIN_SIGNIN_RESULT", updateSocialNetworksData);
 
-    //PubSub.subscribe("LINKEDIN_ACCESS_TOKEN", updateLinkedInData);
+    PubSub.subscribe("LINKEDIN_ACCESS_TOKEN", updateLinkedInData);
 
     //log.trace("getSocialNetworksData");
     //getSocialNetworksData(cookies, "ai-social-networks-data");
@@ -96,10 +96,11 @@ export default function LinkedInStatus() {
     <>
       {linkedInData ?
         <>
+          Data:
           <GenericForm title={t('Menu.ApplicationPreferences')} data={linkedInData} />
         </>
         :
-        <></>
+        <>{t("NoDataAvailable")}</>
       }
     </>
 

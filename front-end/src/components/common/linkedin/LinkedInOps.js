@@ -14,7 +14,6 @@ export default function LinkedInOps({content}) {
 
     const [waiting, setWaiting] = useState(false);
     const [disabled, setDisabled] = useState(false);
-//    const [accessToken, setAccessToken] = useState("AQXRGEQ6_ZFrn8a_ovltRnAByiqfTkLUc86tG85a7nJyblyi-BSpA0cY4SxPkSG9q4avc7ZGsdGetXm6Fmjbkgxs-sJiyMrARYmMszmLMJXoOYjvk_y6HRHQJYvbjkdSDavsT9VT7MZ2Vx2jpcK1z4a9zqWkwaLFNkOhSIZLXSyA2iLHIcQFkZFckzIESd9KRwTJ-9DgTgtYW6V1n7mvgupp0bcTH5sRljVMEv3-r9BjtbnUG34Z37ypDnD1matBXrKLU3lutw9OYXikD2L-X_KALN3JNI2HgUlDE885d8Qv-AWzOjZmzrK7IdH5CNMk7gUIr5zeuJ7bgXfG2SJIdhNQ8qdraQ");
     const [accessToken, setAccessToken] = useState();
     
     async function publishContent(accessToken, commentary, media) {
@@ -24,7 +23,7 @@ export default function LinkedInOps({content}) {
 
         const ME_RESOURCE = '/me';
         const POSTS_RESOURCE = '/posts';
-        const API_VERSION = '202311';
+        const API_VERSION = '202501';
     
         // Configure RestliClient
         const restliClient = new RestliClient();

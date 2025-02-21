@@ -11,7 +11,7 @@ export const Constants = {
     ANALYTICS_JS_CONTAINER: process.env.NEXT_PUBLIC_ANALYTICS_JS_CONTAINER ?? null,
     COVER_URL: process.env.NEXT_PUBLIC_COVER_URL ?? null,
     LINKEDIN_CLIENT_ID: process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID ?? null,
-    REDIRECT_URL: process.env.NEXT_PUBLIC_REDIRECT_URL ?? null,
+    LINKEDIN_CLIENT_REDIRECT_URI: process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_REDIRECT_URI ?? null,
     SCOPE: process.env.NEXT_PUBLIC_SCOPE ?? null,
     CATALOG_CARD_WIDTH: process.env.NEXT_PUBLIC_CATALOG_CARD_HEIGHT ?? null,
     CATALOG_HEADER_CARD_WIDTH: process.env.NEXT_PUBLIC_CATALOG_HEADER_CARD_HEIGHT ?? null,
@@ -20,6 +20,7 @@ export const Constants = {
     INITIAL_PROCESS_DURATION: process.env.NEXT_PUBLIC_INITIAL_PROCESS_DURATION ?? null,
     DEFAULT_USER: process.env.NEXT_PUBLIC_DEFAULT_USER ?? null,
     ADMIN_EMAIL: process.env.NEXT_PUBLIC_ADMIN_EMAIL ?? null,
+    ACCESS_TOKEN: process.env.NODE_ENV == "production" ? process.env.ACCESS_TOKEN : "",
 };
 
 export const graphqlURI = Constants.WORDPRESS_GRAPHQL_ENDPOINT;

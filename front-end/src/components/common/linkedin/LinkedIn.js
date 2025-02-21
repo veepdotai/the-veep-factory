@@ -20,24 +20,32 @@ export default function LinkedIn() {
   const [cookies] = useCookies(['JWT']);
   const [waiting, setWaiting] = useState(false);
   const [disabled, setDisabled] = useState(false);
+  const [key, setKey] = useState(0)
 
+  const redirectUri = Constants.LINKEDIN_CLIENT_REDIRECT_URI || `${typeof window === 'object' && window.location.origin}/linkedin`
+  log.trace("useLinkedIn: redirectUri: " + redirectUri);
   const { linkedInLogin } = useLinkedIn({
     clientId: Constants.LINKEDIN_CLIENT_ID,
     scope: Constants.SCOPE,
-    redirectUri: Constants.REDIRECT_URL, // for Next.js, you can use `${typeof window === 'object' && window.location.origin}/linkedin`
-    //redirectUri: `${window.location.origin}/linkedin`, // for Next.js, you can use `${typeof window === 'object' && window.location.origin}/linkedin`
-    //redirectUri: `http://localhost/wp-content/plugins/veepdotai_publish_social/callback.php`, // for Next.js, you can use `${typeof window === 'object' && window.location.origin}/linkedin`
-    //redirectUri: `http://localhost/wp-json/veepdotai_rest/v1/oauth/`, // for Next.js, you can use `${typeof window === 'object' && window.location.origin}/linkedin`
+    redirectUri: redirectUri,
     onSuccess: (code) => {
+      log.trace("useLinkedIn: setKey: key: " + key);
+      setKey(key + 1)
       log.trace("useLinkedIn: onSuccess: code: " + code);
-      fetch(Constants.WORDPRESS_REST_URL + "/wp-json/veepdotai_rest/v1/oauth/?"
-              + "&code=" + code
-              + "&JWT=" + cookies.JWT)
+      PubSub.publish("LINKEDIN_SIGNIN_RESULT", code)
+      
+      let oauthUrl = Constants.WORDPRESS_REST_URL + "/wp-json/veepdotai_rest/v1/oauth/?"
+                      + "&code=" + code
+                      + "&JWT=" + cookies.JWT
+                      + "&redirectUri=" + redirectUri
+      log.trace("useLinkedIn: local oauthUrl: " + oauthUrl)
+      return fetch(oauthUrl)
         .then((res) => {
           return res.json()
-        }).then((data) => {
-          log.trace("/wp-json/veepdotai_rest/v1/oauth/: access_token: " + data.linkedin?.access_token); 
-          PubSub.publish("LINKEDIN_SIGNIN_RESULT", data.linkedin?.access_token);
+        })
+        .then((data) => {
+          log.trace("/wp-json/veepdotai_rest/v1/oauth/: data: ", data) 
+          PubSub.publish("LINKEDIN_SIGNIN_RESULT", data)
         });
     },
     onError: (error) => {
@@ -62,13 +70,19 @@ export default function LinkedIn() {
   useEffect(() => {
     PubSub.subscribe("LINKEDIN_SIGNIN_RESULT", updateButtons);
     PubSub.subscribe("LINKEDIN_LOGIN_ACTION", handleLinkedInLogin);
+
+    /*
+    PubSub.publish("LINKEDIN_SIGNIN_RESULT", Constants.ACCESS_TOKEN);
+    setWaiting(false)
+    setDisabled(true)
+    */
   }, []);
 
   return (
-    <>
+    <div key={key}>
       <SuspenseClick waiting={waiting} disabled={disabled} handleAction={linkedInLogin} label={t("SignInLinkedIn")} />
       {/*<Button onClick={linkedInLogin}>{t("SignInLinkedIn")}</Button>*/}
-    </>
+    </div>
 
   );
 }
