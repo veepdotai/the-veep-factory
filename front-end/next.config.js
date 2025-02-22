@@ -2,7 +2,7 @@
 const nextConfig = {
 //    basePath: '',
 //    assetPrefix: '',
-    reactStrictMode: false,
+    reactStrictMode: true,
     distDir: 'dist',
     output: 'export',
     trailingSlash: true,

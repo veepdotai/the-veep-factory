@@ -13,6 +13,8 @@ import {
 import MyContentPanelWithSheet2panels from './MyContentPanelWithSheet2panels'
 
 import { t } from "i18next";
+import LogoWithUrl from "@/components/LogoWithLink";
+import { Icons } from "@/constants/Icons";
 
 export default function MyContentPanelWithSheet( {side, id = null, info = null, content = null}) {
 
@@ -35,7 +37,13 @@ export default function MyContentPanelWithSheet( {side, id = null, info = null, 
               <Sheet open={open} onOpenChange={setOpen}>
                 <SheetContent className="sm:max-w-8xl w-full">
                   <SheetHeader>
-                    <SheetTitle>{t("ContentDetails")}</SheetTitle>
+                    <SheetTitle className="flex items-center">
+                      <LogoWithUrl height="3em"/>
+                      <div style={{color: "grey"}} className="flex items-center text-sm px-3">
+                        <a onClick={(e) => setOpen(false)} href="#">{Icons.home}</a>
+                      </div>
+                      {t("ContentDetails")}
+                    </SheetTitle>
                     <SheetDescription>
                     </SheetDescription>
                   </SheetHeader>
