@@ -35,7 +35,7 @@ export default function MyContentPanelWithSheet( {side, id = null, info = null, 
             <>
               {/*className="w-full" style={{width: "1024px"}}*/}
               <Sheet open={open} onOpenChange={setOpen}>
-                <SheetContent className="sm:max-w-8xl w-full">
+                <SheetContent className="sm:max-w-8xl w-full p-0">
                   <SheetHeader>
                     <SheetTitle className="flex items-center">
                       <LogoWithUrl height="3em"/>
@@ -47,7 +47,9 @@ export default function MyContentPanelWithSheet( {side, id = null, info = null, 
                     <SheetDescription>
                     </SheetDescription>
                   </SheetHeader>
+                  <div className="px-6">
                     <MyContentPanelWithSheet2panels id={id} info={info} content={content}/>
+                  </div>
                   <SheetFooter>
                   </SheetFooter>
                 </SheetContent>
