@@ -50,6 +50,8 @@ export const Icons = {
     schedule:           <Md.MdOutlineSchedule {...attr}/>,
     about:              <Md.MdPermDeviceInformation {...attr} />,
     avatar:             <Md.MdPerson {...attr} />,
+    "app-parameters":     <Md.MdDesignServices {...attr}  />,
+    "user-parameters":    <Md.MdDesignServices {...attr}  />,
     appPreferences:     <Md.MdDesignServices {...attr}  />,
     userPreferences:    <Md.MdDesignServices {...attr}  />,
     contents:           <Md.MdOutlineArticle {...attr}  />,

@@ -29,12 +29,12 @@ export default function Dashboard() {
             },
             level2: {
                 lst: {backgroundImage: "linear-gradient(45deg,rgb(172, 153, 226),rgb(29, 9, 146))"},
-                lcn: "rounded-2 m-2 w-25 text-white",
+                lcn: "rounded-2 m-2 w-[300px] text-white",
                 //title: "ps-3 font-extrabold text-2xl",
                 title: "ps-3 font-extrabold text-2xl",
                 subtitle: "ps-3 font-semibold text-xl",
                 description: "ps-3 font-normal",
-        },
+            },
         },
         cheatSheetsSet: [
             {
@@ -177,13 +177,13 @@ export default function Dashboard() {
     let getVOD2 = (item, current) => getValueOrDefault(item, current, "level2", configuration)
 
     return (
-        <div>
+        <div className=''>
             {configuration?.cheatSheetsSet.map((cheatSheets) =>
                 <div key={cheatSheets.id} id={cheatSheets.id} className="p-4">
                     <div className={getVOD1("title", cheatSheets)}>{cheatSheets.title}</div>
                     {cheatSheets?.subtitle && <div className={getVOD1("subtitle", cheatSheets)}>{cheatSheets?.subtitle}</div>}
                     {cheatSheets?.description && <div className={getVOD1("description", cheatSheets)}>{cheatSheets?.description}</div>}
-                    <div className="p-2 flex">
+                    <div className="p-2 flex flex-wrap">
                         {cheatSheets?.content?.map((cheatSheet) => getCard(cheatSheet))}
                     </div>
                 </div>
