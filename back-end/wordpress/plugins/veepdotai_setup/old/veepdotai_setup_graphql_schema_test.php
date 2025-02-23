@@ -1,125 +1,5 @@
 <?php
-/**
- * @package Veepdotai
- * @version 0.0.1
- */
-/*
-Plugin Name: veepdotai_setup
-Plugin URI: http://wordpress.org/plugins/veepdotai_setup/
-Description: Provides various misc functions to WP (credits, logout without confirmation, google login && logout)
-Author: JC Kermagoret
-Version: 0.0.2
-Author URI: http://www.veep.ai
-*/
-
-define( "VEEPDOTAI_SETUP_CREDITS", 10);
-
-// Par mois : 5 articles de blog par mois,
-// Pour un article, 5 posts LI
-// Par semaine : 5 posts LI - éventuellement * 3 pour avoir le choix = 15*5 = 60 par mois
-// Itou pour FB|Insta|TT|Pinterest...
-// Soit 50 facile...
-// Toutes ces informations pourraient êre stockées dans une autre base qui
-// gèreraient mieux le côté versatile et volumineux.
 define( "MAXITEMS_TO_REGISTER_IN_GRAPHQL", 50 ); // 100?
-
-add_action( 'user_register', 'veepdotai_registration_save', 10, 1 );
-add_action( 'login_form', 'login_button', 10, 1 );
-
-/**
- * Setting first credits
- */
-function veepdotai_registration_save( $user_id ) {
-
-	$user = get_userdata( $user_id );
-	Veepdotai_Util::log( 'debug', 'User: ' . print_r($user, true));
-
-	$user_name = $user->user_login;
-
-	$prefix = "veepdotai";
-	$suffix = "-" . $prefix . "-credits";
-	
-	$default_username = "defaultuser";
-
-	$default_credits = get_option( $default_username . $suffix );
-	if ( $default_credits ) {
-		$credits = $default_credits;
-	} else {
-		$credits = VEEPDOTAI_SETUP_CREDITS;
-	}
-	Veepdotai_Util::log( "debug", "Setting $credits for Username: " . $user_name);
-	update_option( $user_name . $suffix, $credits );
-
-}
-
-function login_button() {
-	if ( isset( $custom_btn_text ) && $custom_btn_text ) {
-		$button_text = esc_html( $custom_btn_text );
-	} else {
-		$button_text = ( ! empty( $button_text ) ) ? $button_text : __( 'Log in with Google', 'login-with-google' );
-	}
-	
-	if ( empty( $login_url ) ) {
-		return;
-	}
-	
-	$button_url = $login_url;
-	
-	if ( is_user_logged_in() ) {
-		$button_text = __( 'Log out', 'login-with-google' );
-		$button_url   = wp_logout_url( get_permalink() );
-	}
-	
-	$user_wp = wp_get_current_user();
-	$jwt = veepdotai_create_jwt_token( $user_wp, null );
-	if ( strpos( home_url(), "localhost") !== false ) {
-		$url = home_url() . ":3000/?JWT=" . $jwt;
-	} else {
-		$url = home_url() . "/app/?JWT=" . $jwt;
-	}
-	
-	?>
-	<div class="wp_google_login">
-		<div class="wp_google_login__button-container">
-			<?php
-				global $veepdotai_jwt;
-				if (is_user_logged_in()) {
-			?>
-				<a class="wp_google_login__button" href="<?php echo "$url";?>">
-					<span class="wp_google_login__google-icon"></span>
-					Se connecter
-				</a>
-			<?php } ?>
-			<a class="wp_google_login__button"
-				<?php
-				printf( ' href="%s"', esc_url( $button_url ) );
-				?>
-			>
-				<span class="wp_google_login__google-icon"></span>
-				<?php echo esc_html( $button_text ) . "Hello"; ?>
-			</a>
-		</div>
-	</div>
-	<?php
-}
-
-/**
- * Plugin Name: Veepdotai Force Logout Redirect
- * Description: A simple plugin that forces logout then redirects without nonce verification
- */
-
-/**
- * Bypass logout confirmation on nonce verification failure
- */
-function logout_without_confirmation($action, $result) {
-	if ( ! $result && $action == "log-out" ) {
-		$redirect_to = isset($_REQUEST['redirect_to']) ? $_REQUEST['redirect_to'] : site_url();
-        $location = str_replace("&amp;", "&", wp_logout_url($redirect_to));
-		wp_safe_redirect($location); 
-		exit(); 
-    }
-}
-add_action( 'check_admin_referer', 'logout_without_confirmation', 10, 2);
 
 //add_action( 'graphql_register_types', function() {
 add_action( 'init', function() {
@@ -943,3 +823,36 @@ function register_veepdotai_old_schema() {
 	   }
 	]);
 }
+
+add_action( 'graphql_register_types', 'register_my_connection', 99 );
+function register_my_connection() {
+  $config = [
+    'fromType' => 'RootQuery',
+    'toType' => 'Post',
+    'fromFieldName' => 'postsFromThisWeek',
+    'connectionTypeName' => 'PostsFromThisWeekConnection',
+    'resolve' => function( $id, $args, $context, $info ) {
+		$resolver   = new \WPGraphQL\Data\Connection\PostObjectConnectionResolver( $id, $args, $context, $info, 'post' );
+		$resolver->set_query_arg( 'date_query', [
+			'after' => '2 years ago',
+			'before' => '1 year ago',
+		] );
+		$connection = $resolver->get_connection();
+		return $connection;
+	    //return \WPGraphQL\Data\DataSource::resolve_post_objects_connection( $id, $args, $context, $info, 'post' );
+    },
+    'resolveNode' => function( $id, $args, $context, $info ) {
+		/*
+		$resolver   = new \WPGraphQL\Data\Connection\PostObjectConnectionResolver( $id, $args, $context, $info, 'post' );
+		$resolver->set_query_arg( 'date_query', [
+			'after' => '2 years ago',
+			'before' => '1 year ago',
+		] );
+		$connection = $resolver->get_connection();
+		return $connection;
+		//return \WPGraphQL\Data\DataSource::resolve_post_object( $id, $context );
+		*/
+    }
+  ];
+  register_graphql_connection( $config );
+};

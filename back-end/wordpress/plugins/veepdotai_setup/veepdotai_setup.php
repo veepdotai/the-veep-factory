@@ -14,5 +14,4 @@ Author URI: http://www.veep.ai
 
 require_once 'veepdotai_setup_credits.php';
 require_once 'veepdotai_setup_login_button.php';
-require_once 'veepdotai_setup_graphql_schema.php';
 require_once 'veepdotai_setup_admin_tools.php';

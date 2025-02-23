@@ -1,0 +1,27 @@
+query getDCT {
+  domainContentTypes {
+    nodes {
+      name
+      description
+      title
+      databaseId
+      keys {
+        nodes {
+          id
+          id1
+          id2
+          databaseId
+          values {
+            nodes {
+              id
+              key
+              short
+              long
+              databaseId
+            }
+          }
+        }
+      }
+    }
+  }
+}

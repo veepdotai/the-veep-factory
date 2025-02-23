@@ -1,0 +1,3 @@
+To set up CORS, useful with REST and Graphql, a few elements must be configured:
+* for GraphQL, set CORS headers like in src/Router.php
+* for ReST calls, set CORS headers in the JWT config/Cors

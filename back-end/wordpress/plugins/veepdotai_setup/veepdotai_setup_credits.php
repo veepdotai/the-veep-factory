@@ -8,7 +8,7 @@ define( "VEEPDOTAI_SETUP_CREDITS", 10);
 
 // Par mois : 5 articles de blog par mois,
 // Pour un article, 5 posts LI
-// Par semaine : 5 posts LI - éventuellement * 3 pour avoir le choix = 15*5 = 60 par mois
+// Par semaine : 5 posts LI - éventuellement * 3 pour avoir le choix = 15*5 = 75 par mois
 // Itou pour FB|Insta|TT|Pinterest...
 // Soit 50 facile...
 // Toutes ces informations pourraient êre stockées dans une autre base qui
