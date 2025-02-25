@@ -13,24 +13,32 @@ function register() {
     register_upload();
 }
 
+function log( $msg ) {
+	\Veepdotai_Util::log( 'debug', 'GraphQL Mutations\Upload: ' . $msg );
+}
+
 function register_upload() {
-    register_graphql_mutation(
-        'upload', [
+    register_graphql_mutation( 'upload', [
+
             'description' => __( 'Upload blob to WP repository', 'your-textdomain' ),
             'inputFields' => [
                 'file' => [
-                    'type' => ['non_null' => 'Upload'],
+//                    'type' => ['non_null' => 'Upload'],
+                    'type' => 'Upload',
+//                    'type' => 'String',
                 ],
             ],
+
             'outputFields' => [
                 'text' => [
                     'type'    => 'String',
-                    'resolve' => function ($payload) {
-                        return $payload['text'];
-                    },
+//                    'resolve' => function ($payload) {
+//                        return $payload['text'];
+//                    },
                 ],
             ],
-            'mutateAndGetPayload' => function ($input) {
+
+            'mutateAndGetPayload' => function( $input, $context, $info ) {
                 if (!function_exists('wp_handle_sideload')) {
                     require_once(ABSPATH . 'wp-admin/includes/file.php');
                 }
@@ -40,9 +48,15 @@ function register_upload() {
                     'test_type' => false,
                 ]);
 
-                return [
+                $data = [
+//                    'text' => 'Uploaded file was "' . $input['file']
                     'text' => 'Uploaded file was "' . $input['file']['name'] . '" (' . $input['file']['type'] . ').',
                 ];
+                $result = [
+                    'text' => json_encode( $data ),
+                ];
+                log("result: " . print_r( $result, true ) );
+                return $result;
             }
         ]
     );

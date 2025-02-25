@@ -125,6 +125,7 @@
     "ai": "^4.1.0",
     "animate.css": "^4.1.1",
     "aphrodite": "^2.4.0",
+    "apollo-upload-client": "^18.0.1",
     "audio-recorder-polyfill": "^0.4.1",
     "audio-recorder-polyfill-next": "https://github.com/lucasotanez/audio-recorder-polyfill-next.git",
     "axios": "^1.7.9",

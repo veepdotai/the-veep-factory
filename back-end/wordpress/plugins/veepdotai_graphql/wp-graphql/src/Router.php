@@ -384,7 +384,7 @@ class Router {
 
 		$headers = [
 			//'Access-Control-Allow-Origin'  => '*',
-			'Access-Control-Allow-Origin'  => 'https://3000-veepdotai-voice2post-jy1dot3bmal.ws-eu117.gitpod.io',
+			'Access-Control-Allow-Origin'  => 'https://3000-veepdotai-voice2post-jy1dot3bmal.ws-eu118.gitpod.io',
 			'Access-Control-Allow-Credentials' => 'true',
 			'Access-Control-Allow-Headers' => implode( ', ', $access_control_allow_headers ),
 			'Access-Control-Max-Age'       => 600,
