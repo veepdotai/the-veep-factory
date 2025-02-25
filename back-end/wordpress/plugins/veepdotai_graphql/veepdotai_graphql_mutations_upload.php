@@ -30,12 +30,12 @@ function register_upload() {
             ],
 
             'outputFields' => [
-                'text' => [
-                    'type'    => 'String',
-//                    'resolve' => function ($payload) {
-//                        return $payload['text'];
-//                    },
-                ],
+				'status' => [
+					'type' => 'String',
+					'resolve' => function ($payload) {
+						return $payload['status'];
+					}
+				]
             ],
 
             'mutateAndGetPayload' => function( $input, $context, $info ) {
@@ -43,17 +43,39 @@ function register_upload() {
                     require_once(ABSPATH . 'wp-admin/includes/file.php');
                 }
 
-                wp_handle_sideload($input['file'], [
+                $uploaded = wp_handle_sideload($input['file'], [
                     'test_form' => false,
                     'test_type' => false,
                 ]);
 
+				if (isset($file_return['error']) || isset($file_return['upload_error_handler'])) {
+					throw new \GraphQL\Error\UserError("The file could not be uploaded.");
+				}
+				
+				$filename = $uploaded['file'];
+                $mime_type = $uploaded['type'] ? $uploaded['type'] : sanitize_mime_type( $input['file']['type'] );
+
+				$attachment = [
+					'guid' => $uploaded['url'], 
+					'post_mime_type' => $mime_type,
+					'post_title' => preg_replace('/\.[^.]+$/', '', basename($filename)),
+					'post_content' => '',
+					'post_status' => 'inherit'
+				];
+
+				$attachment_id = wp_insert_attachment($attachment, $filename);
+
+				require_once(ABSPATH . 'wp-admin/includes/image.php');
+				$attachment_metadata = wp_generate_attachment_metadata($attachment_id, $filename);
+				wp_update_attachment_metadata($attachment_id, $attachment_metadata);
+
                 $data = [
-//                    'text' => 'Uploaded file was "' . $input['file']
-                    'text' => 'Uploaded file was "' . $input['file']['name'] . '" (' . $input['file']['type'] . ').',
+                    'uploaded' => $uploaded, 
+                    'attachment' => $attachment,
+                    'metadata' => $attachment_metadata,
                 ];
                 $result = [
-                    'text' => json_encode( $data ),
+                    'status' => json_encode( $data ),
                 ];
                 log("result: " . print_r( $result, true ) );
                 return $result;
