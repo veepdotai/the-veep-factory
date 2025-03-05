@@ -463,6 +463,19 @@ class Generation_Process {
         return $new_content_id;
     }
 
+    public static function get_context( $context ) {
+        $json_raw = Veepdotai_Util::get_option( $context );
+        Generation_Process::log( __METHOD__ . ": specific context: jckermagoret-veepdotai-$context: ", $json_raw );
+        $json_string = preg_replace("/_EOL_/", "\n", $json_raw );
+        $json_string = preg_replace("/_G_/", '"', $json_string );
+        Generation_Process::log( __METHOD__ . ": context1 (string): " . $json_string );
+
+        $json_o = (array) json_decode( $json_string );
+        Generation_Process::log( __METHOD__ . ": context2 (array): " . print_r( $json_o, true) );
+
+        return $json_o;
+    }
+
     /**
      * This method replaces all the occurrences of prompts names by their
      * corresponding generated content 
@@ -470,22 +483,9 @@ class Generation_Process {
     public static function replace_placeholders( $inspiration, $veeplet, $_prompt, $current_step ) {
         $max = 30;
 
-        function get_context( $context ) {
-            $json_raw = Veepdotai_Util::get_option( $context );
-            Generation_Process::log( __METHOD__ . ": specific context: jckermagoret-veepdotai-$context: ", $json_raw );
-            $json_string = preg_replace("/_EOL_/", "\n", $json_raw );
-            $json_string = preg_replace("/_G_/", '"', $json_string );
-            Generation_Process::log( __METHOD__ . ": context1 (string): " . $json_string );
-
-            $json_o = (array) json_decode( $json_string );
-            Generation_Process::log( __METHOD__ . ": context2 (array): " . print_r( $json_o, true) );
-    
-            return $json_o;
-        }
-
         // Gets the context from option
-        $brand_voice = get_context( "brandVoice" );
-        $editorial_line = get_context( "editorialLine" );
+        $brand_voice = Generation_Process::get_context( "brandVoice" );
+        $editorial_line = Generation_Process::get_context( "editorialLine" );
         //$brandVoice = Veepdotai_Util::get_option("brandVoice")
 
         // Replaces {{inspiration}} placeholder
@@ -546,6 +546,7 @@ class Generation_Process {
         return $prompt;
     }
 
+    /*
     public static function replace_placeholders2( $inspiration, $veeplet, $_prompt, $current_step ) {
         $max = 30;
 
@@ -608,6 +609,7 @@ class Generation_Process {
 
         return $prompt;
     }
+    */
 
     /**
      * 
