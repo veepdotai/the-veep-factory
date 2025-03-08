@@ -194,7 +194,7 @@ export const UtilsFormCommon = {
                     </SelectContent>
                 </Select>
             )
-        } else if (fieldType === "checkbox") {
+        } else if (["checkbox"].includes(fieldType)) {
             let items = [
                 {id: "displayHeader", label: t("displayHeaderLabel")},
                 {id: "displayFooter", label: t("displayFooterLabel")},
@@ -254,7 +254,7 @@ export const UtilsFormCommon = {
             />
 
             return f
-        } else if (fieldType === "combobox") {
+        } else if (["listofvalues", "combobox"].includes(fieldType)) {
             lcn = lcn || "w-[300px]"
             let values = fieldValues?.split('|') || [];
             values = values.map((item) => {
@@ -347,7 +347,7 @@ export const UtilsFormCommon = {
     getFormField: function(form, fieldName, fieldType = "input", fieldValues = null, fieldOptions = {}) {
         let _fieldName = fieldName.replace(/([^\.]*)$/, "$1")
         let fo = fieldOptions
-        if (fieldType === "combobox" || fieldType === "checkbox") {
+        if (["listofvalues", "combobox", "checkbox"].includes(fieldType)) {
             fo.displayFormLabel = fo.displayFormLabel || false
         } else {
             fo.displayFormLabel = fo.displayFormLabel || true
@@ -359,9 +359,13 @@ export const UtilsFormCommon = {
                         {fo?.displayFormLabel &&
                             <FormLabel className={`${fo?.cnFormLabel} font-bold text-sm mt-4 pe-2 pb-2`}>{t(_fieldName + "Label")}</FormLabel>
                         }
-                        {UtilsFormCommon.getFieldType(form, field, fieldName, fieldType, fieldValues, fo)}
+                        <div class="flex">
+                            <div class="w-75">
+                                {UtilsFormCommon.getFieldType(form, field, fieldName, fieldType, fieldValues, fo)}
+                            </div>
+                            <FormDescription className="m-3 mb-4 text-xs">{t(fieldName + "Desc")}</FormDescription>
+                        </div>
                         <FormMessage className="mx-3 mt-3 mb-2 text-xs"/>
-                        <FormDescription className="m-3 mb-4 text-xs">{t(fieldName + "Desc")}</FormDescription>
                     </FormItem>
                 )}
             />
