@@ -5,6 +5,8 @@ import { Logger } from 'react-logger-lib'
 import { t } from 'i18next'
 
 import { UtilsMenu } from 'src/components/lib/utils-menu'
+import { Utils } from 'src/components/lib/utils'
+
 import MenuOptions from './MenuOptions'
 import MenuItem from './MenuItems/MenuItem'
 import LogoWithLink from "src/components/LogoWithLink"
@@ -35,11 +37,19 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                     {
                         menuDefinition.map((menu, i) => {
                             if (menu.title == "") {
-                                return menu.items.map(row => row.id == "separator" ? <hr /> : <MenuItem key={menu.id} itemKey={row.id} itemLabel={row.label} direction={direction} /> )
+                                return menu?.items?.map(row => row.id == "separator" ?
+                                        <hr />
+                                    :
+                                        <MenuItem key={menu.id} itemKey={row.id} itemLabel={row.label || t(Utils.camelize(row.id) + "Label")} direction={direction} />
+                                )
                             } else {
                                 return getAccordionItem(menu.id, menu.title,
                                     <>
-                                        {menu.items.map((row) => row.id == "separator" ? <hr /> : <MenuItem key={menu.id} itemKey={row.id} itemLabel={row.label} direction={direction} /> )}
+                                        {menu?.items?.map((row) => row.id == "separator" ?
+                                                <hr />
+                                            :
+                                                <MenuItem key={menu.id} itemKey={row.id} itemLabel={row.label || t(Utils.camelize(row.id) + "Label")} direction={direction} />
+                                        )}
                                     </>
                                 )       
                             }
@@ -102,9 +112,10 @@ export default function MenuVertical( {direction, isManager, profile} ) {
 
                     { 'byDpt' === view ?
                             <>
-                                {getAccordionItem("home", getMenuTitle(t("Dashboard")),
+                                {false && getAccordionItem("home", getMenuTitle(t("Dashboard")),
                                     getMenu('byDpt', UtilsMenu.getGenericMenu())
                                 )}
+                                {getMenu('byDpt', UtilsMenu.getGenericMenu())}
                             </>
                         :
                         <>
@@ -135,7 +146,7 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                             </>
                     }
 
-                    {getAccordionItem("verticalAIParams", getMenuTitle(t("VerticalAIParams")),
+                    {false && getAccordionItem("verticalAIParams", getMenuTitle(t("VerticalAIParams")),
                         <>
                             <MenuItem key={"brand-voice"} itemKey="brand-voice" itemLabel={t("BrandVoice")} direction={direction} />
                             <MenuItem key={"editorial-line"}  itemKey="editorial-line" itemLabel={t("EditorialLine")} direction={direction} />
@@ -143,7 +154,11 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                             <MenuItem key={"pdf-export"} itemKey="pdf-export" itemLabel={t("PDFExport")} direction={direction} />
                         </>
                     )}
-                    
+
+                    {true && getAccordionItem("verticalAIParams", getMenuTitle(t("VerticalAIParams")),
+                        getMenu('byDpt', UtilsMenu.getConfigurationMenu())
+                    )}
+
                     { ! isNormalUser ?
                             <>
 

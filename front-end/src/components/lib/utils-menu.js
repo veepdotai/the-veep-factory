@@ -17,6 +17,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { Utils } from './utils';
+import configurationMenuDefinition from './utils-menu-configuration-definition.json'
 
 export const UtilsMenu = {
   log: Logger.of("Menu"),
@@ -32,7 +34,7 @@ export const UtilsMenu = {
         */}
         <SheetContent className="sm:max-w-8xl w-75">
           <SheetHeader>
-            <SheetTitle>Edit profile</SheetTitle>
+            <SheetTitle>{t("EditProfile")}</SheetTitle>
             <SheetDescription>
               Make changes to your profile here. Click save when you're done.
             </SheetDescription>
@@ -52,8 +54,8 @@ export const UtilsMenu = {
 
   getGenericMenu: function() {
     let menuDefinition = [{
-        id: "common",
-        title: "",
+        id: "home",
+        title: "home2",
         items: [
             { id: 'home', dontcreate: true, label: t("Dashboard")},
             /*
@@ -65,8 +67,8 @@ export const UtilsMenu = {
             },
             */
             //{id: 'assistant', label: t("CreateAssistant")},
-            {id: 'add-content', dontcreate: true, label: t("CreateContent")},
-            {id: 'contents', dontcreate: false, label: t("MyContents")},
+            { id: 'add-content', dontcreate: true, label: t("CreateContent")},
+            { id: 'contents', dontcreate: false, label: t("MyContents")},
 //            {id: 'separator', label: ""},        
         ]
     }]
@@ -74,6 +76,13 @@ export const UtilsMenu = {
     return menuDefinition
   },
 
+  /**
+   * This menu is used to build:
+   * - the left navigational menu
+   * - the main pane that will display corresponding content
+   * 
+   * returns a json definition 
+   */
   getMainContentMenu: function() {
       function details(name, displayAgents = true) {
         return  {
@@ -123,40 +132,152 @@ export const UtilsMenu = {
     return menuDefinition
   },
 
+  getConfigurationMenu: function() {
+    let menuDefinition = configurationMenuDefinition 
+    /*[
+        { 
+          id: 'context',
+          title: t("Context"),
+          label: t("ContextLabel"),
+          itemType: "screen",
+          items: [
+            { id: 'brand-voice', itemType: "form", label: t("BrandVoiceLabel")},
+            { id: 'editorial-line', itemType: "form", label: t("EdiorialLineLabel")},
+            { id: 'pdf-export', itemType: "form", label: t("PdfExportLabel")},
+          ]
+        },
+        { 
+          id: "my-expertise",
+          title: t("MyExpertise"),
+          label: t('MyExpertiseLabel'),
+          itemType: "menu",
+          items: [
+            { id: 'my-experiences', itemType: "form", label: t('MyExperiences') },
+          ]
+        },
+        { 
+          id: 'knowledge-bases',
+          label: t('KnowledgeBaseLabel'),
+          title: t('KnowledgeBaseTitle'),
+          itemType: "menu",
+          items: [
+            { id: "websites", itemType: "form", label: t("WebsiteLabel")},
+            { id: "documents", itemType: "form", label: t("DocumentsLabel")},
+            { id: "news", itemType: "form", label: t("NewsLabel")},
+            { id: "misc", itemType: "form", label: t("MiscLabel")},
+          ]
+        },
+        { 
+          id: 'automations',
+          title: t('AutomationsTitle'),
+          itemType: "",
+          items: [
+            
+          ]
+        },
+        { 
+          id: 'enumerations',
+          title: t('EnumerationsTitle'),
+          itemType: "menu",
+          items: [
+            { id: 'configuration', itemType: "form", label: t("ConfigurationLabel")},
+            { id: 'classification', itemType: "form", label: t("ClassificationLabel")},
+            { id: 'prompt', itemType: "form", label: t("PromptLabel")},
+          ]
+        },
+        { 
+          id: 'menus',
+          title: t('MenusTitle'),
+          itemType: "menu",
+          items: [
+            { id: 'welcome', itemType: "form", label: t("WelcomeLabel")},
+            { id: 'data', itemType: "form", label: t("DataLabel")},
+            { id: 'configuration', itemType: "form", label: t("ConfigurationLabel")},
+          ]
+        },
+        { 
+          id: 'forms',
+          title: t('FormsTitle'),
+          itemType: "menu",
+          items: [
+            { id: 'data', itemType: "form", label: t("WelcomeLabel")},
+          ]
+        },
+        { 
+          id: 'templates',
+          title: t('TemplatesTitle'),
+          itemType: "menu",
+          items: [
+            { id: 'Documents', itemType: "form", label: t("WelcomeLabel")},
+            { id: 'Caroussel', itemType: "form", label: t("DataLabel")},
+          ]
+        },
+        { 
+          id: 'data-analysis',
+          title: t('AnalysisTitle')},
+    ]
+*/
+    return menuDefinition
+  },
+
   createPaneFromMenuItem: function(menuDefinition, home = null) {
     let tab = menuDefinition.map((menu) => {
-        let panes = menu.items.map((row) => {
-          if (! row?.dontcreate) { 
-            return (
-              <Tab.Pane eventKey={row.id}>
-                <ScreenHeading name={row.id} title={t(row?.query?.view) || t(row.label)} subtitle={t(`${row.label}Subtitle`)} />
-                <Container className='p-0'>
-                  {row.displayAgents ?
-                      <>
-                        <AllCards id={row?.id + "-catalog-shared"} type="personal" title={t("VeepVeeplets")} cat={row.name} form={home} />
-                        {/* <Home credits={credits} current={current} /> */}
-                      </>
-                    :
-                      <></>
-
-                  }
-                  <MyContent 
-                    view={row?.query?.view}
-                    status={row?.query?.status}
-                    meta={row?.query?.meta}
-                    date={row?.query?.date}
-                    interval={row?.query?.interval}
-                    category={row?.query?.category}
-                  />
-                </Container>
-              </Tab.Pane>
-            )
-          } else {
+        let panes = menu?.items?.map((row) => {
+          if (row?.dontcreate) {
+            // The pane has been created in another way. It already exists.
             return (<></>)
+          } else {            
+            // The pane is going to be created according the provided itemType and information
+            let itemType = row?.itemType || "menu"
+            let props = {
+              name: row.id,
+              title: t(row?.query?.view) || t(Utils.camelize(row?.label)),
+              subtitle: t(Utils.camelize(row?.label) + 'Subtitle')
+            }
+
+            switch(itemType) {
+              case "menu": break
+              case "form":
+                return (
+                  <Tab.Pane key={row.id} eventKey={row.id}>
+                    <ScreenHeading {...props} />
+                    <Container className='p-0'>
+                      Content
+                    </Container>
+                  </Tab.Pane>
+                )
+                break
+              case "query":
+                return (
+                  <Tab.Pane eventKey={row.id}>
+                    <ScreenHeading {...props} />
+                    <Container className='p-0'>
+                      {row?.displayAgents ?
+                          <>
+                            <AllCards id={row?.id + "-catalog-shared"} type="personal" title={t("VeepVeeplets")} cat={row.name} form={home} />
+                            {/* <Home credits={credits} current={current} /> */}
+                          </>
+                        :
+                          <></>
+                      }
+                      <MyContent 
+                        view={row?.query?.view}
+                        status={row?.query?.status}
+                        meta={row?.query?.meta}
+                        date={row?.query?.date}
+                        interval={row?.query?.interval}
+                        category={row?.query?.category}
+                      />
+                    </Container>
+                  </Tab.Pane>
+                )
+                break
+
+              default:
+            }
           }
         })
         return panes
-
     })
 
     return tab

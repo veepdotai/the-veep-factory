@@ -1,0 +1,82 @@
+[
+    { 
+      "id": "context",
+      "title": "Context",
+      "label": "ContextLabel",
+      "itemType": "screen",
+      "items": [
+        { "id": "brand-voice", "itemType": "form", "label": "BrandVoiceLabel"},
+        { "id": "editorial-line", "itemType": "form", "label": "EdiorialLineLabel"},
+        { "id": "pdf-export", "itemType": "form", "label": "PdfExportLabel"}
+      ]
+    },
+    { 
+      "id": "my-expertise",
+      "title": "MyExpertise",
+      "label": "MyExpertiseLabel",
+      "itemType": "menu",
+      "items": [
+        { "id": "my-experiences", "itemType": "form", "label": "MyExperiences" }
+      ]
+    },
+    { 
+      "id": "knowledge-bases",
+      "label": "KnowledgeBaseLabel",
+      "title": "KnowledgeBaseTitle",
+      "itemType": "menu",
+      "items": [
+        { "id": "websites", "itemType": "form", "label": "WebsiteLabel"},
+        { "id": "documents", "itemType": "form", "label": "DocumentsLabel"},
+        { "id": "news", "itemType": "form", "label": "NewsLabel"},
+        { "id": "misc", "itemType": "form", "label": "MiscLabel"}
+      ]
+    },
+    { 
+      "id": "automations",
+      "title": "AutomationsTitle",
+      "itemType": "",
+      "items": [
+        
+      ]
+    },
+    { 
+      "id": "enumerations",
+      "title": "EnumerationsTitle",
+      "itemType": "menu",
+      "items": [
+        { "id": "configuration", "itemType": "form", "label": "ConfigurationLabel"},
+        { "id": "classification", "itemType": "form", "label": "ClassificationLabel"},
+        { "id": "prompt", "itemType": "form", "label": "PromptLabel"}
+      ]
+    },
+    { 
+      "id": "menus",
+      "title": "MenusTitle",
+      "itemType": "menu",
+      "items": [
+        { "id": "welcome", "itemType": "form", "label": "WelcomeLabel"},
+        { "id": "data", "itemType": "form", "label": "DataLabel"},
+        { "id": "configuration", "itemType": "form", "label": "ConfigurationLabel"}
+      ]
+    },
+    { 
+      "id": "forms",
+      "title": "FormsTitle",
+      "itemType": "menu",
+      "items": [
+        { "id": "data", "itemType": "form", "label": "WelcomeLabel"}
+      ]
+    },
+    { 
+      "id": "templates",
+      "title": "TemplatesTitle",
+      "itemType": "menu",
+      "items": [
+        { "id": "Documents", "itemType": "form", "label": "WelcomeLabel"},
+        { "id": "Caroussel", "itemType": "form", "label": "DataLabel"}
+      ]
+    },
+    { 
+      "id": "data-analysis",
+      "title": "AnalysisTitle"}
+]

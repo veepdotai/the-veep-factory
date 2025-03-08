@@ -92,13 +92,15 @@ export default function Main({credits, current}) {
 ]
   return (
     <>
-      {/* Create and initialize main parts */}
+      {/* Create and initialize main parts (through panes creation) */}
       <Tab.Content className="p-0">
-        {/* Create tabs */}
+        
+        {/* Create panes for each menu item */}
         {UtilsMenu.createPaneFromMenuItem(UtilsMenu.getGenericMenu(), home)}
-        {UtilsMenu.createPaneFromMenuItem(UtilsMenu.getMainContentMenu(), home)}
+        {/* UtilsMenu.createPaneFromMenuItem(UtilsMenu.getMainContentMenu(), home) */}
+        {UtilsMenu.createPaneFromMenuItem(UtilsMenu.getConfigurationMenu(), home)}
 
-        {/* Create tabs container */}
+        {/* Create panes for other elements */}
         {panes.map((pane, i) =>
             <Tab.Pane key={pane.id} eventKey={pane.id}>
               <ScreenHeading name={pane.id} akey={pane.id} title={pane.title} subtitle={pane.subtitle} />

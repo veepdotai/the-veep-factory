@@ -9,7 +9,11 @@ export const Utils = {
 	log: Logger.of("Utils"),
 
 	camelize: function(str) {
-		if (str.match(/-/)) {
+		if (! str) {
+			return ""
+		}
+		
+		if (str?.match(/-/)) {
 			return str.match(/([^-]+)/g).map((part) => Utils.capitalize(part)).join("")
 		} else {
 			return Utils.capitalize(str)
