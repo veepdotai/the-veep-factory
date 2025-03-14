@@ -1,0 +1,10 @@
+[{
+  "id": "home",
+  "title": "home",
+  "items": [
+      { "id": "home", "dontcreate": true, "label": "Dashboard"},
+      { "id": "add-content", "dontcreate": true, "label": "CreateContent"},
+      { "id": "contents", "dontcreate": false, "label": "MyContents"}
+  ]
+}
+]
