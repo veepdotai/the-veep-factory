@@ -31,6 +31,7 @@ export default function MenuVertical( {direction, isManager, profile} ) {
     }
 
     function getMenu(view, menuDefinition) {
+        log.trace("getMenu: view: ", view, " / menuDefinition: ", menuDefinition)
         return(
             <>
                 <Accordion type="multiple" className="ms-4">
@@ -40,7 +41,7 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                                 return menu?.items?.map(row => row.id == "separator" ?
                                         <hr />
                                     :
-                                        <MenuItem key={menu.id} itemKey={row.id} itemLabel={row.label || t(Utils.camelize(row.id) + "Label")} direction={direction} />
+                                        <MenuItem key={menu.id} itemKey={row.id} itemLabel={row.label || t(Utils.camelize(row.id) + "Label2")} direction={direction} />
                                 )
                             } else {
                                 return getAccordionItem(menu.id, menu.title,
@@ -48,7 +49,7 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                                         {menu?.items?.map((row) => row.id == "separator" ?
                                                 <hr />
                                             :
-                                                <MenuItem key={menu.id} itemKey={row.id} itemLabel={row.label || t(Utils.camelize(row.id) + "Label")} direction={direction} />
+                                                <MenuItem key={menu.id} itemKey={row.id} itemLabel={row.label || t(Utils.camelize(row.id) + "Label3")} direction={direction} />
                                         )}
                                     </>
                                 )       
@@ -122,7 +123,7 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                         {getAccordionItem("home", getMenuTitle(t("Home")),
                             <>
                                 {/*getMenuTitle(t("Teamspaces"))*/}
-                                <MenuItem itemKey="home" itemLabel={t("Dashboard")} />                                                    
+                                <MenuItem itemKey="menu-home" itemLabel={t("Dashboard")} />                                                    
                             </>
                         )}
                         </>

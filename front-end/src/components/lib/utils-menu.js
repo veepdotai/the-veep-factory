@@ -18,6 +18,9 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { Utils } from './utils';
+
+import startMenuDefinition from './utils-menu-start-definition.json'
+import dataMenuDefinition from './utils-menu-data-definition.json'
 import configurationMenuDefinition from './utils-menu-configuration-definition.json'
 
 export const UtilsMenu = {
@@ -53,27 +56,58 @@ export const UtilsMenu = {
   },
 
   getGenericMenu: function() {
-    let menuDefinition = [{
-        id: "home",
-        title: "home2",
-        items: [
-            { id: 'home', dontcreate: true, label: t("Dashboard")},
-            /*
-            {
-              id: 'digitalTwin', label: t("MyDigitalTwin"),
-              query: {
-                view: t("RecentActivities"), status: "DRAFT", interval: {after: "2024-11-01", before: "2024-11-30"}
-              }
-            },
-            */
-            //{id: 'assistant', label: t("CreateAssistant")},
-            { id: 'add-content', dontcreate: true, label: t("CreateContent")},
-            { id: 'contents', dontcreate: false, label: t("MyContents")},
-//            {id: 'separator', label: ""},        
-        ]
-    }]
+    let menuDefinition = startMenuDefinition
 
     return menuDefinition
+  },
+
+  process: function(menu) {
+    return UtilsMenu.processMenu(menu)
+  },
+
+  processMenu: function(o) {
+    function details(name, displayAgents = true) {
+      return  {
+        id: `dpt-${name?.toLowerCase()}`,
+        name: name,
+        label: t(name),
+        itemType: "query",
+        dontcreate: false,
+        query: { view: t(name), status: "DRAFT", meta: { key: "veepdotaiCategory", compare: "LIKE", value: name}},
+        displayAgents: displayAgents
+      }
+    }
+
+      if (Array.isArray(o)) {
+          return o.map((item) => UtilsMenu.processMenu(item))
+      } else if("object" == typeof(o)) {
+          if (o.f) {
+              let f = o.f[0]      // function name
+              let params = o.f[1] // params
+              switch(f) {
+                  case 'details': return details(params)
+                  case 't': return t(params)
+                  default: return `unknown method ${f}`
+              }
+          } else {
+              let res = {}
+              let keys = Object.keys(o)
+              for (let i = 0; i < keys.length; i++) {
+                  let key = keys[i]
+                  if (Array.isArray(o[key])) {
+                      res[key] = UtilsMenu.processMenu(o[key])
+                  } else if ("object" == typeof(o[key])) {
+                      res[key] = UtilsMenu.processMenu(o[key], key)
+                  } else {
+                      res[key] = o[key]
+                  }
+              }
+              return res
+          }
+      } else {
+          // This is a primitive
+          return o
+      }
   },
 
   /**
@@ -84,139 +118,13 @@ export const UtilsMenu = {
    * returns a json definition 
    */
   getMainContentMenu: function() {
-      function details(name, displayAgents = true) {
-        return  {
-          id: `dpt-${name?.toLowerCase()}`,
-          name: name,
-          label: t(name),
-          query: { view: t(name), status: "DRAFT", meta: { key: "veepdotaiCategory", compare: "LIKE", value: name}},
-          displayAgents: displayAgents
-        }
-      }
-
-      let menuDefinition = [
-        {
-            id: "function-sales",
-            title: t("SalesFunction"),
-            items: [
-              details("Communication"),
-              details("Marketing"),
-              details("Sales"),
-            ]
-        },
-        {
-            id: "function-production",
-            title: t("ProductionConsultingServicesFunction"),
-            items: [
-                details("Management"),
-                details("Production"),
-                details("Consulting"),
-                details("Service"),
-                details("Quality"),
-                details("RandD"),
-            ]
-        },
-        {
-            id: "function-support",
-            title: t("SupportFunction"),
-            items: [
-                details("Finance"),
-                details("HR"),
-                details("IT"),
-                details("Logistics"),
-                details("Procurement"),
-            ]
-        },
-    ]
+    let menuDefinition = UtilsMenu.process(dataMenuDefinition)
 
     return menuDefinition
   },
 
   getConfigurationMenu: function() {
     let menuDefinition = configurationMenuDefinition 
-    /*[
-        { 
-          id: 'context',
-          title: t("Context"),
-          label: t("ContextLabel"),
-          itemType: "screen",
-          items: [
-            { id: 'brand-voice', itemType: "form", label: t("BrandVoiceLabel")},
-            { id: 'editorial-line', itemType: "form", label: t("EdiorialLineLabel")},
-            { id: 'pdf-export', itemType: "form", label: t("PdfExportLabel")},
-          ]
-        },
-        { 
-          id: "my-expertise",
-          title: t("MyExpertise"),
-          label: t('MyExpertiseLabel'),
-          itemType: "menu",
-          items: [
-            { id: 'my-experiences', itemType: "form", label: t('MyExperiences') },
-          ]
-        },
-        { 
-          id: 'knowledge-bases',
-          label: t('KnowledgeBaseLabel'),
-          title: t('KnowledgeBaseTitle'),
-          itemType: "menu",
-          items: [
-            { id: "websites", itemType: "form", label: t("WebsiteLabel")},
-            { id: "documents", itemType: "form", label: t("DocumentsLabel")},
-            { id: "news", itemType: "form", label: t("NewsLabel")},
-            { id: "misc", itemType: "form", label: t("MiscLabel")},
-          ]
-        },
-        { 
-          id: 'automations',
-          title: t('AutomationsTitle'),
-          itemType: "",
-          items: [
-            
-          ]
-        },
-        { 
-          id: 'enumerations',
-          title: t('EnumerationsTitle'),
-          itemType: "menu",
-          items: [
-            { id: 'configuration', itemType: "form", label: t("ConfigurationLabel")},
-            { id: 'classification', itemType: "form", label: t("ClassificationLabel")},
-            { id: 'prompt', itemType: "form", label: t("PromptLabel")},
-          ]
-        },
-        { 
-          id: 'menus',
-          title: t('MenusTitle'),
-          itemType: "menu",
-          items: [
-            { id: 'welcome', itemType: "form", label: t("WelcomeLabel")},
-            { id: 'data', itemType: "form", label: t("DataLabel")},
-            { id: 'configuration', itemType: "form", label: t("ConfigurationLabel")},
-          ]
-        },
-        { 
-          id: 'forms',
-          title: t('FormsTitle'),
-          itemType: "menu",
-          items: [
-            { id: 'data', itemType: "form", label: t("WelcomeLabel")},
-          ]
-        },
-        { 
-          id: 'templates',
-          title: t('TemplatesTitle'),
-          itemType: "menu",
-          items: [
-            { id: 'Documents', itemType: "form", label: t("WelcomeLabel")},
-            { id: 'Caroussel', itemType: "form", label: t("DataLabel")},
-          ]
-        },
-        { 
-          id: 'data-analysis',
-          title: t('AnalysisTitle')},
-    ]
-*/
     return menuDefinition
   },
 
@@ -235,15 +143,13 @@ export const UtilsMenu = {
               subtitle: t(Utils.camelize(row?.label) + 'Subtitle')
             }
 
+            console.log("createPaneFromMenuItem: itemType: ", itemType)
+            console.log("createPaneFromMenuItem: row: ", row)
             switch(itemType) {
               case "menu": break
               case "form":
                 return (
                   <Tab.Pane key={row.id} eventKey={row.id}>
-                    <ScreenHeading {...props} />
-                    <Container className='p-0'>
-                      Content
-                    </Container>
                   </Tab.Pane>
                 )
                 break

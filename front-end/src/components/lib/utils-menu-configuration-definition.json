@@ -64,7 +64,7 @@
       "title": "FormsTitle",
       "itemType": "menu",
       "items": [
-        { "id": "data", "itemType": "form", "label": "WelcomeLabel"}
+        { "id": "forms", "itemType": "form", "label": "FormsLabel"}
       ]
     },
     { 
@@ -72,11 +72,16 @@
       "title": "TemplatesTitle",
       "itemType": "menu",
       "items": [
-        { "id": "Documents", "itemType": "form", "label": "WelcomeLabel"},
-        { "id": "Caroussel", "itemType": "form", "label": "DataLabel"}
+        { "id": "documents", "itemType": "form", "label": "DocumentsLabel"},
+        { "id": "caroussel", "itemType": "form", "label": "CarousselLabel"}
       ]
     },
     { 
       "id": "data-analysis",
-      "title": "AnalysisTitle"}
+      "title": "AnalysisTitle",
+      "itemType": "menu",
+      "items": [
+        { "id": "kpi", "itemType": "form", "label": "KpisLabel"}
+      ]
+    }
 ]

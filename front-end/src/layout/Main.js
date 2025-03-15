@@ -11,8 +11,9 @@ import Logs from "src/components/Logs";
 //import MyContent from "src/components/screens/mycontent/MyContent";
 import Dashboard from "src/components/screens/Dashboard";
 //import BrandVoiceForm from "src/components/screens/forms/BrandVoiceForm";
-import EditorialLine from "src/components/screens/EditorialLine";
+//import EditorialLine from "src/components/screens/EditorialLine";
 import VContentForm from "src/components/screens/forms/VContentForm";
+import DynamicForm from "src/components/screens/forms/DynamicForm";
 import PDFExportForm from "src/components/screens/forms/PDFExportForm";
 import PubTarget from "src/components/screens/PubTarget";
 import EditorialCalendar from "src/components/screens/EditorialCalendar";
@@ -68,7 +69,8 @@ export default function Main({credits, current}) {
     {id: "pdf-config", title: t("PdfConfigTitle"), subtitle: t("PdfConfigSubtitle"), content: <PDFDisplay />},
     {id: "brand-voice", title: t("BrandVoiceTitle"), subtitle: t("BrandVoiceSubtitle"), content: <BrandVoiceForm />},
     {id: "config-post", title: t("ConfigPostTitle"), subtitle: t("ConfigPostSubtitle"), content: <VContentForm />},
-    {id: "editorial-line", title: t("EditorialLineTitle"), subtitle: t("EditorialLineSubtitle"), content: <EditorialLine />},
+    {id: "editorial-line", title: t("EditorialLineTitle"), subtitle: t("EditorialLineSubtitle"), content: <DynamicForm type="editorial-line" />},
+    {/*id: "editorial-line", title: t("EditorialLineTitle"), subtitle: t("EditorialLineSubtitle"), content: <EditorialLine />*/},
     {id: "pdf-export", title: t("PdfExportTitle"), subtitle: t("PdfExportSubtitle"), content: <PDFExportForm />},
 
     {id: "credits", title: t("CreditsTitle"), subtitle: t("CreditsSubtitle"), content: <Credits />},
@@ -93,11 +95,11 @@ export default function Main({credits, current}) {
   return (
     <>
       {/* Create and initialize main parts (through panes creation) */}
-      <Tab.Content className="p-0">
+      <Tab.Content key="menu-panes" className="p-0">
         
         {/* Create panes for each menu item */}
         {UtilsMenu.createPaneFromMenuItem(UtilsMenu.getGenericMenu(), home)}
-        {/* UtilsMenu.createPaneFromMenuItem(UtilsMenu.getMainContentMenu(), home) */}
+        {UtilsMenu.createPaneFromMenuItem(UtilsMenu.getMainContentMenu(), home)}
         {UtilsMenu.createPaneFromMenuItem(UtilsMenu.getConfigurationMenu(), home)}
 
         {/* Create panes for other elements */}
