@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
 import { Logger } from 'react-logger-lib'
 import { t } from 'i18next'
+import PubSub from 'pubsub-js'
 
 import { cn } from "@/lib/utils"
 
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons"
 import { Button } from "src/components/ui/shadcn/button"
 import { Checkbox } from "src/components/ui/shadcn/checkbox"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage,} from "src/components/ui/shadcn/form"
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage,} from "src/components/ui/shadcn/form"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue,} from "src/components/ui/shadcn/select"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, } from "src/components/ui/shadcn/command"
 import { Popover, PopoverContent, PopoverTrigger, } from "src/components/ui/shadcn/popover"
@@ -15,7 +16,11 @@ import { Calendar as CalendarIcon } from "lucide-react"
 import { Calendar } from "src/components/ui/shadcn/calendar"
 import { Input } from "src/components/ui/shadcn/input"
 import { Textarea } from "src/components/ui/shadcn/textarea"
+
+import { Icons } from '@/constants/Icons'
+import Utils from 'src/lib/utils'
 import { UtilsGraphQLObject } from '@/api/utils-graphql-object'
+
 
 export const UtilsFormCommon = {
     log: Logger.of("UtilsFormCommon"),
@@ -23,6 +28,7 @@ export const UtilsFormCommon = {
     onSubmitMetadata: function(graphqlURI, cookies, cid, data, topic, toast, name = null, value = null) {
         let log = (msg) => UtilsFormCommon.log.trace("onSubmitMetadata: " + msg)
 
+        let lcn = "mt-2 w-[500px] rounded-md"
         let o = data ? JSON.stringify(data, null, 2) : null
         log("Submitting data: " + o)
 
@@ -40,7 +46,7 @@ export const UtilsFormCommon = {
         toast && toast({
           title: t("Status"),
           description: (
-            <div className="mt-2 w-[500px] rounded-md">{t("DataUpdated")}</div>
+            <div className={lcn}>{t("DataUpdated")}</div>
           ),
         })
     },
@@ -60,7 +66,7 @@ export const UtilsFormCommon = {
         toast({
           title: t("Status"),
           description: (
-            <div className="mt-2 w-[500px] rounded-md">{t("DataUpdated")}</div>
+            <div className="mt-2 w-[500px] rounded-md">{t("SavingData")}</div>
           ),
         })
     },
@@ -75,6 +81,44 @@ export const UtilsFormCommon = {
     },
 
     // It is form display, not an update in the database
+    // So user must click on Save to persist data
+    updateFormFromStringForm: function(form, metadata) {
+        let log = UtilsFormCommon.log
+
+        if (typeof metadata == "string" && metadata) {
+            metadata = JSON.parse(metadata)
+            log.trace("updateFormFromStringForm: metadata (object): ", metadata)
+            if (typeof metadata.result == "string") {
+                metadata = metadata?.result?.replace(/_EOL_/g, "\n").replace(/_G_/g, '"')
+                if (metadata) {
+                    metadata = JSON.parse(metadata)
+                }
+            } else {
+                // metadata.result may be a boolean
+                // what do we do in that case?
+            }
+            log.trace("updateFormFromStringForm: ", "metadata: ", metadata)
+        }
+        
+        if (metadata) {
+            if (! ('result' in metadata)) {
+                log.trace("updateFormFromStringForm: before resetting form: ", "metadata: ", metadata)
+                form.reset(metadata)
+            } else if (metadata.result === true) {
+                // Data are updated
+                log.trace("updateFormFromStringForm: Data have been updated.")
+            } else if (metadata.result === false) {
+                // Data aren't updated
+                //alert("Error while updating data.")
+                log.trace("updateFormFromStringForm: Data have NOT been updated.")
+            }
+        } else {
+            // metadata == null or undefined
+            // We should raise an error?
+            log.trace("updateFormFromStringForm: metadata is null. What's happening? Houston, we have a problem.")
+        }
+    },
+
     updateStringForm: function(form, topic, message) {
         //let log = (msg) => UtilsFormCommon.log.trace("updateForm: " + msg)
         let log = UtilsFormCommon.log
@@ -90,38 +134,7 @@ export const UtilsFormCommon = {
         }
         log.trace("updateStringForm: metadata: ", metadata)
 
-        if (typeof metadata == "string" && metadata) {
-            metadata = JSON.parse(metadata)
-            log.trace("updateStringForm: metadata (object): ", metadata)
-            if (typeof metadata.result == "string") {
-                metadata = metadata?.result?.replace(/_EOL_/g, "\n").replace(/_G_/g, '"')
-                if (metadata) {
-                    metadata = JSON.parse(metadata)
-                }
-            } else {
-                // metadata.result may be a boolean
-                // what do we do in that case?
-            }
-            log.trace("updateStringForm: ", "metadata: ", metadata)
-        }
-        
-        if (metadata) {
-            if (! ('result' in metadata)) {
-                log.trace("updateStringForm: before resetting form: ", "metadata: ", metadata)
-                form.reset(metadata)
-            } else if (metadata.result === true) {
-                // Data are updated
-                log.trace("updateStringForm: Data have been updated.")
-            } else if (metadata.result === false) {
-                // Data aren't updated
-                //alert("Error while updating data.")
-                log.trace("updateStringForm: Data have NOT been updated.")
-            }
-        } else {
-            // metadata == null or undefined
-            // We should raise an error?
-            log.trace("updateStringForm: metadata is null. What's happening? Houston, we have a problem.")
-        }
+        return UtilsFormCommon.updateFormFromStringForm(form, metadata)
     },
     
     updateFormOld: function(form, topic, message) {
@@ -255,7 +268,7 @@ export const UtilsFormCommon = {
 
             return f
         } else if (["listofvalues", "combobox"].includes(fieldType)) {
-            lcn = lcn || "w-[300px]"
+            lcn = lcn || "w-[400px]"
             let values = fieldValues?.split('|') || [];
             values = values.map((item) => {
                 return item.match(/:/) ?
@@ -284,7 +297,7 @@ export const UtilsFormCommon = {
                             </Button>
                         </FormControl>
                     </PopoverTrigger>
-                    <PopoverContent className="w-[300px] p-0">
+                    <PopoverContent className={cn(lcn, "p-0")}>
                         <Command>
                             <CommandInput placeholder={t(fieldName + "Search")} className="h-9" />
                             <CommandList>
@@ -347,23 +360,65 @@ export const UtilsFormCommon = {
     getFormField: function(form, fieldName, fieldType = "input", fieldValues = null, fieldOptions = {}) {
         let _fieldName = fieldName.replace(/([^\.]*)$/, "$1")
         let fo = fieldOptions
+        let lcnFormField = "w-75"
+        let lcnFieldLabel = `${fo?.cnFormLabel} font-bold text-sm mt-4 pe-2 pb-2`
+        let lcnFieldDesc = `${lcnFormField} m-3 mb-4 text-xs`
         if (["listofvalues", "combobox", "checkbox"].includes(fieldType)) {
             fo.displayFormLabel = fo.displayFormLabel || false
         } else {
             fo.displayFormLabel = fo.displayFormLabel || true
         }
+
+        function toggleHelp(e, fieldName) {
+            const capitalize = <T extends string>(s: T) => (s[0].toUpperCase() + s.slice(1)) as Capitalize<typeof s>;
+            e.preventDefault()
+            let helpMode = "toast"
+            switch(helpMode) {
+                case 'toast':
+                    PubSub.publish("PROMPT_DIALOG", {
+                        title: t(capitalize(fieldName)),
+                        description: "Quelques mots pour vous aider...",
+                        content: t(fieldName + "Desc"),
+                        //let help = document.getElementById(fieldName + "Desc")
+                        actions: [{
+                            label: t("Close")
+                        }]
+                    })
+                    break;
+                default:
+                    let help = document.getElementById(fieldName + "Help")
+                    if (help.classList?.contains("d-none")) {
+                        help.classList.remove("d-none")
+                    } else {
+                        help.classList?.add("d-none")
+                    }
+            }
+        }
+
+        let helpMode = "toast"
+
         return (
             <FormField control={form.control} name={fieldName}
                 render={({ field }) => (
                     <FormItem>
-                        {fo?.displayFormLabel &&
-                            <FormLabel className={`${fo?.cnFormLabel} font-bold text-sm mt-4 pe-2 pb-2`}>{t(_fieldName + "Label")}</FormLabel>
+                        {fo?.displayFormLabel && <>
+                                <FormLabel className={lcnFieldLabel}>
+                                    {t(_fieldName + "Label")}<a className="mx-2 hover:cursor-pointer" onClick={(e) => toggleHelp(e, fieldName)}>{Icons.help}</a>
+                                </FormLabel>
+                                {
+                                    helpMode != 'toast' ?
+                                        <div id={fieldName + "Help"}>
+                                            <FormDescription className={lcnFieldDesc}>{t(fieldName + "Desc")}</FormDescription>
+                                        </div>
+                                        :
+                                        <></>
+                                }
+                            </>
                         }
                         <div class="flex">
-                            <div class="w-75">
+                            <div class={lcnFormField}>
                                 {UtilsFormCommon.getFieldType(form, field, fieldName, fieldType, fieldValues, fo)}
                             </div>
-                            <FormDescription className="m-3 mb-4 text-xs">{t(fieldName + "Desc")}</FormDescription>
                         </div>
                         <FormMessage className="mx-3 mt-3 mb-2 text-xs"/>
                     </FormItem>

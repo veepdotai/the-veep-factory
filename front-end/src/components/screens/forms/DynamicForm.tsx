@@ -22,8 +22,7 @@ import { Form, } from "src/components/ui/shadcn/form"
 import { Tabs, TabsContent, TabsList, TabsTrigger, } from "src/components/ui/shadcn/tabs"
 import { UtilsGraphQLObject } from '../../../api/utils-graphql-object'
 import Loading from 'src/components/common/Loading'
-import { fieldNameFromStoreName } from '@apollo/client/cache'
-import { normalizeReadFieldOptions } from '@apollo/client/cache/inmemory/policies'
+import JSON2Form from '@/components/import-to-form/JSON2Form'
 
 export default function DynamicForm({ type }) {
   const log = Logger.of(DynamicForm.name);
@@ -40,21 +39,6 @@ export default function DynamicForm({ type }) {
     return z.string().min(minChars, { message: t("AtLeast", { length: minChars }), }).optional().or(z.literal(''))
   }
 
-  const minChars = 2
-  const FormSchema = z.object(getFormSchema(formDefinition))
-
-  let cn = "text-sm font-bold"
-  let sectionCn = "pt-5 flex items-center text-md font-bold text-black after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:after:border-neutral-600"
-
-  let defaultTabsContentLayout = "pl-5"
-//  let defaultCBB = { displayFormLabel: true, cnFormLabel: "w-[200px] text-right" }
-  let defaultCBB = { displayFormLabel: true, cnFormLabel: "w-[200px] text-left" }
-
-  let form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {}
-  })
-
   function getFormSchema(formDefinition) {
     let formDefinitionObject = {}
     formDefinition.map((field) => {
@@ -65,6 +49,36 @@ export default function DynamicForm({ type }) {
     return formDefinitionObject
   }
 
+  const minChars = 2
+  const FormSchema = z.object(getFormSchema(formDefinition))
+  let form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {}
+  })
+
+
+  let cn = "text-sm font-bold"
+  let sectionCn = "pt-5 flex items-center text-md font-bold text-black after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:after:border-neutral-600"
+
+  let defaultTabsContentLayout = "pl-5 pb-5"
+//  let defaultCBB = { displayFormLabel: true, cnFormLabel: "w-[200px] text-right" }
+  let defaultCBB = { displayFormLabel: true, cnFormLabel: "w-[400px] text-left" }
+
+  function importForm() {
+    log.trace("importForm")
+    const getValueById = (fieldName) => document.getElementById(fieldName).value 
+
+    //alert(`json: ${getValueById("importFormJson")} / ${getValueById("importFormFieldsList")} / ${getValueById("importFormStrategy") || 'merge-after'}`)
+    //let metadata = {benefits: getValueById("importFormJson")}
+    try {
+      let metadata = JSON.parse(getValueById("importFormJson"))
+      return UFC.updateFormFromStringForm(form, metadata)
+    } catch(e) {
+      log.trace("importForm: pb while updating: e: ", e)
+      alert("importForm: pb while updating: e: " + e)
+    }
+  }
+
   function updateForm(topic, message) {
     log.trace("updateForm: ", "topic: ", topic, "message: ", message)
     return UFC.updateStringForm(form, topic, message)
@@ -73,6 +87,22 @@ export default function DynamicForm({ type }) {
   //function onSubmit(data: z.infer<typeof FormSchema>) {
   function onSubmit(data) {
     return UFC.onSubmit(graphqlURI, cookies, name, topic, data, toast)
+  }
+
+  //function renameContentTitleDialog(graphqlURI, cookies, row) {
+  function displayImportDialog() {
+      PubSub.publish("PROMPT_DIALOG", {
+          title: t("FormImportDialog"),
+          description: t("FormImportDialogDesc"),
+          content: JSON2Form(),
+          actions: [{
+              label: t("Cancel")
+          }, {
+              label: t("OK"),
+              //click: () => MyContentActions.renameContentTitle(graphqlURI, cookies, row, document.getElementById("input_title").value)
+              click: () => importForm()
+          }]
+      })
   }
 
   useEffect(() => {
@@ -115,37 +145,48 @@ export default function DynamicForm({ type }) {
         return UFC.getFormField(form, field.name, field.type, field.options, defaultCBB)
       })
     } else {
-      res = Object.keys(fieldsBySubgroup).map((subgroup, i) => {
-        if (subgroup == "empty") {
-          return fieldsBySubgroup[subgroup].map((field) => UFC.getFormField(form, field.name, field.type, field.options, defaultCBB))
-        } else {
-          let subGroup = t(Utils.camelize(subgroup))
-          return (
-            <div>
-              <div key={`${subGroup}-section`} class={sectionCn}>
-                {subGroup}
-              </div>
-              <div key={`${subGroup}-items`} class=''>{/*{{ paddingLeft: "3rem"}}*/}
-                {fieldsBySubgroup[subgroup].map((field) => UFC.getFormField(form, field.name, field.type, field.options, defaultCBB))}
-              </div>
-            </div>
-          )
-        }
-      })
+      res = Object.keys(fieldsBySubgroup)
+            .map((subgroup, i) => {
+              if (subgroup == "empty") {
+                return fieldsBySubgroup[subgroup].map((field) => UFC.getFormField(form, field.name, field.type, field.options, defaultCBB))
+              } else {
+                let subGroup = t(Utils.camelize(subgroup))
+                return (
+                  <div>
+                    <div key={`${subGroup}-section`} class={sectionCn}>
+                      {subGroup}
+                    </div>
+                    <div key={`${subGroup}-items`} class=''>{/*{{ paddingLeft: "3rem"}}*/}
+                      {fieldsBySubgroup[subgroup].map((field) => UFC.getFormField(form, field.name, field.type, field.options, defaultCBB))}
+                    </div>
+                  </div>
+                )
+              }
+            })
     }
 
     return (
       <TabsContent value={t(Utils.camelize(group))} className={defaultTabsContentLayout}>
+        <div className="float-right">
+          <div className='w-[300px] grid grid-cols-3 gap-2'>
+            <Button onClick={(e) => {displayImportDialog(); e.preventDefault()}}>{t("Import")}</Button>
+            <Button type="submit">{t("Submit")}</Button>
+            {/*<Button type="reset">{t("Reset")}</Button>*/}
+          </div>
+        </div>
+
         {res}
       </TabsContent>
     )
   }
 
+  //alert('DefaultValue: ' + t(Utils.camelize(Object.keys(fieldsByGroup[0])[0])))
+  //alert('DefaultValue: ' + JSON.stringify(Object.keys(fieldsByGroup)[0]))
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
 
-        <Tabs defaultValue="pitch">
+        <Tabs defaultValue={t(Utils.camelize(Object.keys(fieldsByGroup)[0]))}>
 
           <TabsList className="grid grid-cols-5">
             {tabsTrigger}
@@ -153,8 +194,6 @@ export default function DynamicForm({ type }) {
 
           {Object.keys(fieldsByGroup).map((group) => getTabsContentForGroup(group, fieldsByGroup))}
         </Tabs>
-
-        <Button type="submit">{t("Submit")}</Button>
       </form>
     </Form>
   )

@@ -8,6 +8,10 @@ import toast from 'react-hot-toast';
 export const UtilsGraphQLObject = {
 	log: Logger.of("UtilsGraphQLObject"),
 
+	/**
+	 * When data is retrieved, its content is published on the provided topic
+	 * so listening parts can be updated
+	 */
 	listOne: function(graphqlURI, cookies, name, topic) {
 		let log = UtilsGraphQLObject.log
 		let q = `
