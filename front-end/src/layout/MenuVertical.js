@@ -109,24 +109,20 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                 <Accordion type="multiple" className="mt-3" defaultValue={["home", "content"]}>
 
                     {/*<MenuItem itemKey="add-content-wizard" itemLabel={t("AddContent")} innerCN=" bg-secondary text-white border border-2" outerCN="mb-2" direction={direction} />*/}
-                    {/*<MenuItem itemKey="add-content" itemLabel={t("AddContent")} innerCN="border border-2" outerCN="mb-2" direction={direction} />*/}
 
                     { 'byDpt' === view ?
                             <>
-                                {false && getAccordionItem("home", getMenuTitle(t("Dashboard")),
-                                    getMenu('byDpt', UtilsMenu.getGenericMenu())
-                                )}
                                 {getMenu('byDpt', UtilsMenu.getGenericMenu())}
                             </>
                         :
-                        <>
-                        {getAccordionItem("home", getMenuTitle(t("Home")),
                             <>
-                                {/*getMenuTitle(t("Teamspaces"))*/}
-                                <MenuItem itemKey="menu-home" itemLabel={t("Dashboard")} />                                                    
+                                {getAccordionItem("home", getMenuTitle(t("Home")),
+                                    <>
+                                        {/*getMenuTitle(t("Teamspaces"))*/}
+                                        <MenuItem itemKey="menu-home" itemLabel={t("Dashboard")} />                                                    
+                                    </>
+                                )}
                             </>
-                        )}
-                        </>
                     }
 
                     { 'byDpt' === view ?
@@ -140,21 +136,10 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                                 {getAccordionItem("content", getMenuTitle(t("Creation")),
                                     <>
                                         <MenuItem key={"contents"} itemKey="contents" itemLabel={t("MyContents")} />
-                                        {/*<MenuItem itemKey="add-content" itemLabel={t("DocModels")} direction={direction} />*/}
-                                        {/*<MenuItem key={"add-content"} itemKey="add-content" itemLabel={t("AddContent")} direction={direction} />*/}
                                     </>
                                 )}
                             </>
                     }
-
-                    {false && getAccordionItem("verticalAIParams", getMenuTitle(t("VerticalAIParams")),
-                        <>
-                            <MenuItem key={"brand-voice"} itemKey="brand-voice" itemLabel={t("BrandVoice")} direction={direction} />
-                            <MenuItem key={"editorial-line"}  itemKey="editorial-line" itemLabel={t("EditorialLine")} direction={direction} />
-
-                            <MenuItem key={"pdf-export"} itemKey="pdf-export" itemLabel={t("PDFExport")} direction={direction} />
-                        </>
-                    )}
 
                     {true && getAccordionItem("verticalAIParams", getMenuTitle(t("VerticalAIParams")),
                         getMenu('byDpt', UtilsMenu.getConfigurationMenu())
