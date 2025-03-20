@@ -26,18 +26,18 @@ export default function JSON2Form() {
             </fieldset>
             <fieldset>
                 <Label className={cn4Label} id='importFormStrategyLabel'>{t("Strategy")}</Label>
-                <input type="hidden" id="importFormStrategy" />
-                <RadioGroup onValueChange={(value) => document.getElementById('importFormStrategy').value = value} defaultValue="merge-after">
+                <input type="hidden" id="importFormStrategy" value="merge-newdata-after"/>
+                <RadioGroup onValueChange={(value) => document.getElementById('importFormStrategy').value = value} defaultValue="merge-newdata-after">
                     <div className={cn4RadioItem}>
                         <RadioGroupItem value="replace" />
                         <Label className={cn4RadioItemLabel}>{t("Replace")}</Label>
                     </div>
                     <div className={cn4RadioItem}>
-                        <RadioGroupItem value="merge-before" />
+                        <RadioGroupItem value="merge-newdata-before" />
                         <Label className={cn4RadioItemLabel}>{t("MergeBefore")}</Label>
                     </div>
                     <div className={cn4RadioItem}>
-                        <RadioGroupItem value="merge-after" />
+                        <RadioGroupItem value="merge-newdata-after" />
                         <Label className={cn4RadioItemLabel}>{t("MergeAfter")}</Label>
                     </div>
                 </RadioGroup>

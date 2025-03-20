@@ -26,6 +26,8 @@ import MenuHorizontal from "src/layout/MenuHorizontal"
 import Main from "src/layout/Main"
 import Footer from "src/layout/Footer"
 import CalendarView from '../components/screens/CalendarView'
+//import { useToast } from '@/hooks/use-toast';
+import { useToast } from "src/components/ui/shadcn/hooks/use-toast"
 
 //export default function App() {
 export default function Index() {
@@ -47,6 +49,8 @@ export default function Index() {
   const size = useBreakpoint();
   const [menuDirection, setMenuDirection] = useState();
 
+  const { toast } = useToast()
+
   const menuStyle = {
 //    backgroundColor: "#3663EA",
 //    color: "white",
@@ -58,6 +62,10 @@ export default function Index() {
     return getGenericData({
       "topic": "CREDITS", "cookies": cookies, "ns": "billing", "service": "credits", "setData": setCredits, "key": "credits"
     });
+  }
+
+  function handleToast(topic, message) {
+    toast(message)
   }
 
   useEffect(() => {
@@ -100,6 +108,8 @@ export default function Index() {
 
       PubSub.subscribe("SELECTED_DOCTYPE", (topic, message) => setActiveTab({activeKey: "add-content"}));
 
+      PubSub.subscribe("TOAST", (topic, message) => handleToast(topic, message))
+
     }
     
     initPageListeners();
@@ -122,7 +132,7 @@ export default function Index() {
       <ThemeProvider data-bs-theme="dark">
 
         <Toaster
-          position="bottom-right"
+          position="bottom-left"
           reverseOrder={false}
         />
         <ShadcnToaster />

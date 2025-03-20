@@ -51,22 +51,31 @@ export const UtilsFormCommon = {
         })
     },
 
-    onSubmit: function(graphqlURI, cookies, name, topic, data, toast) {
+    onSubmit: function(graphqlURI, cookies, name, topic, data) {
         let log = (msg) => UtilsFormCommon.log.trace("onSubmit: " + msg)
+        
         let o = JSON.stringify(data, null, 2)
+        log("o (after JSON stringifying): " + o)
+
+        let odata = o?.replace(/"/g, "_G_").replace(/\n/g, "_EOL_")
+        log("odata (after replacing chars): " + odata)
+ 
         let q = UtilsGraphQLObject.create(graphqlURI, cookies,
           name,
-          o.replace(/"/g, "_G_").replace(/\n/g, "_EOL_"),
-          topic,
+          odata,
+          topic
         )
   
         log("GraphQL request: " + q)
         log("Submitting data: " + JSON.stringify(data, null, 2))
 
-        toast({
+        PubSub.publish('TOAST', {
           title: t("Status"),
           description: (
-            <div className="mt-2 w-[500px] rounded-md">{t("SavingData")}</div>
+            <div className="mt-2 w-[300px] rounded-md flex">
+                {Icons.loading}
+                {t("SavingData")}
+            </div>
           ),
         })
     },
@@ -82,9 +91,10 @@ export const UtilsFormCommon = {
 
     // It is form display, not an update in the database
     // So user must click on Save to persist data
-    updateFormFromStringForm: function(form, metadata) {
+    updateFormFromStringForm: function(form, metadata, mergingStrategy = null) {
         let log = UtilsFormCommon.log
 
+        let newMetadata = null
         if (typeof metadata == "string" && metadata) {
             metadata = JSON.parse(metadata)
             log.trace("updateFormFromStringForm: metadata (object): ", metadata)
@@ -102,8 +112,34 @@ export const UtilsFormCommon = {
         
         if (metadata) {
             if (! ('result' in metadata)) {
-                log.trace("updateFormFromStringForm: before resetting form: ", "metadata: ", metadata)
-                form.reset(metadata)
+                // Data can be updated
+                let prevMetadata = form.getValues()
+                log.trace("updateFormFromStringForm: before resetting form: ", "prevMetadata: ", prevMetadata)
+                log.trace("updateFormFromStringForm: before resetting form: ", "newMetadata: ", metadata)
+
+                // the new content comes before the old one
+                let mergedMetadata = {...prevMetadata}
+                let keys = Object.keys(prevMetadata)
+                for(let i = 0; i < keys.length; i++) {
+                    let key = keys[i]
+                    if (metadata[key]) {
+                        let mergedValue = mergedMetadata[key]
+                        if ('merge-newdata-before' === mergingStrategy) {
+                            mergedMetadata[key] = metadata[key] + (mergedValue && "\n" + mergedValue)
+                        } else if ('merge-newdata-after' === mergingStrategy) {
+                            mergedMetadata[key] = (mergedValue && mergedValue + "\n") + metadata[key]
+                        } else if ('replace' === mergingStrategy) {
+                            mergedMetadata[key] = metadata[key]
+                        } else {
+                            // We are initializing the form so we take the new value we get from the database
+                            mergedMetadata[key] = metadata[key]
+                        }
+                    } else {
+                        // We just let the existing data
+                    }
+                }
+                
+                form.reset(mergedMetadata)
             } else if (metadata.result === true) {
                 // Data are updated
                 log.trace("updateFormFromStringForm: Data have been updated.")
@@ -369,12 +405,11 @@ export const UtilsFormCommon = {
             fo.displayFormLabel = fo.displayFormLabel || true
         }
 
-        function toggleHelp(e, fieldName) {
+        function toggleHelp(e, fieldName, helpMode = "modal") {
             const capitalize = <T extends string>(s: T) => (s[0].toUpperCase() + s.slice(1)) as Capitalize<typeof s>;
             e.preventDefault()
-            let helpMode = "toast"
             switch(helpMode) {
-                case 'toast':
+                case 'modal':
                     PubSub.publish("PROMPT_DIALOG", {
                         title: t(capitalize(fieldName)),
                         description: "Quelques mots pour vous aider...",
@@ -395,7 +430,7 @@ export const UtilsFormCommon = {
             }
         }
 
-        let helpMode = "toast"
+        let helpMode = "modal"
 
         return (
             <FormField control={form.control} name={fieldName}
@@ -403,10 +438,10 @@ export const UtilsFormCommon = {
                     <FormItem>
                         {fo?.displayFormLabel && <>
                                 <FormLabel className={lcnFieldLabel}>
-                                    {t(_fieldName + "Label")}<a className="mx-2 hover:cursor-pointer" onClick={(e) => toggleHelp(e, fieldName)}>{Icons.help}</a>
+                                    {t(_fieldName + "Label")}<a className="mx-2 hover:cursor-pointer" onClick={(e) => toggleHelp(e, fieldName, helpMode)}>{Icons.help}</a>
                                 </FormLabel>
                                 {
-                                    helpMode != 'toast' ?
+                                    helpMode != 'modal' ?
                                         <div id={fieldName + "Help"}>
                                             <FormDescription className={lcnFieldDesc}>{t(fieldName + "Desc")}</FormDescription>
                                         </div>

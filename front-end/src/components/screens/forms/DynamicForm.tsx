@@ -16,7 +16,6 @@ import { Utils } from '../../lib/utils'
 
 import formDefinition from "./editorial-form-definition.json"
 
-import { useToast } from "src/components/ui/shadcn/hooks/use-toast"
 import { Button } from "src/components/ui/shadcn/button"
 import { Form, } from "src/components/ui/shadcn/form"
 import { Tabs, TabsContent, TabsList, TabsTrigger, } from "src/components/ui/shadcn/tabs"
@@ -29,8 +28,6 @@ export default function DynamicForm({ type }) {
 
   const graphqlURI = Constants.WORDPRESS_GRAPHQL_ENDPOINT;
   const [cookies] = useCookies(['JWT']);
-
-  const { toast } = useToast()
 
   const name = "form-" + Utils.camelize(type)
   const topic = Utils.camelize(type) + "_DATA_FETCHED"
@@ -72,7 +69,8 @@ export default function DynamicForm({ type }) {
     //let metadata = {benefits: getValueById("importFormJson")}
     try {
       let metadata = JSON.parse(getValueById("importFormJson"))
-      return UFC.updateFormFromStringForm(form, metadata)
+      let mergingStrategy = getValueById("importFormStrategy")
+      return UFC.updateFormFromStringForm(form, metadata, mergingStrategy)
     } catch(e) {
       log.trace("importForm: pb while updating: e: ", e)
       alert("importForm: pb while updating: e: " + e)
@@ -86,11 +84,12 @@ export default function DynamicForm({ type }) {
 
   //function onSubmit(data: z.infer<typeof FormSchema>) {
   function onSubmit(data) {
-    return UFC.onSubmit(graphqlURI, cookies, name, topic, data, toast)
+    return UFC.onSubmit(graphqlURI, cookies, name, topic, data)
   }
 
   //function renameContentTitleDialog(graphqlURI, cookies, row) {
-  function displayImportDialog() {
+  function displayImportDialog(e) {
+      e.preventDefault()
       PubSub.publish("PROMPT_DIALOG", {
           title: t("FormImportDialog"),
           description: t("FormImportDialogDesc"),
@@ -99,7 +98,6 @@ export default function DynamicForm({ type }) {
               label: t("Cancel")
           }, {
               label: t("OK"),
-              //click: () => MyContentActions.renameContentTitle(graphqlURI, cookies, row, document.getElementById("input_title").value)
               click: () => importForm()
           }]
       })
@@ -169,7 +167,7 @@ export default function DynamicForm({ type }) {
       <TabsContent value={t(Utils.camelize(group))} className={defaultTabsContentLayout}>
         <div className="float-right">
           <div className='w-[300px] grid grid-cols-3 gap-2'>
-            <Button onClick={(e) => {displayImportDialog(); e.preventDefault()}}>{t("Import")}</Button>
+            <Button onClick={(e) => displayImportDialog(e)}>{t("Import")}</Button>
             <Button type="submit">{t("Submit")}</Button>
             {/*<Button type="reset">{t("Reset")}</Button>*/}
           </div>

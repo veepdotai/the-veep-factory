@@ -3,7 +3,7 @@ import { gql } from '@apollo/client'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 import { UtilsGraphQL } from './utils-graphql'
 
-import toast from 'react-hot-toast';
+import { t } from 'i18next'
 
 export const UtilsGraphQLObject = {
 	log: Logger.of("UtilsGraphQLObject"),
@@ -76,6 +76,11 @@ export const UtilsGraphQLObject = {
 				mutation: gql`${q}`
 			}).then((result) => {
 				log.trace(`create: ` + JSON.stringify(result));
+				PubSub.publish("TOAST", {
+					"title": t("Status"),
+					"description": <div className="mt-2 w-[500px] rounded-md">{t("DataSaved")}</div>
+				})
+
 				let data = result.data.saveData.result
 				let r = {
 					"status": 200,
