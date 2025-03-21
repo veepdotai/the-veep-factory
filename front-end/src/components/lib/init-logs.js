@@ -68,6 +68,7 @@ export default function initAppJSLogs(level = "NONE") {
       localStorage.setItem('PDFParams', level);
       localStorage.setItem('PDFPanel', level);
     localStorage.setItem('GenericForm', level);
+    localStorage.setItem('DynamicForm', level);
     localStorage.setItem('Heading', level);
     localStorage.setItem('Home', level);
     localStorage.setItem('Menu', level);

@@ -1,0 +1,24 @@
+[
+    {
+        "id": "0",
+        "name": "formName",
+        "group": "main",
+        "type": "input",
+        "constraints": "",
+        "values": "",
+        "className": "",
+        "position": 0,
+        "options": ""
+    },
+    {
+        "id": "1",
+        "name": "formDef",
+        "group": "main",
+        "type": "textarea",
+        "constraints": "",
+        "values": "",
+        "className": "",
+        "position": 1,
+        "options": "80x20"
+    }
+]

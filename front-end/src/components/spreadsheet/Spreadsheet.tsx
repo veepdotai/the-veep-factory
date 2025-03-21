@@ -5,27 +5,28 @@ import { ReactGrid, Column, Row, Cell, NumberCell, TextCell } from "@silevis/rea
 import { NonEditableCell } from "@silevis/reactgrid";
 
 import handleRowReorder from "./utils-reactgrid";
+import { Button } from "src/components/ui/shadcn/button";
 
 export default function Spreadsheet() {
 
   interface FieldConfiguration {
     id: string,
     name: string
-    parent: string
+    group: string
     type: string
     constraints: string
-    values: string
+    options: string
     className: string,
     position: number
   }
     
-  const ReactGridExample = () => {
+  const FormSpreadsheet = () => {
 
-    const columnLabels = ['id', 'name', 'parent', 'type', 'constraints', 'options', 'className', 'position']
+    const columnLabels = ['id', 'name', 'group', 'type', 'constraints', 'options', 'className', 'position']
     let formConfiguration: FieldConfiguration[] = []
     for(var i = 0; i <= 50; i++) {
       formConfiguration.push(
-        { id: `${i}`, name: "", parent: "", type: "", constraints: "", values: "", className: "", position: i },
+        { id: `${i}`, name: "", group: "", type: "", constraints: "", options: "", className: "", position: i },
       )
     }
 
@@ -116,7 +117,7 @@ export default function Spreadsheet() {
     const handleSave = () => {
       console.log("saving data: ", data)
       console.log("saving data in json: ", JSON.stringify(data))
-      alert("Data saved")
+      alert("Data saved: " + JSON.stringify(data))
     };
 
     const [columns, setColumns] = useState<Column[]>(columnLabels.map((row, i) => { return {colIndex: i, width: row.width ?? 100, resizable: row.resizable ?? true} }))
@@ -254,6 +255,12 @@ export default function Spreadsheet() {
         }
       }}
     >
+      {/*
+        <Button onClick={handleUndoChanges}>Undo</Button>
+        <Button onClick={handleRedoChanges}>Redo</Button>
+        */}
+        <Button onClick={handleSave}>Save</Button>
+
         <ReactGrid
           columns={columns}
           //styledRanges={styledRanges}
@@ -264,14 +271,11 @@ export default function Spreadsheet() {
           cells={getCells(headerRow, data)}
           //stickyLeftColumns={1}
         />
-        <button onClick={handleUndoChanges}>Undo</button>
-        <button onClick={handleRedoChanges}>Redo</button>
-        <button onClick={handleSave}>Save</button>
       </div>
     )
   }
 
   return (
-    <ReactGridExample/>
+    <FormSpreadsheet />
   )
 }

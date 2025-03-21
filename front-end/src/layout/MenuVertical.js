@@ -94,6 +94,10 @@ export default function MenuVertical( {direction, isManager, profile} ) {
         )
     }
 
+    let genericMenu = UtilsMenu.getGenericMenu()
+    let mainContentMenu = UtilsMenu.getMainContentMenu()
+    let configurationMenu = UtilsMenu.getConfigurationMenu()
+
     return (
         <Nav id="menu" className="min-vh-100 mt-2 text-white" variant={direction == "vertical" ? "pills" : "underline"}>
             <Stack direction={direction} gap={1} className="col-md-12 mx-auto">
@@ -111,9 +115,7 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                     {/*<MenuItem itemKey="add-content-wizard" itemLabel={t("AddContent")} innerCN=" bg-secondary text-white border border-2" outerCN="mb-2" direction={direction} />*/}
 
                     { 'byDpt' === view ?
-                            <>
-                                {getMenu('byDpt', UtilsMenu.getGenericMenu())}
-                            </>
+                            <>{genericMenu?.length > 0 && <>{getMenu('byDpt', genericMenu)}</>}</>
                         :
                             <>
                                 {getAccordionItem("home", getMenuTitle(t("Home")),
@@ -126,24 +128,29 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                     }
 
                     { 'byDpt' === view ?
-                            <>
-                                {getAccordionItem("content", getMenuTitle(t("AIAssistants")),
-                                    getMenu('byDpt', UtilsMenu.getMainContentMenu())
-                                )}
+                            <> 
+                                {
+                                    mainContentMenu?.length > 0 
+                                        && getAccordionItem("content", getMenuTitle(t("AIAssistants")), getMenu('byDpt', mainContentMenu))
+                                }
                             </>
                         :
                             <>
-                                {getAccordionItem("content", getMenuTitle(t("Creation")),
-                                    <>
-                                        <MenuItem key={"contents"} itemKey="contents" itemLabel={t("MyContents")} />
-                                    </>
-                                )}
+                                {
+                                    getAccordionItem("content", getMenuTitle(t("Creation")),
+                                        <>
+                                            <MenuItem key={"contents"} itemKey="contents" itemLabel={t("MyContents")} />
+                                        </>
+                                    )
+                                }
                             </>
                     }
 
-                    {true && getAccordionItem("verticalAIParams", getMenuTitle(t("VerticalAIParams")),
-                        getMenu('byDpt', UtilsMenu.getConfigurationMenu())
-                    )}
+                    {configurationMenu?.length > 0 &&
+                        getAccordionItem("verticalAIParams", getMenuTitle(t("VerticalAIParams")),
+                            getMenu('byDpt', configurationMenu)
+                        )
+                    }
 
                     { ! isNormalUser ?
                             <>

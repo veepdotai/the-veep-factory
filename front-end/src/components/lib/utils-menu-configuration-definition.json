@@ -6,7 +6,7 @@
       "itemType": "screen",
       "items": [
         { "id": "brand-voice", "itemType": "form", "label": "BrandVoiceLabel"},
-        { "id": "editorial-line", "itemType": "form", "label": "EdiorialLineLabel"},
+        { "id": "editorial-line", "itemType": "form", "label": "EditorialLineLabel"},
         { "id": "pdf-export", "itemType": "form", "label": "PdfExportLabel"}
       ]
     },
@@ -62,9 +62,11 @@
     { 
       "id": "forms",
       "title": "FormsTitle",
-      "itemType": "menu",
+      "label": "FormsLabel",
+      "itemType": "screen",
       "items": [
-        { "id": "forms", "itemType": "form", "label": "FormsLabel"}
+        { "id": "form", "itemType": "form", "label": "FormsLabel"},
+        { "id": "spreadsheet", "itemType": "spreadsheet", "label": "SpreadsheetLabel"}
       ]
     },
     { 

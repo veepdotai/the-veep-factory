@@ -14,7 +14,8 @@ import { z } from "zod"
 import { UtilsFormCommon as UFC } from '../../lib/utils-form-common'
 import { Utils } from '../../lib/utils'
 
-import formDefinition from "./editorial-form-definition.json"
+import editorialFormDefinition from "./editorial-form-definition.json"
+import formFormDefinition from "./form-form-definition.json"
 
 import { Button } from "src/components/ui/shadcn/button"
 import { Form, } from "src/components/ui/shadcn/form"
@@ -31,6 +32,21 @@ export default function DynamicForm({ type }) {
 
   const name = "form-" + Utils.camelize(type)
   const topic = Utils.camelize(type) + "_DATA_FETCHED"
+
+  function getFormDefinitionFromType(type) {
+    switch (type) {
+      case 'editorial-line':
+        return editorialFormDefinition
+      case 'form':
+        return formFormDefinition
+      default:
+        return formFormDefinition
+    }
+  }
+
+  const formDefinition = getFormDefinitionFromType(type)
+  log.trace("type: ", type)
+  log.trace("formDefinition: ", formDefinition)
 
   function getConstraints(minChars = 1) {
     return z.string().min(minChars, { message: t("AtLeast", { length: minChars }), }).optional().or(z.literal(''))

@@ -74,6 +74,7 @@ export const Icons = {
     infos:              <Md.MdOutlinePermDataSetting {...attr} />,
     "brand-voice":      <Md.MdKeyboardVoice {...attr} />,
     "editorial-line":   <IoNewspaperOutline {...attr} />,
+    "form":             <IoNewspaperOutline {...attr} />,
     params:             <Md.MdOutlineDesignServices {...attr}  />,
     "add-content":      <Md.MdOutlineModeEdit {...attr}  />,
     "editorial-calendar": <Md.MdOutlineCalendarMonth {...attr} />,
