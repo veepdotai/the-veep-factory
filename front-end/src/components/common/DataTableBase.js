@@ -1,20 +1,29 @@
 import { t } from 'i18next'
 import PubSub from 'pubsub-js'
+
 import { Button } from 'src/components/ui/shadcn/button'
-import DataTableComponent from '../screens/mycontent/datatable/react-dtc/content/page'
-import DataTableTanStack from '../screens/mycontent/datatable/shadcn-dt-tanstack/content/page'
+import DataTableComponent from 'src/components/screens/mycontent/datatable/react-dtc/content/page'
+import DataTableTanStack from 'src/components/screens/mycontent/datatable/shadcn-dt-tanstack/content/page'
 
 import { Icons } from '@/constants/Icons'
 import { cn } from '@/lib/utils'
 
+//import { z } from "zod"
+import getColumns from "./datatable/vcontents/columns"
+
+function getData(props) {
+	return props.data
+	//return z.array(schema).parse(data)
+}
+  
 function getDataTableContent(props, cns) {
 	return (
 		<>
 			{ props?.dtViewType == "DTComponent" ?
-				<DataTableComponent {...props} />
+				<DataTableComponent {...props}/>
 				:
 				<>
-				<DataTableTanStack {...props} cns={cns}/>
+				<DataTableTanStack {...props} columns={getColumns} cns={cns}/>
 				</>
 			}
 		</>

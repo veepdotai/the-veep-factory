@@ -7,11 +7,13 @@ import { ColumnDef } from "@tanstack/react-table"
 
 import { Badge } from "src/components/ui/shadcn/badge"
 import { Checkbox } from "src/components/ui/shadcn/checkbox"
-import { DataTableColumnHeader } from "../core/data-table-column-header"
-import { DataTableRowActions } from "../core/data-table-row-actions"
+import { DataTableColumnHeader } from "src/components/screens/mycontent/datatable/shadcn-dt-tanstack/core/data-table-column-header"
+import { DataTableRowActions } from "src/components/screens/mycontent/datatable/shadcn-dt-tanstack/core/data-table-row-actions"
+//import { DataTableColumnHeader } from "../core/data-table-column-header"
+//import { DataTableRowActions } from "../core/data-table-row-actions"
 
-import { labels, priorities, statuses } from "../data/enums"
-import { schema, Data } from "../data/schema"
+import { labels, priorities, statuses } from "./enums"
+import { schema, Data } from "./schema"
 
 export default function getColumns(operations): ColumnDef<Data>[] {
   const log = Logger.of("getColumns")
@@ -128,6 +130,8 @@ export default function getColumns(operations): ColumnDef<Data>[] {
     const className = meta.className ? meta.className : `flex w-[${width}] ${fontSize} items-center`
   
     let result =   {
+      ...meta,
+      fieldType: "enum",
       accessorKey: accessorKey,
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={title} />
@@ -188,8 +192,8 @@ export default function getColumns(operations): ColumnDef<Data>[] {
       getColumnMetadata({name: "domain", title: t("Domain"), width: "150px", onClick: operations.onShow}),
       getColumnMetadata({name: "category", title: t("Category"), width: "150px", onClick: operations.onShow}),
       getColumnMetadata({name: "artefactType", title: t("ArtefactType"), width: "150px", onClick: operations.onShow}),
-//      getEnumColumnMetadata({name: "status", title: t("Status"), data: statuses}),
-//      getEnumColumnMetadata({name: "priority", title: t("Priority"), data: priorities}),
+      getEnumColumnMetadata({name: "status", title: t("Status"), data: statuses}),
+      getEnumColumnMetadata({name: "priority", title: t("Priority"), data: priorities}),
       getId(),
       getActions(operations),
   ]

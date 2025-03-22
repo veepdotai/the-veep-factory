@@ -1,39 +1,30 @@
-
-//import { z } from "zod"
+import { Logger } from 'react-logger-lib'
 import { DataTable } from "../core/data-table"
-import getColumns from "./columns"
-//import { schema } from "../data/schema"
-import { statuses, priorities } from "../data/enums"
-import { t } from "i18next"
 
-function getData(props) {
-  return props.data
-  //return z.array(schema).parse(data)
+
+interface DataTableProps {
+  data: any[],
+  operations: any[],
+  viewMode: "compact1" | "compact2",
+  columns: Function
 }
 
-export default function DataTableTanStack(props) {
-  //const tasks = await getTasks()
-  const data = getData(props)
+export default function DataTableTanStack(props: DataTableProps) {
+  const log = Logger.of(DataTableTanStack.name)
 
-  let metadata = [
-/*
-    {
-      name: "status",
-      title: t("Status"),
-      data: statuses
-    },
-    {
-      name: "priority",
-      title: t("Priority"),
-      data: priorities
-    }
-*/
-  ]
+  let columns = props.columns(props.operations)
+  let metadata = columns
+                  .filter((row) => row?.fieldType == "enum")
+                  .map((row) => {
+                    return {name: row.name, title: row.title, data: row.data}
+                  })
+
+  log.trace("metadata:", metadata)
 
   return (
     <>
       {/*<DataTable data={data} columns={columns} metadata={metadata} viewMode="compact2" />*/}
-      <DataTable {...props} columns={getColumns(props.operations)} metadata={metadata} viewMode="compact1" />
+      <DataTable {...props} columns={columns} metadata={metadata} viewMode="compact1" />
     </>
   )
 }
