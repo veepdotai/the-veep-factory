@@ -10,13 +10,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "src/components/ui/shadcn/sheet"
-import MyContentPanelWithSheet2panels from './MyContentPanelWithSheet2panels'
+import ContentPanelWithSheet2panels from './ContentPanelWithSheet2panels'
 
 import { t } from "i18next";
 import LogoWithUrl from "@/components/LogoWithLink";
 import { Icons } from "@/constants/Icons";
 
-export default function MyContentPanelWithSheet( {side, id = null, info = null, content = null}) {
+export default function ContentPanelWithSheet( {side, id = null, info = null, content = null}) {
 
   const [open, setOpen] = useState(false);
 
@@ -48,7 +48,7 @@ export default function MyContentPanelWithSheet( {side, id = null, info = null, 
                     </SheetDescription>
                   </SheetHeader>
                   <div className="px-6">
-                    <MyContentPanelWithSheet2panels id={id} info={info} content={content}/>
+                    <ContentPanelWithSheet2panels id={id} info={info} content={content}/>
                   </div>
                   <SheetFooter>
                   </SheetFooter>

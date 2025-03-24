@@ -1,7 +1,7 @@
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup, } from "src/components/ui/shadcn/resizable"
 import { ScrollArea, ScrollBar } from "src/components/ui/shadcn/scroll-area"
 
-export default function MyContentPanelWithResizable( {side, id = null, info = null, content = null}) {
+export default function ContentPanelWithResizable( {side, id = null, info = null, content = null}) {
 
   return (
     <>

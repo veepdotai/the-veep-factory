@@ -8,7 +8,7 @@ import NavItemLinkIconText from "src/components/NavItemLinkIconText"
 
 import { Icons } from "src/constants/Icons"
 
-export default function MenuItem( {id = '', innerCN, outerCN, itemKey, itemLabel, alwaysVisible = true, handleClose} ) {
+export default function MenuItem( {id = '', icon, innerCN, outerCN, itemKey, itemLabel, alwaysVisible = true, handleClose} ) {
   const log = Logger.of(MenuItem.name);
 
   function handleClick() {
@@ -29,7 +29,7 @@ export default function MenuItem( {id = '', innerCN, outerCN, itemKey, itemLabel
   return (
     <>
       <NavItemLinkIconText id={itemKey} innerCN={innerCN} outerCN={outerCN} itemKey={itemKey} eventKey={itemKey} title={itemLabel} alwaysVisible={alwaysVisible} onClick={handleClick}>
-        {Icons[itemKey]}
+        {"none" !== icon && icon && Icons[icon]}
       </NavItemLinkIconText>
     </>
   );

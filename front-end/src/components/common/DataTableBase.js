@@ -2,19 +2,11 @@ import { t } from 'i18next'
 import PubSub from 'pubsub-js'
 
 import { Button } from 'src/components/ui/shadcn/button'
-import DataTableComponent from 'src/components/screens/mycontent/datatable/react-dtc/content/page'
-import DataTableTanStack from 'src/components/screens/mycontent/datatable/shadcn-dt-tanstack/content/page'
+import DataTableComponent from '@/components/datatable/react-dtc/content/page'
+import DataTableTanStack from '@/components/datatable/shadcn-dt-tanstack/content/page'
 
 import { Icons } from '@/constants/Icons'
 import { cn } from '@/lib/utils'
-
-//import { z } from "zod"
-import getColumns from "./datatable/vcontents/columns"
-
-function getData(props) {
-	return props.data
-	//return z.array(schema).parse(data)
-}
   
 function getDataTableContent(props, cns) {
 	return (
@@ -23,13 +15,14 @@ function getDataTableContent(props, cns) {
 				<DataTableComponent {...props}/>
 				:
 				<>
-				<DataTableTanStack {...props} columns={getColumns} cns={cns}/>
+				<DataTableTanStack {...props} cns={cns}/>
 				</>
 			}
 		</>
 	)
 }
-function DataTableBase( props ) {
+
+export default function DataTableBase( props ) {
 
 	//enum ViewTypeEnum {DTComponent, DTTanStack}
 	let classNames = {
@@ -73,5 +66,3 @@ function DataTableBase( props ) {
 	  </>
 	)
 }
-
-export default DataTableBase;

@@ -1,0 +1,13 @@
+[
+    { 
+      "id": "context",
+      "title": "Context",
+      "label": "ContextLabel",
+      "itemType": "screen",
+      "items": [
+        { "id": "brand-voice", "itemType": "form", "label": "BrandVoiceLabel"},
+        { "id": "editorial-line", "itemType": "form", "label": "EditorialLineLabel"},
+        { "id": "pdf-export", "itemType": "form", "label": "PdfExportLabel"}
+      ]
+    }
+]

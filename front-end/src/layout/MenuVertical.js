@@ -41,7 +41,7 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                                 return menu?.items?.map(row => row.id == "separator" ?
                                         <hr />
                                     :
-                                        <MenuItem key={menu.id} itemKey={row.id} itemLabel={row.label || t(Utils.camelize(row.id) + "Label2")} direction={direction} />
+                                        <MenuItem key={menu.id} icon={row.icon} itemKey={row.id} itemLabel={row.label || t(Utils.camelize(row.id) + "Label2")} direction={direction} />
                                 )
                             } else {
                                 return getAccordionItem(menu.id, menu.title,
@@ -49,7 +49,7 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                                         {menu?.items?.map((row) => row.id == "separator" ?
                                                 <hr />
                                             :
-                                                <MenuItem key={menu.id} itemKey={row.id} itemLabel={row.label || t(Utils.camelize(row.id) + "Label3")} direction={direction} />
+                                                <MenuItem key={menu.id} icon={row.icon} itemKey={row.id} itemLabel={row.label || t(Utils.camelize(row.id) + "Label3")} direction={direction} />
                                         )}
                                     </>
                                 )       
@@ -110,7 +110,7 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                     {selectUserLevel()}
                 </div>
 
-                <Accordion type="multiple" className="mt-3" defaultValue={["home", "content"]}>
+                <Accordion type="multiple" className="mt-3" defaultValue={["menu-home"]}>
 
                     {/*<MenuItem itemKey="add-content-wizard" itemLabel={t("AddContent")} innerCN=" bg-secondary text-white border border-2" outerCN="mb-2" direction={direction} />*/}
 
@@ -129,10 +129,7 @@ export default function MenuVertical( {direction, isManager, profile} ) {
 
                     { 'byDpt' === view ?
                             <> 
-                                {
-                                    mainContentMenu?.length > 0 
-                                        && getAccordionItem("content", getMenuTitle(t("AIAssistants")), getMenu('byDpt', mainContentMenu))
-                                }
+                                {mainContentMenu?.length > 0 && getMenu('byDpt', mainContentMenu)}
                             </>
                         :
                             <>
@@ -146,11 +143,7 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                             </>
                     }
 
-                    {configurationMenu?.length > 0 &&
-                        getAccordionItem("verticalAIParams", getMenuTitle(t("VerticalAIParams")),
-                            getMenu('byDpt', configurationMenu)
-                        )
-                    }
+                    {configurationMenu?.length > 0 && getMenu('byDpt', configurationMenu)}
 
                     { ! isNormalUser ?
                             <>
@@ -169,8 +162,8 @@ export default function MenuVertical( {direction, isManager, profile} ) {
 
                                 {getAccordionItem("configuration", getMenuTitle(t("Configuration")),
                                     <>
-                                        <MenuItem key={"config-pdf"} itemKey="config-pdf" itemLabel={t("PDFConfig")} direction={direction} />
-                                        <MenuItem key={"config-post"} itemKey="config-post" itemLabel={t("PostConfig")} direction={direction} />
+                                        <MenuItem key={"config-pdf"} icon="config-pdf" itemKey="config-pdf" itemLabel={t("PDFConfig")} direction={direction} />
+                                        <MenuItem key={"config-post"} icon="config-post" itemKey="config-post" itemLabel={t("PostConfig")} direction={direction} />
                                     </>
                                 )}
                             </>

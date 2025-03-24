@@ -22,8 +22,12 @@ import { Utils } from './utils';
 import startMenuDefinition from './utils-menu-start-definition.json'
 import dataMenuDefinition from './utils-menu-data-definition.json'
 import configurationMenuDefinition from './utils-menu-configuration-definition.json'
+import configurationMenuDefinitionForUser from './utils-menu-configuration-definition-user.json'
+import configurationMenuDefinitionForAdmin from './utils-menu-configuration-definition-admin.json'
 import Spreadsheet from '../spreadsheet/Spreadsheet';
 import DynamicForm from '../screens/forms/DynamicForm';
+
+import MyConfiguration from 'src/components/screens/myconfiguration/MyConfiguration'
 
 export const UtilsMenu = {
   log: Logger.of("Menu"),
@@ -126,7 +130,16 @@ export const UtilsMenu = {
   },
 
   getConfigurationMenu: function() {
-    let menuDefinition = configurationMenuDefinition 
+      const role = "user"
+    
+    let menuDefinition = []
+    if ("user" === role) {
+      menuDefinition = configurationMenuDefinitionForUser 
+    } else if ("admin" === role) {
+      menuDefinition = configurationMenuDefinitionForAdmin
+    } else {
+      menuDefinition = configurationMenuDefinition 
+    }
     return menuDefinition
   },
 
@@ -153,6 +166,7 @@ export const UtilsMenu = {
                 return (
                   <Tab.Pane key={row.id} eventKey={row.id}>
                     <ScreenHeading {...props} />
+                    <MyConfiguration type={row.id} />
                     <DynamicForm type={row.id} />
                   </Tab.Pane>
                 )

@@ -7,8 +7,8 @@ import { ColumnDef } from "@tanstack/react-table"
 
 import { Badge } from "src/components/ui/shadcn/badge"
 import { Checkbox } from "src/components/ui/shadcn/checkbox"
-import { DataTableColumnHeader } from "src/components/screens/mycontent/datatable/shadcn-dt-tanstack/core/data-table-column-header"
-import { DataTableRowActions } from "src/components/screens/mycontent/datatable/shadcn-dt-tanstack/core/data-table-row-actions"
+import { DataTableColumnHeader } from "@/components/datatable/shadcn-dt-tanstack/core/data-table-column-header"
+import { DataTableRowActions } from "@/components/datatable/shadcn-dt-tanstack/core/data-table-row-actions"
 //import { DataTableColumnHeader } from "../core/data-table-column-header"
 //import { DataTableRowActions } from "../core/data-table-row-actions"
 
@@ -49,7 +49,10 @@ export default function getColumns(operations): ColumnDef<Data>[] {
   
     return {
       id: "actions",
-      cell: ({ row }) => <DataTableRowActions row={row} labels={labels} schema={schema}
+      cell: ({ row }) => <DataTableRowActions
+                            row={row}
+                            labels={labels}
+                            schema={schema}
                             onShow={operations.onShow}
                             onEdit={operations.onEdit}
                             onDuplicate={operations.onDuplicate}
@@ -118,10 +121,13 @@ export default function getColumns(operations): ColumnDef<Data>[] {
   function getEnumColumnMetadata(meta) {
     if (! meta.name || ! meta.data) {
       throw new Error("'name' and 'data' metadata MUST be provided => 'name', 'data' or both are not currently provided.");
+    } else if (Array.isArray(meta?.data) && meta?.data.length == 0) {
+      return null
     }
-  
+
     const name = meta.name
     const data = meta.data
+    
     const accessorKey = meta.accessorKey || name
     const title = meta.title || name.replace(/(^|\s)\S/g, l => l.toUpperCase())
   
@@ -163,25 +169,11 @@ export default function getColumns(operations): ColumnDef<Data>[] {
   
   }
 /*  
-  function onShow(row) {
-    alert("Show:" + JSON.stringify(row.original));
-  }
-  
-  function onEdit(row) {
-    alert("Edit:" + JSON.stringify(row.original));
-  }
-  
-  function onDuplicate(row) {
-    alert("Duplicate:" + JSON.stringify(row.original));
-  }
-  
-  function onFavorite(row) {
-    alert("Favorite:" + JSON.stringify(row.original));
-  }
-  
-  function onDelete(row) {
-    alert("Delete:" + JSON.stringify(row.original));
-  }
+  function onShow(row) { alert("Show:" + JSON.stringify(row.original)); }
+  function onEdit(row) { alert("Edit:" + JSON.stringify(row.original)); }
+  function onDuplicate(row) { alert("Duplicate:" + JSON.stringify(row.original)); }  
+  function onFavorite(row) { alert("Favorite:" + JSON.stringify(row.original)); }
+  function onDelete(row) { alert("Delete:" + JSON.stringify(row.original)); }
 */
   return [
       getSelect(),
@@ -196,5 +188,5 @@ export default function getColumns(operations): ColumnDef<Data>[] {
       getEnumColumnMetadata({name: "priority", title: t("Priority"), data: priorities}),
       getId(),
       getActions(operations),
-  ]
+  ].filter((item) => item != null)
 }

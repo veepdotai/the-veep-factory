@@ -9,7 +9,10 @@
  * - transcription
  * - veeplet (set of prompts)
  * 
- * According the content type (and the veep client version), the structure is different. The code reflects these versions and more and more will happen except if a migration is done at each time.
+ * According the content type (and the veep client version), the structure may
+ * be different. The code reflects these client versions so code continues to
+ * to work. So more and more code will be added except if migrations
+ * are done to only keep last features.
  *  
  */
 import { useState, useEffect } from 'react';
@@ -109,7 +112,7 @@ export default function MyContentDetails( { id }) {
         <TabsContent key="details-content-pdf" id="details-content-pdf" className="h-full" value="pdf-merged-content">
           {MyContentDetailsForDesktop.desktopPDFContent(selectedFormat, prompt, data, contentId)}
         </TabsContent>
-        <TabsContent id="details-sideBySide-content" id="details-sideBySide-content" value="sideBySide-content">
+        <TabsContent key="details-sideBySide-content" id="details-sideBySide-content" value="sideBySide-content">
           <ScrollArea className="w-100 whitespace-nowrap h-full">
             <ScrollBar orientation="vertical" />
 
@@ -145,8 +148,8 @@ export default function MyContentDetails( { id }) {
         node = data.nodes[0]       
       }
       setMainNode(node)
-      log.trace("...useEffect[data]: node: " + JSON.stringify(node));
-      log.trace("...useEffect[data]: node databaseId: " + JSON.stringify(node?.databaseId));
+      log.trace("...useEffect[data]: node: ", node);
+      log.trace("...useEffect[data]: node databaseId: " + node?.databaseId);
       if (node.veepdotaiPrompt) {
         log.trace("useEffect[data]: prompt: " + node.veepdotaiPrompt);
         let promptObj = TOML.parse(node.veepdotaiPrompt.replace(/#EOL#/g, "\n"));
@@ -156,7 +159,7 @@ export default function MyContentDetails( { id }) {
         setPrompt(promptObj);
       }
     } catch (e) {
-      log.trace("Exception: e: " + JSON.stringify(e))
+      log.trace("Exception: e: ", e)
     }
   }, [data]);
 

@@ -1,6 +1,6 @@
 [{
   "id": "home",
-  "title": "home",
+  "title": "Home",
   "items": [
       { "id": "home", "dontcreate": true, "label": "Dashboard"},
       { "id": "add-content", "dontcreate": true, "label": "CreateContent"},

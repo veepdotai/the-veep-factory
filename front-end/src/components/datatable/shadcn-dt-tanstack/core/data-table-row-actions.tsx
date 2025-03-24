@@ -83,21 +83,21 @@ export function DataTableRowActions<TData>({
         {onEdit && (<DropdownMenuItem className={className} onClick={edit}>{t("Rename")}</DropdownMenuItem>)}
         {onDuplicate && (<DropdownMenuItem className={className} onClick={duplicate}>{t("Duplicate")}</DropdownMenuItem>)}
         {onFavorite && (<DropdownMenuItem className={className} onClick={favorite}>{t("Favorite")}</DropdownMenuItem>)}
-        {/*
         <DropdownMenuSeparator className="border-t"/>
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
-          <DropdownMenuSubContent>
-            <DropdownMenuRadioGroup value={data.label}>
-              {labels.map((label) => (
-                <DropdownMenuRadioItem key={label.value} value={label.value}>
-                  {label.label}
-                </DropdownMenuRadioItem>
-              ))}
-            </DropdownMenuRadioGroup>
-          </DropdownMenuSubContent>
-        </DropdownMenuSub>
-        */}
+        { Array.isArray(labels) && labels.length > 0 &&
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
+            <DropdownMenuSubContent>
+              <DropdownMenuRadioGroup value={row.label || ""}>
+                {labels.map((label) => (
+                  <DropdownMenuRadioItem key={label.value} value={label.value}>
+                    {label.label}
+                  </DropdownMenuRadioItem>
+                ))}
+              </DropdownMenuRadioGroup>
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
+        }
         {onDelete && (<>
             <DropdownMenuSeparator />
             <DropdownMenuItem className={className} onClick={remove}>

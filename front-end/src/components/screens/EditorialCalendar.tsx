@@ -14,7 +14,7 @@ import { UtilsContent } from '../lib/util-content'
 
 import './EditorialCalendar/styles.css'
 import Loading from '../common/Loading'
-import { CommonFacetedFilter } from './mycontent/datatable/shadcn-dt-tanstack/core/common-faceted-filter'
+import { CommonFacetedFilter } from '../datatable/shadcn-dt-tanstack/core/common-faceted-filter'
 import SocialNetworkPreview from './SocialNetworkPreview'
 import { UtilsGraphQL } from '@/api/utils-graphql'
 import { useCookies } from 'react-cookie'
