@@ -464,8 +464,8 @@ class Generation_Process {
     }
 
     public static function get_context( $context ) {
-        $json_raw = Veepdotai_Util::get_option( $context );
-        Generation_Process::log( __METHOD__ . ": specific context: jckermagoret-veepdotai-$context: ", $json_raw );
+        $json_raw = Veepdotai_Util::get_option( "form-" . $context );
+        Generation_Process::log( __METHOD__ . ": specific context: jckermagoret-veepdotai-form-$context: ", $json_raw );
         $json_string = preg_replace("/_EOL_/", "\n", $json_raw );
         $json_string = preg_replace("/_G_/", '"', $json_string );
         Generation_Process::log( __METHOD__ . ": context1 (string): " . $json_string );
