@@ -39,6 +39,9 @@ export const Icons = {
     url:                <Md.MdLink {...attr}/>,
     stats:              <Md.MdBarChart {...attr}/>,
 
+    prev:               <Md.MdArrowBackIos {...attr} />,
+    next:               <Md.MdArrowForwardIos {...attr} />,
+    
     spin:                <Md.MdRotateRight {...attr} className="m-0 p-0" size="32"/>,
     loading:            <div {...attr}>
                             <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

@@ -1,0 +1,266 @@
+{
+    "firstPage": {
+      "flexDirection": "column",
+      "paddingTop": 35,
+      "paddingBottom": 65
+    },
+  
+    "tocPage": {
+      "flexDirection": "column",
+      "paddingTop": 35,
+      "paddingBottom": 65,
+      "paddingHorizontal": 30
+    },
+  
+    "contentPage": {
+      "flexDirection": "column",
+      "paddingTop": 35,
+      "paddingBottom": 65,
+      "paddingHorizontal": 35
+    },
+  
+    "lastPage": {
+      "flexDirection": "column",
+      "paddingTop": 35,
+      "paddingBottom": 65
+    },
+  
+    "company": {
+      "fontStyle": "italic",
+      "fontSize": 12,
+      "textAlign": "center",
+      "marginTop": 15,
+      "marginBottom": 150
+    },
+  
+    "featuredImage": {
+      "top": 350,
+      "textAlign": "center",
+      "marginHorizontal": "auto",
+      "width": "30%"
+    },
+    
+    "title": {
+      "position": "absolute",
+      "width": "100%",
+      "top": 150,
+      "fontSize": 30,
+      "textAlign": "center",
+      "marginVertical": 20
+    },
+  
+    "subtitle": {
+      "position": "absolute",
+      "width": "100%",
+      "top": 200,
+      "fontSize": 24,
+      "textAlign": "center",
+      "marginHorizontal": "auto",
+      "marginVertical": 20
+    },
+  
+    "header": {
+      "position": "relative",
+      "marginBottom": 10,
+      "borderBottom": 1,
+      "borderColor": "grey"
+    },
+  
+    "contentTable": {
+      "position": "relative",
+      "marginTop": 30,
+      "marginHorizontal": 50
+    },
+  
+    "contentTableTitle": {
+      "textAlign": "center",
+      "marginBottom": 50
+    },
+  
+    "contentTableLinks": {
+      "border": "1px black solid",
+      "borderRadius": 5,
+      "padding": 10,
+      "position": "relative",
+      "marginHorizontal": 20
+    },
+  
+    "backPageContent": {
+      "textAlign": "center",
+      "marginVertical": "auto",
+      "color": "grey"
+    },
+  
+    "footer": {
+      "position": "absolute",
+      "left": 0,
+      "right": 0,
+      "bottom": 0,
+  
+      "margin": 10,
+      "padding": 10,
+  
+      "fontSize": 12,
+      "color": "grey",
+  
+      "borderTop": 1,
+      "borderColor": "grey"
+    },
+  
+    "footerContent": {
+      "width": "90%",
+      "textAlign": "center"
+    },
+    
+    "pageNumber": {
+      "position": "absolute",
+      "right": 0,
+      "padding": 10
+    },
+  
+    "title1": {
+      "fontSize": 24,
+      "textAlign": "left",
+      "marginVertical": 20
+    },
+  
+    "title2": {
+      "fontSize": 22,
+      "textAlign": "left",
+  
+      "marginVertical": 20
+    },
+  
+    "title3": {
+      "fontSize": 20,
+      "marginVertical": 20
+    },
+  
+    "title4": {
+      "fontSize": 18,
+      "marginVertical": 20
+    },
+  
+    "title5": {
+      "fontSize": 16,
+      "marginVertical": 20
+    },
+  
+    "title6": {
+      "fontSize": 14,
+      "marginVertical": 20
+    },
+  
+    "link": {
+      "fontSize": 14,
+      "color": "black",
+      "marginBottom": 10
+    },
+  
+    "subLink": {
+      "fontSize": 12,
+      "color": "grey",
+      "marginLeft": 20,
+      "marginBottom": 10
+    },
+  
+    "para": {
+        "backgroundColor": "lightgrey"
+    },
+  
+    "text": {
+        "marginVertical": 12,
+        "fontSize": 14,
+        "textAlign": "justify"
+    },
+  
+    "image": {
+        "margin": 12,
+        "width": 30,
+        "height": 30
+    },
+  
+    "container": {
+        "flexDirection": "row",
+        "marginBottom": 10
+    },
+  
+    "metadataBlock": {
+      "position": "absolute",
+      "bottom": 100,
+      "left": 250,
+      "width": 325,
+      "fontSize": 12
+    },
+    
+    "metadataLine": {
+      "flexDirection": "row",
+      "borderLeft": "1px grey solid"
+    },
+  
+    "label": {
+      "fontWeight": "extrabold",
+      "width": 75,
+      "textAlign": "right"
+    },
+  
+    "sep": {
+      "paddingLeft": 5,
+      "paddingRight": 5
+    },
+  
+    "value": {
+    },
+  
+    "alignStart": {
+        "flex": 1,
+        "textAlign": "justify",
+        "fontSize": 14
+    },
+  
+    "alignEnd": {
+        "flex": 1,
+        "textAlign": "justify",
+        "fontSize": 14
+    },
+  
+    "backgroundImageContainer": {
+        "width": "100%",
+        "height": "50%"
+    },
+  
+    "backgroundImage": {
+        "objectFit": "contain",
+        "position": "absolute",
+        "top": 0,
+        "zIndex": -1,
+        "width": "100%",
+        "height": "auto"
+    },
+  
+    "fullBackgroundImage": {
+        "objectFit": "cover",
+        "position": "absolute",
+        "zIndex": -1,
+        "width": "100%",
+        "height": "100%"
+    },
+  
+    "fullBackgroundImageContainer": {
+        "width": "100%",
+        "height": "88%"
+    },
+  
+    "centeredText": {
+        "marginVertical": "auto",
+        "marginHorizontal": 12,
+        "fontSize": 16
+    },
+  
+    "imageInPara": {
+        "margin": 12,
+        "width": "auto",
+        "height": 150
+    }
+  
+  }

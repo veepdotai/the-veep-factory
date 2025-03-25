@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
   },
 
   contentTableLinks: {
-    border: "1px black solid",
-    borderRadius: 5,
+    border: "1px blue solid",
+    borderRadius: 50,
     padding: 10,
     position: "relative",
     marginHorizontal: 20,
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   title:{
       fontSize:50,
       textAlign:"center",
-      marginVertical:20
+      marginVertical:50
   },
   
   subtitle:{
@@ -161,22 +161,6 @@ const styles = StyleSheet.create({
     marginVertical: 'auto',
     color: 'grey',
   },
-
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-  
-
 
   /**
    * Text styles

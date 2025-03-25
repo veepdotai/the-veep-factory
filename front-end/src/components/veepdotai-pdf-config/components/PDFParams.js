@@ -1,6 +1,7 @@
 import { t } from 'i18next';
 import moment from 'moment';
 import { Logger } from 'react-logger-lib';
+
 import stylesA4 from '../default.css';
 import stylesLinkedin from '../defaultLinkedin.css';
 
@@ -67,14 +68,12 @@ export default class PDFParams {
     setFormat(newFormat){
         this.format = newFormat
 
-        if (newFormat == "linkedin"){
+        if (newFormat == "linkedin") {
             this.dimensions = {width: 800, height: 800}
             this.styles = stylesLinkedin
-        }
-        else if (newFormat == "A4"){
+        } else if (newFormat == "A4") {
             this.styles = stylesA4
-        }
-        else{
+        } else {
             this.dimensions = this.format
         }        
     }

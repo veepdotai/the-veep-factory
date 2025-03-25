@@ -1,17 +1,11 @@
-'use client';
-
 import { useEffect, useState } from 'react';
 import { Logger } from 'react-logger-lib';
-import { PDFViewer, Link, Page, Text, Image, View, Document, StyleSheet } from '@react-pdf/renderer';
+import { Link, Page, Text, Image, View, Document } from '@react-pdf/renderer';
+
 import { t } from 'i18next';
-import dynamic from 'next/dynamic';
 import { useMediaQuery } from 'usehooks-ts';
 
-//const dynamicProps = {ssr: false, loading: () => <p>{t("Loading...")}</p>}
-
-//const PDFViewer = dynamic(() => import("./PDFViewer"), {ssr: false, loading: () => <p>Loading...</p>});  
-//const PDFViewer = dynamic(() => import("@react-pdf/renderer").then((mod) => mod.PDFViewer), {ssr: false, loading: () => <p>{t("Loading...")}</p>});  
-//const PDFViewer = dynamic(() => import("@react-pdf/renderer").then((mod) => mod.PDFViewer), dynamicProps);  
+import PDFLink from './PDFLink' 
 
 /**
  * 
@@ -42,28 +36,20 @@ export function PDF( {initContent, initParams} ) {
   }, [])
 
 
-  /*
-          <PDFViewer width={'100%'} height={isDesktop ? '100%' : '800px'}>
-            <PDFDocument
-                    content={content}
-                    params={params}
-            />
-          </PDFViewer>
-  */
+  let doc = <PDFDocument content={content} params={params} />
+
   return (
     <>
       { (content?.length && params) ?
-          <PDFViewer width={'100%'} height={isDesktop ? '100%' : '800px'}>
-            <PDFDocument
-                    content={content}
-                    params={params}
-            />
-          </PDFViewer>
+          <>
+            <PDFLink document={doc} params={params} />
+          </>
         :
           <>Loading...</>
       }
     </>
   )
+
 }
 
 /**
@@ -107,29 +93,7 @@ export function PDFDocument({content, params}) {
     log.trace("firstPage: processing...");
 
     log.trace("data: ", data)
-    /*
-    return (
-      <Page key={"page-" + data?.title} style={data?.styles?.firstPage} bookmark={t("CoverPage")} size={data?.dimensions}>
-        
-        {getInlineContent("title", "title")}
-        {getInlineContent("subtitle", "subtitle")}
 
-        <Image key={data?.featuredImage} style={data?.styles?.featuredImage} src={data?.featuredImage} />
-
-        <View key={"view-" + data?.title} style={data?.styles?.metadataBlock}>
-          {/ *getInlineContentWithLabel(45, t("Company"), data?.companyName, "company")* /}
-          {getInlineContentWithLabel(30, t("OrganizationName"), data?.organizationName, "organizationName", data?.styles)}
-          {getInlineContentWithLabel(30, t("Author"), data?.author, "author", data?.styles)}
-          {getInlineContentWithLabel(15, t("Version"), data?.version, "version", data?.styles)}
-          {getInlineContentWithLabel(0, t("Date"), data?.date, "date", data?.styles)}
-        </View>
-
-        {data?.backgroundImageCover == "./assets/images/nothing.png" ? background(data?.backgroundImage) : background(data?.backgroundImageCover)}
-
-        {/ *footer()* /}
-      </Page>
-    )
-    */
     let title = data?.title?.replace(/[^a-zA-Z0-9]/g, "")
     log.trace("jcktitle: ", title)
     return (
@@ -140,6 +104,7 @@ export function PDFDocument({content, params}) {
 
         { data?.featuredImage && <Image key={data?.featuredImage} style={data?.styles?.featuredImage} src={data?.featuredImage} /> }
 
+        {/*key={"view-" + data?.title}*/} 
         <View style={data?.styles?.metadataBlock}>
           {/*getInlineContentWithLabel(45, t("Company"), data?.companyName, "company")*/}
           {getInlineContentWithLabel(30, t("OrganizationName"), data?.organizationName, "organizationName", data?.styles)}

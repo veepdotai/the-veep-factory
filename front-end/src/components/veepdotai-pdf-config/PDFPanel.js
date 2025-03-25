@@ -1,20 +1,20 @@
 'use client'
+//import dynamic from 'next/dynamic'
 
 import { useState } from 'react';
 import { Logger } from 'react-logger-lib'
 import { t } from 'i18next'
 
+import { useMediaQuery } from 'usehooks-ts';
 import {ResizableHandle, ResizablePanel, ResizablePanelGroup} from 'src/components/ui/shadcn/resizable';
 import { ScrollArea, ScrollBar } from "src/components/ui/shadcn/scroll-area"
 
 import PDFParams from './components/PDFParams';
 import PDF from './components/PDF';
 import PDFExportForm from '../screens/forms/PDFExportForm';
-import { useMediaQuery } from 'usehooks-ts';
 
 import { convert } from './lib/AbstractContent'
-//const PDFDownloadLink = dynamic(() => import('@react-pdf/renderer').then(mod => mod.PDFDownloadLink), { ssr: false });
- 
+
 /**
  * React component to render a PDF config panel with a PDF renderer.
  * 
@@ -29,10 +29,10 @@ export default function PDFPanel( {cid, initParams, initContent, displayInfosPan
     const [params, setParams] = useState(initParams || new PDFParams())
     const [content, setContent] = useState(initContent == undefined ? convert(" ") : convert(initContent))
 
-    log.trace(`infosPanel: style... initContent: ${JSON.stringify(initContent)}`)
-    log.trace(`infosPanel: style...  params: ${JSON.stringify(params)}`)
-    log.trace(`infosPanel: style...  content: ${JSON.stringify(content)}`)
-    log.trace(`infosPanel: style...  content && params: ${(content && params) ? true : false}`)
+    log.trace("initContent: ", initContent)
+    log.trace("params: ", params)
+    log.trace("content: ", content)
+    log.trace("content && params: ", (content && params) ? true : false)
 
     let displayConfigPanel = displayInfosPanel
 /*
@@ -60,7 +60,9 @@ export default function PDFPanel( {cid, initParams, initContent, displayInfosPan
 
                         <ResizablePanel defaultSize={60} className='vh-100 bottom-0'>
                             { content?.length > 1 ?
-                                    <PDF initContent={content} initParams={params}/>
+                                    <>
+                                        <PDF initContent={content} initParams={params}/>
+                                    </>
                                 :
                                     <>{t("NoContent")}</>
                             }
@@ -72,11 +74,11 @@ export default function PDFPanel( {cid, initParams, initContent, displayInfosPan
 
                       <div class="columns-1">
                         <PDFExportForm cid={cid} params={params} />
-                            { content?.length > 1 ?
-                                    <PDF initContent={content} initParams={params}/>
-                                :
-                                    <>{t("NoContent")}</>
-                            }
+                        { content?.length > 1 ?
+                                <PDF initContent={content} initParams={params}/>
+                            :
+                                <>{t("NoContent")}</>
+                        }
                       </div>
                     </ScrollArea>
               :
@@ -86,14 +88,3 @@ export default function PDFPanel( {cid, initParams, initContent, displayInfosPan
     );
 }
 
-/*const PdfLink = (props) => {
-    return (
-        <div>
-            <PDFDownloadLink document={<MyDocument params={props.params}/>} fileName={props.params.title}>
-                {({ blob, url, loading, error }) =>
-                    loading ? 'Loading document...' : 'Download pdf'
-                }
-            </PDFDownloadLink>
-        </div>
-    );
-};*/

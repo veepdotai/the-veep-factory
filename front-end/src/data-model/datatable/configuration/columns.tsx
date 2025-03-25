@@ -168,7 +168,8 @@ export default function getColumns(operations): ColumnDef<Data>[] {
 
   return [
       getSelect(),
-//      getEnumColumnMetadata({name: "menuType", title: t("MenuType"), data: [{"label":"home", "value": "Home"},{"label":"data", "value": "Data"},{"label":"config", "value": "Configuration"}]}),
+      //getEnumColumnMetadata({name: "title", title: t("MenuType"), data: [{"label":"home", "value": "Home"},{"label":"data", "value": "Data"},{"label":"config", "value": "Configuration"}]}),
+      getColumnMetadata({name: "title", title: t("Title")}),
       getColumnMetadata({name: "menuType", title: t("MenuType")}),
       getActions(operations),
       getColumnMetadata({name: "name", title: t("Name"), width: "150px", onClick: operations.onShow}),

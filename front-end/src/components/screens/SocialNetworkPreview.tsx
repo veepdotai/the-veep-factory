@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Logger } from 'react-logger-lib'
 import { t } from "i18next"
+
 import { Document, Page } from 'react-pdf'
 import 'react-pdf/dist/esm/Page/TextLayer.css'
 import 'react-pdf/dist/Page/AnnotationLayer.css'
@@ -11,7 +12,8 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     'pdfjs-dist/build/pdf.worker.min.mjs',
     import.meta.url,
   ).toString();
-  import 'react-pdf/dist/esm/Page/TextLayer.css';
+import 'react-pdf/dist/esm/Page/TextLayer.css';
+
 import { cn } from '../ui/shadcn/utils'
 import { Avatar, AvatarFallback, AvatarImage, } from "@/components/ui/avatar"
 import { Card, CardContent, } from "@/components/ui/card"
@@ -49,7 +51,8 @@ export default function SocialNetworkPreview({viewType = "LinkedIn", content}) {
         let allLines = content.content.split(/\n/)
 
         let author = content.author
-        let mediaUrl = /*content.mediaUrl ||*/ "https://static.vecteezy.com/system/resources/previews/005/909/455/large_2x/annual-report-template-free-vector.jpg"
+        //let mediaUrl = /*content.mediaUrl ||*/ "https://static.vecteezy.com/system/resources/previews/005/909/455/large_2x/annual-report-template-free-vector.jpg"
+        let mediaUrl = "https://3000-veepdotai-voice2post-jy1dot3bmal.ws-eu118.gitpod.io/assets/pdf_test_1.pdf"
 
         return (
             <Card className="w-100 max-h-[500px]">
