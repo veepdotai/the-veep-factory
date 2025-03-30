@@ -20,7 +20,7 @@ export default function ContentPanelWithResizable( {side, id = null, info = null
                 {info ? content(info.id) : ""}
             </ScrollArea>
           :
-            <>{info?.id ? content(info.id) : ""}</>
+            <>{info?.id ? content(info.id) : content}</>
           }
         </ResizablePanel>
       </ResizablePanelGroup>

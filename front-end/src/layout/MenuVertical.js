@@ -20,7 +20,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, } from "@
 export default function MenuVertical( {direction, isManager, profile} ) {
     const log = Logger.of(MenuVertical.name);
 
-    const [isNormalUser, setIsNormalUser] = useState(true) // beginner, normal , advanced
+    const [isNormalUser, setIsNormalUser] = useState(true) // beginner, normal, advanced
 
     const [view, setView] = useState('byDpt')
 
@@ -106,9 +106,11 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                     {/*<ComboboxWorkspaces />*/}
                 </div>
 
-                <div className='mt-3'>
-                    {selectUserLevel()}
-                </div>
+                { isManager &&
+                    <div className='mt-3'>
+                        {selectUserLevel()}
+                    </div>
+                }
 
                 <Accordion type="multiple" className="mt-3" defaultValue={["menu-home"]}>
 

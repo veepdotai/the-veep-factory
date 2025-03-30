@@ -1,0 +1,35 @@
+[
+    {
+        "id": "0",
+        "name": "values",
+        "group": "main",
+        "type": "textarea",
+        "constraints": "",
+        "values": "",
+        "className": "",
+        "position": 0,
+        "options": "80x20"
+    },
+    {
+        "id": "1",
+        "name": "history",
+        "group": "main",
+        "type": "textarea",
+        "constraints": "",
+        "values": "",
+        "className": "",
+        "position": 1,
+        "options": "80x20"
+    },
+    {
+        "id": "2",
+        "name": "anecdotes",
+        "group": "main",
+        "type": "textarea",
+        "constraints": "",
+        "values": "",
+        "className": "",
+        "position": 2,
+        "options": "80x20"
+    }
+]

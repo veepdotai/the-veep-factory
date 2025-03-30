@@ -14,6 +14,7 @@ import MyConfigurationActions from './MyConfigurationActions.js';
 
 //import { z } from "zod"
 import getColumns from "src/data-model/datatable/configuration/columns"
+import DynamicForm from '../forms/DynamicForm'
 
 function getData(props) {
   return props.data
@@ -112,7 +113,9 @@ export default function MyConfiguration( {...props} ) {
     getData();
 	}, [graphqlURI, cookies]);
 
+  let form = <DynamicForm type={props.type} />
+
   return (
-      <ContentPanel side={datatable} info={info} content={details} />
+      <ContentPanel side={datatable} info={info} content={form} displayType="main"/>
 );
 }

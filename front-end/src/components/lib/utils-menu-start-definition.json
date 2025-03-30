@@ -2,9 +2,9 @@
   "id": "home",
   "title": "Home",
   "items": [
-      { "id": "home", "dontcreate": true, "label": "Dashboard"},
-      { "id": "add-content", "dontcreate": true, "label": "CreateContent"},
-      { "id": "contents", "dontcreate": false, "itemType": "query", "label": "MyContents"}
+      { "id": "home", "dontcreate": true, "label": {"f": ["t", "Dashboard"]}},
+      { "id": "add-content", "dontcreate": true, "label": {"f": ["t", "CreateContent"]}},
+      { "id": "contents", "dontcreate": false, "itemType": "query", "label": {"f": ["t", "MyContents"]}}
   ]
 }
 ]

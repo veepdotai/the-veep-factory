@@ -16,6 +16,8 @@ import { Utils } from '../../lib/utils'
 
 import editorialFormDefinition from "./editorial-form-definition.json"
 import formFormDefinition from "./form-form-definition.json"
+import brandVoiceFormDefinition from "./brand-form-definition.json"
+import templateFormDefinition from "./template-form-definition.json"
 
 import { Button } from "src/components/ui/shadcn/button"
 import { Form, } from "src/components/ui/shadcn/form"
@@ -39,6 +41,10 @@ export default function DynamicForm({ type }) {
         return editorialFormDefinition
       case 'form':
         return formFormDefinition
+      case 'brand-voice':
+        return brandVoiceFormDefinition
+      case 'template':
+        return templateFormDefinition
       default:
         return formFormDefinition
     }

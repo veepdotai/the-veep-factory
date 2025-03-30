@@ -67,11 +67,7 @@ export default function Main({credits, current}) {
       </>
     },
     {id: "pdf-config", title: t("PdfConfigTitle"), subtitle: t("PdfConfigSubtitle"), content: <PDFDisplay />},
-    {id: "brand-voice", title: t("BrandVoiceTitle"), subtitle: t("BrandVoiceSubtitle"), content: <BrandVoiceForm />},
     {id: "config-post", title: t("ConfigPostTitle"), subtitle: t("ConfigPostSubtitle"), content: <VContentForm />},
-    /*{id: "editorial-line", title: t("EditorialLineTitle"), subtitle: t("EditorialLineSubtitle"), content: <DynamicForm type="editorial-line" />},*/
-    /*{id: "form", title: t("FormTitle"), subtitle: t("FormSubtitle"), content: <DynamicForm type="form" />},*/
-    /*id: "editorial-line", title: t("EditorialLineTitle"), subtitle: t("EditorialLineSubtitle"), content: <EditorialLine />},*/
     {id: "pdf-export", title: t("PdfExportTitle"), subtitle: t("PdfExportSubtitle"), content: <PDFExportForm />},
 
     {id: "credits", title: t("CreditsTitle"), subtitle: t("CreditsSubtitle"), content: <Credits />},

@@ -61,12 +61,6 @@ export const UtilsMenu = {
     )
   },
 
-  getGenericMenu: function() {
-    let menuDefinition = startMenuDefinition
-
-    return menuDefinition
-  },
-
   process: function(menu) {
     return UtilsMenu.processMenu(menu)
   },
@@ -116,6 +110,12 @@ export const UtilsMenu = {
       }
   },
 
+  getGenericMenu: function() {
+    let menuDefinition = UtilsMenu.process(startMenuDefinition)
+
+    return menuDefinition
+  },
+
   /**
    * This menu is used to build:
    * - the left navigational menu
@@ -130,7 +130,7 @@ export const UtilsMenu = {
   },
 
   getConfigurationMenu: function() {
-      const role = "user"
+    const role = "user"
     
     let menuDefinition = []
     if ("user" === role) {
@@ -140,7 +140,7 @@ export const UtilsMenu = {
     } else {
       menuDefinition = configurationMenuDefinition 
     }
-    return menuDefinition
+    return UtilsMenu.process(menuDefinition)
   },
 
   createPaneFromMenuItem: function(menuDefinition, home = null) {
@@ -154,8 +154,8 @@ export const UtilsMenu = {
             let itemType = row?.itemType || "menu"
             let props = {
               name: row.id,
-              title: t(row?.query?.view) || t(Utils.camelize(row?.label)),
-              subtitle: t(Utils.camelize(row?.label) + 'Subtitle')
+              title: t(row?.query?.view) || t(Utils.camelize(row?.title)) || t(Utils.camelize(row?.label)),
+              subtitle: t(Utils.camelize(row?.subtitle)) || t(Utils.camelize(row?.label) + 'Subtitle')
             }
 
             console.log("createPaneFromMenuItem: itemType: ", itemType)
@@ -167,7 +167,6 @@ export const UtilsMenu = {
                   <Tab.Pane key={row.id} eventKey={row.id}>
                     <ScreenHeading {...props} />
                     <MyConfiguration type={row.id} />
-                    <DynamicForm type={row.id} />
                   </Tab.Pane>
                 )
                 break
@@ -175,6 +174,7 @@ export const UtilsMenu = {
                 return (
                   <Tab.Pane key={row.id} eventKey={row.id}>
                     <ScreenHeading {...props} />
+                    <MyConfiguration type={row.id} />
                     <Spreadsheet />
                   </Tab.Pane>
                 )

@@ -18,8 +18,8 @@ import { Input } from "src/components/ui/shadcn/input"
 import { Textarea } from "src/components/ui/shadcn/textarea"
 
 import { Icons } from '@/constants/Icons'
-import Utils from 'src/lib/utils'
 import { UtilsGraphQLObject } from '@/api/utils-graphql-object'
+import Upload from '../upload-widget/page'
 
 
 export const UtilsFormCommon = {
@@ -125,7 +125,7 @@ export const UtilsFormCommon = {
                     if (metadata[key]) {
                         let mergedValue = mergedMetadata[key]
                         if ('merge-newdata-before' === mergingStrategy) {
-                            mergedMetadata[key] = metadata[key] + (mergedValue && "\n" + mergedValue)
+                            mergedMetadata[key] = metadata[key] + (mergedValue && ("\n" + mergedValue))
                         } else if ('merge-newdata-after' === mergingStrategy) {
                             mergedMetadata[key] = (mergedValue && mergedValue + "\n") + metadata[key]
                         } else if ('replace' === mergingStrategy) {
@@ -213,6 +213,14 @@ export const UtilsFormCommon = {
             let fieldValue = fieldValues ?? undefined
             return <Input className={cn} placeholder={t(fieldName + "PlaceHolder")} {...field} />
             //return <Input className={cn} placeholder={t(fieldName + "PlaceHolder")} {...field} value={fieldValue} />
+        } else if (fieldType === "upload") {
+            let fieldValue = fieldValues ?? undefined
+            return (
+                <>
+                    {/*<Input className={cn} placeholder={t(fieldName + "PlaceHolder")} {...field} />*/}
+                    <Upload form={form} className={lcn} fieldName={fieldName} {...field} />
+                </>
+            )
         } else if (fieldType === "textarea") {
             return (
                 <Textarea className={lcn || "min-h-[200px]"} placeholder={t(fieldName + "PlaceHolder")} {...field} />

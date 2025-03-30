@@ -1,0 +1,42 @@
+[
+    {
+        "id": "0",
+        "name": "logo",
+        "group": "main",
+        "type": "upload",
+        "constraints": "",
+        "options": "",
+        "className": "",
+        "position": 0
+    },
+    {
+        "id": "1",
+        "name": "coverBg",
+        "group": "main",
+        "type": "upload",
+        "constraints": "",
+        "options": "",
+        "className": "",
+        "position": 1
+    },
+    {
+        "id": "2",
+        "name": "lastPageBg",
+        "group": "main",
+        "type": "upload",
+        "constraints": "",
+        "options": "",
+        "className": "",
+        "position": 2
+    },
+    {
+        "id": "3",
+        "name": "css",
+        "group": "Look'n feel",
+        "type": "textarea",
+        "constraints": "",
+        "options": "80x60",
+        "className": "",
+        "position": 3
+    }
+]

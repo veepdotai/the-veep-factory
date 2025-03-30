@@ -107,6 +107,7 @@ export default function initAppJSLogs(level = "NONE") {
     localStorage.setItem('Sources', level);
     localStorage.setItem('Form', level);
     localStorage.setItem('ToggleForm', level);
+    localStorage.setItem('Upload', level);
     localStorage.setItem('UploadSelector', level);
     localStorage.setItem('TextForm', level);
     localStorage.setItem('UploadForm', level);
