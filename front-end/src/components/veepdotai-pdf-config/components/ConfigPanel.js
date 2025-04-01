@@ -137,7 +137,7 @@ class ConfigPanel extends React.Component {
     return(
       <div>
           <h2>Fond de la page de garde :</h2>
-          <div class="flex">
+          <div className="flex">
             <Input type="file"
               onChange={(item) => {this.param.backgroundImgCover = URL.createObjectURL(item.target.files[0])}}/>          
             <Button variant="ghost" className='mt-1 mx-1 px-0 h-9 w-9' onClick={() => {

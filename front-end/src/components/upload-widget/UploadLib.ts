@@ -23,7 +23,7 @@ export const UploadLib = {
         return client
     },
 
-    query: function() {
+    query: function(cookies) {
         const GET_USER = gql`
             query GetUser {
                 users {
@@ -38,7 +38,7 @@ export const UploadLib = {
             }
         `;
       
-        let client = UploadLib.client()
+        let client = UploadLib.client(cookies)
         UploadLib.log.trace("client: ", client) 
         return client.query({
             query: GET_USER,

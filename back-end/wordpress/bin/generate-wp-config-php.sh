@@ -18,6 +18,7 @@ v_wp_config_start() {
 	echo
 
 	echo "define('DB_NAME', '$DB_NAME');"
+	echo "define('DB_HOST', '$DB_HOST');"
 	echo "define('DB_USER', '$DB_USER');"
 	echo "define('DB_PASSWORD', '$DB_PASSWORD');"
 	echo 

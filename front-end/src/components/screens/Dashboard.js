@@ -149,7 +149,7 @@ export default function Dashboard() {
     function getCard(cheatSheet) {
         return (
             <Card key={cheatSheet.id} id={cheatSheet.id} style={getVOD2("lst", cheatSheet)} className={cn("d-flex flex-col", getVOD2("lcn", cheatSheet))}>
-                <div class="flex-1">
+                <div className="flex-1">
                     <CardHeader className="mb-2">
                         <CardTitle className={getVOD2("title", cheatSheet)}>{cheatSheet.title}</CardTitle>
                         {cheatSheet.subtitle && <CardSubtitle className={getVOD2("subtitle", cheatSheet)}>{cheatSheet.subtitle}</CardSubtitle>}

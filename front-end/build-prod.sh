@@ -144,7 +144,7 @@ init() {
     APP_HOST="https://app.veep.ai"
     APP_DIR=$(echo "$APP_HOST" | sed "s,https\?://,,g")
 
-    ROOT_DIR="/workspace/the-veep-factory"
+    ROOT_DIR="/workspaces/the-veep-factory"
     FRONT_DIR="$ROOT_DIR/front-end"
     BACK_DIR="$ROOT_DIR/back-end"
 

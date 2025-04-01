@@ -6,7 +6,6 @@ if ( $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' )
     $_SERVER['SERVER_PORT'] = 443;
 }
 
-define('DB_HOST', 'localhost');
 define('DB_COLLATE', 'utf8mb4_general_ci');
 define('DB_CHARSET', 'utf8mb4');
 

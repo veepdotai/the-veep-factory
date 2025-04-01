@@ -72,7 +72,7 @@ export default function PDFPanel( {cid, initParams, initContent, displayInfosPan
                     <ScrollArea className="w-100 whitespace-nowrap h-full">
                       <ScrollBar orientation='vertical' />
 
-                      <div class="columns-1">
+                      <div className="columns-1">
                         <PDFExportForm cid={cid} params={params} />
                         { content?.length > 1 ?
                                 <PDF initContent={content} initParams={params}/>

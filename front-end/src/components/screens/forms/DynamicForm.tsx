@@ -173,10 +173,10 @@ export default function DynamicForm({ type }) {
                 let subGroup = t(Utils.camelize(subgroup))
                 return (
                   <div>
-                    <div key={`${subGroup}-section`} class={sectionCn}>
+                    <div key={`${subGroup}-section`} className={sectionCn}>
                       {subGroup}
                     </div>
-                    <div key={`${subGroup}-items`} class=''>{/*{{ paddingLeft: "3rem"}}*/}
+                    <div key={`${subGroup}-items`} className=''>{/*{{ paddingLeft: "3rem"}}*/}
                       {fieldsBySubgroup[subgroup].map((field) => UFC.getFormField(form, field.name, field.type, field.options, defaultCBB))}
                     </div>
                   </div>

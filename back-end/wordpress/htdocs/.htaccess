@@ -1,3 +1,6 @@
+#<ifModule mod_headers.c>
+#Header set X-Content-Type-Options nosniff
+#</ifModule>
 
 # BEGIN WordPress
 # Les directives (lignes) entre « BEGIN WordPress » et « END WordPress » sont générées

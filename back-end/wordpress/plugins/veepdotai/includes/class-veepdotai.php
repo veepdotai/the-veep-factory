@@ -230,6 +230,8 @@ class Veepdotai {
 			$url = home_url() . ":3000/r?JWT=" . $jwt;
 		} else if ( strpos( home_url(), "ws-eu11") !== false ) {
 			$url = str_replace("8001", "3000", home_url()) . "/r?JWT=" . $jwt;
+		} else if ( strpos( home_url(), "github.dev") !== false ) {
+			$url = str_replace("-80", "-3000", home_url()) . "/r?JWT=" . $jwt;
 		} else {
 			$url = home_url() . "/v/app/r?JWT=" . $jwt;
 		}

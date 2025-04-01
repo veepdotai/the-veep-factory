@@ -398,8 +398,8 @@ export default function PromptForm({definition, handleClose}) {
                   if (i > 0) { // i == 0 => prompts.chain
                     return (
                       <Stack key={eventKey} direction="horizontal" gap={3}>
-                        <TabsTrigger class="m-0" value={eventKey}>
-                            <div class="w-[200px] text-left flex-1 inline-block align-middle">{veepletObject.prompts[row].label}</div>
+                        <TabsTrigger className="m-0" value={eventKey}>
+                            <div className="w-[200px] text-left flex-1 inline-block align-middle">{veepletObject.prompts[row].label}</div>
                             <Button variant="secondary" className="ms-auto bg-transparent inline-block align-middle" onClick={(e) => duplicatePrompt(row, e)}>
                               {Icons.copy}
                             </Button>
@@ -412,8 +412,8 @@ export default function PromptForm({definition, handleClose}) {
                   }
               })}
                     <Stack direction="horizontal" gap={3}>
-                      <div class="m-0">
-                        <div class="w-[200px] text-left flex-1 inline-block align-middle">{t("AddPrompt")}</div>
+                      <div className="m-0">
+                        <div className="w-[200px] text-left flex-1 inline-block align-middle">{t("AddPrompt")}</div>
                         <Button variant="secondary" className="bg-transparent ms-auto inline-block align-middle" onClick={(e) => { addOnePrompt(e)}}>
                           {Icons['add-content']}
                         </Button>

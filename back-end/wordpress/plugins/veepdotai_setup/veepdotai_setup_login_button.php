@@ -18,6 +18,8 @@ function redirect_to_app_on_404() {
 			$url = str_replace("80", "3000", home_url());
 		} else if ( strpos( home_url(), "gitpod") !== false ) {
 			$url = str_replace("8001", "3000", home_url());
+		} else if ( strpos( home_url(), "github.dev") !== false ) {
+			$url = str_replace("-80", "-3000", home_url());
 		}
 
 		//$url = "https://www.google.com";

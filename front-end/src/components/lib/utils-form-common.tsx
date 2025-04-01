@@ -458,8 +458,8 @@ export const UtilsFormCommon = {
                                 }
                             </>
                         }
-                        <div class="flex">
-                            <div class={lcnFormField}>
+                        <div className="flex">
+                            <div className={lcnFormField}>
                                 {UtilsFormCommon.getFieldType(form, field, fieldName, fieldType, fieldValues, fo)}
                             </div>
                         </div>

@@ -70,3 +70,49 @@ Veep.AI is an open source “ChatGPT Canvas” type solution allowing you to cre
 
 ### Content Creation
 <img src="https://github.com/user-attachments/assets/1bf1a04d-d094-4b08-a0da-7259dfcbf7b6" width="50%" />
+
+# Cloud IDE
+
+## Github.dev
+
+Some notes:
+
+sudo apt update
+sudo apt upgrade
+sudo apt install apache2
+
+
+sudo vi envvars
+add:
+export APACHE_DOCROOT=/workspaces/the-veep-factory/back-end/wordpress/htdocs
+
+sudo vi /etc/apache2/sites-enabled/000-default.conf
+update: 
+DocumentRoot $APACHE_DOCROOT
+
+sudo vi /etc/apache2/apache2.conf
+add:
+<Directory /workspaces/the-veep-factory/back-end/wordpress/htdocs>
+        Options FollowSymLinks
+        AllowOverride None
+        Require all granted
+</Directory>
+
+/workspaces/the-veep-factory/back-office/wordpress/htdocs
+
+MySql
+check /etc/mysql/debian.cnf
+user ? password ?
+
+/etc/php/apache2/php.ini
+add:
+extension=mysqli
+
+reload apache2
+
+Error during WP database connection
+Use network host instead of socket
+
+WP_DEFINE("DB_HOST", "127.0.0.1")
+
+pb with graphql, /graphql is not found. Need to use /index.php?graphql
