@@ -46,7 +46,6 @@ class CustomCSSandJS_AdminConfig {
         add_action( 'ccj_settings_form', array( $this, 'general_extra_form' ), 11 );
         add_filter( 'ccj_settings_default', array( $this, 'general_extra_default' ) );
         add_filter( 'ccj_settings_save', array( $this, 'general_extra_save' ) );
-        add_action( 'before_woocommerce_init', array( $this, 'before_woocommerce_init' ) );
     }
 
 
@@ -274,15 +273,6 @@ class CustomCSSandJS_AdminConfig {
 
         <?php
     }
-
-	/**
-	 * Declare compatibility with the WooCommerce COT (custom order tables) feature.
-	 */
-	function before_woocommerce_init() {
-		if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
-			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', CCJ_PLUGIN_FILE, true );
-		}
-	}
 }
 
 return new CustomCSSandJS_AdminConfig();

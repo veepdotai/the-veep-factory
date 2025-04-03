@@ -205,6 +205,18 @@ i.ccj-i-beautifier::before {
     padding: 3px 8px;
     background-color: #fff;
 }
+.code-mirror-before .code-mirror-before-css::before,
+.code-mirror-before .code-mirror-before-js::before, 
+.code-mirror-after .code-mirror-after-css::before,
+.code-mirror-after .code-mirror-after-js::before {
+	content: "\003C";
+} 
+.code-mirror-before .code-mirror-before-css::after, 
+.code-mirror-before .code-mirror-before-js::after,
+.code-mirror-after .code-mirror-after-css::after, 
+.code-mirror-after .code-mirror-after-js::after {
+	content: "\FF1E";
+}
 
 /**
  * Options meta box

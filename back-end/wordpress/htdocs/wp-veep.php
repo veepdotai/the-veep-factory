@@ -3,7 +3,7 @@
 if ( $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' )
 {
     $_SERVER['HTTPS']       = 'on';
-    $_SERVER['SERVER_PORT'] = 443;
+    #$_SERVER['SERVER_PORT'] = 443;
 }
 
 define('DB_COLLATE', 'utf8mb4_general_ci');

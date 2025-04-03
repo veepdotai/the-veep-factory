@@ -75,6 +75,7 @@ class CustomCSSandJS_Admin {
 
 		// Add some custom actions/filters
 		add_action( 'manage_custom-css-js_posts_custom_column', array( $this, 'manage_posts_columns' ), 10, 2 );
+		add_filter( 'list_table_primary_column', array( $this, 'list_table_primary_column' ), 10, 2 );
 		add_filter( 'manage_edit-custom-css-js_sortable_columns', array( $this, 'manage_edit_posts_sortable_columns' ) );
 		add_action( 'posts_orderby', array( $this, 'posts_orderby' ), 10, 2 );
 		add_action( 'posts_join_paged', array( $this, 'posts_join_paged' ), 10, 2 );
@@ -214,9 +215,12 @@ class CustomCSSandJS_Admin {
 	 */
 	public function cm_localize() {
 
+		global $wp_version;
+
 		$settings = get_option( 'ccj_settings', array() );
 
 		$vars = array(
+			'wp_version'     => $wp_version,
 			'autocomplete'   => isset( $settings['ccj_autocomplete'] ) && ! $settings['ccj_autocomplete'] ? false : true,
 			'active'         => __( 'Active', 'custom-css-js' ),
 			'inactive'       => __( 'Inactive', 'custom-css-js' ),
@@ -278,6 +282,10 @@ class CustomCSSandJS_Admin {
 			return $this->default_options;
 		}
 
+		if ( is_array( $options['options'][0] ) && isset( $options['options'][0]['type'] ) ) {
+			return $options['options'][0];
+		}
+
 		$options                   = @unserialize( $options['options'][0] );
 		$this->options[ $post_id ] = $options;
 		return $options;
@@ -335,7 +343,7 @@ class CustomCSSandJS_Admin {
 			'cb'        => '<input type="checkbox" />',
 			'active'    => '<span class="ccj-dashicons dashicons dashicons-star-empty" title="' . __( 'Active', 'custom-css-js' ) . '"></span>',
 			'type'      => __( 'Type', 'custom-css-js' ),
-			'title'     => __( 'Title' ),
+			'name'      => __( 'Title' ),
 			'author'    => __( 'Author' ),
 			'published' => __( 'Published' ),
 			'modified'  => __( 'Modified', 'custom-css-js' ),
@@ -344,9 +352,26 @@ class CustomCSSandJS_Admin {
 
 
 	/**
+	 * Set list table primary column.
+	 */
+	function list_table_primary_column() {
+		return 'name';
+	}
+
+
+	/**
 	 * Fill the data for the new added columns in the `edit` screen
 	 */
 	function manage_posts_columns( $column, $post_id ) {
+
+		if ( 'name' === $column ) {
+			$post      = get_post( $post_id );
+			$edit_link = get_edit_post_link( $post_id );
+			$title     = _draft_or_post_title( $post_id );
+			echo '<strong><a class="row-title" href="' . esc_url( $edit_link ) . '">' . esc_html( $title ) . '</a>';
+				_post_states( $post );
+			echo '</strong>';
+		}
 
 		if ( 'type' === $column ) {
 			$options = $this->get_options( $post_id );
@@ -361,7 +386,7 @@ class CustomCSSandJS_Admin {
 				$h_time    = $t_time;
 				$time_diff = 0;
 			} else {
-				$time      = ( 'published' === $column ) ? get_post_time( 'U', false, $post ) : get_post_modified_time( 'U', false, $post );
+				$time      = ( 'published' === $column ) ? get_post_time( 'U', true, $post ) : get_post_modified_time( 'U', true, $post );
 				$time_diff = time() - $time;
 
 				if ( $time && $time_diff > 0 && $time_diff < DAY_IN_SECONDS ) {
@@ -753,8 +778,8 @@ End of comment */ ',
 					) . PHP_EOL . PHP_EOL;
 				}
 				$code_mirror_mode   = 'text/javascript';
-				$code_mirror_before = '<script type="text/javascript">';
-				$code_mirror_after  = '</script>';
+				$code_mirror_before = 'script type="text/javascript"';
+				$code_mirror_after  = '/script';
 				break;
 			case 'html':
 				if ( $new_post ) {
@@ -762,10 +787,10 @@ End of comment */ ',
 						'<!-- Add HTML code to the header or the footer.
 
 For example, you can use the following code for loading the jQuery library from Google CDN:
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 or the following one for loading the Bootstrap library from jsDelivr:
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
 -- End of the comment --> ',
 						'custom-css-js'
@@ -803,8 +828,8 @@ End of comment */ ',
 
 				}
 				$code_mirror_mode   = 'text/css';
-				$code_mirror_before = '<style type="text/css">';
-				$code_mirror_after  = '</style>';
+				$code_mirror_before = 'style type="text/css"';
+				$code_mirror_after  = '/style';
 
 		}
 
@@ -819,9 +844,9 @@ End of comment */ ',
 
 				</div>
 
-				<div class="code-mirror-before"><div><?php echo htmlentities( $code_mirror_before ); ?></div></div>
+				<div class="code-mirror-before"><div class="code-mirror-before-<?php echo esc_attr($language); ?>"><?php echo htmlentities( $code_mirror_before ); ?></div></div>
 				<textarea class="wp-editor-area" id="ccj_content" mode="<?php echo htmlentities( $code_mirror_mode ); ?>" name="content" autofocus><?php echo $post->post_content; ?></textarea>
-				<div class="code-mirror-after"><div><?php echo htmlentities( $code_mirror_after ); ?></div></div>
+				<div class="code-mirror-after"><div class="code-mirror-after-<?php echo esc_attr($language); ?>"><?php echo htmlentities( $code_mirror_after ); ?></div></div>
 
 				<table id="post-status-info"><tbody><tr>
 					<td class="autosave-info">
@@ -926,6 +951,8 @@ End of comment */ ',
 	 * Get an array with all the information for building the code's options
 	 */
 	function get_options_meta() {
+		global $wp_version;
+
 		$options = array(
 			'linking'      => array(
 				'title'   => __( 'Linking type', 'custom-css-js' ),
@@ -965,6 +992,10 @@ End of comment */ ',
 					'frontend' => array(
 						'title'    => __( 'In Frontend', 'custom-css-js' ),
 						'dashicon' => 'tagcloud',
+					),
+					'block' => array(
+						'title'    => __( 'In Block editor', 'custom-css-js' ),
+						'dashicon' => 'layout',
 					),
 					'admin'    => array(
 						'title'    => __( 'In Admin', 'custom-css-js' ),
@@ -1020,6 +1051,18 @@ End of comment */ ',
 				'disabled' => true,
 			),
 		);
+
+		if ( version_compare( $wp_version, '6.6', '<' ) ) {
+			$in_block_tipsy = __( 'The "In Block editor" option is available only for "Linking type: External File". For WordPress >= 6.6 the "In Block editor" option is available for both linking types.', 'custom-css-js' );
+			$in_block_tipsy = htmlentities( $in_block_tipsy );
+			$in_block_tipsy = '<span rel="tipsy" class="dashicons dashicons-editor-help tipsy-no-html" style="margin: 7px 3px 0 3px; display: none;" title="' . $in_block_tipsy . '"></span>';
+			$options['side']['values']['block']['title'] .= $in_block_tipsy; 
+		}
+
+		if ( ! version_compare( $wp_version, '5.0' ) || class_exists( 'Classic_Editor' ) ) {
+			// Remove the "In Block editor" option only for WP < 5 or if the "Classic Editor" plugin installed
+			unset( $options['side']['values']['block'] );
+		}
 
 		if ( is_multisite() && is_super_admin() && is_main_site() ) {
 			$options['multisite'] = array(
@@ -1184,7 +1227,7 @@ End of comment */ ',
 		}
 
 		$options['side'] = [];
-		foreach ( ['frontend', 'admin', 'login'] as $_side ) {
+		foreach ( ['frontend', 'block', 'admin', 'login'] as $_side ) {
 			if ( isset( $_POST[ 'custom_code_side-' . $_side ] ) && $_POST[ 'custom_code_side-' . $_side ] == '1' ) {
 				$options['side'][] = $_side;
 			}
@@ -1393,14 +1436,14 @@ endif;
 					$selected  = ( isset( $a['disabled'] ) && $a['disabled'] ) ? ' disabled="disabled"' : '';
 					$selected .= ( in_array( $__key, $current_values ) ) ? ' checked="checked" ' : '';
 					$output   .= '<input type="checkbox" ' . $selected . ' value="1" name="' . $id . '" id="' . $id . '">' . PHP_EOL;
-					$output   .= '<label class="' . $dashicons . '" for="' . $id . '"> ' . esc_attr( $__value['title'] ) . '</label><br />' . PHP_EOL;
+					$output   .= '<label class="' . $dashicons . '" for="' . $id . '"> ' . $__value['title'] . '</label><br />' . PHP_EOL;
 				}
 			} else {
 				$dashicons = isset( $a['dashicon'] ) ? 'dashicons-before dashicons-' . $a['dashicon'] : '';
 				$selected  = ( isset( $options[ $_key ] ) && $options[ $_key ] == '1' ) ? ' checked="checked" ' : '';
 				$selected .= ( isset( $a['disabled'] ) && $a['disabled'] ) ? ' disabled="disabled"' : '';
 				$output   .= '<input type="checkbox" ' . $selected . ' value="1" name="' . $name . '" id="' . $name . '">' . PHP_EOL;
-				$output   .= '<label class="' . $dashicons . '" for="' . $name . '"> ' . esc_attr( $a['title'] ) . '</label>' . PHP_EOL;
+				$output   .= '<label class="' . $dashicons . '" for="' . $name . '"> ' . $a['title'] . '</label>' . PHP_EOL;
 			}
 			$output .= '</div>' . PHP_EOL;
 		}

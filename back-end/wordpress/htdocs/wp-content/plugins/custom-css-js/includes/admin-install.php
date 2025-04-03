@@ -64,7 +64,6 @@ class CustomCSSandJS_Install {
             'publicly_queryable'     => false,
             'show_ui'                => true,
             'show_in_menu'           => true,
-            'menu_position'          => 100,
             'menu_icon'              => 'dashicons-plus-alt',
             'query_var'              => false,
             'rewrite'                => array( 'slug' => 'custom-css-js' ),

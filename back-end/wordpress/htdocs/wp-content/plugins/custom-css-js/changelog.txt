@@ -1,0 +1,364 @@
+== Changelog ==
+
+= 3.50 =
+* 02/17/2025
+* Fix: the editor doesn't show up under certain conditions 
+* Fix: don't show the code excerpts in the list table, if the "Extended View" option is enabled for posts or pages
+
+= 3.49 =
+* 11/13/2024
+* Fix: add nuance for the "in Block editor" option for websites with WP before v6.6 and after
+
+= 3.48 =
+* 09/24/2024
+* Feature: add JS/CSS custom codes to the Block editor
+
+= 3.47 =
+* 05/27/2024
+* Fix: use the GMT time for showing when a custom code was published or modified
+
+= 3.46 =
+* 01/31/2024
+* Tweak: update the Bootstrap and jQuery library links 
+* Tweak: remove the qTranslate-x warning. The qTranslate-x plugin was removed from wp.org since Aug 2021
+
+= 3.45 =
+* 10/17/2023
+* Fix: enqueue the jQuery library only if there is a frontend JS custom code that requires it 
+
+= 3.44 =
+* 06/07/2023
+* Compatibility with the WooCommerce "custom order tables" feature
+
+= 3.43 =
+* 03/13/2023
+* Fix: PHP8.1 deprecation notices
+* Fix: after adding a JS/HTML custom code with empty content will show the CSS default message in the editor
+
+= 3.42 =
+* 01/17/2023
+* Fix: the "LH Archived Post Status" plugin was removing the "Publish" button on the add/edit custom code page
+* Feature: multiple values for the "Where in site" option
+
+= 3.41 =
+* 10/05/2022
+* Feature: code folding in the editor
+
+= 3.40 =
+* 06/10/2022
+* Feature: keep the user-set editor's height upon page loads and custom code saves 
+* Feature: save the custom code upon "Ctrl-S" in the editor
+* Tweak: admin side adjustments for RTL languages 
+
+= 3.39 =
+* 03/16/2022
+* Fix: load the CodeMirror options from a localized variable 
+* Tweak: add the "ccj_code_editor_settings" filter for modifying the editor's options
+
+= 3.38.1 =
+* 12/02/2021
+* Fix: revert the code related to the compatibility with the `HTML Editor Syntax Highlighter` plugin
+
+= 3.38 =
+* 11/09/2021
+* Fix: escape labels on the "Add new custom code" page
+* Feature: keep the last cursor position in the editor and let the editor get focus when the page loads 
+
+= 3.37 =
+* 07/12/2021
+* Fix: allow the TablePress plugin to load its JS files on the "Add custom code" page in admin
+* Feature: highlight active line in the editor 
+* Feature: add "Ctrl + J" shortcut to the editor for jumping to the matching tag
+
+= 3.36 =
+* 02/23/2021
+* Fix: fatal error with PHP8.0
+
+= 3.35 =
+* 01/19/2021
+* Tweak: change dummy revision dates to fictional dates before 2000
+* Fix: replace the deprecated postL10n JS object with wp.i18n
+* Fix: add "tipsy-no-html" to the tooltips on the settings page
+
+= 3.34 =
+* 11/01/2020
+* Feature: enqueue the jQuery library if one of the JS custom codes requires it
+* Fix: set cookie SameSite attribute to lax
+
+= 3.33 =
+* 08/20/2020
+* Fix: the user language preferrence was ignored in favor of the site defined language
+* Fix: allow the jQuery library added by plugins like Enable jQuery Migrate Helper or Test jQuery Updates
+* Fix: permalink was not editable with WordPress 5.5
+* Feature: fullscreen editor
+* Feature: button for beautifying the code
+
+= 3.32  =
+* 07/08/2020
+* Fix: add "Cmd + " editor shortcuts for MacOS computers
+* Fix: use file_get_contents instead of include_once to load the custom codes
+* Fix: compatibility issue with the Product Slider for WooCommerce by ShapedPlugin
+* Feature: "Ctrl + /" in the editor will comment out the code
+* Feature: order custom codes table by "type" and "active" state
+* Feature: autocomplete in the editor
+
+= 3.31 =
+* 03/21/2020
+* Declare compatibility WooCommerce 4.1
+* Feature: add "After <body> tag" option for HTML codes, if the theme allows it 
+* Feature: don't show type attribute for script and style tags if the theme adds html5 support for it
+* Code refactory
+* Fix: the permalink was mistakingly showing a ".css" file extension when being edited
+
+= 3.30 =
+* 03/12/2020
+* Feature: color the matching brackets in the editor
+* Declare compatibility WooCommerce 4.0 
+* Declare compatibility WordPress 5.4 
+
+= 3.29 =
+* 01/31/2020
+* Fix: date Published and Modified date wasn't shown in Japanese
+* Feature: indentation in the editor
+* Feature: close brackets in the editor
+
+= 3.28 =
+* 11/05/2019
+* Tweak: update the Bootstrap and jQuery library links 
+* Declare compatibility with WordPress 5.3
+
+= 3.27 =
+* 08/08/2019 
+* Compatibility with the "CMSMasters Content Composer" plugin
+* Feature: keep the cursor position after saving
+* Option: remove the comments from the HTML
+
+= 3.26 =
+* 05/08/2019
+* Fix: remove the Codemirror library added from WP Core
+* Tweak: use protocol relative urls for custom code linked file
+* Declare compatibility with WordPress 5.2
+
+= 3.25 =
+* 04/21/2019
+* Tweak: update the Bootstrap and jQuery library links 
+* Declare compatibility with WooCommerce 3.6
+
+= 3.24 =
+* 04/05/2019
+* Fix: remove the editor scrollbar
+* Tweak: rename "First Page" to "Homepage" to avoid misunderstandings 
+
+= 3.23 =
+* 03/15/2019
+* Fix: avoid conflicts with other plugins that use CodeMirror as their editor
+
+= 3.22 =
+* 12/06/2018
+* Fix: another solution for the bug related to the Edit Custom Code page was blank for WordPress 5.0 and the Classic Editor enabled
+
+= 3.21 =
+* 12/06/2018
+* Fix: the Edit Custom Code page was blank for WordPress 5.0 and the Classic Editor enabled
+
+= 3.20 =
+* 11/15/2018
+* Fix: remove compatibility with the Shortcoder plugin. Bug https://wordpress.org/support/topic/edit-page-blank-8/ 
+* Declare compatibility WooCommerce 3.5
+
+= 3.19 =
+* 10/16/2018
+* Fix: keep the editor LTR even on RTL websites
+* Fix: flush rewrite rules after modifying the "Add Web Designer role" option
+
+= 3.18 =
+* 07/13/2018
+* Fix: the default comment for JS for other locales than "en_" was removing the <scripts> tags
+* Tweak: make the search dialog persistent
+* Tweak: correct the tooltip info for the 'ccs_js_designer' option
+
+= 3.17 =
+* 04/25/2018
+* Fix: add the add/edit/delete custom post capabilities to the admin and 'css_js_designer' roles on plugin activation
+
+= 3.16 =
+* 04/22/2018
+* Fix: "The link you followed has expired" on custom code save if the WP Quads Pro plugin is active
+* Fix: PHP warning for PHP 7.2
+* Change: add/remove the "Web Designer" role only on activating/deactivating the option in the Settings page
+
+= 3.15 =
+* 03/27/2018
+* Change: check the option name against an array of allowed values
+
+= 3.14 =
+* 02/04/2018
+* Feature: permalink slug for custom codes
+* Fix: set the footer scripts to a higher priority
+* Update the french translation
+* Fix: allow admin stylesheets from ACF plugin, otherwise it breaks the post.php page
+* Tweak: for post.php and post-new.php page show code's title in the page title
+
+= 3.13 =
+* 01/12/2018
+* Feature: add the "Keep the HTML entities, don't convert to its character" option
+
+= 3.12 =
+* 01/03/2018
+* Reverse to the `wp_footer` function for the footer scripts, as the `print_footer_scripts` function is used also in the admin, which lead to many broken back-ends
+
+= 3.11 =
+* 01/03/2018
+* Use the `print_footer_scripts` function for the footer scripts (https://wordpress.org/support/topic/footer-code-position-before-external-scripts-is-overridden/)
+* Escape selectively the HTML characters in the editor (https://wordpress.org/support/topic/annoying-bug-in-text-editor/)
+
+= 3.10 =
+* 12/15/2017
+* Fix: https://wordpress.org/support/topic/broken-layout-of-code-snippet-type-color-tag-css-html-js-on-main-list-table/
+* Feature: add filter by code type
+* Feature: make the 'Modified' column sortable
+* Fix: if the default comment remains in the "Add Custom JS", then there was no <script> tags added to the code, as the comment contained a <script> tag
+
+= 3.9 =
+* 12/01/2017
+* Feature: add "Last edited ..." information under the editor
+* Fix: jump to line when searching
+* Tweak: add message that the Code Revision data is dummy
+
+= 3.8 =
+* 10/19/2017
+* Declare compatibility with WooCommerce 3.2 (https://woocommerce.wordpress.com/2017/08/28/new-version-check-in-woocommerce-3-2/)
+* Fix: avoid conflicts with other plugins that implement the CodeMirror editor
+* Update the CodeMirror library to 5.28 version
+
+= 3.7 =
+* 10/06/2017
+* Add French and Polish translation
+
+= 3.6 =
+* 09/07/2017
+* Fix: compatibility with the CSS Plus plugin
+
+= 3.5 =
+* 08/25/2017
+* Code refactoring
+* Add activate/deactivate link to row actions and in Publish box
+* Make the activate/deactivate links work with AJAX
+* Add Turkish translation
+
+= 3.4 =
+* 07/11/2017
+* Security fix according to VN: JVN#31459091 / TN: JPCERT#91837758 
+
+= 3.3 =
+* 06/23/2017
+* Feature: option for adding Codes to the Login Page 
+
+= 3.2 =
+* 06/13/2017
+* Fix: compatibility issue with the HTML Editor Syntax Highlighter plugin
+
+= 3.1 =
+* 05/14/2017
+* Feature: prepare the plugin for translation
+
+= 3.0 =
+* 04/12/2017
+* Feature: create the Web Designer role
+* Feature: allow Custom Codes to be managed only by users with the right capabilities
+
+= 2.10 =
+* 02/05/2017
+* Feature: circumvent external file caching by adding a GET parameter
+* Add special offer for Simple Custom CSS and JS pro
+
+= 2.9 =
+* 12/05/2016
+* Compatibility with WP4.7. The "custom HTML code" was not showing up anymore
+
+= 2.8 =
+* 10/09/2016
+* Feature: add search within the editor accessible with Ctrl+F
+* Feature: make the inactive rows opaque
+
+= 2.7 =
+* 09/04/2016
+* Fix: there was a space in the htmlmixed.%20js url
+* Feature: make the editor resizable
+
+= 2.6 =
+* 08/31/2016
+* Feature: add HTML code
+* Fix: add htmlentities when showing them in the editor
+* Feature: when adding a code, show more explanations as comments
+
+= 2.5 =
+* 08/25/2016
+* Fix: compatibility with other plugins that interfere with the CodeMirror editor
+
+= 2.4 =
+* 08/01/2016
+* Add the "Add CSS Code" and "Add JS Code" buttons next to the page title
+* Compatibility with WP 4.6: the "Modified" column in the Codes listing was empty
+
+= 2.3 =
+* 06/22/2016
+* Add the includes/admin-notices.php and includes/admin-addons.php
+* Feature: change the editor's scrollbar so it can be caught with the mouse
+
+= 2.2 =
+* 06/22/2016
+* Check compatibility WordPress 4.5.3
+* Add special offer for Simple Custom CSS and JS pro
+
+= 2.1 =
+* 04/24/2016
+* Fix: on multisite installs have to create the custom-css-js folder in the upload dir for each site
+* Fix: the `deactivate code` star wasn't working when first time clicked
+* Fix: In the add/edit Code page filter which meta boxes are allowed
+* Fix: If the custom-css-js folder is not created of is not writable, issue an admin notice.
+
+= 2.0 =
+* 04/11/2016
+* Feature: enable/disable codes
+* Feature: add a GET parameter at the end of external files in order to over circumvent caching
+* Fix: don't add the "<script>" tag from the code if already present. 
+
+= 1.6 =
+* 03/26/2016
+* Fix: the number of codes were limited because query_posts is automatically inserting a limit 
+
+= 1.5 =
+* 03/10/2016
+* Fix: solved a conflict with the `shortcoder` plugin.
+
+= 1.4 =
+* 01/04/2016
+* Tweak: Do not enqueue scripts unless we are editing the a custom-css-js type post.
+* Fix: The register_activation_hook was throwing a notice
+* Fix: add window.onload when initializing the CodeMirror editor
+* Tweak: Differentiated the option names for "Where on page" and "Where in site"
+* Fix: set the correct language modes to CodeMirror object
+* Tweak: remove the `slug` metabox
+* Tweak: use the compressed version of CodeMirror
+
+= 1.3 =
+* 12/27/2015
+* Tweak: changed the submenus to "Add Custom CSS" and "Add Custom JS" instead of "New Custom Code"
+* Tweak: Use `admin_head` instead of `admin_enqueue_scripts` for external files in order to add priority to the code
+* Fix: The javascript code was not shown
+* Fix: For longer code the last line in the editor was hidding because of the CodeMirrorBefore div.
+
+= 1.2 =
+* 12/14/2015
+* Fix: when a code was sent into Trash it still wasn't shown on the website
+
+= 1.1 =
+* 10/12/2015
+* Tweak: for external files use wp_head and wp_footer instead of wp_enqueue_style. Otherwise the CSS and JS is inserted before all the other scripts and are overwritten.
+* Tweak: Save all the codes in files in order to save on database queries
+* Tweak: Rewrite the readme.txt in the form of FAQ for better explanations
+
+= 1.0 =
+* 06/12/2015
+* Initial commit

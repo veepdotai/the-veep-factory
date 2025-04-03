@@ -216,6 +216,21 @@ jQuery(document).ready( function($) {
 		}
 	}
 
+	// Disable "In Block editor" option for "Linking type: Internal" and WP < 6.6
+	if ( CCJ['wp_version'].localeCompare('6.6', undefined, { numeric: true, sensitivity: 'base' }) < 0 && $('#custom_code_side-block').length > 0 ) {
+
+		toggle_in_block_editor( $('input[name="custom_code_linking"]:checked').val() !== 'internal' );
+		$('input[name="custom_code_linking"]').change( function() {
+			toggle_in_block_editor( $(this).val() !== 'internal' );
+		} );
+
+		function toggle_in_block_editor( enable = true ) {
+			$('input#custom_code_side-block').prop('disabled', ! enable );
+			$('.options_meta_box label.dashicons-layout').css('color', enable ? '#3c434a' : '#ccc' );
+			$('.options_meta_box label.dashicons-layout span').css('color', '#3c434a').toggle( ! enable );
+		}
+	}
+
 
     // Toggle the signs for activating/deactivating codes
     function ccj_activate_deactivate(code_id, action) {
