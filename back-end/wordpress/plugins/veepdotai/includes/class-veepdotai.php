@@ -6,10 +6,10 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 add_action("wp_dashboard_setup", "Veepdotai::dashboard_setup");
 
 /**
- * Prevents user to access login screen except admin
+ * Prevents logged user to access login screen except admin
  */
 
-add_action( 'init', 'blockusers_init' );
+add_action( 'init2', 'blockusers_init' );
 function blockusers_init() {
 	$user_wp = wp_get_current_user();
 	//error_log("user_wp: " . print_r($user_wp, null), 3, "/tmp/wp-init.log");
@@ -17,7 +17,8 @@ function blockusers_init() {
 	//error_log("user_wp: " . print_r($url, null), 3, "/tmp/wp-init.log");
 	//$url = "https://www.google.com";
 
-    if ( is_admin()
+    if ( $user_wp
+			&& is_admin()
 			&& ! current_user_can( 'administrator' )
 			&& ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
         wp_redirect( $url );

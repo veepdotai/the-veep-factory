@@ -305,6 +305,7 @@ class Veepdotai_Util {
 			if ( ! get_option( $user_param_name ) ) {
 				self::log( 'debug', "Setting option through binary serialization because transcription is empty and should not." );
 				$res = self::convert_binary_data( $user, $user_param_name, $value );
+				//$res = $value;
 				self::log( 'debug', "Update option after binary conversion ? res = ${res}." );
 			}
 		}

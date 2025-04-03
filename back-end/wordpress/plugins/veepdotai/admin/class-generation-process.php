@@ -732,7 +732,8 @@ class Generation_Process {
         self::log( __METHOD__ . ": content: " . print_r( $content, true ) );
         $extracted = substr($content, 0, 20);
         self::log( __METHOD__ . ": extracted: " . print_r( $extracted, true ) );
-        $computed_title = Veepdotai\Misc\Encoding\fixUTF8($extracted);
+        //$computed_title = Veepdotai\Misc\Encoding\fixUTF8($extracted);
+        $computed_title = $extracted;
         self::log( __METHOD__ . ": computed_title: " . print_r( $computed_title, true ) );
 
         $elements = self::extract_elements( $content );
