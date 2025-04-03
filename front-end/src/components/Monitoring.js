@@ -104,10 +104,19 @@ export default function Monitoring( props ) {
     }
 
     function showResumeButton(topic, msg) {
-        //alert("coucou");
+        log.trace('showResumeButton: topic: ', topic, "message: ", msg)
+        log.trace('showResumeButton: setBackDisabled to true...');
         setBackDisabled(true);
+
+        log.trace('showResumeButton: setResumeButton: true...')
         setResumeButton(true);
+
+        log.trace('showResumeButton: setContentId: true...')
+        setContentId(msg?.replace(/.*cid:(.*)$/, "$1"))
+
+        log.trace('showResumeButton: setTimer: false...')
         setTimer(false);
+        log.trace('done.')
     }
 
     function reset(topic, msg) {
@@ -162,7 +171,7 @@ export default function Monitoring( props ) {
                     }
                 </Col>
 
-                {
+                { true &&
                     <Col className="text-align-start" xs={12} md={12} lg={12} xl={12}>
                         
                         {
@@ -184,7 +193,7 @@ export default function Monitoring( props ) {
                                     <Button className={"whitespace-normal " + (!backDisabled ? 'd-none' :'m-1')} onClick={cancelProcess} disabled={!backDisabled}>
                                         {t("Menu.Cancel")}
                                     </Button>
-                                    { resumeButton && contentId ?
+                                    { resumeButton && (contentId != null) ?
                                             <>
                                                 <Button className="flash m-1" onClick={resume}>
                                                     {t("Resume")}

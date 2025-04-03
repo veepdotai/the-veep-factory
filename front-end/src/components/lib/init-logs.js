@@ -53,6 +53,7 @@ export default function initAppJSLogs(level = "NONE") {
     localStorage.setItem('Parameters', level);
     
     /** Components */
+    localStorage.setItem('Monitoring', level);
     localStorage.setItem('AllCards', level);
       localStorage.setItem('Prompt', level);
       localStorage.setItem('PromptActions', level);
