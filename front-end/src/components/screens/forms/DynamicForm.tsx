@@ -50,10 +50,6 @@ export default function DynamicForm({ type }) {
     }
   }
 
-  const formDefinition = getFormDefinitionFromType(type)
-  log.trace("type: ", type)
-  log.trace("formDefinition: ", formDefinition)
-
   function getConstraints(minChars = 1) {
     return z.string().min(minChars, { message: t("AtLeast", { length: minChars }), }).optional().or(z.literal(''))
   }
@@ -64,24 +60,29 @@ export default function DynamicForm({ type }) {
       formDefinitionObject[field.name] = getConstraints(field.constraints || minChars)
       return null
     })
-    console.log(formDefinitionObject)
+    log.trace("getFormSchema: formDefinitionObject: ", formDefinitionObject)
     return formDefinitionObject
   }
 
-  const minChars = 2
-  const FormSchema = z.object(getFormSchema(formDefinition))
-  let form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {}
-  })
+  function getFormDefinitionByFieldsName(formDefinition) {
+    let formDefinitionObject = {}
+    formDefinition.map((field) => {
+      formDefinitionObject[field.name] = field
+      return null
+    })
+    log.trace("getFormDefinitionByFieldsName: formDefinitionObject: ", formDefinitionObject)
+    return formDefinitionObject
+  }
 
-
-  let cn = "text-sm font-bold"
-  let sectionCn = "pt-5 flex items-center text-md font-bold text-black after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:after:border-neutral-600"
-
-  let defaultTabsContentLayout = "pl-5 pb-5"
-//  let defaultCBB = { displayFormLabel: true, cnFormLabel: "w-[200px] text-right" }
-  let defaultCBB = { displayFormLabel: true, cnFormLabel: "w-[400px] text-left" }
+  function getDefaultValuesFromFormDefinition(formDefinition) {
+    let defaultValues = {}
+    formDefinition.map((field) => {
+      defaultValues[field.name] = field.values || ""
+      return null
+    })
+    log.trace("getDefaultValuesFromFormDefinition: defaultValues: ", defaultValues)
+    return defaultValues  
+  }
 
   function importForm() {
     log.trace("importForm")
@@ -92,16 +93,23 @@ export default function DynamicForm({ type }) {
     try {
       let metadata = JSON.parse(getValueById("importFormJson"))
       let mergingStrategy = getValueById("importFormStrategy")
-      return UFC.updateFormFromStringForm(form, metadata, mergingStrategy)
+      return UFC.updateFormFromStringForm(form, formMetadata, metadata, mergingStrategy)
     } catch(e) {
       log.trace("importForm: pb while updating: e: ", e)
       alert("importForm: pb while updating: e: " + e)
     }
   }
 
+  /**
+   * Called when the data is loaded from the server
+   * 
+   * @param topic the topic for the specific content type  
+   * @param message the fetched data
+   * @returns 
+   */
   function updateForm(topic, message) {
     log.trace("updateForm: ", "topic: ", topic, "message: ", message)
-    return UFC.updateStringForm(form, topic, message)
+    return UFC.updateStringForm(form, formMetadata, topic, message)
   }
 
   //function onSubmit(data: z.infer<typeof FormSchema>) {
@@ -125,30 +133,6 @@ export default function DynamicForm({ type }) {
       })
   }
 
-  useEffect(() => {
-    PubSub.subscribe(topic, updateForm)
-    UtilsGraphQLObject.listOne(graphqlURI, cookies, name, topic)
-  }, [])
-
-  log.trace("updateForm: formDefinition: ", formDefinition)
-
-  let normalizedFormDefinition = formDefinition.filter(({ name }) => name ? true : false)
-  normalizedFormDefinition = normalizedFormDefinition.map((field) => {
-    let group = field.group
-    if (group.indexOf("/")) {
-      return {
-        ...field,
-        group: group.replace(/([^\/]*)\/.*/, "$1"),
-        subgroup: group.replace(/[^\/]*\/(.*)/, "$1")
-      }
-    } else {
-      return field
-    }
-  })
-  let fieldsByGroup = Object.groupBy(normalizedFormDefinition, ({ group }) => group || "main")
-  let tabsTrigger = Object.keys(fieldsByGroup).map(
-    (group) => <TabsTrigger key={`group-${group}]`} className={cn} value={t(Utils.camelize(group))}>{t(Utils.camelize(group))}</TabsTrigger>
-  )
   /**
    * 
    * @param group 
@@ -199,6 +183,57 @@ export default function DynamicForm({ type }) {
       </TabsContent>
     )
   }
+
+  useEffect(() => {
+    PubSub.subscribe(topic, updateForm)
+    UtilsGraphQLObject.listOne(graphqlURI, cookies, name, topic)
+  }, [])
+
+  const minChars = 2
+
+  /**
+   * Should be refactored in a class
+   */
+  let formMetadata = {}
+  formMetadata.type = type
+  formMetadata.formDefinition = getFormDefinitionFromType(type)
+  formMetadata.formDefinitionByFieldsName = getFormDefinitionByFieldsName(formMetadata.formDefinition)
+  formMetadata.defaultValues = getDefaultValuesFromFormDefinition(formMetadata.formDefinition)
+  formMetadata.formSchema = getFormSchema(formMetadata.formDefinition)
+  log.trace("formMetadata: ", formMetadata)
+
+  const FormSchema = z.object(formMetadata.formSchema)
+  let form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: formMetadata.defaultValues
+  })
+
+  let cn = "text-sm font-bold"
+  let sectionCn = "pt-5 flex items-center text-md font-bold text-black after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:after:border-neutral-600"
+
+  let defaultTabsContentLayout = "pl-5 pb-5"
+//  let defaultCBB = { displayFormLabel: true, cnFormLabel: "w-[200px] text-right" }
+  let defaultCBB = { displayFormLabel: true, cnFormLabel: "w-[400px] text-left" }
+
+  log.trace("updateForm: formMetadata.formDefinition: ", formMetadata.formDefinition)
+
+  let normalizedFormDefinition = formMetadata.formDefinition.filter(({ name }) => name ? true : false)
+  normalizedFormDefinition = normalizedFormDefinition.map((field) => {
+    let group = field.group
+    if (group.indexOf("/")) {
+      return {
+        ...field,
+        group: group.replace(/([^\/]*)\/.*/, "$1"),
+        subgroup: group.replace(/[^\/]*\/(.*)/, "$1")
+      }
+    } else {
+      return field
+    }
+  })
+  let fieldsByGroup = Object.groupBy(normalizedFormDefinition, ({ group }) => group || "main")
+  let tabsTrigger = Object.keys(fieldsByGroup).map(
+    (group) => <TabsTrigger key={`group-${group}]`} className={cn} value={t(Utils.camelize(group))}>{t(Utils.camelize(group))}</TabsTrigger>
+  )
 
   //alert('DefaultValue: ' + t(Utils.camelize(Object.keys(fieldsByGroup[0])[0])))
   //alert('DefaultValue: ' + JSON.stringify(Object.keys(fieldsByGroup)[0]))

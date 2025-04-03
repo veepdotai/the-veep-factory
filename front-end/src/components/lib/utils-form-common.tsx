@@ -91,13 +91,13 @@ export const UtilsFormCommon = {
 
     // It is form display, not an update in the database
     // So user must click on Save to persist data
-    updateFormFromStringForm: function(form, metadata, mergingStrategy = null) {
-        let log = UtilsFormCommon.log
+    updateFormFromStringForm: function(form, formMetadata, metadata, mergingStrategy = null) {
+        let log = (...args) => UtilsFormCommon.log.trace("updateFormFromStringForm: ", args)
 
         let newMetadata = null
         if (typeof metadata == "string" && metadata) {
             metadata = JSON.parse(metadata)
-            log.trace("updateFormFromStringForm: metadata (object): ", metadata)
+            log("metadata (object): ", metadata)
             if (typeof metadata.result == "string") {
                 metadata = metadata?.result?.replace(/_EOL_/g, "\n").replace(/_G_/g, '"')
                 if (metadata) {
@@ -107,55 +107,62 @@ export const UtilsFormCommon = {
                 // metadata.result may be a boolean
                 // what do we do in that case?
             }
-            log.trace("updateFormFromStringForm: ", "metadata: ", metadata)
+            log("metadata: ", metadata)
         }
         
         if (metadata) {
             if (! ('result' in metadata)) {
                 // Data can be updated
-                let prevMetadata = form.getValues()
-                log.trace("updateFormFromStringForm: before resetting form: ", "prevMetadata: ", prevMetadata)
-                log.trace("updateFormFromStringForm: before resetting form: ", "newMetadata: ", metadata)
+                let prevMetadata = {...formMetadata.defaultValues, ...form.getValues()}
+                log("before resetting form: ", "prevMetadata: ", prevMetadata)
+                log("before resetting form: ", "newMetadata: ", metadata)
 
-                // the new content comes before the old one
-                let mergedMetadata = {...prevMetadata}
-                let keys = Object.keys(prevMetadata)
-                for(let i = 0; i < keys.length; i++) {
-                    let key = keys[i]
-                    if (metadata[key]) {
-                        let mergedValue = mergedMetadata[key]
-                        if ('merge-newdata-before' === mergingStrategy) {
-                            mergedMetadata[key] = metadata[key] + (mergedValue && ("\n" + mergedValue))
-                        } else if ('merge-newdata-after' === mergingStrategy) {
-                            mergedMetadata[key] = (mergedValue && mergedValue + "\n") + metadata[key]
-                        } else if ('replace' === mergingStrategy) {
-                            mergedMetadata[key] = metadata[key]
+                let mergedMetadata = {}
+                if (null === mergingStrategy) {
+                    mergedMetadata = {...metadata}
+                } else {
+                    // the new content comes before the old one
+                    mergedMetadata = {...prevMetadata}
+                    let keys = Object.keys(prevMetadata)
+                    for(let i = 0; i < keys.length; i++) {
+                        let key = keys[i]
+                        if (metadata[key]) {
+                            let mergedValue = mergedMetadata[key]
+                            if ('replace' === mergingStrategy
+                                    || "listofvalues" === formMetadata.formDefinitionByFieldsName[key].type) {
+                                mergedMetadata[key] = metadata[key]
+                            } else if ('merge-newdata-before' === mergingStrategy) {
+                                mergedMetadata[key] = metadata[key] + (mergedValue && ("\n" + mergedValue))
+                            } else if ('merge-newdata-after' === mergingStrategy) {
+                                mergedMetadata[key] = (mergedValue && mergedValue + "\n") + metadata[key]
+                            } else {
+                                // We are initializing the form so we take the new value we get from the database
+                                mergedMetadata[key] = metadata[key]
+                            }
                         } else {
-                            // We are initializing the form so we take the new value we get from the database
-                            mergedMetadata[key] = metadata[key]
+                            // We just let the existing data
                         }
-                    } else {
-                        // We just let the existing data
                     }
                 }
-                
+
+                log("once merged: ", "mergedMetadata: ", mergedMetadata)
                 form.reset(mergedMetadata)
             } else if (metadata.result === true) {
                 // Data are updated
-                log.trace("updateFormFromStringForm: Data have been updated.")
+                log("Data have been updated.")
             } else if (metadata.result === false) {
                 // Data aren't updated
                 //alert("Error while updating data.")
-                log.trace("updateFormFromStringForm: Data have NOT been updated.")
+                log("Data have NOT been updated.")
             }
         } else {
             // metadata == null or undefined
             // We should raise an error?
-            log.trace("updateFormFromStringForm: metadata is null. What's happening? Houston, we have a problem.")
+            log("metadata is null. What's happening? Houston, we have a problem.")
         }
     },
 
-    updateStringForm: function(form, topic, message) {
+    updateStringForm: function(form, formMetadata, topic, message) {
         //let log = (msg) => UtilsFormCommon.log.trace("updateForm: " + msg)
         let log = UtilsFormCommon.log
         log.trace("updateStringForm: topic: ", topic)
@@ -170,7 +177,7 @@ export const UtilsFormCommon = {
         }
         log.trace("updateStringForm: metadata: ", metadata)
 
-        return UtilsFormCommon.updateFormFromStringForm(form, metadata)
+        return UtilsFormCommon.updateFormFromStringForm(form, formMetadata, metadata)
     },
     
     updateFormOld: function(form, topic, message) {
@@ -206,8 +213,8 @@ export const UtilsFormCommon = {
     },
 
     getFieldType: function(form, field, fieldName, fieldType = "input", fieldValues = "", fieldOptions) {
-        let log = (msg) => UtilsFormCommon.log.trace(`getFieldType: ${msg}`);
-        log(JSON.stringify(field))
+        let log = (...args) => UtilsFormCommon.log.trace("getFieldType: ", args);
+        log("field: " + fieldName, field)
         let lcn = fieldOptions?.cn || "" 
         if (fieldType === "input") {
             let fieldValue = fieldValues ?? undefined
@@ -228,7 +235,7 @@ export const UtilsFormCommon = {
         } else if (fieldType === "select") {
             lcn = lcn || "w-[300px]"
             let values = fieldValues?.split('|') || [];
-            UtilsFormCommon.log.trace("Values: " + JSON.stringify(values));
+            log("select: values: ", values);
             return (
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
@@ -252,6 +259,7 @@ export const UtilsFormCommon = {
                 </Select>
             )
         } else if (["checkbox"].includes(fieldType)) {
+            log("checkbox: ");
             let items = [
                 {id: "displayHeader", label: t("displayHeaderLabel")},
                 {id: "displayFooter", label: t("displayFooterLabel")},
@@ -312,6 +320,8 @@ export const UtilsFormCommon = {
 
             return f
         } else if (["listofvalues", "combobox"].includes(fieldType)) {
+            log(fieldType + ": ", fieldValues)
+
             lcn = lcn || "w-[400px]"
             let values = fieldValues?.split('|') || [];
             values = values.map((item) => {

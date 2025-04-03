@@ -84,7 +84,7 @@ export default function GenericForm( props ) {
                   return (
                     <Form.Group key={attr} className="mt-3" controlId={attr}>
                       <Form.Label className="fs-bold">{titleize(attr)}:</Form.Label>
-                      <Form.Control value={fields[attr]} type="text" {...register(attr)} onChange={handleChanges} />
+                      <Form.Control value={fields[attr] ?? ""} type="text" {...register(attr)} onChange={handleChanges} />
                     </Form.Group>
                   )
                 })

@@ -3,7 +3,7 @@ import { Logger } from 'react-logger-lib';
 
 export const ContentIdContext = createContext(null);
 
-export function ContentIdProvider ( {children} ) {
+export function ContentIdProvider({ children }) {
     const log = Logger.of(ContentIdProvider.name);
     log.trace("Initialization.")
 

@@ -13,7 +13,7 @@ export const UtilsGraphQLObject = {
 	 * so listening parts can be updated
 	 */
 	listOne: function(graphqlURI, cookies, name, topic) {
-		let log = UtilsGraphQLObject.log
+		let log = (...args) => UtilsGraphQLObject.log.trace("listOne: ", args)
 		let q = `
 			mutation list {
 				listData(input: { option: "${name}" }) {
@@ -22,16 +22,20 @@ export const UtilsGraphQLObject = {
 			}
 		`;
 	
-		log.trace(`listOne: query: ${q}`)	
+		log("query: ", q)	
+		if (! cookies) {
+			log("not executed because no cookies: ", cookies)
+			return null
+		}
 	
 		return UtilsGraphQL
 			.client(graphqlURI, cookies)
 			.mutate({
 				mutation: gql`${q}`
 			}).then((result) => {
-				log.trace(`listData: ` + JSON.stringify(result));
-				let data = result.data.listData.result
-				log.trace(`listData: ` + JSON.stringify(data));
+				log("listData: result: ", result)
+				let data = result?.data?.listData?.result
+				log("listData: result: ", data)
 				let r = {
 					"status": 200,
 					"result": data
@@ -39,7 +43,7 @@ export const UtilsGraphQLObject = {
 				PubSub.publish(topic, r);
 				return r
 			}).catch((e) => {
-				log.trace(`list: error while fetching option value for ${name}. Exception: ${e}`);
+				log(`list: error while fetching option value for ${name}. Exception: ${e}`);
 				let r = { "status": 500, "error": e, "msg": `Exception while creating ${name}: ${e}`}
 				PubSub.publish(topic, r);
 				return r
