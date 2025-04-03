@@ -116,3 +116,7 @@ Use network host instead of socket
 WP_DEFINE("DB_HOST", "127.0.0.1")
 
 pb with graphql, /graphql is not found. Need to use /index.php?graphql
+
+Be sure to enable mod_rewrite in apache
+
+In development mode only, you can disable JWT authentification for every request in Simple login module if you encounter some problems in Cloud IDE setup.

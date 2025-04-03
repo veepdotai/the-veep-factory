@@ -17,14 +17,19 @@ v_read_pass() {
 }
 
 v_installation() {
+	sudo apt-get update
+
+	# Various required packages for Veep to work
+	sudo apt-get -y install ffmpeg php8.2-curl
+
 	# Apache Configuration
 	#export APACHE_DOCROOT_IN_REPO=../wordpress/htdocs
 	#apachectl start
+	# APACHE_DOCROOT is defined in /etc/apache2/envvars
 	sudo service apache2 start
 
 	# MySQL server installation
-	sudo apt-get update
-	sudo apt-get -y install mysql-server ffmpeg
+	sudo apt-get -y install mysql-server ffmpeg php8.2-curl
 
 	# MySQL post-installation
 	sudo chown mysql:$DEV_PLATFORM /var/run/mysqld
