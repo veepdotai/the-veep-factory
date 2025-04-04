@@ -273,6 +273,39 @@ class Veepdotai {
 
 	}
 
+	public static function build_app() {
+		$user_wp = wp_get_current_user();
+
+		//$app_dir = "/workspaces/the-veep-factory/back-end/wordpress/htdocs/v";
+		$app_dir = "/srv/data/web/vhosts/app.veep.ai/htdocs/v";
+		$link_name = "current";
+		
+		if( $user_wp->ID == 1
+			|| in_array( 'veepdotai_role_admin', (array) $user_wp->roles ) ) {
+			?>
+				<form method="POST">
+					<input name="app_id" value="" placeholder="Enter app id"></input>
+					<input type="submit"></input>
+				</form>
+			<?php
+				$app_id = sanitize_text_field( $_POST[ "app_id" ] );
+				if( $app_id ) {
+
+					$app_src = $app_dir . "/" . $app_id;
+					$app_target = $app_dir . "/" . $link_name;
+ 
+					Veepdotai_Util::log( 'debug', 'Link: ' . $app_target . ' => ' . $app_src );
+
+					if (file_exists($app_target)) {
+						Veepdotai_Util::log( "debug", "We remove old target: ${app_target}" );
+						unlink( $app_target );
+					}
+					Veepdotai_Util::log( "debug", "Let's create the new target: ${app_target}" );
+					symlink( $app_src, $app_target );
+				}
+		}
+	}
+
 	public static function user_search_by_email() {
 		$user_wp = wp_get_current_user();
 		
@@ -335,6 +368,7 @@ class Veepdotai {
 		Veepdotai::provide_jwt_links();
 		Veepdotai::user_search_by_email();
 		Veepdotai::migrate_v1_to_v2();
+		Veepdotai::build_app();
 	}
 	
 	public static function dashboard_setup() {	
