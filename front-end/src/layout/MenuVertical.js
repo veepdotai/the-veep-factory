@@ -37,22 +37,20 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                 <Accordion type="multiple" className="ms-4">
                     {
                         menuDefinition.map((menu, i) => {
-                            if (menu.title == "") {
-                                return menu?.items?.map(row => row.id == "separator" ?
-                                        <hr />
-                                    :
-                                        <MenuItem key={menu.id} icon={row.icon} itemKey={row.id} itemLabel={row.label || t(Utils.camelize(row.id) + "Label2")} direction={direction} />
-                                )
-                            } else {
-                                return getAccordionItem(menu.id, menu.title,
-                                    <>
-                                        {menu?.items?.map((row) => row.id == "separator" ?
-                                                <hr />
-                                            :
-                                                <MenuItem key={menu.id} icon={row.icon} itemKey={row.id} itemLabel={row.label || t(Utils.camelize(row.id) + "Label3")} direction={direction} />
-                                        )}
-                                    </>
-                                )       
+                            let menuItems = menu?.items?.map(row => row.id == "separator" ?
+                                                                    <hr />
+                                                                :
+                                                                    <MenuItem
+                                                                        key={menu.id}
+                                                                        icon={row.icon}
+                                                                        itemKey={row.id}
+                                                                        itemLabel={row.label || t(Utils.camelize(row.id) + "Label2")}
+                                                                        direction={direction} />
+                            ) 
+                            if (menu.title == "") { // No accordion
+                                return menuItems
+                            } else { // Accordion
+                                return getAccordionItem(menu.id, menu.title, menuItems)
                             }
                         })
                     }

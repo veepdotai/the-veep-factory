@@ -24,16 +24,6 @@ export default function MenuOptions( props ) {
 
   return (
     <>
-      {/*
-          <OffCanvasMenu profile={profile}  key='menu'
-              direction={props.direction}
-              alwaysVisible={props.alwaysVisible}
-              scroll={true}
-              backdrop={true}
-              placement={props.direction == "horizontal" ? "end" : "start"}
-        />
-      */}
-
         <OffCanvasMenu profile={profile}  key='menu'
           {...{
               className: props.className,
@@ -63,9 +53,6 @@ function OffCanvasMenu({ name, ...props }) {
   const handleShow = () => setShow(true);
 
   function menuItem({id, label = "", _alwaysVisible = true}) {
-    /*
-    <MenuItem key={"credits"} alwaysVisible={true} itemKey="credits" itemLabel={t("Credits")} direction={direction} handleClose={handleClose} />
-    */
     return (
       <MenuItem
         key={id}
@@ -106,19 +93,16 @@ function OffCanvasMenu({ name, ...props }) {
 
         <Offcanvas.Body>
 
-
-            { direction == "horizontal" ? // smartphone
+            { direction == "horizontal" ? // mobile (smartphone|tablet)
                 <Container>
+                    {menuItem({id: "support"})}
                     {menuItem({id: "credits"})}
-
                     {menuItem({id: "user-parameters"})}
                     { isManager ? menuItem({id: "app-parameters"}) : <></>}
-                    {menuItem({id: "add-content"})}
-                    {menuItem({id: "support"})}
                     {menuItem({id: "about"})}
                     <Exit alwaysVisible={true} direction={direction} handleClose={handleClose} />            
                 </Container>
-              :
+              : // normal options menu in desktop mode
                 <Container className="gap-5">
                     {menuItem({id: "credits"})}
                     {menuItem({id: "user-parameters"})}
