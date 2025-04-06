@@ -3,10 +3,11 @@
 require_once 'vendor/autoload.php';
 use GuzzleHttp\Client;
 
-define('CLIENT_ID', CONF_CLIENT_ID);
-define('CLIENT_SECRET', CONF_CLIENT_SECRET);
-define('CLIENT_REDIRECT_URI', CONF_CLIENT_REDIRECT_URI);
-define('SCOPE', 'r_emailaddress,r_liteprofile,w_member_social');
+define('BASE_URI_PROVIDER', 'https://www.linkedin.com');
+define('CLIENT_ID', LINKEDIN_CLIENT_ID);
+define('CLIENT_SECRET', LINKEDIN_CLIENT_SECRET);
+define('CLIENT_REDIRECT_URI', LINKEDIN_CLIENT_REDIRECT_URI);
+define('SCOPE', LINKEDIN_SCOPE);
 
 class Veepdotai_OAuth_REST_Controller extends WP_REST_Controller {
 
@@ -66,19 +67,21 @@ class Veepdotai_OAuth_REST_Controller extends WP_REST_Controller {
         //$user = wp_get_current_user()->user_login;
 
         $code = sanitize_text_field( $request[ 'code' ] );
-        $redirect_uri = CONF_CLIENT_REDIRECT_URI ? CONF_CLIENT_REDIRECT_URI : sanitize_url( $request[ 'redirectUri' ] );
+        $redirect_uri = LINKEDIN_CLIENT_REDIRECT_URI ? LINKEDIN_CLIENT_REDIRECT_URI : sanitize_url( $request[ 'redirectUri' ] );
         self::log( "debug", "get_item: redirect_uri: " . $redirect_uri);
 
         try {
-            $client = new Client(['base_uri' => 'https://www.linkedin.com']);
+            $client = new Client(['base_uri' => BASE_URI_PROVIDER]);
+            $params = [
+                "grant_type" => "authorization_code",
+                "code" => $code,
+                "redirect_uri" => $redirect_uri,
+                "client_id" => CLIENT_ID,
+                "client_secret" => CLIENT_SECRET,
+            ];
+            self::log( "debug", "params: " . print_r( $params, true));
             $response = $client->request('POST', '/oauth/v2/accessToken', [
-                'form_params' => [
-                        "grant_type" => "authorization_code",
-                        "code" => $code,
-                        "redirect_uri" => $redirect_uri,
-                        "client_id" => CLIENT_ID,
-                        "client_secret" => CLIENT_SECRET,
-                ],
+                'form_params' => $params,
             ]);
             $data = json_decode($response->getBody()->getContents(), true);
             self::log( "debug", "data: " . print_r( $data, true));

@@ -18,9 +18,10 @@ define('UNSPLASH_API_KEY', '');
 
 define('STRIPE_SK', getenv('STRIPE_SK') );
 
-define('CONF_CLIENT_ID', getenv('LINKEDIN_CLIENT_ID') );
-define('CONF_CLIENT_SECRET', getenv('LINKEDIN_CLIENT_SECRET') );
-define('CONF_CLIENT_REDIRECT_URI', getenv('LINKEDIN_CLIENT_REDIRECT_URI') ); // 'https://3000-veepdotai-voice2post-jy1dot3bmal.ws-eu117.gitpod.io/linkedin'
+define('LINKEDIN_CLIENT_ID', getenv('LINKEDIN_CLIENT_ID') );
+define('LINKEDIN_CLIENT_SECRET', getenv('LINKEDIN_CLIENT_SECRET') );
+define('LINKEDIN_CLIENT_REDIRECT_URI', getenv('LINKEDIN_CLIENT_REDIRECT_URI') );
+define('LINKEDIN_SCOPE', getenv('LINKEDIN_SCOPE'));
 
 define('INFLUX_ORG_ID', getenv('INFLUX_ORG_ID') );
 define('INFLUX_TOKEN', getenv('INFLUX_TOKEN') );
