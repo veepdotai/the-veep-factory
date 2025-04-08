@@ -66,6 +66,7 @@ export default function initAppJSLogs(level = "NONE") {
       localStorage.setItem('PDFExportForm', level);
       localStorage.setItem('PDFViewer', level);
       localStorage.setItem('PDFDocument', level);
+      localStorage.setItem('PDFLink', level);
       localStorage.setItem('PDFParams', level);
       localStorage.setItem('PDFPanel', level);
     localStorage.setItem('GenericForm', level);

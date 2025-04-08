@@ -49,7 +49,7 @@ export const UploadLib = {
 
     },
 
-    upload: function(cookies, myfile, topic, form) {
+    upload: function(cookies, myfile, topic = "NO_TOPIC_PROVIDED", form = null) {
         UploadLib.log.trace("upload: file: ", myfile) 
         const UPLOAD = gql`
             mutation Upload($input: UploadInput!) {
@@ -71,7 +71,6 @@ export const UploadLib = {
             UploadLib.log.trace("upload: success: data: ", data)
             UploadLib.log.trace("upload: success: topic: ", topic)
             PubSub.publish(topic, {form: form, data: data})
-            //PubSub.publish(topic, data)
         })
         .catch((error) => {
             UploadLib.log.trace("upload: error: ", error)
