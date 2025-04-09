@@ -103,7 +103,7 @@ export default function MyContentDetails( { id }) {
     let displaySelector = false
 
     return (
-      <Tabs className="justify-start h-full" id="mycontent-main" defaultValue="content">
+      <Tabs className="justify-start h-full" id="mycontent-main" defaultValue="sideBySide-content">
 
         {output && MyContentDetailsForDesktop.desktopMenu(prompt, "main")}
 

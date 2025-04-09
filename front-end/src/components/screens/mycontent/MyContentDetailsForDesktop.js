@@ -117,10 +117,10 @@ export default class MyContentDetailsForDesktop {
       }
 
       function toggle(id) {
-        if (byId(id).style === "visibility: display") {
-          byId(id).style = "visibility: none"
+        if (byId(id).style.visibility == "hidden") {
+          byId(id).style.visibility = ""
         } else {
-          byId(id).style = "visibility: display"
+          byId(id).style.visibility = "hidden"
         } 
       }
 
@@ -133,7 +133,7 @@ export default class MyContentDetailsForDesktop {
             >
               {t("Output")}
             </label>
-            <input style={{"visibility": "none"}} id="output-equation" class="text-sm" value={prompt.prompts.output} disabled />
+            <input style={{"visibility": "hidden"}} id="output-equation" class="text-sm" value={Veeplet.getChainAsArray(prompt.prompts.output) || Veeplet.getChainAsArray(prompt.prompts.chain)} disabled />
         </div>
       )
     }
