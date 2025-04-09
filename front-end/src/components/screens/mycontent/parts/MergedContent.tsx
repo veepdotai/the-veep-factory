@@ -163,7 +163,7 @@ export default class MergedContent {
     static getMergedContent(prompt, data, options) {
       let log = (msg) => MergedContent.log.trace("getMergedContent: " + msg)
 
-      let defaultChain = Veeplet.getChainAsArray(prompt.prompts.chain);
+      let defaultChain = Veeplet.getChainAsArray(prompt?.prompts?.output || prompt.prompts.chain);
       log(`prompt.prompts.chain: ${JSON.stringify(defaultChain)}.`);
 
       let chain = Veeplet.getChainAsArray(defaultChain);

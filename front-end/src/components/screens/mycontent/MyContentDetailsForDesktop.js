@@ -5,6 +5,7 @@ import { Logger } from 'react-logger-lib';
 import { t } from 'i18next';
 
 import { TabsList, TabsTrigger } from "src/components/ui/shadcn/tabs"
+import { Checkbox } from "src/components/ui/shadcn/checkbox"
 
 import PDFPanel from 'src/components/veepdotai-pdf-config/PDFPanel'
 import PDFParams from 'src/components/veepdotai-pdf-config/components/PDFParams';
@@ -48,59 +49,108 @@ export default class MyContentDetailsForDesktop {
   }
 
   /**
-   * 
+   * Tabs order is managed by output variable, according its presence or not. In both cases, all tabs are present.
+   * No output => snack content first
+   * Output => document first
+   * Checkbox to display output option or not.
    * @param {*} prompt 
    * @returns The menus
    */
   static desktopMenuWithTabs(prompt, mode) {
+    let log = MyContentDetailsForDesktop.log
+
+    function getSideContent() {
+      return (
+        <>
+          <TabsTrigger key="details-menu-chat" id="details-menu-chat" value="chat">
+            <MyContentDetailsForDesktop.TT id="m-conversation" title={t("Chat")}>
+              {Icons.support}
+            </MyContentDetailsForDesktop.TT>
+          </TabsTrigger>
+          <TabsTrigger key="details-menu-transcription" id="details-menu-transcription" value="transcription">
+            <MyContentDetailsForDesktop.TT id="m-transcription" title={t("Transcription")}>
+              {Icons.transcriptionView}
+            </MyContentDetailsForDesktop.TT>
+          </TabsTrigger>
+          <TabsTrigger key="details-menu-metadata" id="details-menu-metadata" value="metadata">
+            <MyContentDetailsForDesktop.TT id="m-metadata" title={t("Metadata")}>
+              {Icons.metadataView}
+            </MyContentDetailsForDesktop.TT>
+          </TabsTrigger>
+        </>
+      )
+    }
+
+    function getSnackContentTabs() {
+      return (
+        <>
+          <TabsTrigger key="details-menu-sideBySide-content" id="details-menu-sideBySide-content" value="sideBySide-content">
+              <MyContentDetailsForDesktop.TT id="m2" title={t("SideBySideView")}>{Icons.comparedView}</MyContentDetailsForDesktop.TT>
+          </TabsTrigger>
+          <TabsTrigger key="details-menu-calendar-content" id="details-menu-calendar-content" value="calendar-content">
+              <MyContentDetailsForDesktop.TT id="m4" title={t("CalendarView")}>{Icons['editorial-calendar']}</MyContentDetailsForDesktop.TT>
+          </TabsTrigger>
+        </>
+      )
+    }
+
+    function getDocumentTabs() {
+      return (
+        <>
+          <TabsTrigger key="details-menu-content" id="details-menu-content" value="content">
+              <MyContentDetailsForDesktop.TT id="m1" title={t("MainContent")}>
+                {Icons.aggregatedView}
+              </MyContentDetailsForDesktop.TT>
+          </TabsTrigger>
+          <TabsTrigger key="details-menu-pdf" id="details-menu-pdf" value="pdf-merged-content">
+              <MyContentDetailsForDesktop.TT id="m3" title={t("PDFMergedContent")}>
+                {Icons.pdf}
+              </MyContentDetailsForDesktop.TT>
+          </TabsTrigger>
+        </>
+      )
+    }
+
+    function displayOutputOptions() {
+      function byId(id) {
+        return document.getElementById(id)
+      }
+
+      function toggle(id) {
+        if (byId(id).style === "visibility: display") {
+          byId(id).style = "visibility: none"
+        } else {
+          byId(id).style = "visibility: display"
+        } 
+      }
+
+      return (
+        <div className="flex align-items-center">
+            <Checkbox id="output-equation-state" onClick={() => toggle("output-equation")} />
+            <label
+              htmlFor="output-equation-state"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mx-2"
+            >
+              {t("Output")}
+            </label>
+            <input style={{"visibility": "none"}} id="output-equation" class="text-sm" value={prompt.prompts.output} disabled />
+        </div>
+      )
+    }
+
+    log.trace("desktopMenuWithTabs: prompt: ", prompt)
     return (
       <>
         { mode === "side" ?
           <TabsList id="details-menu-chat" variant="pills" className="">
-            <div>            
-              <TabsTrigger key="details-menu-chat" id="details-menu-chat" value="chat">
-                <MyContentDetailsForDesktop.TT id="m-conversation" title={t("Chat")}>
-                  {Icons.support}
-                </MyContentDetailsForDesktop.TT>
-              </TabsTrigger>
-              <TabsTrigger key="details-menu-transcription" id="details-menu-transcription" value="transcription">
-                <MyContentDetailsForDesktop.TT id="m-transcription" title={t("Transcription")}>
-                  {Icons.transcriptionView}
-                </MyContentDetailsForDesktop.TT>
-              </TabsTrigger>
-              <TabsTrigger key="details-menu-metadata" id="details-menu-metadata" value="metadata">
-                <MyContentDetailsForDesktop.TT id="m-metadata" title={t("Metadata")}>
-                  {Icons.metadataView}
-                </MyContentDetailsForDesktop.TT>
-              </TabsTrigger>
-
-              {/*
-              <TabsTrigger id="details-menu-sideBySide-content" value="sideBySide-content">
-                  <MyContentDetailsForDesktop.TT id="m2" title={t("SideBySideView")}>{Icons.comparedView}</MyContentDetailsForDesktop.TT>
-              </TabsTrigger>
-              */}
-            </div>
+            {getSideContent()}
           </TabsList>
         :
           <TabsList id="details-menu-main" variant="pills" className="flex justify-start w-100 mh-100">
-            <div>
-              <TabsTrigger key="details-menu-content" id="details-menu-content" value="content">
-                  <MyContentDetailsForDesktop.TT id="m1" title={t("MainContent")}>
-                    {Icons.aggregatedView}
-                  </MyContentDetailsForDesktop.TT>
-              </TabsTrigger>
-              <TabsTrigger key="details-menu-pdf" id="details-menu-pdf" value="pdf-merged-content">
-                  <MyContentDetailsForDesktop.TT id="m3" title={t("PDFMergedContent")}>
-                    {Icons.pdf}
-                  </MyContentDetailsForDesktop.TT>
-              </TabsTrigger>
-              <TabsTrigger key="details-menu-sideBySide-content" id="details-menu-sideBySide-content" value="sideBySide-content">
-                  <MyContentDetailsForDesktop.TT id="m2" title={t("SideBySideView")}>{Icons.comparedView}</MyContentDetailsForDesktop.TT>
-              </TabsTrigger>
-              <TabsTrigger key="details-menu-calendar-content" id="details-menu-calendar-content" value="calendar-content">
-                  <MyContentDetailsForDesktop.TT id="m4" title={t("CalendarView")}>{Icons['editorial-calendar']}</MyContentDetailsForDesktop.TT>
-              </TabsTrigger>
-            </div>
+              {prompt?.prompts?.output && getDocumentTabs()}
+              {getSnackContentTabs()}
+              {! prompt?.prompts?.output && getDocumentTabs()}
+              {displayOutputOptions()}
           </TabsList>
         }
       </>

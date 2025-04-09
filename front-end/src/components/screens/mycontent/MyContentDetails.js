@@ -39,6 +39,7 @@ import { Label } from "src/components/ui/shadcn/label"
 
 import { UtilsGraphQL } from 'src/api/utils-graphql.js'
 import { Constants } from "src/constants/Constants";
+import { setDefaultAutoSelectFamilyAttemptTimeout } from 'net';
 
 export default function MyContentDetails( { id }) {
   const log = Logger.of(MyContentDetails.name);
@@ -58,7 +59,7 @@ export default function MyContentDetails( { id }) {
   const [width, setWidth] = useState(1);
   const [prompt, setPrompt] = useState(null);
   const [selectedFormat, setSelectedFormat] = useState("PDF");
-
+  const [output, setOutput] = useState()
   const graphqlURI = Constants.WORDPRESS_GRAPHQL_ENDPOINT;
 
   function init(id) {
@@ -104,7 +105,7 @@ export default function MyContentDetails( { id }) {
     return (
       <Tabs className="justify-start h-full" id="mycontent-main" defaultValue="content">
 
-        {MyContentDetailsForDesktop.desktopMenu(prompt, "main")}
+        {output && MyContentDetailsForDesktop.desktopMenu(prompt, "main")}
 
         <TabsContent key="details-content-main" id="details-content-main" className="h-full" value="content">
           {MyContentDetailsForDesktop.desktopMarkdownContent(selectedFormat, prompt, data, contentId)}
@@ -157,6 +158,7 @@ export default function MyContentDetails( { id }) {
         log.trace("useEffect[data]: prompt.prompts.chain[0]: " + promptObj.prompts.chain[0]);
         log.trace("useEffect[data]: prompt.prompts.chain?.length: " + promptObj.prompts.chain?.length);
         setPrompt(promptObj);
+        setOutput(promptObj?.prompts?.output || promptObj?.prompts?.chain)
       }
     } catch (e) {
       log.trace("Exception: e: ", e)

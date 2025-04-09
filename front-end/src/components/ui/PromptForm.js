@@ -437,6 +437,7 @@ export default function PromptForm({definition, handleClose}) {
                 <Tab id="chain" eventKey="chain" title={t("PromptsChain")}>
                   {/*<FormRepeater />*/}
                   {getInput(t("PromptsChain"), 'prompts.chain', {required: true})}
+                  {getInput(t("PromptsOutput"), 'prompts.output', {required: false})}
                   <Tab.Container
                     //defaultActiveKey={veepletObject.prompts.g1.label}
                     //defaultActiveKey="__prompt__FiRsT__"
