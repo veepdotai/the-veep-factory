@@ -11,6 +11,18 @@ import Content from '../Content';
 import MyContentDetailsUtils from '../MyContentDetailsUtils';
 import { PlateEditor } from '../../PlateEditor';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import SocialNetworkPreview from '../../SocialNetworkPreview';
+import { ScrollArea } from 'src/components/ui/shadcn/scroll-area';
+
+import { Document, Page } from 'react-pdf'
+import 'react-pdf/dist/Page/AnnotationLayer.css'
+import 'react-pdf/dist/esm/Page/TextLayer.css'
+import { pdfjs } from 'react-pdf';
+import PDF from '@/components/veepdotai-pdf-config/components/PDF';
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+    'pdfjs-dist/build/pdf.worker.min.mjs',
+    import.meta.url,
+).toString();
 
 export default function SideBySideViewContent( { prompt, data, cid, width = 1 } ) {
     const log = Logger.of(SideBySideViewContent.name)
@@ -27,14 +39,6 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
         } else {
           return "";
         }
-    }
-
-    function getCarouselItem(content, i) {
-      return (
-        <CarouselItem key={i} className={`pl-1 flex justify-center items-center max-w-${MAX[width - 1]}`}>
-          {content}
-        </CarouselItem>
-      )
     }
 
     function getContent(lcid, attrName, title, content, viewType) {
@@ -78,19 +82,27 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
         return (<></>)
       }
 
+      // raw content
       let _content = node?.content ? node.content : node
       let lcid = node?.cid ? node.cid : cid
 
+      // embeds content with editor
       let content = getContent(lcid, attrName, title, _content, viewType)
 
       return (
         <>
-          {"carousel" == viewType ?
-              getCarouselItem(content, i)
-            :
-              content
-          }
+          {"carousel" == viewType && getCarouselItem(content, i)}
+          {"normal" == viewType && content}
+          {"preview" == viewType && getPreviewItem(_content, i)}
         </>
+      )
+    }
+
+    function getCarouselItem(content, i) {
+      return (
+        <CarouselItem key={i} className={`pl-1 flex justify-center items-center max-w-${MAX[width - 1]}`}>
+          {content}
+        </CarouselItem>
       )
     }
 
@@ -109,6 +121,35 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
       )
     }
 
+    function getPreviewItem(content, i) {
+      /*
+      let mediaUrl = "https://humble-space-capybara-v494vgwqp6xcwpv4-3000.app.github.dev/assets/pdf_test_1.pdf"
+      let document1 = <Document file={mediaUrl}>
+          <Page pageNumber={1} height={525} />
+        </Document>
+      */
+      let document = <PDF initContent={content} params={{}} />      
+      log.trace("getPreviewItem: document: ", document)
+
+      return (
+        <div key={i} className="flex w-[400px] m-2">
+          <ScrollArea className="h-100">
+            <SocialNetworkPreview viewType='LinkedIn' content={{content: content}} document={document}/>
+          </ScrollArea>
+        </div>
+      )
+    }
+
+    function getContentWithPreview(contents) {
+      return (
+        <ScrollArea className="w-100 h-[800px]">
+          <div className={`p-1 w-1/${width} flex flex-wrap`}>
+              {contents}
+          </div>
+        </ScrollArea>
+      )
+    }
+
     function getContentWithScrollbar(contents) {
       return (
         <div className={`p-1 w-1/${width} flex overflow-x-auto space-x-2`}>
@@ -117,7 +158,7 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
       )
     }
 
-    function getContents(chain, viewType = "scroll") {
+    function getContents(chain, viewType = "normal") {
       //let chain = [].concat(prompt.prompts.chain);
         log.trace("getCompareView: chain: " + typeof chain + " / " + JSON.stringify(chain));
         let stepsNb = chain?.length;
@@ -125,17 +166,15 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
 
         return (
           <div className={`p-1`}>
-            { "carousel" == viewType ?
-                getContentWithCarousel(contents)
-              :
-                getContentWithScrollbar(contents)
-            }
+            { "carousel" == viewType && getContentWithCarousel(contents)}
+            { "normal" == viewType && getContentWithScrollbar(contents)}
+            { "preview" == viewType && getContentWithPreview(contents)}
           </div>
         );
     }
 
     let chain = Veeplet.getChainAsArray(prompt.prompts.chain);
-    let viewType = "carousel"
+    let viewType = "preview"
 
     return (
       <>

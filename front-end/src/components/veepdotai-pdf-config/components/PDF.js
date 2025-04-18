@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Logger } from 'react-logger-lib';
-import { Link, Page, Text, Image, View, Document } from '@react-pdf/renderer';
-
 import { t } from 'i18next';
-import { useMediaQuery } from 'usehooks-ts';
 
+import { useMediaQuery } from 'usehooks-ts';
+import { Link, Page, Text, Image, View, Document, PDFViewer } from '@react-pdf/renderer';
+
+
+import { convert }  from "@/components/veepdotai-pdf-config/lib/AbstractContent"
 import PDFLink from './PDFLink' 
 
 /**
@@ -12,7 +14,7 @@ import PDFLink from './PDFLink'
  * @param {*} props contains a content String (either markdown or JSON) and an instance of PDFParams
  * @returns a pdf renderer with the new pdf inside
  */
-export function PDF( {initContent, initParams} ) {
+export default function PDF( {initContent, initParams = null, viewType = "complete", viewOptions = {}} ) {
   const log = Logger.of(PDF.name)
 
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -31,21 +33,26 @@ export function PDF( {initContent, initParams} ) {
     setParams(newParams)
   }
 
+  function getViewOptions() {
+    return viewOptions
+  }
+
   useEffect(() => {
     PubSub.subscribe("INFOS_PANEL_UPDATED", updateInfosPanel)
   }, [])
 
-
   let doc = <PDFDocument content={content} params={params} />
+  log.trace("doc: ", doc)
 
   return (
     <>
-      { (content?.length && params) ?
+      { (content?.length) ?
           <>
-            <PDFLink document={doc} params={params} />
-          </>
+            { ("complete" === viewType) && <PDFViewer {...getViewOptions()}>{doc}</PDFViewer> }
+            { ("light" === viewType) && <PDFLink document={doc} title={params?.title} /> }
+            </>
         :
-          <>Loading...</>
+          <p>Loading...</p>
       }
     </>
   )
@@ -55,13 +62,14 @@ export function PDF( {initContent, initParams} ) {
 /**
  * Builds PDF content from provided params/metadata and text content
  * 
- * @param {*} metadata document metadata (title, subtitle...)
- * @param {*} displayOptions display options
- * @param {*} content document amin content
+ * @param {*} content content as simple markdown or structured content as an array of lines of content
+ * @param {*} params document metadata (title, subtitle...)
  * @returns 
  */
 export function PDFDocument({content, params}) {
   const log = Logger.of(PDFDocument.name)
+
+  let normalizedContent = Array.isArray(content) ? content : convert(content)
 
   let data = {
     title: params?.title,
@@ -71,7 +79,8 @@ export function PDFDocument({content, params}) {
     author: params?.author,
     version: params?.version,
     date: params?.date,
-    imageBg: "https://images.pexels.com/photos/2088205/pexels-photo-2088205.jpeg",
+    imageBg: "",
+    imageBg3: "https://images.pexels.com/photos/2088205/pexels-photo-2088205.jpeg",
     imageBg2: "https://images.pexels.com/photos/6144105/pexels-photo-6144105.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     backgroundImage: params?.backgroundImg,
     backgroundImageCover: params?.backgroundImgCover,
@@ -91,11 +100,11 @@ export function PDFDocument({content, params}) {
    */
   function firstPage() {
     log.trace("firstPage: processing...");
-
-    log.trace("data: ", data)
+    log.trace("firstpage: data: ", data)
 
     let title = data?.title?.replace(/[^a-zA-Z0-9]/g, "")
-    log.trace("jcktitle: ", title)
+    log.trace("firstpage: title: ", title)
+
     return (
       <Page style={data?.styles?.firstPage} bookmark={t("CoverPage")} size={data?.dimensions || "A4"}>
         
@@ -128,7 +137,7 @@ export function PDFDocument({content, params}) {
   function toc() {
     let titles = []
 
-    content.map((page) => {
+    normalizedContent.map((page) => {
       titles.push(page[1])
     })
 
@@ -172,7 +181,7 @@ export function PDFDocument({content, params}) {
       let bookmark = content[0]?.length > 0 ? t(content[0][1]) : t("Content")
       return (
         <>
-          {content.map( (page, i) => {
+          {normalizedContent.map( (page, i) => {
             console.log(page[5])
             return (
               <Page key={`content-${i}`} style={data.styles?.contentPage} id={page[0]} bookmark={t(page[1])} size={data?.dimensions}>
@@ -199,7 +208,7 @@ export function PDFDocument({content, params}) {
       return (
           <Page style={data.styles?.contentPage} id={"content"} bookmark={bookmark} size={data?.dimensions}>
             {header()}
-            {content.map( function(page) {
+            {normalizedContent.map( function(page) {
               return (
                 <View id={page[0]}>
                   <Text style={data.styles?.title1}>{page[1]}</Text>
@@ -336,7 +345,7 @@ export function PDFDocument({content, params}) {
     let textStyle = {};
     let style = "";
     if (_style == null || _style == "") {
-      style = name[0].toUpperCase() + name.substring(1);
+      style = name ? name[0].toUpperCase() + name.substring(1) : "";
       log.trace(`getInlineStyle: style: ${style}.`);
     } else {
       log.trace(`getInlineStyle: name: ${name}.`);
@@ -401,27 +410,52 @@ export function PDFDocument({content, params}) {
     )
   }
 
+  /*
+  let document1 = <Document>
+    {firstPage()}
+    {data?.toc ? toc() : (<></>)}
 
+    {contentPages()}
+
+    {data?.backCover?.map(function(item){
+        return lastPage(item[0]-1)
+      })
+    }
+  </Document>
+  */
+  let document = <Document>
+    <Page>
+      <Text>Ceci est un test</Text>
+    </Page>
+  </Document>
+
+/*
+      (content && params) ?
+        {document}
+
+*/
   return (
     <>
     {
       (content && params) ?
+          <Document>
+            {firstPage()}
+            {data?.toc ? toc() : (<></>)}
+
+            {contentPages()}
+
+            {data?.backCover?.map(function(item){
+                return lastPage(item[0]-1)
+              })
+            }
+          </Document>
+        :
         <Document>
-          {firstPage()}
-          {data?.toc ? toc() : (<></>)}
-
-          {contentPages()}
-
-          {data?.backCover?.map(function(item){
-              return lastPage(item[0]-1)
-            })
-          }
+          <Page>
+            <Text>Content is unavailable...</Text>
+          </Page>
         </Document>
-      :
-        <></>
       }
     </>
   );
 }
-
-export default PDF;

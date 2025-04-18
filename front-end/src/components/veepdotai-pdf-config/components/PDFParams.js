@@ -44,9 +44,9 @@ export default class PDFParams {
         this.companyName = params?.companyName || t("DefaultCompanyName")
         this.companyImg = params?.companyImage || "./assets/images/nothing.png"
         this.backgroundImg = params?.backgroundImage || "./assets/images/nothing.png"
-        this.backgroundImgCover = params?.backgroundImageCover || "./assets/images/gradients/ff0076-590fb7.png"
+        this.backgroundImgCover = params?.backgroundImageCover || "/assets/images/gradients/ff0076-590fb7.png"
         
-        this.backCover = params?.backCover || [[1, "./assets/images/gradients/ff0076-590fb7.png", t("DefaultBackCoverContent"), t("DefaultBackCoverTitle")]]
+        this.backCover = params?.backCover || [[1, "/assets/images/gradients/ff0076-590fb7.png", t("DefaultBackCoverContent"), t("DefaultBackCoverTitle")]]
 
         this.newPage = params?.newPage || true
         this.toc = params?.toc || true

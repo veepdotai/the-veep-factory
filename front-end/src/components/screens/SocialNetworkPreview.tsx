@@ -4,16 +4,6 @@ import { useState } from 'react'
 import { Logger } from 'react-logger-lib'
 import { t } from "i18next"
 
-import { Document, Page } from 'react-pdf'
-import 'react-pdf/dist/esm/Page/TextLayer.css'
-import 'react-pdf/dist/Page/AnnotationLayer.css'
-import { pdfjs } from 'react-pdf';
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-    'pdfjs-dist/build/pdf.worker.min.mjs',
-    import.meta.url,
-  ).toString();
-import 'react-pdf/dist/esm/Page/TextLayer.css';
-
 import { cn } from '../ui/shadcn/utils'
 import { Avatar, AvatarFallback, AvatarImage, } from "@/components/ui/avatar"
 import { Card, CardContent, } from "@/components/ui/card"
@@ -21,19 +11,59 @@ import { ScrollArea, } from '@/components/ui/scroll-area'
    
 import { Icons } from '@/constants/Icons'
 
+
+import PDFLink from '../veepdotai-pdf-config/components/PDFLink';
+import PDF from '../veepdotai-pdf-config/components/PDF';
+import { Dialog } from '../ui/shadcn/plate-ui/dialog';
+import { DialogContent, DialogTrigger } from '../ui/shadcn/dialog';
+
 interface ContentProps {
     avatarUrl?: string,
     author?: string,
     baseline?: string,
     title: string,
     content: string,
-    mediaUrl: string
+    mediaUrl: string,
+    viewType?: string,
+    documentSrc?: string,
+    document?: Blob
 }
 
-export default function SocialNetworkPreview({viewType = "LinkedIn", content}) {
+export default function SocialNetworkPreview({viewType = "LinkedIn", content, documentSrc = null, document = null}) {
     const log = Logger.of(SocialNetworkPreview.name)
     
     const [condensedView, setCondensedView] = useState(true)
+
+    let documentSource = `# This is title
+
+Some text 2
+
+# First header
+
+And some text
+
+## Second header.1
+
+And other text
+
+A list with bullets:
+* un
+* deux
+* trois
+
+## Second header.2
+
+And some other text
+
+And again
+`
+    /**
+     * Gets the view type for the current user. A default value is provided to the user, who can update it to suit its needs.
+     * @returns 
+     */
+    function getViewType() {
+        return "light"
+    }
 
     function getLinkedInContent(content: ContentProps) {
         if (! content.content || typeof content.content !== "string") {
@@ -51,11 +81,9 @@ export default function SocialNetworkPreview({viewType = "LinkedIn", content}) {
         let allLines = content.content.split(/\n/)
 
         let author = content.author
-        //let mediaUrl = /*content.mediaUrl ||*/ "https://static.vecteezy.com/system/resources/previews/005/909/455/large_2x/annual-report-template-free-vector.jpg"
-        let mediaUrl = "https://3000-veepdotai-voice2post-jy1dot3bmal.ws-eu118.gitpod.io/assets/pdf_test_1.pdf"
 
         return (
-            <Card className="w-100 max-h-[500px]">
+            <Card className="w-100 max-h-[400px] whitespace-break-spaces">
                 <CardContent>
                     <ScrollArea className="w-100 h-[400px]">
                         <div className="pt-2 flex flex-row">
@@ -87,12 +115,20 @@ export default function SocialNetworkPreview({viewType = "LinkedIn", content}) {
                             </div>
                         </div>
                         <div className='w-100'>
-                            { mediaUrl?.match(/\.pdf$/i) &&
-                                <Document file={mediaUrl}>
-                                    <Page pageNumber={1} height={525} />
-                                </Document>
+                            Modal ?
+                            <Dialog className="h-75">
+                                <DialogTrigger>PDF</DialogTrigger>
+                                <DialogContent className="h-75">
+                                    <PDF className="h-75" initContent={documentSource} initParams={{title: "Test"}} viewType={getViewType()} />
+                                </DialogContent>
+                            </Dialog>
+                            {/*<PDFLink document={document} title="Test" />*/}
+                            {/*
+                            {mediaUrl && mediaUrl?.match(/\.pdf$/i) &&
+                                <PDFLink document={document} title="Test" />
                             }
-                            { mediaUrl && <img src={mediaUrl} /> }
+                            { mediaUrl && mediaUrl?.match(/\.(png|jpg|jpeg|gif)$/i) && <img src={mediaUrl} /> }
+                            */}
                         </div>
                         <div className="flex justify-between w-100 pt-1">
                             {["Up", "Support", "Publish", "Share"].map((action) => 
@@ -121,6 +157,9 @@ export default function SocialNetworkPreview({viewType = "LinkedIn", content}) {
     }
 
     function getTiktokPreview() {
+    }
+
+    function getDocument() {
     }
 
     return (

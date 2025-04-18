@@ -133,7 +133,7 @@ export default class MyContentDetailsForDesktop {
             >
               {t("Output")}
             </label>
-            <input style={{"visibility": "hidden"}} id="output-equation" class="text-sm" value={Veeplet.getChainAsArray(prompt.prompts.output) || Veeplet.getChainAsArray(prompt.prompts.chain)} disabled />
+            <input style={{"visibility": "hidden"}} id="output-equation" className="text-sm" value={Veeplet.getChainAsArray(prompt.prompts.output) || Veeplet.getChainAsArray(prompt.prompts.chain)} disabled />
         </div>
       )
     }

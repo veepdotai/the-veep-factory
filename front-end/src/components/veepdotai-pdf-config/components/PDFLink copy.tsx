@@ -4,18 +4,14 @@ import { Logger } from 'react-logger-lib';
 import { t } from 'i18next'
 import PubSub from "pubsub-js"
 
-import dynamic from 'next/dynamic'
-
-//import { usePDF } from '@react-pdf/renderer'
-import { usePDF } from '@react-pdf/renderer';
+import { usePDF, PDFDownloadLink, Link, Page, Text, Image, View, Document } from '@react-pdf/renderer';
 import { Document as DocView, Page as PageView } from 'react-pdf'
 
 import 'react-pdf/dist/Page/AnnotationLayer.css'
 import 'react-pdf/dist/esm/Page/TextLayer.css'
 import { pdfjs } from 'react-pdf';
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-    //'pdfjs-dist/build/pdf.worker.min.mjs',
-    `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`,
+    'pdfjs-dist/build/pdf.worker.min.mjs',
     import.meta.url,
 ).toString();
 
@@ -24,24 +20,14 @@ import { Button } from 'src/components/ui/shadcn/button'
 import Loading from '@/components/common/Loading';
 import { UploadLib } from '@/components/upload-widget/UploadLib';
 
-//const usePDF = dynamic(() => import('@react-pdf/renderer/usePDF'), { ssr: false })
-  
 export default function PDFLink({document, title}) {
     const log = Logger.of(PDFLink.name)
     const [cookies] = useCookies(['JWT']);
 
+    const [pdfUrl, setPdfUrl] = useState("")
+    const [pdfBlob, setPdfBlob] = useState(null)
     const [pageNumber, setPageNumber] = useState(1)
     const [numPages, setNumPages] = useState<number>()
-    const [instance, updateInstance] = usePDF({ document: document });
-
-  /*
-    const [pdfUrl, setPdfUrl] = useState(instance.url)
-    const [pdfBlob, setPdfBlob] = useState(instance.blob)
-    */
-
-    let pdfUrl = instance.url
-    let pdfBlob = instance.blob
-
 
     function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
         setNumPages(numPages);
@@ -77,15 +63,49 @@ export default function PDFLink({document, title}) {
 
     log.trace("document:", document)
 
+    let getDownloadLink = (document) => {
+        return (
+            <PDFDownloadLink document={document} fileName={title || "filename.pdf"}>
+                {({ blob, url, loading, error }) => {
+                    log.trace('getPDFDownloadLink: **********')
+                    log.trace('getPDFDownloadLink: blob: ', blob)
+                    log.trace('getPDFDownloadLink: url: ', url)
+                    log.trace('getPDFDownloadLink: pdfUrl: ', pdfUrl)
+                    log.trace("getPDFDownloadLink: url && ! pdfUrl: ", url && pdfUrl != "")
+                    log.trace('getPDFDownloadLink: loading: ', loading)
+                    log.trace('getPDFDownloadLink: error: ', error)
+
+                    if (loading) {
+                        log.trace('getPDFDownloadLink: loading pdf document: loading: ', loading)
+                    }
+                    
+                    if (error) {
+                        log.trace('getPDFDownloadLink: loading pdf document: error: ', error)
+                    }
+
+                    if (url && pdfUrl == "") {
+                        log.trace('getPDFDownloadLink: setting url: ', url)
+                        setPdfUrl(url)
+                    }
+
+                    if (blob && ! pdfBlob) {
+                        log.trace('getPDFDownloadLink: setting blob ', blob)
+                        setPdfBlob(blob)
+                    }
+                }}
+            </PDFDownloadLink>
+        )
+    }
+
     useEffect(() => {
         PubSub.subscribe("CONTENT_UPLOADED", onSuccess)
     }, [])
 
-    if (instance.loading) return <div>Loading ...</div>;
-    if (instance.error) return <div>Something went wrong: {instance.error}</div>;
+    //                        {pdfUrl && <DocView file={pdfUrl} {/*onLoadSuccess={onDocumentLoadSuccess}*/}>
 
     return (
         <>
+            { getDownloadLink(document)}
             { pdfUrl != "" &&
                 <div className="flex flex-row">
                     <Button variant="ghost" className="align-right h-screen w-[50px]" onClick={() => pageNumber > 1 && setPageNumber(pageNumber - 1)}>{Icons.prev}</Button>

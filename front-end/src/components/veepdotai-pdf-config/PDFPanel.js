@@ -61,7 +61,7 @@ export default function PDFPanel( {cid, initParams, initContent, displayInfosPan
                         <ResizablePanel defaultSize={60} className='vh-100 bottom-0'>
                             { content?.length > 1 ?
                                     <>
-                                        <PDF initContent={content} initParams={params}/>
+                                        <PDF initContent={content} initParams={params} viewType="light" viewOptions={{}}/>
                                     </>
                                 :
                                     <>{t("NoContent")}</>

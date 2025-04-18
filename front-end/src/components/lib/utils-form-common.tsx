@@ -217,7 +217,8 @@ export const UtilsFormCommon = {
         log("field: " + fieldName, field)
         let lcn = fieldOptions?.cn || "" 
         if (fieldType === "input") {
-            let fieldValue = fieldValues ?? undefined
+            //let fieldValue = fieldValues ?? undefined
+            let fieldValue = fieldValues
             return <Input className={cn} placeholder={t(fieldName + "PlaceHolder")} {...field} />
             //return <Input className={cn} placeholder={t(fieldName + "PlaceHolder")} {...field} value={fieldValue} />
         } else if (fieldType === "upload") {
@@ -451,7 +452,7 @@ export const UtilsFormCommon = {
         let helpMode = "modal"
 
         return (
-            <FormField control={form.control} name={fieldName}
+            <FormField key={fieldName} control={form.control} name={fieldName}
                 render={({ field }) => (
                     <FormItem>
                         {fo?.displayFormLabel && <>
