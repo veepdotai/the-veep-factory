@@ -3,7 +3,10 @@ import {
   SubscriptPlugin,
   SuperscriptPlugin,
 } from '@udecode/plate-basic-marks/react';
-import { focusEditor, useEditorRef } from '@udecode/plate/react';
+import {
+//  focusEditor,
+  useEditorRef
+} from '@udecode/plate/react';
 
 import { Icons } from '@/components/icons';
 
@@ -40,7 +43,8 @@ export function FloatingToolbarMoreDropdownMenu(props: DropdownMenuProps) {
               clear: [SubscriptPlugin.key, SuperscriptPlugin.key],
               key: SuperscriptPlugin.key,
             });
-            focusEditor(editor);
+            //focusEditor(editor);
+            editor.tf.focus()
           }}
         >
           <Icons.superscript className="mr-2 size-5" />
