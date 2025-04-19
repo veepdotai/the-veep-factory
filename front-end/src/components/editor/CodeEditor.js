@@ -1,8 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { loader } from '@monaco-editor/react';
-import { monaco } from '@monaco-editor/react';
+//import { monaco } from '@monaco-editor/react';
 import Editor from '@monaco-editor/react';
-import { Button, Spinner } from 'react-bootstrap';
 import { Logger } from 'react-logger-lib';
 import { t } from 'i18next';
 import { useCookies } from 'react-cookie';
@@ -16,8 +15,6 @@ import { VeepletContext } from 'src/context/VeepletProvider';
 
 import SuspenseClick from '../common/SuspenseClick';
 import Loading from '../common/Loading';
-
-import { AiOutlineVerticalAlignTop } from 'react-icons/ai';
 
 /**
  * Monaco options:
@@ -38,16 +35,16 @@ export default function CodeEditor() {
 
   const editorRef = useRef(null);
 
-  function handleEditorDidMount(editor, monaco) {
-    editorRef.current = editor;
-  }
-
   const [cookies] = useCookies(['JWT']);
 
   const conf = {
     service: Constants.WORDPRESS_REST_URL + "/?rest_route=/veepdotai_rest/v1/veeplets",
     'token': cookies.JWT,
     'prefix': promptPrefix
+  }
+
+  function handleEditorDidMount(editor, monaco) {
+    editorRef.current = editor;
   }
 
   /*
