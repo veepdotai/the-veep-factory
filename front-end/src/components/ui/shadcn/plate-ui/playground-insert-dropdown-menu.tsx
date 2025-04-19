@@ -7,8 +7,8 @@ import type { DropdownMenuProps } from '@radix-ui/react-dropdown-menu';
 import { BlockquotePlugin } from '@udecode/plate-block-quote/react';
 import { insertEmptyCodeBlock } from '@udecode/plate-code-block';
 import { CodeBlockPlugin } from '@udecode/plate-code-block/react';
-import { insertEmptyElement } from '@udecode/plate';
-import { ParagraphPlugin, focusEditor } from '@udecode/plate/react';
+//import { insertEmptyElement } from '@udecode/plate';
+import { ParagraphPlugin, /*focusEditor*/ } from '@udecode/plate/react';
 import { ExcalidrawPlugin } from '@udecode/plate-excalidraw/react';
 import { HEADING_KEYS, insertToc } from '@udecode/plate-heading';
 import { TocPlugin } from '@udecode/plate-heading/react';
@@ -227,10 +227,13 @@ export function PlaygroundInsertDropdownMenu(props: DropdownMenuProps) {
                         }
                         case 'ul':
                         case 'ol': {
-                          insertEmptyElement(editor, ParagraphPlugin.key, {
+                          /*
+                          insertEmptyElement(editor, type, {
                             nextBlock: true,
                             select: true,
-                          });
+                          })
+                          */
+                          editor.tf.insertNodes(editor.api.create.block())
 
                           if (
                             settingsStore.get.checkedId(IndentListPlugin.key)
@@ -260,14 +263,19 @@ export function PlaygroundInsertDropdownMenu(props: DropdownMenuProps) {
                           break;
                         }
                         default: {
+                          /*
                           insertEmptyElement(editor, type, {
                             nextBlock: true,
                             select: true,
-                          });
+                          })
+                          */
+                          editor.tf.insertNodes(editor.api.create.block())
+
                         }
                       }
 
-                      focusEditor(editor);
+                      //focusEditor(editor);
+                      editor.tf.focus()
                     }}
                   >
                     <Icon className="mr-2 size-5" />

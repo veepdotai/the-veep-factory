@@ -6,7 +6,7 @@ import { BlockquotePlugin } from '@udecode/plate-block-quote/react';
 import { insertEmptyElement } from '@udecode/plate';
 import {
   ParagraphPlugin,
-  focusEditor,
+  //focusEditor,
   useEditorRef,
 } from '@udecode/plate/react';
 import { HEADING_KEYS } from '@udecode/plate-heading';
@@ -202,11 +202,15 @@ export function InsertDropdownMenu(props: DropdownMenuProps) {
                         insertEmptyElement(editor, type, {
                           nextBlock: true,
                           select: true,
-                        });
+                        })
+                        /*
+                        editor.tf.insertNodes(editor.api.create.block())
+                        */
                       }
                     }
 
-                    focusEditor(editor);
+                    //focusEditor(editor);
+                    editor.tf.focus()
                   }}
                 >
                   <Icon className="mr-2 size-5" />
