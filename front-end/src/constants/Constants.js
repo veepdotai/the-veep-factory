@@ -18,6 +18,8 @@ export const Constants = {
     CATALOG_CARD_HEIGHT: process.env.NEXT_PUBLIC_CATALOG_CARD_HEIGHT ?? null,
     CATALOG_PROMPT_WITDH: process.env.NEXT_PUBLIC_CATALOG_PROMPT_WIDTH ?? null,
     INITIAL_PROCESS_DURATION: process.env.NEXT_PUBLIC_INITIAL_PROCESS_DURATION ?? null,
+    PDFJS_EXTERNAL_URL: process.env.NEXT_PUBLIC_PDFJS_EXTERNAL_URL ?? null,
+    PDFJS_EXTERNAL_ROOT: process.env.NEXT_PUBLIC_PDFJS_EXTERNAL_ROOT ?? null,
     DEFAULT_USER: process.env.NEXT_PUBLIC_DEFAULT_USER ?? null,
     ADMIN_EMAIL: process.env.NEXT_PUBLIC_ADMIN_EMAIL ?? null,
     ACCESS_TOKEN: process.env.NODE_ENV == "production" ? process.env.ACCESS_TOKEN : "",

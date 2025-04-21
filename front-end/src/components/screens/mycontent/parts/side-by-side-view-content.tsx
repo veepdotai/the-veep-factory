@@ -134,7 +134,7 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
       return (
         <div key={i} className="flex w-[400px] m-2">
           <ScrollArea className="h-100">
-            <SocialNetworkPreview viewType='LinkedIn' content={{content: content}} document={document}/>
+            <SocialNetworkPreview content={{content: content}} params={document} viewType='LinkedIn' attachmentViewType="custom"/>
           </ScrollArea>
         </div>
       )

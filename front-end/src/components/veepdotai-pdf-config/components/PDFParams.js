@@ -4,6 +4,8 @@ import { Logger } from 'react-logger-lib';
 
 import stylesA4 from '../default.css';
 import stylesLinkedin from '../defaultLinkedin.css';
+import { mergeDeep } from '@apollo/client/utilities';
+//import Utils from 'src/components/lib/utils'
 
 const log = Logger.of("PDFParams");
 
@@ -17,7 +19,8 @@ export default class PDFParams {
      * @param {String} companyName name of the company
      * @param {String} companyImage logo of the company
      * @param {String} backgroundImage image to display at the back of the content of the PDF (only content, not cover or back cover)
-     * @param {String} backgroundImageCover image to display at the back of the cover
+     * @param {String} backgroundImageCover background image of the cover
+     * @param {String} backgroundImageBackCover background image of the back cover
      * @param {String} author the author of the document
      * @param {String} version the version of the PDF (note to devs : functions are available to automatically increment the version)
      * @param {Date} date date of the last update of the PDF
@@ -29,14 +32,17 @@ export default class PDFParams {
      * @param {StyleSheet} stylesheet sheet of css styles to use
      */
     constructor (params) {
-        log.trace("constructor: params: " + JSON.stringify(params))
+        log.trace("constructor: params: ", params)
 
         this.title = params?.title
         this.subtitle = params?.subtitle || params?.subtitle
 
         this.styles = params?.stylesheet || ""
-        log.trace("styles: " + JSON.stringify(this.styles))
-        this.stylesheet= params?.stylesheet || stylesA4
+        log.trace("styles: ", this.styles)
+        this.stylesheet = params?.stylesheet || stylesA4
+        log.trace("stylesheet: ", this.stylesheet)
+
+        this.featuredImage = params?.featuredImage
 
         this.format = params?.format || "A4"
         this.setFormat(this.format)
@@ -45,6 +51,7 @@ export default class PDFParams {
         this.companyImg = params?.companyImage || "./assets/images/nothing.png"
         this.backgroundImg = params?.backgroundImage || "./assets/images/nothing.png"
         this.backgroundImgCover = params?.backgroundImageCover || "/assets/images/gradients/ff0076-590fb7.png"
+        this.backgroundImgBackCover = params?.backgroundImageBackCover || "/assets/images/gradients/ff0076-590fb7.png"
         
         this.backCover = params?.backCover || [[1, "/assets/images/gradients/ff0076-590fb7.png", t("DefaultBackCoverContent"), t("DefaultBackCoverTitle")]]
 
@@ -65,17 +72,23 @@ export default class PDFParams {
      * Changes if necessary the format to another one that reactPDF can understand.
      * @param {String} newFormat 
      */
-    setFormat(newFormat){
-        this.format = newFormat
+    setFormat(format){
+        this.format = format
 
-        if (newFormat == "linkedin") {
+        log.trace("setFormat: styles: before merging...:", this.styles)
+
+        if (format == "linkedin") {
             this.dimensions = {width: 800, height: 800}
-            this.styles = stylesLinkedin
-        } else if (newFormat == "A4") {
-            this.styles = stylesA4
+            log.trace("setFormat: stylesLinkedIn: ", stylesLinkedin)
+            this.styles = mergeDeep(stylesLinkedin, this.styles)
+        } else if (format == "A4") {
+            log.trace("setFormat: stylesA4: ", stylesA4)
+            this.styles = mergeDeep(stylesA4, this.styles)
         } else {
             this.dimensions = this.format
-        }        
+        }
+
+        log.trace("setFormat: styles: after merging...:", this.styles)
     }
 
     /**

@@ -3,11 +3,33 @@ import { Logger } from 'react-logger-lib';
 //import { createPlateEditor } from '@udecode/plate/react';
 import { createPlateEditor } from '@udecode/plate/react';
 import { MarkdownPlugin } from '@udecode/plate-markdown';
-import { t } from 'i18next';
+import { t as _t } from 'i18next';
 
 export const Utils = {
 	log: Logger.of("Utils"),
 
+	isObject: (item) => {
+		return (item && typeof item === 'object' && !Array.isArray(item));
+	},
+	
+	mergeDeep: (target, ...sources) => {
+		if (!sources.length) return target;
+		const source = sources.shift();if (Utils.isObject(target) && Utils.isObject(source)) {
+		  for (const key in source) {
+			if (Utils.isObject(source[key])) {
+			  if (!target[key]) Object.assign(target, {
+				[key]: {}
+			  });
+			  mergeDeep(target[key], source[key]);
+			} else {
+			  Object.assign(target, {
+				[key]: source[key]
+			  });
+			}
+		  }
+		}  return mergeDeep(target, ...sources);
+	},
+	
 	camelize: function(str) {
 		if (! str) {
 			return ""
@@ -125,4 +147,13 @@ export const Utils = {
 	  
 		return content
 	  }
+}
+
+export function t(msg) {
+	let msgTranslated = _t(msg)  
+	if (! msgTranslated || msgTranslated === "") {
+		return msg
+	} else {
+		return msgTranslated
+	}	
 }

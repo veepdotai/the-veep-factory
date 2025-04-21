@@ -32,14 +32,6 @@ export default function Mytest() {
   let time = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds()
   console.log(time)
 
-  /*
-  let getContent = (document, i) => {
-    return (
-        <PDFViewer key={`docp-${i}`}>{document}</PDFViewer>
-    )
-  }
-  */
-
   let getDocument = (msg = "", i) => <Document key={`docu-${i}`}>
     <Page>
       <View>
@@ -91,57 +83,3 @@ export default function Mytest() {
   );
 
 }
-
-/*
-export function PDFViewWithCustomActions({ document }) {
-
-  const [pdfUrl, setPdfUrl] = useState("")
-
-  let getDownloadLink = (document) => {
-    return (
-
-      <PDFDownloadLink document={document} fileName="somename.pdf">
-        {({ blob, url, loading, error }) => {
-
-            console.log("blob: ", blob)
-            console.log("=> url: ", url)
-            console.log("=> pdfUrl: ", pdfUrl)
-            console.log("loading: ", loading)
-            console.log("error: ", error)
-
-            if (loading) {
-              console.log("Loading document...")
-            }
-
-            if (url) {
-              console.log("Download now!")
-              console.log("url: ", url)
-              if (pdfUrl == "" && url) {
-                console.log("setting url: ", url)
-                setPdfUrl(url)
-              }
-            }
-
-          }
-        }
-      </PDFDownloadLink>
-    )
-
-  }
-
-  return (
-    <>
-      <p>Action: {getDownloadLink(document)}.</p>
-      <p>pdfUrl: {pdfUrl}</p>
-      {pdfUrl != "" ?
-        <DocView key={Math.random()} file={pdfUrl}>
-          <PageView pageNumber={1} />
-        </DocView>
-        :
-        <p>Loading...</p>
-      }
-    </>
-  )
-}
-
-*/
