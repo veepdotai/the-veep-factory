@@ -1,6 +1,6 @@
 import { Container } from 'react-bootstrap';
 import { Logger } from 'react-logger-lib';
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 
 // App tour
 import { driver } from 'driver.js';

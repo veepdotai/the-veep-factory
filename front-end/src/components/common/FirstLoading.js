@@ -1,4 +1,4 @@
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 import { Container, Spinner } from 'react-bootstrap';
 import { Constants } from "src/constants/Constants";
 

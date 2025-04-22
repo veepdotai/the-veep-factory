@@ -4,7 +4,7 @@ import PubSub from 'pubsub-js'
 
 import { useEffect, useState } from 'react';
 import { Logger } from 'react-logger-lib';
-import { t } from 'i18next'
+import { t } from 'src/components/lib/utils'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 import { withProps } from '@udecode/cn';

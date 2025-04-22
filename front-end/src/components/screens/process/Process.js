@@ -3,7 +3,7 @@ import { Nav, NavDropdown, /*Tab*/ } from 'react-bootstrap';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 
 import { Logger } from 'react-logger-lib';
 import { useCookies } from 'react-cookie';

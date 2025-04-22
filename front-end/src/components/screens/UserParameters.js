@@ -1,5 +1,5 @@
 import { Logger } from 'react-logger-lib';
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 
 import UserPreferences from './preferences/UserPreferences';
 import LinkedIn from '../common/linkedin/LinkedIn';

@@ -45,47 +45,6 @@ export default function SocialNetworkPreview({viewType = "LinkedIn", content, mo
 
         return dialog
     }
-
-    function getContent() {
-        let source = `
-        🚀This is title of a post on a social network🚀
-        
-        Ideally a LI post with lots of interesting things.
-        
-        💥 And some even moe interesting here. With plenty of interesting text about my interesting thoughts.
-        
-        Uh, it's awesome, still more interesting.
-        
-        Damn, I can' believe it!
-        
-        ▸ Blah blah blah 1
-        ▸ Blah blah blah 2
-        ▸ Blah blah blah 3
-        
-        Uh, it's awesome, still more interesting.
-        
-        Damn, I can' believe it!
-        
-        --- (carousel below) ---
-        
-        # First slide title
-        
-        ## First slide subtitle
-        
-        And some text on one or two lines according font size
-        
-        # Second slide title
-        
-        ## Second slide subtitle
-        
-        * Hello
-        * Goodbye
-        * Have a good day
-        `
-
-        //return content
-        return source
-    }
     
     /**
      * Gets the view type for the current user. A default value is provided to the user, who can update it to suit its needs.

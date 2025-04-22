@@ -1,6 +1,6 @@
 import { Logger } from 'react-logger-lib';
 import { Container } from 'react-bootstrap';
-import { useTranslation } from 'i18next';
+import { useTranslation } from 'src/components/lib/utils'
 
 export default function Header() {
     const log = Logger.of(Header.name);

@@ -1,6 +1,6 @@
 import { Nav, NavDropdown } from 'react-bootstrap';
 import { Logger } from 'react-logger-lib';
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 
 import MyContentDetailsUtils from './MyContentDetailsUtils'
 import PDF from '../../export/pdf/PDF.js';

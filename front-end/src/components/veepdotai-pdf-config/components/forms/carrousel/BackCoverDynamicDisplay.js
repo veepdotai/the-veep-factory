@@ -2,7 +2,7 @@ import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, Pagi
 import BackCoverDisplay from './BackCoverDisplay';
 import { useState } from "react";
 import { Button } from "src/components/ui/shadcn/button";
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 import { updateLocale } from "moment/moment";
 import icones from '../../../icons'
 

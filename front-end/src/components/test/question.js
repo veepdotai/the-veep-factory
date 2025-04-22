@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 
 import IntervalExample from './logs.js';
 

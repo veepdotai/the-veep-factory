@@ -1,7 +1,7 @@
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "src/components/ui/shadcn/pagination";
 import { useRef, useState } from "react";
 import { Button } from "src/components/ui/shadcn/button";
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 import { updateLocale } from "moment/moment";
 import icones from '../../../icons'
 import { Input } from "src/components/ui/shadcn/input";

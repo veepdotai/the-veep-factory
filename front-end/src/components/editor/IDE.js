@@ -1,7 +1,7 @@
 import VeepTree from "./VeepTree";
 import CodeEditor from './CodeEditor';
 import { Container, Col, Row } from 'react-bootstrap';
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 
 export default function IDE() {
 

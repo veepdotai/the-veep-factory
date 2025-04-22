@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Card, Container, Col, Dropdown, Modal, Row, Nav} from 'react-bootstrap';
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 import { Logger } from 'react-logger-lib';
 
 import {

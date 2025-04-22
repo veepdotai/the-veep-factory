@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Logger } from 'react-logger-lib';
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 
 import { TabsList, TabsTrigger } from "src/components/ui/shadcn/tabs"
 import { Checkbox } from "src/components/ui/shadcn/checkbox"

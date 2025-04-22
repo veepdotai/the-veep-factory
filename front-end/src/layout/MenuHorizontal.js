@@ -1,6 +1,6 @@
 import { Nav, Stack } from 'react-bootstrap';
 import { Logger } from 'react-logger-lib';
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 
 import MenuOptions from './MenuOptions';
 import MenuMobile from './MenuMobile';

@@ -3,7 +3,7 @@ import remarkGfm from 'remark-gfm';
 
 import { Container } from 'react-bootstrap';
 
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 
 export default function SupportLinks() {
 

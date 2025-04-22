@@ -5,7 +5,7 @@ import { Logger } from 'react-logger-lib';
 /* https://www.linkedin.com/developers/tools/oauth/token-generator */
 import { useLinkedIn } from 'react-linkedin-login-oauth2';
 import { useCookies } from 'react-cookie';
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 
 import { getGenericData } from "src/api/service-fetch"
 import { ThirdPartiesDataContext } from 'src/context/ThirdPartiesDataProvider';

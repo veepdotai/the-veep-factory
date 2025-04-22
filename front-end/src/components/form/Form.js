@@ -3,7 +3,7 @@ import { Card } from 'react-bootstrap';
 import { useCookies } from 'react-cookie';
 import { Logger } from 'react-logger-lib';
 import PubSub from 'pubsub-js';
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';

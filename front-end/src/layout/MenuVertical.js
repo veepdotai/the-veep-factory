@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { Col, Nav, Stack } from 'react-bootstrap'
 import { Logger } from 'react-logger-lib'
-import { t } from 'i18next'
+import { t } from 'src/components/lib/utils'
 
 import { UtilsMenu } from 'src/components/lib/utils-menu'
 import { Utils } from 'src/components/lib/utils'

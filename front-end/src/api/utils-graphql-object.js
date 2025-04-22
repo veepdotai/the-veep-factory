@@ -3,7 +3,7 @@ import { gql } from '@apollo/client'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 import { UtilsGraphQL } from './utils-graphql'
 
-import { t } from 'i18next'
+import { t } from 'src/components/lib/utils'
 
 export const UtilsGraphQLObject = {
 	log: Logger.of("UtilsGraphQLObject"),

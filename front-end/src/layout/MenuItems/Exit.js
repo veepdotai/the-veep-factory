@@ -1,6 +1,6 @@
 import { Logger } from 'react-logger-lib';
 import { useCookies } from 'react-cookie';
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 
 import { Constants } from "src/constants/Constants"
 import { Icons } from "src/constants/Icons"

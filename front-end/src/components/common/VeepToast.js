@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-bootstrap';
 import Toast from 'react-bootstrap/Toast';
 import { Logger } from 'react-logger-lib';
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 import PubSub from 'pubsub-js';
 import { Fireworks } from '@fireworks-js/react';
 import { toast } from 'react-hot-toast';

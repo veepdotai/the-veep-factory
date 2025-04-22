@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 import { Logger } from 'react-logger-lib';
 
 import { Button, Card, Container, Form } from "react-bootstrap";

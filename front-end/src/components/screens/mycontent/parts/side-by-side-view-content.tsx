@@ -14,7 +14,8 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import SocialNetworkPreview from '../../SocialNetworkPreview';
 import { ScrollArea } from 'src/components/ui/shadcn/scroll-area';
 
-import { Document, Page } from 'react-pdf'
+import testdata from 'src/config/data.json'
+/*
 import 'react-pdf/dist/Page/AnnotationLayer.css'
 import 'react-pdf/dist/esm/Page/TextLayer.css'
 import { pdfjs } from 'react-pdf';
@@ -23,7 +24,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     'pdfjs-dist/build/pdf.worker.min.mjs',
     import.meta.url,
 ).toString();
-
+*/
 export default function SideBySideViewContent( { prompt, data, cid, width = 1 } ) {
     const log = Logger.of(SideBySideViewContent.name)
 
@@ -128,13 +129,14 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
           <Page pageNumber={1} height={525} />
         </Document>
       */
-      let document = <PDF initContent={content} params={{}} />      
+      //let document = <PDF initContent={content} params={{}} />      
       log.trace("getPreviewItem: document: ", document)
 
       return (
         <div key={i} className="flex w-[400px] m-2">
           <ScrollArea className="h-100">
-            <SocialNetworkPreview content={{content: content}} params={document} viewType='LinkedIn' attachmentViewType="custom"/>
+            <SocialNetworkPreview content={{content: content}} mode="edit" />
+            <SocialNetworkPreview content={{content: content}} mode="preview" {...attachmentParams} />
           </ScrollArea>
         </div>
       )
@@ -176,6 +178,16 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
     let chain = Veeplet.getChainAsArray(prompt.prompts.chain);
     let viewType = "preview"
 
+                  let attachmentGenerationOptions = {...testdata.attachmentGenerationOptions}
+                  let attachmentViewType = testdata.attachmentViewType 
+                  let attachmentViewOptions = {...testdata.attachmentViewOptions}
+    
+                  let attachmentParams = {
+                    attachmentGenerationOptions: attachmentGenerationOptions,
+                    attachmentViewType: attachmentViewType,
+                    attachmentViewOptions: attachmentViewOptions
+                  }
+    
     return (
       <>
         { chain ?

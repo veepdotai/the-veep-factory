@@ -1,5 +1,5 @@
 import { Logger } from 'react-logger-lib';
-import { t as _t } from 'i18next';
+import { t } from 'src/components/lib/utils';
 
 import { Link, Page, Text, Image, View, Document } from '@react-pdf/renderer';
 
@@ -41,7 +41,7 @@ export default function PDFDocument({content, params}) {
   }
 
   log.trace("params/data: ", data)
-
+/*
   function t(msg) {
     let msgTranslated = _t(msg)  
     log.trace("translate: ", msg, msgTranslated)
@@ -52,7 +52,7 @@ export default function PDFDocument({content, params}) {
       return msgTranslated
     }
   }
-
+*/
   /**
    * Creates and return the first page of the pdf
    * @returns The first page of the PDF

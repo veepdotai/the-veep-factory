@@ -1,5 +1,5 @@
 import React from 'react';
-import { t } from 'i18next'
+import { t } from 'src/components/lib/utils'
 import { Label } from "src/components/ui/shadcn/label"
 
 export default class TitleDisplay extends React.Component {

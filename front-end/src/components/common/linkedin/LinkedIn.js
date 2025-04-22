@@ -6,7 +6,7 @@ import { useCookies } from 'react-cookie';
 /* https://www.linkedin.com/developers/tools/oauth/token-generator */
 import { useLinkedIn } from 'react-linkedin-login-oauth2';
 
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 //import {alert} from 'react-bootstrap-confirmation';
 
 import { Constants } from "src/constants/Constants";

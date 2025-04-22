@@ -6,7 +6,7 @@ import { Logger } from 'react-logger-lib'
 import { useCookies } from 'react-cookie'
 import { confirmAlert } from 'react-confirm-alert'
 
-import { t } from 'i18next'
+import { t } from 'src/components/lib/utils'
 import PubSub from 'pubsub-js'
 
 import { ContentIdContext } from "src/context/ContentIdProvider"

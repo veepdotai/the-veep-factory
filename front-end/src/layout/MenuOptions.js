@@ -5,7 +5,7 @@ import { Container, Offcanvas } from 'react-bootstrap';
 
 import * as Icon from 'react-bootstrap-icons';
 
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 
 import { pushState } from "src/components/lib/utils-analytics";
 import Profile from './MenuItems/Profile';

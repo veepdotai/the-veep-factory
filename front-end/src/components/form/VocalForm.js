@@ -6,7 +6,7 @@ import PubSub from 'pubsub-js';
 import AudioRecorderPolyfill from 'audio-recorder-polyfill-next';
 import mpegEncoder from 'audio-recorder-polyfill/mpeg-encoder';
 
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 
 import { AudioRecorder, useAudioRecorder } from '../lib/react-audio-recorder/react-audio-voice-recorder.es.js';
 import { pushState } from '../lib/utils-analytics';

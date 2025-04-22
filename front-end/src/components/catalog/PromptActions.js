@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { Col, Dropdown, Nav} from 'react-bootstrap';
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 import { Logger } from 'react-logger-lib';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';

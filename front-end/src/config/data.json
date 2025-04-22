@@ -33,7 +33,7 @@
     },
     "attachmentViewType": "custom",
     "attachmentViewOptions": {
-      "width": 530,
+      "width": 330,
       "!height": 480,
       "!showToolbar": true,
       "className": "",

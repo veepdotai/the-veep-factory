@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Logger } from 'react-logger-lib';
 import { md5 } from "js-md5";
 import { PDFViewer, Link, Page, Text, Image, View, Document, StyleSheet } from '@react-pdf/renderer';
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 import moment from "moment";
 import pdfJsonFile from './PDF-stylesheet.json'
   

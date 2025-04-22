@@ -3,7 +3,7 @@ import { Logger } from 'react-logger-lib';
 //import { createPlateEditor } from '@udecode/plate/react';
 import { createPlateEditor } from '@udecode/plate/react';
 import { MarkdownPlugin } from '@udecode/plate-markdown';
-import { t as _t } from 'i18next';
+import { t as _t } from 'i18next'
 
 export const Utils = {
 	log: Logger.of("Utils"),

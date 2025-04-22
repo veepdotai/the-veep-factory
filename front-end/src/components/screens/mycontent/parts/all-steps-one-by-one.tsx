@@ -1,7 +1,7 @@
 import { useState, Fragment } from 'react';
 import { Logger } from 'react-logger-lib';
 import md5 from 'js-md5';
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 import parse from 'html-react-parser';
 
 import { Utils } from '@/components/lib/utils';

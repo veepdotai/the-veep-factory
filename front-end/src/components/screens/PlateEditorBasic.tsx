@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Logger } from 'react-logger-lib';
-import { t } from 'i18next'
+import { t } from 'src/components/lib/utils'
 
 import { withProps } from '@udecode/cn';
 import { createPlateEditor, Plate, ParagraphPlugin, PlateElement, PlateLeaf } from '@udecode/plate/react';

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Logger } from 'react-logger-lib';
 import PubSub from 'pubsub-js';
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 
 import GenericForm from '../form/GenericForm';
 

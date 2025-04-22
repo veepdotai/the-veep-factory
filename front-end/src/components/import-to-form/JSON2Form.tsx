@@ -1,4 +1,4 @@
-import { t } from 'i18next'
+import { t } from 'src/components/lib/utils'
 
 import { cn } from "@/components/ui/utils"
 import { Input } from "@/components/ui/input"

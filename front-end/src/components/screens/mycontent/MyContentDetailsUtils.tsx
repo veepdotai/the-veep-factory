@@ -1,6 +1,6 @@
 import { ButtonGroup, Button, Col, Row } from 'react-bootstrap'
 import { Logger } from 'react-logger-lib'
-import { t } from 'i18next'
+import { t } from 'src/components/lib/utils'
 import { addMinutes, addHours, addDays } from 'date-fns'
 
 import { ToggleGroup, ToggleGroupItem } from "src/components/ui/shadcn/toggle-group"

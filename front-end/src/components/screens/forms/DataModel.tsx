@@ -1,5 +1,5 @@
 import { Logger } from 'react-logger-lib'
-import { t } from 'i18next'
+import { t } from 'src/components/lib/utils'
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"

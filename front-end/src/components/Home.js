@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
 import { Logger } from 'react-logger-lib';
 import { useCookies } from 'react-cookie';
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 import PubSub from 'pubsub-js';
 
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup, } from "src/components/ui/shadcn/resizable"

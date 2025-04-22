@@ -4,7 +4,7 @@ import { Logger } from 'react-logger-lib'
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
-import { t } from 'i18next'
+import { t } from 'src/components/lib/utils'
 import { Container } from 'react-bootstrap'
 import { useCookies } from 'react-cookie'
 

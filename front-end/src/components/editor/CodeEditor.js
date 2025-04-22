@@ -3,7 +3,7 @@ import { loader } from '@monaco-editor/react';
 //import { monaco } from '@monaco-editor/react';
 import Editor from '@monaco-editor/react';
 import { Logger } from 'react-logger-lib';
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 import { useCookies } from 'react-cookie';
 import TOML from '@iarna/toml';
 

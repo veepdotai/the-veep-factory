@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Button, Card, Container, Col, Dropdown, Modal, Row, Nav, Stack} from 'react-bootstrap';
 import { Logger } from 'react-logger-lib';
 import PubSub from 'pubsub-js';
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 import { IconPickerItem } from 'react-icons-picker'
 import { useCookies } from 'react-cookie';
 import TOML from '@iarna/toml';

@@ -1,6 +1,6 @@
 
 import { Logger } from 'react-logger-lib'
-import { t } from 'i18next'
+import { t } from 'src/components/lib/utils'
 import { Container, Tab } from 'react-bootstrap';
 import { ScreenHeading } from "src/components/common/Heading";
 import MyContent from "src/components/screens/mycontent/MyContent";

@@ -4,7 +4,7 @@ import format from "date-fns/format"
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { useCookies } from 'react-cookie';
 import toast from 'react-hot-toast'
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 import PubSub from 'pubsub-js'
 
 import { fr } from 'date-fns/locale'

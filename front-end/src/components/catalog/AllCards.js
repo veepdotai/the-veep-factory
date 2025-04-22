@@ -3,7 +3,7 @@ import { Card, Col, Row, Nav} from 'react-bootstrap';
 import { Logger } from 'react-logger-lib';
 import PubSub from 'pubsub-js';
 import { useCookies } from 'react-cookie';
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from 'src/components/ui/shadcn/tabs'
 import { ScrollArea, ScrollBar } from "src/components/ui/shadcn/scroll-area"

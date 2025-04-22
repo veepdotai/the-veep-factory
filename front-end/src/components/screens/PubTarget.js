@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Logger } from 'react-logger-lib'
-import { t } from 'i18next'
+import { t } from 'src/components/lib/utils'
 
 //import { Container } from 'react-bootstrap'
 import { useCookies } from 'react-cookie'

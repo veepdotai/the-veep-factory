@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Logger } from 'react-logger-lib';
 import { Image } from 'react-bootstrap';
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 
 import { pushState } from "src/components/lib/utils-analytics"
 import NavItemLinkIconText from "src/components/NavItemLinkIconText"

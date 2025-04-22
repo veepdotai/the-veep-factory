@@ -1,6 +1,6 @@
 import { Logger } from 'react-logger-lib';
 import { Button, Card, Container, Row, Col } from 'react-bootstrap';
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 import PubSub from 'pubsub-js';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 

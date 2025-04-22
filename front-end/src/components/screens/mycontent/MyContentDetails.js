@@ -19,7 +19,7 @@ import { useState, useEffect } from 'react';
 import { Container, Row } from 'react-bootstrap';
 import { Logger } from 'react-logger-lib';
 
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 
 import TOML from '@iarna/toml';
 import { useCookies } from 'react-cookie';

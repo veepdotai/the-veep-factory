@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import { t } from 'i18next'
+import { t } from 'src/components/lib/utils'
 
 import {RadioGroup, RadioGroupItem} from 'src/components/ui/shadcn/radio-group';
 import { Label } from "src/components/ui/shadcn/label"

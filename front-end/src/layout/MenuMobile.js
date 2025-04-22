@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Logger } from 'react-logger-lib';
 import { Container, Offcanvas } from 'react-bootstrap';
 
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 
 import { Utils } from "src/components/lib/utils";
 import { Icons } from "src/constants/Icons"

@@ -4,7 +4,7 @@ import { Container, Col, Row } from 'react-bootstrap';
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 
 export default function Support() {
   const log = Logger.of(Support.name);

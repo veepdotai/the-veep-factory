@@ -8,7 +8,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { Form, FloatingLabel, Button, Container, Nav, NavDropdown, Row, Col, Stack, Tab, Tabs, Dropdown } from 'react-bootstrap'
 import { Logger } from 'react-logger-lib'
-import { t } from 'i18next'
+import { t } from 'src/components/lib/utils'
 import { useCookies } from 'react-cookie'
 import TOML from '@iarna/toml';
 import IconPicker from 'react-icons-picker'

@@ -4,7 +4,7 @@ import { Button } from 'src/components/ui/shadcn/button';
 import { Label } from "src/components/ui/shadcn/label"
 
 import icones from '../../../icons'
-import { t } from 'i18next'
+import { t } from 'src/components/lib/utils'
 
 const ImageDisplay = (props) => {
     let fileLogo = ""

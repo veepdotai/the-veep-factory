@@ -1,6 +1,6 @@
 import { useEffect, Fragment } from 'react'
 import { Logger } from 'react-logger-lib'
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 import { cn } from "@/lib/utils"
 
 import { useMediaQuery } from 'usehooks-ts'

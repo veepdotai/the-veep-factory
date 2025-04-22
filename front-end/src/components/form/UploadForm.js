@@ -2,7 +2,7 @@ import { useContext, useRef, useState, useEffect } from 'react';
 import { Button, Col, Container, Modal, Row, Form } from 'react-bootstrap';
 import { Logger } from 'react-logger-lib';
 import PubSub from 'pubsub-js';
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 
 import { UploadLib } from '../lib/util-upload-form.js';
 import { pushState } from '../lib/utils-analytics.js';

@@ -1,6 +1,6 @@
 import { Button, Col, Container, Modal, Row, Form } from 'react-bootstrap';
 import PubSub from 'pubsub-js';
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 
 import { Icons } from '@/constants/Icons';
 

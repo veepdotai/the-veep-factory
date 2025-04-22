@@ -11,7 +11,7 @@
 import React from 'react';
 
 import type { DropdownMenuProps } from '@radix-ui/react-dropdown-menu';
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 import PubSub from 'pubsub-js'
 
 import { collapseSelection } from '@udecode/plate';

@@ -3,7 +3,7 @@ import { useContext, useState } from 'react';
 import { Button, Container } from 'react-bootstrap';
 import { Logger } from 'react-logger-lib';
 import toast from 'react-hot-toast';
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 
 import { FilePond, registerPlugin } from 'react-filepond'
 import 'filepond/dist/filepond.min.css'

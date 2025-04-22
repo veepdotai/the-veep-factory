@@ -1,7 +1,7 @@
 import{ useCallback, useEffect, useMemo, useState } from 'react'
 
 import { Logger } from 'react-logger-lib'
-import { t } from 'i18next'
+import { t } from 'src/components/lib/utils'
 import PubSub from "pubsub-js"
 import { Button } from '../ui/shadcn/button'
 

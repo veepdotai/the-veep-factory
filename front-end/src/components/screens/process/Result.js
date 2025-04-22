@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Button, Card, Placeholder } from 'react-bootstrap';
 import { Logger } from 'react-logger-lib';
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 
 import { useCookies } from 'react-cookie';
 import parse from 'html-react-parser';

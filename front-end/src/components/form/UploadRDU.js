@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { Container } from 'react-bootstrap';
 import { Logger } from 'react-logger-lib';
 import toast from 'react-hot-toast';
-import { t } from 'i18next';
+import { t } from 'src/components/lib/utils'
 import 'react-dropzone-uploader/dist/styles.css'
 import Dropzone from 'react-dropzone-uploader'
 
