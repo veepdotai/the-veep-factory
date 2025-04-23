@@ -16,9 +16,15 @@ import { FiUser, FiUserPlus, FiUserCheck } from "react-icons/fi";
 import { BiWorld } from "react-icons/bi";
 import { LuLoader } from "react-icons/lu";
 
+export function getIcon(iconName) {
+    return Icons[iconName] || Icons.default
+}
+
 export const attr = {className: "d-inline align-text-middle", size: 20}
 
 export const Icons = {
+    default:            <Md.MdOutlineSupportAgent {...attr} />,
+
     chat:               <Md.MdOutlineChatBubbleOutline {...attr} />,
     clipboard:          <Md.MdCopyAll {...attr} />,
     config:             <Md.MdDesignServices {...attr} />,

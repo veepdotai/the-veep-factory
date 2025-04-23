@@ -10,7 +10,7 @@ import { Utils } from 'src/components/lib/utils'
 import MenuOptions from './MenuOptions'
 import MenuItem from './MenuItems/MenuItem'
 import LogoWithLink from "src/components/LogoWithLink"
-import { Icons } from '@/constants/Icons'
+import { getIcon } from '@/constants/Icons'
 
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
@@ -72,7 +72,7 @@ export default function MenuVertical( {direction, isManager, profile} ) {
             <AccordionItem key={value} value={value}>
                 <AccordionTrigger className="">
                     <div className="d-flex d-inline align-text-middle">
-                        <div className="me-2">{Icons[value]}</div>
+                        <div className="me-2">{getIcon(value)}</div>
                         <div className="text-left">{trigger}</div>
                     </div>
                 </AccordionTrigger>
@@ -84,9 +84,9 @@ export default function MenuVertical( {direction, isManager, profile} ) {
     function selectUserLevel() {
         return (
             <div className="flex items-center space-x-2">
-                <Label htmlFor="ui-mode">{Icons["user-normal"]}</Label>
+                <Label htmlFor="ui-mode">{getIcon("user-normal")}</Label>
                 <Switch id="mode" onClick={() => setIsNormalUser(!isNormalUser)}/>
-                <Label htmlFor="ui-mode">{Icons["user-advanced"]}</Label>
+                <Label htmlFor="ui-mode">{getIcon("user-advanced")}</Label>
                 <div className=''>{ isNormalUser ? t("NormalUser") : t("ExpertUser")}</div>
             </div>
         )
@@ -151,10 +151,10 @@ export default function MenuVertical( {direction, isManager, profile} ) {
                                 {getAccordionItem("tools", getMenuTitle(t("Tools")),
                                     <>
                                         {/*<MenuItem itemKey="chat" itemLabel={t("Chat")} direction={direction} />*/}
-                                        <div className='ps-4'>{Icons.chat}
+                                        <div className='ps-4'>{getIcon("chat")}
                                             <a className="ps-2" target="_blank" href="https://chat.veep.ai">Chat</a>
                                         </div>
-                                        <div className='pt-2 ps-4'>{Icons.support}
+                                        <div className='pt-2 ps-4'>{getIcon("support")}
                                             <a className="ps-2" target="_blank" href="https://github.com/veepdotai/the-veep-factory">Support</a>
                                         </div>
                                     </>

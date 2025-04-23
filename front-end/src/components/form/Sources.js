@@ -6,7 +6,7 @@ import { md5 } from "js-md5"
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
-import { Icons } from '@/constants/Icons'
+import { getIcon } from '@/constants/Icons'
 
 export default function Sources( props ) {
     const log = Logger.of(Sources.name);
@@ -75,7 +75,7 @@ export default function Sources( props ) {
                             {
                                 source.contents.length > 0 ?
                                     <ul>
-                                        {source.contents.map((item) => <li key={item.title} >{Icons[item.icon]} {item.title}</li>)}
+                                        {source.contents.map((item) => <li key={item.title} >{getIcon(item.icon)} {item.title}</li>)}
                                     </ul>
                                 :
                                     <div className="text-center text-slate-500">{t("NotAvailableData")}</div>

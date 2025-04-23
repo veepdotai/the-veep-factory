@@ -2,7 +2,7 @@ import { Button, Col, Container, Modal, Row, Form } from 'react-bootstrap';
 import PubSub from 'pubsub-js';
 import { t } from 'src/components/lib/utils'
 
-import { Icons } from '@/constants/Icons';
+import { getIcon } from '@/constants/Icons';
 
 export default function UploadSelector() {
   let size = 32;
@@ -12,7 +12,7 @@ export default function UploadSelector() {
   function getInputWidget(inputType) {
     return (
       <Col style={style} className='text-center' xs={3} onClick={() => PubSub.publish("RESOURCE_SELECTED", inputType)}>
-        <div>{Icons[inputType]}</div>
+        <div>{getIcon(inputType)}</div>
         <div className="">{t(inputType)}</div>
       </Col>
     )

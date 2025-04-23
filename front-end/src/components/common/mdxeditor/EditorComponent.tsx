@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { Logger } from 'react-logger-lib';
 import PubSub from "pubsub-js";
-import { Icons } from "src/constants/Icons";
+import { getIcon } from "src/constants/Icons";
 
 import {FC, useEffect} from 'react'
 import {
@@ -65,7 +65,7 @@ const Editor: FC<EditorProps> = ({ cid, attrName, markdown, editorRef, contentEd
       { true ?
         <>
           <Button {...looknfeel} onClick={() => handleSave(editorRef.current.getMarkdown())}>
-            {Icons.save}
+            {getIcon("save")}
           </Button>
           <MDXEditor ref={editorRef} markdown={markdown} contentEditableClassName={contentEditableClassName} plugins={[
                 headingsPlugin(),

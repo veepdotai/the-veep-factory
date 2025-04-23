@@ -5,7 +5,7 @@ import { Container, Offcanvas } from 'react-bootstrap';
 import { t } from 'src/components/lib/utils'
 
 import { Utils } from "src/components/lib/utils";
-import { Icons } from "src/constants/Icons"
+import { getIcon } from "src/constants/Icons"
 
 import MenuItem from './MenuItems/MenuItem';
 import { Button } from 'src/components/ui/shadcn/button';
@@ -65,7 +65,7 @@ function OffCanvasMenu({ name, ...props }) {
 
   return (
     <>
-      <Button variant={'link'} onClick={handleShow}>{Icons.menu}</Button>
+      <Button variant={'link'} onClick={handleShow}>{getIcon("menu")}</Button>
 
       <Offcanvas style={{width: 300}} show={show} onHide={handleClose} {...props}>
 

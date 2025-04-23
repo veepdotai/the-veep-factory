@@ -15,7 +15,7 @@ import { Constants } from "src/constants/Constants"
 import WaitForIt from './common/WaitForIt'
 import { UploadLib } from './lib/util-upload-form'
 import flash from 'src/styles/css.flash.css'
-import { Icons } from '../constants/Icons'
+import { getIcon } from '../constants/Icons'
 
 export default function Monitoring( props ) {
     const log = Logger.of(Monitoring.name);
@@ -199,7 +199,7 @@ export default function Monitoring( props ) {
                                                     {t("Resume")}
                                                 </Button>
                                                 <OverlayTrigger trigger="click" placement="bottom" overlay={popoverClick}>
-                                                    {Icons.help}
+                                                    {getIcon("help")}
                                                 </OverlayTrigger>
                                             </>
                                         :

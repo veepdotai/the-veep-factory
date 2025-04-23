@@ -9,7 +9,7 @@ import { Constants } from '@/constants/Constants'
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, } from "src/components/ui/shadcn/card"
 import { Button } from 'src/components/ui/shadcn/button'
-import { Icons } from '@/constants/Icons'
+import { getIcon } from '@/constants/Icons'
 import { cn } from '@/lib/utils'
 
 export default function Dashboard() {
@@ -162,7 +162,7 @@ export default function Dashboard() {
                 <CardFooter className="justify-end">
                     <Button asChild>
                         <a className="button" target="_blank" href={cheatSheet.href}>
-                            {cheatSheet?.icon ? Icons[cheatSheet.icon] : Icons["right"]}{cheatSheet?.label}
+                            {cheatSheet?.icon ? getIcon(cheatSheet.icon) : getIcon("right")}{cheatSheet?.label}
                         </a>
                     </Button>
                 </CardFooter>

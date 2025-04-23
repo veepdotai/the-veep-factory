@@ -38,7 +38,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     import.meta.url,
 ).toString();
 
-import { Icons } from '@/constants/Icons';
+import { getIcon } from '@/constants/Icons';
 import { Button } from 'src/components/ui/shadcn/button'
 import Loading from '@/components/common/Loading';
 import { UploadLib } from '@/components/upload-widget/UploadLib';

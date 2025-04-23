@@ -13,7 +13,7 @@ import { getService } from '../lib/service-fetch'
 import VocalForm from './VocalForm';
 import UploadForm from './UploadForm';
 
-import { Icons } from "src/constants/Icons";
+import { getIcon } from "src/constants/Icons";
 
 const dNone = 'd-none d-sm-none d-md-block ';
 
@@ -143,7 +143,7 @@ function ToggleForm( props ) {
         <Card className={'h-100 rounded-4 overflow-auto '}>
             {/* disabled ? 'border-0' : 'h-100 rounded-4 overflow-auto ' */}
             <Card.Title className={'border-bottom text-center p-2 '}>
-                {Icons.volume} {/* size={36} */}
+                {getIcon("volume")} {/* size={36} */}
                 {t(props.contentType?.title)}
             </Card.Title>
             <Card.Body style={{"font-size": "0.875rem"}} className={disabled ? 'pt-0' : ''}>

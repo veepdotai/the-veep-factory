@@ -15,7 +15,7 @@ import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, Me
 import { Popover, PopoverContent, PopoverTrigger } from "src/components/ui/shadcn/popover"
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "src/components/ui/shadcn/tooltip"
 
-import { Icons } from '@/constants/Icons'
+import { getIcon } from '@/constants/Icons'
 import { Separator } from 'src/components/ui/shadcn/separator';
 
 export default function ContentActions( {actions = null, title = null, icon = null, viewType = "menu"} ) {
@@ -31,7 +31,7 @@ export default function ContentActions( {actions = null, title = null, icon = nu
     let shortcutChar = ("Mac" == useOSDetection() && '⌘') || "CTRL"
     return (
       <MenubarItem key={title}>
-        {Icons[icon]}{' '} {title} <MenubarShortcut>{shortcutChar} {shortcut}</MenubarShortcut>
+        {getIcon(icon)}{' '} {title} <MenubarShortcut>{shortcutChar} {shortcut}</MenubarShortcut>
       </MenubarItem>
     )
   }
@@ -40,7 +40,7 @@ export default function ContentActions( {actions = null, title = null, icon = nu
     return (
       <Menubar>
         <MenubarMenu>
-          <MenubarTrigger>{icon && Icons[icon]}{' '}{title ?? ""}</MenubarTrigger>
+          <MenubarTrigger>{icon && getIcon(icon)}{' '}{title ?? ""}</MenubarTrigger>
           <MenubarContent>
             {actions?.map((action) => getActionMenuItem(action.title, action.icon, action.action, action.shortcut))}
           </MenubarContent>
@@ -56,7 +56,7 @@ export default function ContentActions( {actions = null, title = null, icon = nu
         <a className="text-sm flex h-full w-full select-none justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
           href="/"
         >
-          {Icons[icon]}{title} <div className="text-xs">{shortcutChar} <strong>{shortcut}</strong></div>
+          {getIcon(icon)}{title} <div className="text-xs">{shortcutChar} <strong>{shortcut}</strong></div>
         </a>
       </NavigationMenuLink>
     )
@@ -67,7 +67,7 @@ export default function ContentActions( {actions = null, title = null, icon = nu
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuTrigger>{icon && Icons[icon]}{' '}{title ?? ""}</NavigationMenuTrigger>
+            <NavigationMenuTrigger>{icon && getIcon(icon)}{' '}{title ?? ""}</NavigationMenuTrigger>
             <NavigationMenuContent>
               {actions?.map((action) => getActionNavigationMenuItem(action.title, action.icon, action.action, action.shortcut))}
             </NavigationMenuContent>
@@ -146,7 +146,7 @@ const ContentActionsUtils = {
       return (
         <Button className={cn("p-1 hover:bg-accent justify-start font-normal text-sm", className)} variant="ghost" disabled={disabled} onClick={action}>
           <div className="flex flex-row gap-2 items-center">
-            {displayIcon && icon && Icons[icon]}
+            {displayIcon && icon && getIcon(icon)}
             {displayTitle && title ? <span className="mx text-muted-foreground text-xs">{title}</span> : <></>}
           </div>
           <span className="sr-only">{title}</span>
@@ -155,7 +155,7 @@ const ContentActionsUtils = {
     } else {
       return(
         <Button className={cn("p-1", className)} variant="ghost" disabled={disabled}>
-          {displayIcon && icon && Icons[icon]}{displayTitle && title ? <div className="ps-2">{title}</div>: <></>}
+          {displayIcon && icon && getIcon(icon)}{displayTitle && title ? <div className="ps-2">{title}</div>: <></>}
           <span className="sr-only">{title}</span>
         </Button>                
       )

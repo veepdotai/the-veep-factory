@@ -5,7 +5,7 @@ import { Logger } from 'react-logger-lib';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
-import { Icons } from "src/constants/Icons";
+import { getIcon } from "src/constants/Icons";
 import { md5 } from "js-md5";
 import { ProfileContext } from "src/context/ProfileProvider";
 import { Constants } from "src/constants/Constants";
@@ -42,22 +42,22 @@ export default function PromptActions( { definition, showPromptForm, showPromptE
                         <Dropdown.Menu>
                             {! shared ?
                                 <>
-                                    <Dropdown.Item onClick={() => showPromptForm()}>{Icons.config} {t("Configure")}</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => showPromptForm()}>{getIcon("config")} {t("Configure")}</Dropdown.Item>
                                     { Utils.isManager(profile) && (
-                                        <Dropdown.Item onClick={() => showPromptEditor()}>{Icons.editor} {t("Source")}</Dropdown.Item>
+                                        <Dropdown.Item onClick={() => showPromptEditor()}>{getIcon("editor")} {t("Source")}</Dropdown.Item>
                                     )}
-                                    <Dropdown.Item onClick={() => showInfo()}>{Icons.infos} {t("Infos")}</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => showInfo()}>{getIcon("infos")} {t("Infos")}</Dropdown.Item>
                                     <Dropdown.Divider />
-                                    <Dropdown.Item onClick={() => copy()}>{Icons.copy} {t("Duplicate")}</Dropdown.Item>
-                                    <Dropdown.Item disabled onClick={() => share()}>{Icons.share} {t("Share")}</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => copy()}>{getIcon("copy")} {t("Duplicate")}</Dropdown.Item>
+                                    <Dropdown.Item disabled onClick={() => share()}>{getIcon("share")} {t("Share")}</Dropdown.Item>
                                     <Dropdown.Divider />
-                                    <Dropdown.Item onClick={() => confirm(t("AreYouSureToRemove"), remove)}>{Icons.delete} {t("Delete")}</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => confirm(t("AreYouSureToRemove"), remove)}>{getIcon("delete")} {t("Delete")}</Dropdown.Item>
                                 </>
                             :
                                 <>
-                                    <Dropdown.Item onClick={() => confirm(t("CustomizingPrompt"), showPromptForm)}>{Icons.config} {t("Customize")}</Dropdown.Item>
-                                    {/*<Dropdown.Item onClick={() => showPromptForm()}>{Icons.config} {t("Customize")}</Dropdown.Item>*/}
-                                    <Dropdown.Item onClick={() => showInfo()}>{Icons.infos} {t("Infos")}</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => confirm(t("CustomizingPrompt"), showPromptForm)}>{getIcon("config")} {t("Customize")}</Dropdown.Item>
+                                    {/*<Dropdown.Item onClick={() => showPromptForm()}>{getIcon("config")} {t("Customize")}</Dropdown.Item>*/}
+                                    <Dropdown.Item onClick={() => showInfo()}>{getIcon("infos")} {t("Infos")}</Dropdown.Item>
                                 </>
                             }
 
@@ -67,16 +67,16 @@ export default function PromptActions( { definition, showPromptForm, showPromptE
             :
                 <Col xs={3}>
                     <Nav.Link className="text-align-right" onClick={ () => showPromptEditor() }>
-                        {Icons.config}
+                        {getIcon("config")}
                     </Nav.Link>
                     <Nav.Link className="text-align-right" onClick={ () => showInfo() }>
-                        {Icons.infos}
+                        {getIcon("infos")}
                     </Nav.Link>
                     <Nav.Link className="text-align-right" onClick={ () => copy() }>
-                        {Icons.copy}
+                        {getIcon("copy")}
                     </Nav.Link>
                     <Nav.Link className="text-align-right" onClick={ () => copy() }>
-                        {Icons.delete}
+                        {getIcon("delete")}
                     </Nav.Link>
                 </Col>
         }

@@ -11,7 +11,7 @@ import remarkGfm from 'remark-gfm';
 import styles from './Form.module.css';
 
 import { Constants } from "src/constants/Constants";
-import { Icons } from "src/constants/Icons";
+import { getIcon } from "src/constants/Icons";
 
 import UploadSelector from './UploadSelector';
 //import VocalForm from './VocalForm';
@@ -142,7 +142,7 @@ function ToggleForm( props ) {
     return (
         <>{
             getForm(
-                Icons.volume,
+                getIcon("volume"),
                 t(props.contentType?.title),
                 <form onSubmit={onSubmit}>
                     <Tips1 disabled={disabled} contentType={props.contentType} />

@@ -17,7 +17,7 @@ import { Calendar } from "src/components/ui/shadcn/calendar"
 import { Input } from "src/components/ui/shadcn/input"
 import { Textarea } from "src/components/ui/shadcn/textarea"
 
-import { Icons } from '@/constants/Icons'
+import { getIcon } from '@/constants/Icons'
 import { UtilsGraphQLObject } from '@/api/utils-graphql-object'
 import Upload from '../upload-widget/page'
 
@@ -73,7 +73,7 @@ export const UtilsFormCommon = {
           title: t("Status"),
           description: (
             <div className="mt-2 w-[300px] rounded-md flex">
-                {Icons.loading}
+                {getIcon("loading")}
                 {t("SavingData")}
             </div>
           ),
@@ -457,7 +457,7 @@ export const UtilsFormCommon = {
                     <FormItem>
                         {fo?.displayFormLabel && <>
                                 <FormLabel className={lcnFieldLabel}>
-                                    {t(_fieldName + "Label")}<a className="mx-2 hover:cursor-pointer" onClick={(e) => toggleHelp(e, fieldName, helpMode)}>{Icons.help}</a>
+                                    {t(_fieldName + "Label")}<a className="mx-2 hover:cursor-pointer" onClick={(e) => toggleHelp(e, fieldName, helpMode)}>{getIcon("help")}</a>
                                 </FormLabel>
                                 {
                                     helpMode != 'modal' ?

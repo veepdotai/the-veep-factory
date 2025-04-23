@@ -6,7 +6,7 @@ import { t } from 'src/components/lib/utils'
 
 import PubSub from 'pubsub-js';
 
-import { Icons } from "src/constants/Icons";
+import { getIcon } from "src/constants/Icons";
 
 export default function ProcessStats() {
     const log = Logger.of(ProcessStats.name);
@@ -31,7 +31,7 @@ export default function ProcessStats() {
     return (
         <>
             { content ?
-                <Container>{Icons.stats} {countWords(content)} / {content.length}</Container>
+                <Container>{getIcon("stats")} {countWords(content)} / {content.length}</Container>
                 :
                 <></>
             }

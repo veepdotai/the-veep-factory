@@ -3,7 +3,7 @@ import { useCookies } from 'react-cookie';
 import { t } from 'src/components/lib/utils'
 
 import { Constants } from "src/constants/Constants"
-import { Icons } from "src/constants/Icons"
+import { getIcon } from "src/constants/Icons"
 //import { pushState } from "src/components/lib/utils-analytics";
 import NavItemLinkIconText from "src/components/NavItemLinkIconText"
 
@@ -42,7 +42,7 @@ export default function Exit( props ) {
   return (
     <>
       <NavItemLinkIconText itemKey={menuItemKey} title={menuItemLabel} alwaysVisible="true" onClick={handleClick}>
-        {Icons['exit']}
+        {getIcon('exit')}
       </NavItemLinkIconText>
     </>
   );

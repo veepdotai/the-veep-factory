@@ -69,7 +69,7 @@ export default function Home( props ) {
         toast((_t) => (
             <Row>
                 <Col>
-                    <button onClick={() => toast.dismiss(_t.id)}>{Icons.delete}</button>
+                    <button onClick={() => toast.dismiss(_t.id)}>{getIcon("delete")}</button>
                     <Markdown remarkPlugins={[remarkGfm]}>{t("GenerationSteps", { joinArrays: '\n\n'})}</Markdown>
                     <p>{t("Transcription")}<Badge className={stylesUtils.badge} bg={props.variant??'danger'}> </Badge>...</p>
                 </Col>

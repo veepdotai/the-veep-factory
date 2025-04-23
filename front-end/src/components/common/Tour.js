@@ -6,7 +6,7 @@ import { t } from 'src/components/lib/utils'
 import { driver } from 'driver.js';
 import 'driver.js/dist/driver.css';
 
-import { Icons } from "src/constants/Icons";
+import { getIcon } from "src/constants/Icons";
 import { Utils } from '../lib/utils';
 
 
@@ -60,6 +60,6 @@ export default function Tour( props ) {
     }
 
     return (
-        <div className='cursor-pointer' onClick={handleClick}>{Icons.tour}</div>
+        <div className='cursor-pointer' onClick={handleClick}>{getIcon("tour")}</div>
     )
 }

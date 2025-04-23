@@ -6,7 +6,7 @@ import { t } from 'src/components/lib/utils'
 import { pushState } from "src/components/lib/utils-analytics"
 import NavItemLinkIconText from "src/components/NavItemLinkIconText"
 
-import { Icons, attr } from "src/constants/Icons"
+import { getIcon, attr } from "src/constants/Icons"
 
 export default function Profile( {className, avatarUrl, direction, handleShow, handleClose} ) {
   const log = Logger.of(Profile.name);
@@ -35,7 +35,7 @@ export default function Profile( {className, avatarUrl, direction, handleShow, h
                 <Image className="d-inline" src={myAvatarUrl} width={24} roundedCircle />
               :
               <>
-                {Icons.avatar}
+                {getIcon("avatar")}
               </>
           }
       </NavItemLinkIconText>

@@ -4,7 +4,7 @@ import { Logger } from 'react-logger-lib';
 //import Icon from '../common/Icon';
 
 import { Constants } from "src/constants/Constants";
-import { Icons } from "src/constants/Icons";
+import { getIcon } from "src/constants/Icons";
 
 import styles from './PromptDetails.module.css';
 
@@ -19,13 +19,13 @@ export default function PromptDetails( {...props } ) {
                         <Card.Title className="h5">
                             <Row>
                                 <Col xs={4}>
-                                    {Icons.dashboard}
+                                    {getIcon("dashboard")}
                                 </Col>
                                 <Col xs={6}>
                                     {props.title}
                                 </Col>
                                 <Col xs={2}>
-                                    {props.reviews}{Icons.star} {/*className="ps-1"*/}
+                                    {props.reviews}{getIcon("star")} {/*className="ps-1"*/}
                                 </Col>
                             </Row>
                         </Card.Title>

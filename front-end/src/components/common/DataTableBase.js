@@ -5,7 +5,7 @@ import { Button } from 'src/components/ui/shadcn/button'
 import DataTableComponent from '@/components/datatable/react-dtc/content/page'
 import DataTableTanStack from '@/components/datatable/shadcn-dt-tanstack/content/page'
 
-import { Icons } from '@/constants/Icons'
+import { getIcon } from '@/constants/Icons'
 import { cn } from '@/lib/utils'
   
 function getDataTableContent(props, cns) {
@@ -58,7 +58,7 @@ export default function DataTableBase( props ) {
 				</div>
 			*/}
 			<div className={cn(cns.cnForTablePresentation, "d-flex mt-4 space-y-2")}>
-				<Button variant="ghost" className=" justify-end" onClick={handleRefresh}>{Icons.refresh}</Button>
+				<Button variant="ghost" className=" justify-end" onClick={handleRefresh}>{getIcon("refresh")}</Button>
 				<p className="text-muted-foreground">{t("CurrentContentsList")}</p>
 			</div>
 			{getDataTableContent(props, cns)}

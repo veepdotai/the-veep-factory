@@ -14,7 +14,7 @@ import ContentPanelWithSheet2panels from './ContentPanelWithSheet2panels'
 
 import { t } from "i18next";
 import LogoWithUrl from "@/components/LogoWithLink";
-import { Icons } from "@/constants/Icons";
+import { getIcon } from "@/constants/Icons";
 
 export default function ContentPanelWithSheet( {side, id = null, info = null, content = null}) {
 
@@ -40,7 +40,7 @@ export default function ContentPanelWithSheet( {side, id = null, info = null, co
                     <SheetTitle className="flex items-center">
                       <LogoWithUrl height="3em"/>
                       <div style={{color: "grey"}} className="flex items-center text-sm px-3">
-                        <a onClick={(e) => setOpen(false)} href="#">{Icons.home}</a>
+                        <a onClick={(e) => setOpen(false)} href="#">{getIcon("home")}</a>
                       </div>
                       {t("ContentDetails")}
                     </SheetTitle>

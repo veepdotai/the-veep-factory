@@ -8,12 +8,12 @@ import { cn } from '../ui/shadcn/utils'
 import { Avatar, AvatarFallback, AvatarImage, } from "@/components/ui/avatar"
 import { Card, CardContent, CardTitle } from "@/components/ui/card"
 import { ScrollArea, } from '@/components/ui/scroll-area'
-   
-import { Icons } from '@/constants/Icons'
-
-import PDF from '../veepdotai-pdf-config/components/PDF';
 import { Dialog, DialogContent, DialogTrigger } from '../ui/shadcn/dialog';
 import { Button } from '../ui/shadcn/button';
+   
+import { getIcon } from '@/constants/Icons'
+
+import PDF from '../veepdotai-pdf-config/components/PDF';
 import PDFParams from '../veepdotai-pdf-config/components/PDFParams';
 
 interface ContentProps {
@@ -88,7 +88,7 @@ export default function SocialNetworkPreview({viewType = "LinkedIn", content, mo
                 <div className="ms-2 flex-column">
                     <div className="text-strong text-xs align-middle">{author} {dotChar} <span className={textStyle}>1st</span></div>
                     <div className={cn(textStyle, "text-ellipsis")}>{baseline?.substring(0, maxBaselineLength)}...</div>
-                    <div className={cn(textStyle, "align-text-middle")}>1d {dotChar} {Icons.world(14)}</div>
+                    <div className={cn(textStyle, "align-text-middle")}>1d {dotChar} {getIcon("world")(14)}</div>
                 </div>
             </div>
 
@@ -121,12 +121,12 @@ export default function SocialNetworkPreview({viewType = "LinkedIn", content, mo
                 <div className="flex justify-between w-100 pt-1">
                     {["Up", "Support", "Publish", "Share"].map((action) => 
                         <a key={action} onClick={() => alert(t("JustPreview"))} className="px-3 py-1 rounded-1 hover:cursor-pointer hover:bg-slate-100 text-xs d-inline align-middle">
-                            {Icons[action.toLowerCase()]} {t("LI" + action)}
+                            {getIcon(action.toLowerCase())} {t("LI" + action)}
                         </a>)
                     }
                 </div>
                 <div className="pt-2 flex justify-between w-100">
-                    <a onClick={() => alert(t("JustPreview"))} className="text-xs text-blue-600 hover:cursor-pointer hover:text-underline d-inline align-middle">{Icons['add-content']} {t("LIHits")}</a>
+                    <a onClick={() => alert(t("JustPreview"))} className="text-xs text-blue-600 hover:cursor-pointer hover:text-underline d-inline align-middle">{getIcon('add-content')} {t("LIHits")}</a>
                     <a onClick={() => alert(t("JustPreview"))} className="text-xs text-blue-600 hover:cursor-pointer hover:text-underline">{t("LIViewAnalytics")}</a> 
                 </div>
             </div>

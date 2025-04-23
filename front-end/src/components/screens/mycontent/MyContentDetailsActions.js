@@ -14,7 +14,7 @@ import {
     DropdownMenuTrigger,
   } from "src/components/ui/shadcn/dropdown-menu"
 
-import { Icons } from "src/constants/Icons";
+import { getIcon } from "src/constants/Icons";
 
 export default function MyContentDetailsActions( { showPromptEditor, showInfo, publish, regenerate, copy}) {
     const log = Logger.of(MyContentDetailsActions.name);
@@ -28,19 +28,19 @@ export default function MyContentDetailsActions( { showPromptEditor, showInfo, p
                 <>
                     <DropdownMenu className="v-center float-end">
                         <DropdownMenuTrigger asChild>
-                            <Button variant="outline">{Icons.moreVertical}</Button>
+                            <Button variant="outline">{getIcon("moreVertical")}</Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="w-56">
                             <DropdownMenuLabel>{t("Actions")}</DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             <DropdownMenuGroup>
                                 <DropdownMenuItem onClick={copy}>
-                                    {Icons.copy} {t("Copy")}
+                                    {getIcon("copy")} {t("Copy")}
                                     <DropdownMenuShortcut>P</DropdownMenuShortcut>
                                 </DropdownMenuItem>
-                                <DropdownMenuItem onClick={publish}>{Icons.share} {t("Publish")}</DropdownMenuItem>
+                                <DropdownMenuItem onClick={publish}>{getIcon("share")} {t("Publish")}</DropdownMenuItem>
                                 <DropdownMenuSeparator />
-                                <DropdownMenuItem onClick={regenerate} disabled>{Icons.delete} {t("Regenerate")}</DropdownMenuItem>
+                                <DropdownMenuItem onClick={regenerate} disabled>{getIcon("delete")} {t("Regenerate")}</DropdownMenuItem>
                             </DropdownMenuGroup>
                         </DropdownMenuContent>
                     </DropdownMenu>

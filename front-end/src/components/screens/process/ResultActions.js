@@ -5,7 +5,7 @@ import PubSub from 'pubsub-js';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 import LinkedInOps from '../../common/linkedin/LinkedInOps';
-import { Icons } from "src/constants/Icons";
+import { getIcon } from "src/constants/Icons";
 import ProcessStats from './ProcessStats';
 
 export default function ResultActions( { content } ) {
@@ -26,7 +26,7 @@ export default function ResultActions( { content } ) {
                         onCopy={onCopy}
                         >
                             <Button variant='outline-info' className='p-2 btn btn-sm fs-6'>
-                                {Icons.clipboard}
+                                {getIcon("clipboard")}
                             </Button>
                     </CopyToClipboard>
                 </Col>

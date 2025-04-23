@@ -10,7 +10,7 @@ import { Checkbox } from "src/components/ui/shadcn/checkbox"
 import PDFPanel from 'src/components/veepdotai-pdf-config/PDFPanel'
 import PDFParams from 'src/components/veepdotai-pdf-config/components/PDFParams';
 
-import { Icons } from "src/constants/Icons";
+import { getIcon } from "src/constants/Icons";
 import EKeyLib from '../../lib/util-ekey';
 import { Utils } from '../../lib/utils';
 import Veeplet from '../../lib/class-veeplet'
@@ -39,7 +39,7 @@ export default class MyContentDetailsForDesktop {
       return (
           <TabsTrigger id={`details-menu-${eventKey}`} value={eventKey}>
             <MyContentDetailsForDesktop.TT id={`m-${eventKey}`} title={`${t("Edit")} ${instructions?.label}`}>
-              {Icons.editor} {instructions?.label.substring(0,4)}
+              {getIcon("editor")} {instructions?.label.substring(0,4)}
             </MyContentDetailsForDesktop.TT>
           </TabsTrigger>
       )
@@ -64,17 +64,17 @@ export default class MyContentDetailsForDesktop {
         <>
           <TabsTrigger key="details-menu-chat" id="details-menu-chat" value="chat">
             <MyContentDetailsForDesktop.TT id="m-conversation" title={t("Chat")}>
-              {Icons.support}
+              {getIcon("support")}
             </MyContentDetailsForDesktop.TT>
           </TabsTrigger>
           <TabsTrigger key="details-menu-transcription" id="details-menu-transcription" value="transcription">
             <MyContentDetailsForDesktop.TT id="m-transcription" title={t("Transcription")}>
-              {Icons.transcriptionView}
+              {getIcon("transcriptionView")}
             </MyContentDetailsForDesktop.TT>
           </TabsTrigger>
           <TabsTrigger key="details-menu-metadata" id="details-menu-metadata" value="metadata">
             <MyContentDetailsForDesktop.TT id="m-metadata" title={t("Metadata")}>
-              {Icons.metadataView}
+              {getIcon("metadataView")}
             </MyContentDetailsForDesktop.TT>
           </TabsTrigger>
         </>
@@ -85,10 +85,10 @@ export default class MyContentDetailsForDesktop {
       return (
         <>
           <TabsTrigger key="details-menu-sideBySide-content" id="details-menu-sideBySide-content" value="sideBySide-content">
-              <MyContentDetailsForDesktop.TT id="m2" title={t("SideBySideView")}>{Icons.comparedView}</MyContentDetailsForDesktop.TT>
+              <MyContentDetailsForDesktop.TT id="m2" title={t("SideBySideView")}>{getIcon("comparedView")}</MyContentDetailsForDesktop.TT>
           </TabsTrigger>
           <TabsTrigger key="details-menu-calendar-content" id="details-menu-calendar-content" value="calendar-content">
-              <MyContentDetailsForDesktop.TT id="m4" title={t("CalendarView")}>{Icons['editorial-calendar']}</MyContentDetailsForDesktop.TT>
+              <MyContentDetailsForDesktop.TT id="m4" title={t("CalendarView")}>{getIcon('editorial-calendar')}</MyContentDetailsForDesktop.TT>
           </TabsTrigger>
         </>
       )
@@ -99,12 +99,12 @@ export default class MyContentDetailsForDesktop {
         <>
           <TabsTrigger key="details-menu-content" id="details-menu-content" value="content">
               <MyContentDetailsForDesktop.TT id="m1" title={t("MainContent")}>
-                {Icons.aggregatedView}
+                {getIcon("aggregatedView")}
               </MyContentDetailsForDesktop.TT>
           </TabsTrigger>
           <TabsTrigger key="details-menu-pdf" id="details-menu-pdf" value="pdf-merged-content">
               <MyContentDetailsForDesktop.TT id="m3" title={t("PDFMergedContent")}>
-                {Icons.pdf}
+                {getIcon("pdf")}
               </MyContentDetailsForDesktop.TT>
           </TabsTrigger>
         </>

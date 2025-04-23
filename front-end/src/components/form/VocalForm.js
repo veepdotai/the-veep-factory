@@ -17,7 +17,7 @@ import styles from './Vocal.module.css';
 import { VeepletContext } from 'src/context/VeepletProvider';
 import { ContentIdContext } from 'src/context/ContentIdProvider';
 
-import { Icons } from "src/constants/Icons";
+import { getIcon } from "src/constants/Icons";
 
 var ex = null;
 var blob;
@@ -156,7 +156,7 @@ export default function Vocal( {...props} ) {
                     variant="danger"
                     onClick={() => handleRemove(index) }
                   >
-                      {Icons.delete} {/* key={index + "h"} */}
+                      {getIcon("delete")} {/* key={index + "h"} */}
                   </Button>
                   
                 </Col>
