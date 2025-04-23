@@ -113,6 +113,7 @@ export default function PDFLink({document, title, viewOptions}) {
     let leftButtonCN = pageNumber > 1 ? "place-content-stretch rounded-full bg-black text-white font-bold z-10" : "z-0"
     let rightButtonCN = pageNumber < numPages ? "place-content-stretch rounded-full bg-black text-white font-bold z-10" : "z-0"
 
+    let height = viewOptions.height ? viewOptions.height : 500
     return (
         <>
             { pdfUrl != "" &&
@@ -124,7 +125,7 @@ export default function PDFLink({document, title, viewOptions}) {
                         </div>
                         <div className="">
                             <div className="p-2 bg-black text-white text-sm font-bold w-100">Titre du fichier : {numPages ? numPages : "..."} pages</div>
-                            <DocView className="" file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
+                            <DocView className={height? `h-[${height}px]` : ''} file={pdfUrl}  onLoadSuccess={onDocumentLoadSuccess}>
                                 <PageView pageNumber={pageNumber} loading="..." {...viewOptions} />
                             </DocView>
                             <div className="p-2 bg-black text-white text-sm font-bold w-100">{t("Page")} {pageNumber} {t("Of")} {numPages ? numPages : "..."}</div>

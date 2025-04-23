@@ -2,6 +2,7 @@
 
 import { Logger } from "react-logger-lib"
 import testdata from "../data.json"
+import { t } from "@/components/lib/utils"
 
 import SocialNetworkPreview from "@/components/screens/SocialNetworkPreview";
 
@@ -41,7 +42,7 @@ export default function MyTest() {
 
               return (
                 <div className="flex flex-row gap-5">
-                  <SocialNetworkPreview key={`mpc-${i}-edit`} mode="edit" content={{content: content}}/>
+                  <SocialNetworkPreview key={`mpc-${i}-edit`} mode="edit" content={{content: content}} />
                   <SocialNetworkPreview key={`mpc-${i}-preview`} mode="preview" content={{content: content}} {...attachmentParams} />
                 </div>
               )

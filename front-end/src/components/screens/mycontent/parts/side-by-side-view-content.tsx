@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { Logger } from 'react-logger-lib';
 
 import parse from 'html-react-parser';
@@ -29,6 +29,18 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
     const log = Logger.of(SideBySideViewContent.name)
 
     const MAX = ["xl", "lg", "md", "sm", "xs"]
+    const [viewType, setViewType] = useState() 
+
+        
+    function getViewTypes() {
+      return (
+        <div className="flex flex-row">
+          <button className={`btn btn-sm btn-primary ${viewType == "normal" ? "btn-active" : ""}`} onClick={() => setViewType("normal")}>Normal</button>
+          <button className={`btn btn-sm btn-primary ${viewType == "carousel" ? "btn-active" : ""}`} onClick={() => setViewType("carousel")}>Carousel</button>
+          <button className={`btn btn-sm btn-primary ${viewType == "preview" ? "btn-active" : ""}`} onClick={() => setViewType("preview")}>Preview</button>
+        </div>
+      )
+    }
 
     function format(_content, _parse = false) {
         if (_content && typeof _content === "string") {
@@ -155,7 +167,9 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
     function getContentWithScrollbar(contents) {
       return (
         <div className={`p-1 w-1/${width} flex overflow-x-auto space-x-2`}>
-          {contents}
+          <ScrollArea className="h-100">
+            {contents}
+          </ScrollArea>
         </div>
       )
     }
@@ -176,20 +190,20 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
     }
 
     let chain = Veeplet.getChainAsArray(prompt.prompts.chain);
-    let viewType = "preview"
 
-                  let attachmentGenerationOptions = {...testdata.attachmentGenerationOptions}
-                  let attachmentViewType = testdata.attachmentViewType 
-                  let attachmentViewOptions = {...testdata.attachmentViewOptions}
-    
-                  let attachmentParams = {
-                    attachmentGenerationOptions: attachmentGenerationOptions,
-                    attachmentViewType: attachmentViewType,
-                    attachmentViewOptions: attachmentViewOptions
-                  }
+    let attachmentGenerationOptions = {...testdata.attachmentGenerationOptions}
+    let attachmentViewType = testdata.attachmentViewType 
+    let attachmentViewOptions = {...testdata.attachmentViewOptions}
+
+    let attachmentParams = {
+      attachmentGenerationOptions: attachmentGenerationOptions,
+      attachmentViewType: attachmentViewType,
+      attachmentViewOptions: attachmentViewOptions
+    }
     
     return (
       <>
+        <>{getViewTypes()}</>
         { chain ?
             getContents(chain, viewType)
           :

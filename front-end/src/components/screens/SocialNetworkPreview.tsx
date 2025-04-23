@@ -54,8 +54,10 @@ export default function SocialNetworkPreview({viewType = "LinkedIn", content, mo
         return attachmentViewType
     }
 
-    function getPDFContent(content : string) {
-        let pdfContent = content.replace(/.*---.*---(\r?\n)*(.*)/mis, "$1").trim()
+    function getPDFContent(content) {
+        //let pdfContent = data.content.replace(/.*---.*---(\r?\n?)*(.*)/mis, "$1").trim()
+        log.trace("getPDFContent: before transformation: content: ", content)
+        let pdfContent = content.replace(/.*---[^\r\n]*---(.*)/mis, "$1")
         log.trace("getPDFContent: ", pdfContent)
         return pdfContent
     }
@@ -113,7 +115,7 @@ export default function SocialNetworkPreview({viewType = "LinkedIn", content, mo
 
         let carousel =
             <div className='w-100'>
-                <PDF className="h-75" initContent={getPDFContent(content)} initParams={new PDFParams(attachmentGenerationOptions)} viewType={getAttachmentViewType()} viewOptions={attachmentViewOptions} />
+                <PDF className="h-75" initContent={getPDFContent(data.content)} initParams={new PDFParams(attachmentGenerationOptions)} viewType={getAttachmentViewType()} viewOptions={attachmentViewOptions} />
             </div>
 
         let footer = 

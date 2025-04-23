@@ -19,23 +19,23 @@ export default function PDFDocument({content, params}) {
 
   let data = {
     title: params?.title,
-    subtitle: params?.subtitle || params?.subtitle,
+    subtitle: params?.subtitle,
     featuredImage: params?.featuredImage,
     organizationName: params?.organizationName,
     author: params?.author,
     version: params?.version,
     date: params?.date,
+    backgroundImage: params?.backgroundImage || params?.backgroundImg,
     backgroundImageCover: params?.backgroundImageCover || params?.backgroundImgCover,
     backgroundImageBackCover: params?.backgroundImageBackCover || params?.backgroundImgBackCover,
-    backgroundImage: params?.backgroundImage || params?.backgroundImg,
     footer: params?.footer,
     backCover: params?.backCover || [],
     dimensions: params?.dimensions || "A4",
-//    displayHeader: params?.displayHeader,
-    displayHeader: true,
+
+    displayHeader: params?.displayHeader,
     displayFooter: params?.displayFooter,
+    displayToc: params?.displayToc,
     newPage: params?.newPage,
-    toc: params?.toc,
 
     styles: params?.styles || {},
   }
@@ -53,6 +53,11 @@ export default function PDFDocument({content, params}) {
     }
   }
 */
+
+  function getNothingImage() {
+    return "/assets/images/nothing.png"
+  }
+
   /**
    * Creates and return the first page of the pdf
    * @returns The first page of the PDF
@@ -83,7 +88,7 @@ export default function PDFDocument({content, params}) {
           {getInlineContentWithLabel(0, t("Date"), data?.date, "date", data?.styles)}
         </View>
 
-        {data?.backgroundImageCover == "./assets/images/nothing.png" ? background(data?.backgroundImage) : background(data?.backgroundImageCover)}
+        {data?.backgroundImageCover == getNothingImage() ? background(data?.backgroundImage) : background(data?.backgroundImageCover)}
 
         {/*footer()*/}
       </Page>
@@ -151,13 +156,13 @@ export default function PDFDocument({content, params}) {
                 {page[2].map((subtitle, i) => {
                   if (typeof(subtitle) == "string"){
                     return (<Text key={`text-${i}`} style={data.styles?.text}>{subtitle}</Text>)
-                  }else {
+                  } else {
                     return displaySubtitle(1, subtitle)
                   }
                 })}
-                {page[4] != "./assets/images/nothing.png" ? (<Image src={page[4]} style={page[5] != null ? page[5].image : data.styles?.imageContent} />) : (console.log())}
+                {page[4] != getNothingImage() ? (<Image src={page[4]} style={page[5] != null ? page[5].image : data.styles?.imageContent} />) : (console.log())}
                 {footer()}
-                {/*background(page[3] == "./assets/images/nothing.png" && data?.backgroundImage != "./assets/images/nothing.png" ? data?.backgroundImage : page[3])*/}
+                {/*background(page[3] == getNothingImage() && data?.backgroundImage != getNothingImage() ? data?.backgroundImage : page[3])*/}
                 {background(data?.backgroundImage)}
               </Page>
             )
@@ -185,12 +190,12 @@ export default function PDFDocument({content, params}) {
                       }
                     })
                   }
-                  {page[4] != "./assets/images/nothing.png" ? (<Image src={page[4]} style={page[5] != null ? page[5].image : data.styles?.imageContent} />) : (console.log())}
+                  {page[4] != getNothingImage() ? (<Image src={page[4]} style={page[5] != null ? page[5].image : data.styles?.imageContent} />) : (console.log())}
                 </View>
               )
             })}
             {footer()}
-            {background(content[0][3] == "./assets/images/nothing.png" && data?.backgroundImage != "./assets/images/nothing.png" ? data?.backgroundImage : content[0][3])}
+            {background(content[0][3] == getNothingImage() && data?.backgroundImage != getNothingImage() ? data?.backgroundImage : content[0][3])}
           </Page>
       )
     }
@@ -210,10 +215,13 @@ export default function PDFDocument({content, params}) {
    * @returns The subtitle and its content
    */
   function displaySubtitle(i, subtitle) {
+      log.trace("displaySubtitle: i: ", i);
+      log.trace("displaySubtitle: subtitle: ", subtitle);
+      
       return (
         <>
           {/*<Text style={data.styles?.subtitle}>{subtitle[0]}</Text>*/}
-          <Text key={subtitle} style={data.styles['title' + i]}>{subtitle[0]}</Text>
+          <Text key={subtitle} style={data.styles['title' + (i+1)]}>title: {i}: {subtitle[0]}</Text>
             {subtitle.length > 1 ?
                 <>{typeof(subtitle[1]) == "string"
                     ? <Text style={data.styles?.text}>{subtitle[1]}</Text>
@@ -253,7 +261,10 @@ export default function PDFDocument({content, params}) {
    * @returns the rendered header
    */
   function header() {
-    if(data?.displayHeader){
+    log.trace("header: displayHeader: ", data?.displayHeader)
+
+    if (data?.displayHeader) {
+      log.trace("header: displayHeader == true? ", data?.displayHeader)
       return (
         <View style={data.styles?.header} fixed>
           <Image style={data.styles?.image} src={data?.featuredImage} />
@@ -264,7 +275,7 @@ export default function PDFDocument({content, params}) {
 
   /**
    * Renders the footer in a view, usable in a page. It contains the page number and displays it
-   * @returns the rendered header
+   * @returns the rendered footer
    */
   function footer() {
     if (data?.displayFooter) {
@@ -370,37 +381,13 @@ export default function PDFDocument({content, params}) {
     )
   }
 
-  /*
-  let document1 = <Document>
-    {firstPage()}
-    {data?.toc ? toc() : (<></>)}
-
-    {contentPages()}
-
-    {data?.backCover?.map(function(item){
-        return lastPage(item[0]-1)
-      })
-    }
-  </Document>
-  */
-  let document = <Document>
-    <Page>
-      <Text>Ceci est un test</Text>
-    </Page>
-  </Document>
-
-/*
-      (content && params) ?
-        {document}
-
-*/
   return (
     <>
     {
       (content && params) ?
           <Document>
             {firstPage()}
-            {data?.toc ? toc() : (<></>)}
+            {data?.displayToc ? toc() : (<></>)}
 
             {contentPages()}
 

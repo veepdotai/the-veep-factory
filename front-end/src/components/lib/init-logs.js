@@ -63,6 +63,7 @@ export default function initAppJSLogs(level = "NONE") {
     localStorage.setItem('Calendar', level);
       localStorage.setItem('CalendarView', level);
       localStorage.setItem('CalendarSheet', level);
+    localStorage.setItem('SocialNetworkPreview', level);
     localStorage.setItem('PDF', level);
       localStorage.setItem('PDFExportForm', level);
       localStorage.setItem('PDFViewer', level);
