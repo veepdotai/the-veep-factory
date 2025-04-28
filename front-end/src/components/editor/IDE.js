@@ -1,5 +1,5 @@
 import VeepTree from "./VeepTree";
-import CodeEditor from './CodeEditor';
+import VeepletCodeEditor from './VeepletCodeEditor';
 import { Container, Col, Row } from 'react-bootstrap';
 import { t } from 'src/components/lib/utils'
 
@@ -17,7 +17,7 @@ export default function IDE() {
                     <Container className="mb-3">
                         {t("WriteYourOwnPrompt")}
                     </Container>
-                    <CodeEditor />
+                    <VeepletCodeEditor />
                 </Col>
             </Row>
         </>
