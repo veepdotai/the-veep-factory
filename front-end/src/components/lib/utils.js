@@ -42,8 +42,12 @@ export const Utils = {
 		}
 	},
 
-	capitalize: function(str) {
-		return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+	capitalize: function(str, justFirstOne = false) {
+		if (justFirstOne) {
+			return str.charAt(0).toUpperCase() + str.slice(1);
+		} else {
+			return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+		}
 	},
 
 	isManager: function(profile) {

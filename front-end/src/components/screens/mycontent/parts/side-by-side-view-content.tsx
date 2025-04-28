@@ -145,11 +145,14 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
       log.trace("getPreviewItem: document: ", document)
 
       return (
-        <div key={i} className="flex w-[400px] m-2">
+        <div key={i} className="flex w-[550px] m-2">
           <ScrollArea className="h-100">
+            {/*
             <SocialNetworkPreview content={{content: content}} mode="edit" />
             <SocialNetworkPreview content={{content: content}} mode="preview" {...attachmentParams} />
-          </ScrollArea>
+            */}
+              <SocialNetworkPreview content={{content: content}} mode="alone" {...attachmentParams} />
+            </ScrollArea>
         </div>
       )
     }

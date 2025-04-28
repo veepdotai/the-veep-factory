@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import { Logger } from 'react-logger-lib'
-import { t } from "i18next"
+import { t } from "src/components/lib/utils"
 import PubSub from "pubsub-js"
 
 import { Calendar, Navigate, Views, dayjsLocalizer } from 'react-big-calendar'

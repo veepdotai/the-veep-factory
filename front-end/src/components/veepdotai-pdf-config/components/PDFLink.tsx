@@ -57,17 +57,19 @@ import { UploadLib } from '@/components/upload-widget/UploadLib';
  * @param viewOptions options for the PDF viewer
  * @returns 
  */  
-export default function PDFLink({document, title, viewOptions}) {
+export default function PDFLink({document, title, viewOptions, children}) {
     const log = Logger.of(PDFLink.name)
     const [cookies] = useCookies(['JWT']);
 
+    let doc = document || children
+
     const [pageNumber, setPageNumber] = useState(1)
     const [numPages, setNumPages] = useState<number>()
-    const [instance, updateInstance] = usePDF({ document: document });
 
+    const [instance, updateInstance] = usePDF({ document: doc}); 
     let pdfUrl = instance.url
     let pdfBlob = instance.blob
-
+    
     function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
         setNumPages(numPages);
     }
@@ -100,8 +102,12 @@ export default function PDFLink({document, title, viewOptions}) {
         })
     }
 
-    log.trace("document:", document)
+    log.trace("document:", doc)
     log.trace("viewOptions:", viewOptions)
+
+    useEffect(() => {
+        updateInstance(doc)
+    }, [doc])
 
     useEffect(() => {
         PubSub.subscribe("CONTENT_UPLOADED", onSuccess)
@@ -113,7 +119,16 @@ export default function PDFLink({document, title, viewOptions}) {
     let leftButtonCN = pageNumber > 1 ? "place-content-stretch rounded-full bg-black text-white font-bold z-10" : "z-0"
     let rightButtonCN = pageNumber < numPages ? "place-content-stretch rounded-full bg-black text-white font-bold z-10" : "z-0"
 
-    let height = viewOptions.height ? viewOptions.height : 500
+    let width = viewOptions.width ? viewOptions.width : 533
+    let height = viewOptions.height ? viewOptions.height : 533
+    let widthAndHeightCN = (width && `w-[${width}px]`) + (height && ` h-[${height}px]`)
+    function getArray(l) {
+        let arr = []
+        for(let i = 0; i < l; i++) {
+            arr.push(i)
+        }
+        return arr
+    }
     return (
         <>
             { pdfUrl != "" &&
@@ -123,9 +138,14 @@ export default function PDFLink({document, title, viewOptions}) {
                         <div style={{marginRight: "-50px"}} className="flex flex-col justify-center">
                             <Button variant="ghost" className={leftButtonCN} onClick={() => pageNumber > 1 && setPageNumber(pageNumber - 1)}>&lt;</Button>
                         </div>
-                        <div className="">
-                            <div className="p-2 bg-black text-white text-sm font-bold w-100">Titre du fichier : {numPages ? numPages : "..."} pages</div>
-                            <DocView className={height? `h-[${height}px]` : ''} file={pdfUrl}  onLoadSuccess={onDocumentLoadSuccess}>
+                        <div className={widthAndHeightCN}>
+                            <div className={"p-2 bg-black text-white text-sm font-bold w-100" + (width && ` w-[${width}px]`)}>{title} : {numPages ? numPages : "..."} pages</div>
+                            <DocView key={title} className={/*"flex flex-nowrap " + */widthAndHeightCN} file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
+                                {/*}
+                                {numPages && getArray(numPages).map((_, i) => {
+                                    return <PageView key={i} pageNumber={i + 1} loading="..." {...viewOptions} />
+                                })}
+                                */}
                                 <PageView pageNumber={pageNumber} loading="..." {...viewOptions} />
                             </DocView>
                             <div className="p-2 bg-black text-white text-sm font-bold w-100">{t("Page")} {pageNumber} {t("Of")} {numPages ? numPages : "..."}</div>

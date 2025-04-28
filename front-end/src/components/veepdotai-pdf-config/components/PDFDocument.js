@@ -40,19 +40,8 @@ export default function PDFDocument({content, params}) {
     styles: params?.styles || {},
   }
 
-  log.trace("params/data: ", data)
-/*
-  function t(msg) {
-    let msgTranslated = _t(msg)  
-    log.trace("translate: ", msg, msgTranslated)
-
-    if (! msgTranslated || msgTranslated === "") {
-      return msg
-    } else {
-      return msgTranslated
-    }
-  }
-*/
+  log.trace("PDFDocument: params: ", params)
+  log.trace("PDFDocument: data: ", data)
 
   function getNothingImage() {
     return "/assets/images/nothing.png"
