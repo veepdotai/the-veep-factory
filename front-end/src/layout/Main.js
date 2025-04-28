@@ -10,8 +10,6 @@ import Logs from "src/components/Logs";
 
 //import MyContent from "src/components/screens/mycontent/MyContent";
 import Dashboard from "src/components/screens/Dashboard";
-//import BrandVoiceForm from "src/components/screens/forms/BrandVoiceForm";
-//import EditorialLine from "src/components/screens/EditorialLine";
 import VContentForm from "src/components/screens/forms/VContentForm";
 import DynamicForm from "src/components/screens/forms/DynamicForm";
 import PDFExportForm from "src/components/screens/forms/PDFExportForm";
@@ -21,8 +19,6 @@ import About from "src/components/screens/About";
 import UserParameters from "src/components/screens/UserParameters";
 import AppParameters from "src/components/screens/AppParameters";
 import Credits from "src/components/screens/Credits";
-//import CodeEditor from "src/components/editor/CodeEditor";
-//import IDE from "src/components/editor/IDE";
 import PDFDisplay from "src/components/screens/PDFDisplay";
 import AddContentWizard from "src/components/screens/wizards/AddContentWizard";
 import Profile from "src/components/screens/Profile";

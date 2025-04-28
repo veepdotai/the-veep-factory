@@ -126,6 +126,10 @@ export default function initAppJSLogs(level = "NONE") {
     localStorage.setItem('ContentActions', level);
 
     localStorage.setItem('VeepletModel', level);
+    
+    localStorage.setItem('BaseCodeEditor', level);
+    localStorage.setItem('VeepletCodeEditor', level);
+    localStorage.setItem('JSCodeEditor', level);
 
     localStorage.setItem('getColumns', level);
     localStorage.setItem('UtilsForm', level);
