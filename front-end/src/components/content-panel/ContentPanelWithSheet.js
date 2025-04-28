@@ -12,7 +12,7 @@ import {
 } from "src/components/ui/shadcn/sheet"
 import ContentPanelWithSheet2panels from './ContentPanelWithSheet2panels'
 
-import { t } from "i18next";
+import { t } from "src/components/lib/utils";
 import LogoWithUrl from "@/components/LogoWithLink";
 import { getIcon } from "@/constants/Icons";
 

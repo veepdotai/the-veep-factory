@@ -1,6 +1,6 @@
 import React from 'react';
 //On utilise shadcn.ui pour faire le panneau
-import { t } from "i18next"
+import { t } from "src/components/lib/utils"
 
 import  {ResizableHandle, ResizablePanel, ResizablePanelGroup } from 'src/components/ui/shadcn/resizable';
 import { Input } from 'src/components/ui/shadcn/input';

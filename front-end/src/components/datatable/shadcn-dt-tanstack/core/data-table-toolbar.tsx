@@ -1,6 +1,6 @@
 "use client"
 
-import { t } from "i18next"
+import { t } from "src/components/lib/utils"
  
 import { Cross2Icon } from "@radix-ui/react-icons"
 import { Table } from "@tanstack/react-table"

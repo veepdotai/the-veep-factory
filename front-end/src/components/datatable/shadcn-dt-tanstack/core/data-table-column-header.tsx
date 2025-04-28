@@ -1,7 +1,7 @@
 import { ArrowDownIcon, ArrowUpIcon, CaretSortIcon, EyeNoneIcon, } from "@radix-ui/react-icons"
 import { Column } from "@tanstack/react-table"
 
-import { t } from "i18next"
+import { t } from "src/components/lib/utils"
 
 import { cn } from "@/lib/utils"
 import { Button } from "src/components/ui/shadcn/button"

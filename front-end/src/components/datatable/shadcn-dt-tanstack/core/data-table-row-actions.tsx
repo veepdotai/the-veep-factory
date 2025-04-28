@@ -1,6 +1,6 @@
 "use client"
 
-import { t } from "i18next"
+import { t } from "src/components/lib/utils"
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { Row } from "@tanstack/react-table"
 

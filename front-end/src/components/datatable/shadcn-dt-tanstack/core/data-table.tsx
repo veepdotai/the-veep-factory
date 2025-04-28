@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { t } from "i18next"
+import { t } from "src/components/lib/utils"
 
 import {
   ColumnDef,

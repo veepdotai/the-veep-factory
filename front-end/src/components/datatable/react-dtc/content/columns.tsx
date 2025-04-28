@@ -1,4 +1,4 @@
-import { t } from "i18next"
+import { t } from "src/components/lib/utils"
 import dayjs from "dayjs"
 
 const columns = [
