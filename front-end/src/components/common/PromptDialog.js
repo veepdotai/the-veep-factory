@@ -47,12 +47,14 @@ export default function PromptDialog() {
     <>
       { infos ?
         <Dialog open={open} onOpenChange={setOpen}>
-          <DialogContent>
+          <DialogContent className={infos?.outerCN}>
             <DialogHeader>
               <DialogTitle>{infos?.title}</DialogTitle>
               <DialogDescription>{infos?.description}</DialogDescription>
             </DialogHeader>
+
             {infos?.content}
+
             <div className='flex justify-end'>
               {infos?.actions?.map((action, i) => {
                 return (
