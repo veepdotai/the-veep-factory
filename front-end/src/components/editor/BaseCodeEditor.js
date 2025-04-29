@@ -16,7 +16,18 @@ import Loading from '../common/Loading';
  * - https://codesandbox.io/p/sandbox/multi-model-editor-kugi6?file=%2Fsrc%2FApp.js%3A12%2C20
  */
 export default function 
-BaseCodeEditor({topics, language, initialValue, action, driver = null, editorPreOptions = {}, editorPostOptions = {}, languageOptions = {}}) {
+BaseCodeEditor({
+    topics,
+    language,
+    initialValue,
+    action,
+    driver = null,
+    editorPreOptions = {},
+    editorPostOptions = {},
+    languageOptions = {},
+    showSaveButton = true}
+  ) {
+
   const log = Logger.of(BaseCodeEditor.name);
 
   const [disabledSaveButton, setDisabledSaveButton] = useState(true);
@@ -69,7 +80,7 @@ BaseCodeEditor({topics, language, initialValue, action, driver = null, editorPre
 
   useEffect(() => {
     PubSub.subscribe( topics[0], updateSaveButtonListener) // First topic is for this component
-
+    PubSub.subscribe( "PROCESS_CODE_EDITOR_CONTENT", handleAction)
   }, []);
 
   return (
@@ -102,7 +113,7 @@ BaseCodeEditor({topics, language, initialValue, action, driver = null, editorPre
             onMount={handleEditorDidMount}
             onChange={handleOnChange}
           />
-          <SuspenseClick waiting={saving} disabled={disabledSaveButton} handleAction={handleAction} label={t("Menu.Save")} />
+          {showSaveButton && <SuspenseClick waiting={saving} disabled={disabledSaveButton} handleAction={handleAction} label={t("Menu.Save")} />}
         </>
         :
         <>

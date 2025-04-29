@@ -88,6 +88,14 @@ export default function JSCodeEditor({source = ""}) {
   init()
   
   return (
-      <BaseCodeEditor topics={topics} language='json' initialValue={initialValue} action={handleSave} languageOptions={languageOptions} editorPreOptions={editorPreOptions} />
+      <BaseCodeEditor
+        topics={topics}
+        language='json'
+        initialValue={initialValue}
+        action={handleSave}
+        languageOptions={languageOptions}
+        editorPreOptions={editorPreOptions}
+        showSaveButton={false}
+      />
   )
 }
