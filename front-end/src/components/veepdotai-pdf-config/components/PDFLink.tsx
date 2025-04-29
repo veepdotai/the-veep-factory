@@ -57,7 +57,13 @@ import { UploadLib } from '@/components/upload-widget/UploadLib';
  * @param viewOptions options for the PDF viewer
  * @returns 
  */  
-export default function PDFLink({document, title, viewOptions, children}) {
+export default function PDFLink({
+        document,
+        title,
+        viewOptions,
+        showProcessButton = true,
+        children
+    }) {
     const log = Logger.of(PDFLink.name)
     const [cookies] = useCookies(['JWT']);
 
@@ -74,15 +80,16 @@ export default function PDFLink({document, title, viewOptions, children}) {
         setNumPages(numPages);
     }
 
-    //    function onProcess(blob): void {
-    function onProcess({ url} : {url: string}): void {
+    //    function handleProcess(blob): void {
+    function handleProcess({ url } : {url: string}): void {
+        log.trace("handleProcess: url: ", url)
         try {
             fetch(url)
             .then(response => response.blob())
             .then((blob) => {
                 let metadata = { type: 'application/pdf' };
                 let file = new File([blob], "mypdf.pdf", metadata)
-                log.trace("onProcess: file: ", file)
+                log.trace("handleProcess: file: ", file)
                 if (cookies) {
                     UploadLib.upload(cookies, file, "CONTENT_UPLOADED")
                 } else {
@@ -95,33 +102,17 @@ export default function PDFLink({document, title, viewOptions, children}) {
         }
     }
 
+    function processPDF(topic, msg) {
+        handleProcess(pdfUrl)
+    }
+
     function onSuccess(topic, msg) {        
         PubSub.publish("TOAST", {
-            "title": t("Status Of PDF Link"),
+            "title": t("Status Of PDF Upload"),
             "description": <div className="mt-2 w-[500px] rounded-md">{t("DataSaved")}</div>
         })
     }
 
-    log.trace("document:", doc)
-    log.trace("viewOptions:", viewOptions)
-
-    useEffect(() => {
-        updateInstance(doc)
-    }, [doc])
-
-    useEffect(() => {
-        PubSub.subscribe("CONTENT_UPLOADED", onSuccess)
-    }, [])
-
-    if (instance.loading) return <div>Loading ...</div>;
-    if (instance.error) return <div>Something went wrong: {instance.error}</div>;
-
-    let leftButtonCN = pageNumber > 1 ? "place-content-stretch rounded-full bg-black text-white font-bold z-10" : "z-0"
-    let rightButtonCN = pageNumber < numPages ? "place-content-stretch rounded-full bg-black text-white font-bold z-10" : "z-0"
-
-    let width = viewOptions.width ? viewOptions.width : 533
-    let height = viewOptions.height ? viewOptions.height : 533
-    let widthAndHeightCN = (width && `w-[${width}px]`) + (height && ` h-[${height}px]`)
     function getArray(l) {
         let arr = []
         for(let i = 0; i < l; i++) {
@@ -129,25 +120,48 @@ export default function PDFLink({document, title, viewOptions, children}) {
         }
         return arr
     }
+
+    useEffect(() => {
+        updateInstance(doc)
+    }, [doc])
+
+    useEffect(() => {
+        PubSub.subscribe("CONTENT_UPLOADED", onSuccess)
+        PubSub.subscribe("PROCESS_PDF", processPDF)
+    }, [])
+
+    log.trace("document:", doc)
+    log.trace("viewOptions:", viewOptions)
+
+    let width = viewOptions.width ? viewOptions.width : 533
+    let height = viewOptions.height ? viewOptions.height : 533
+    let widthAndHeightCN = (width && `min-w-[${width}px]`) + (height && ` min-h-[${height}px]`)
+
+    // className doesn't work on the following Node
+    if (instance.loading) return <div style={{width: `${width}px`, minHeight: `${height}px`}} className="flex items-center justify-center">Loading...</div>
+    if (instance.error) return <div>Something went wrong: {instance.error}</div>;
+
+    let leftButtonCN = pageNumber > 1 ? "place-content-stretch rounded-full bg-black text-white font-bold z-10" : "z-0"
+    let rightButtonCN = pageNumber < numPages ? "place-content-stretch rounded-full bg-black text-white font-bold z-10" : "z-0"
+
+    let loading = <div style={{minHeight: `${height}px`}} className="flex items-center justify-center">Loading...</div>
+
     return (
         <>
-            { pdfUrl != "" &&
+            { pdfUrl && pdfUrl != "" &&
                 <>
-                    <Button onClick={() => onProcess(pdfUrl)}>{t("ProcessPDF")}</Button>
+                    {showProcessButton && <Button onClick={() => handleProcess(pdfUrl)}>{t("ProcessPDF")}</Button>}
                     <div className={`flex justify-center`}>
                         <div style={{marginRight: "-50px"}} className="flex flex-col justify-center">
                             <Button variant="ghost" className={leftButtonCN} onClick={() => pageNumber > 1 && setPageNumber(pageNumber - 1)}>&lt;</Button>
                         </div>
-                        <div className={widthAndHeightCN}>
-                            <div className={"p-2 bg-black text-white text-sm font-bold w-100" + (width && ` w-[${width}px]`)}>{title} : {numPages ? numPages : "..."} pages</div>
-                            <DocView key={title} className={/*"flex flex-nowrap " + */widthAndHeightCN} file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
-                                {/*}
-                                {numPages && getArray(numPages).map((_, i) => {
-                                    return <PageView key={i} pageNumber={i + 1} loading="..." {...viewOptions} />
-                                })}
-                                */}
-                                <PageView pageNumber={pageNumber} loading="..." {...viewOptions} />
-                            </DocView>
+                        <div style={{width: `${width}px`}} className="">
+                            <div className={"p-2 bg-black text-white text-sm font-bold w-100"}>{title} : {numPages ? numPages : "..."} pages</div>
+                            <div style={{width: `${width}px`, minHeight: `${height}px`}}>
+                                <DocView key={title} className="" loading={loading} file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
+                                    <PageView height="533px" pageNumber={pageNumber} loading="..." {...viewOptions} />
+                                </DocView>
+                            </div>
                             <div className="p-2 bg-black text-white text-sm font-bold w-100">{t("Page")} {pageNumber} {t("Of")} {numPages ? numPages : "..."}</div>
                         </div>
                         <div style={{marginLeft: "-50px"}} className="flex flex-col justify-center">

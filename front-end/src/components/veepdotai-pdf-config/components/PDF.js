@@ -1,15 +1,13 @@
-import { useEffect, useId, useState } from 'react';
-import { Logger } from 'react-logger-lib';
-import { t } from 'src/components/lib/utils'
+import { useEffect, useId, useState } from 'react'
+import { Logger } from 'react-logger-lib'
 
-import { useMediaQuery } from 'usehooks-ts';
+import { useMediaQuery } from 'usehooks-ts'
 
-import { PDFViewer } from '@react-pdf/renderer';
-import PDFLink from './PDFLink' 
+import { PDFViewer } from '@react-pdf/renderer'
+
+import PDFLink from './PDFLink'
 import PDFDocument from './PDFDocument'
-
-import PDFTest from './PDFTest'
-import PDFParams from './PDFParams';
+import PDFParams from './PDFParams'
 
 /**
  * 
@@ -26,7 +24,6 @@ export default function PDF( {initContent, initParams = null, viewType = "embedd
   const [params, setParams] = useState(initParams)
   const [doc, setDoc] = useState(null)
 
-  //log.trace("id: ", id, "style... initContent: ", initContent)
   log.trace("id: ", id, "style... initParams: ", initParams)
 
   function updateInfosPanel(topic, newParams) {      
@@ -50,22 +47,16 @@ export default function PDF( {initContent, initParams = null, viewType = "embedd
   }, [doc])
 
   useEffect(() => {
-    //log.trace("useEffect[params]: id: ", id, "style... content: ", content)
     log.trace("useEffect[params]: id: ", id, "style... params: ", params)
-    setDoc(<PDFDocument content={content} params={new PDFParams(params)} />)
-    //setDoc(<p>Params: {JSON.stringify(params)}</p>)
+    setDoc(<PDFDocument content={content} params={new PDFParams(params)} />) // This will trigger document update through the update method
   }, [params])
 
   useEffect(() => {
-    //log.trace("useEffect[]: id: ", id, "style... content: ", content)
     log.trace("useEffect[]: id: ", id, "style... params: ", params)
     PubSub.subscribe("INFOS_PANEL_UPDATED", updateInfosPanel)
     PubSub.subscribe("SOURCE_EDITOR_UPDATED", updatePDF)
-    //setDoc(<PDFDocument content={initContent} params={initParams} />)
   }, [])
 
-  //let doc = <PDFDocument content={content} params={params} />
-  //<PDFLink document={doc} title={params?.title} viewOptions={viewOptions}/> }
   return (
     <>
       { (doc && content?.length) ?
