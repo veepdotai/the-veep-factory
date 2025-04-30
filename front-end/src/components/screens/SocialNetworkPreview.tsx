@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from 'react'
+import { useEffect, useId, useState } from 'react'
 import { Logger } from 'react-logger-lib'
 import { t, Utils } from "src/components/lib/utils"
 
@@ -34,12 +34,15 @@ interface ContentProps {
 export default function SocialNetworkPreview({
         viewType = "LinkedIn",
         content,
+        id = "",
         mode = "alone",
         action = null,
         attachmentGenerationOptions = {},
         attachmentViewType = "custom",
         attachmentViewOptions = {}}
     ) {
+
+    let localId = "" === id ? Math.round(Math.random() * 1000000000) + "" : id
 
     const log = Logger.of(SocialNetworkPreview.name)
     log.trace("attachmentGenerationOptions: ", attachmentGenerationOptions)
@@ -51,10 +54,20 @@ export default function SocialNetworkPreview({
     })    
     const [condensedView, setCondensedView] = useState(true)
 
-    function preview() {alert("Preview")}
+    function preview() {PubSub.publish("PROCESS_CODE_EDITOR_CONTENT", {})}
+    function saveAll() {
+        alert("Save All")
+        save()
+        saveLayout()
+        saveCarousel()
+    }
     function save() {alert("Save")}
     function saveLayout() {alert("SaveLayout")}
-    function saveCarousel() {alert("SaveCarousel")}
+    function saveCarousel() {
+        alert("SaveCarousel")
+        PubSub.publish( "PROCESS_PDF_" + id, {})
+    }
+
     function publish() {alert("Publish")}
 
     function enterInEditAndPreviewMode() {
@@ -89,12 +102,12 @@ export default function SocialNetworkPreview({
             let i = Math.random()
             return (    
                 <ScrollArea className="h-100 w-100">
-                    <div className="flex flex-row gap-5">
-                        <SocialNetworkPreview key={`mpc-${i}-edit`} viewType="LinkedIn" mode="edit" content={content}
+                    <div className="flex justify-center flex-row gap-5">
+                        <SocialNetworkPreview key={`mpc-${i}-edit`} id={localId} viewType="LinkedIn" mode="edit" content={content}
                             attachmentGenerationOptions={attachmentGenerationOptions}
                             attachmentViewType={attachmentViewType}
                             attachmentViewOptions={attachmentViewOptions} />
-                        <SocialNetworkPreview key={`mpc-${i}-preview`} viewType="LinkedIn" mode="preview" content={content}
+                        <SocialNetworkPreview key={`mpc-${i}-preview`} id={localId} viewType="LinkedIn" mode="preview" content={content}
                             attachmentGenerationOptions={attachmentGenerationOptions}
                             attachmentViewType={attachmentViewType}
                             attachmentViewOptions={attachmentViewOptions} />
@@ -103,7 +116,13 @@ export default function SocialNetworkPreview({
             )
         }
        
-        PubSub.publish("PROMPT_DIALOG", {title: "Edit and Preview", description: "Edit and previw in PDF", content: display()})
+        PubSub.publish("PROMPT_DIALOG", {
+            outerCN: "max-w-none w-75 h-75",
+            innerCN: "",
+            title: "Edit and Preview",
+            description: "Edit and preview in PDF",
+            content: display()
+        })
 
     }
         
@@ -132,27 +151,23 @@ export default function SocialNetworkPreview({
      * @returns 
      */
     function getButton(mode, action: actionProps ) {
-        //if (mode === "alone") {
-            let o = {}
-            if ("function" === typeof action) {
-            //if ("object" == typeof action) {
-                o.action = action
-                o.name = o.action.name
-                log.trace("getButton: o1: ", o)
-                o.icon = getIcon(o.name)
-            } else {
-                o = action
-            }
+        let o = {}
+        if ("function" === typeof action) {
+        //if ("object" == typeof action) {
+            o.action = action
+            o.name = o.action.name
+            log.trace("getButton: o1: ", o)
+            o.icon = getIcon(o.name)
+        } else {
+            o = action
+        }
 
-            log.trace("getButton: o2: ", o)
-            return (
-                <Button variant="outline" className="w-100" onClick={() => o.action()}>
-                    {o.icon} {t(Utils.capitalize(o.name, true))}
-                </Button>
-            )
-        //} else {
-        //    return ""
-        //}
+        log.trace("getButton: o2: ", o)
+        return (
+            <Button variant={"ghost"} className="w-none" onClick={() => o.action()}>
+                {o.icon} {t(Utils.capitalize(o.name, true))}
+            </Button>
+        )
     }
 
     function getLinkedInContent(data: ContentProps) {
@@ -209,6 +224,7 @@ export default function SocialNetworkPreview({
         let carousel =
             <div className='w-100'>
                 <PDF className="h-75"
+                    id={id}
                     initContent={getPDFContent(data.content)}
                     initParams={new PDFParams(getAttachmentGenerationOptions())}
                     viewType={getAttachmentViewType()}
@@ -232,14 +248,26 @@ export default function SocialNetworkPreview({
             </div>
 
         return (
-            <Card className="w-100 h-full whitespace-break-spaces">
-                <CardTitle>
-                    {"alone" === mode && <div className="w-25">{getButton(mode, enterInEditAndPreviewMode)}</div>}
-                    {"edit" === mode && <div className="w-25">{getButton(mode, preview)} | {getButton(mode, save)}</div>}
-                    {"preview" === mode && <div className="w-25">{getButton(mode, saveLayout)} | {getButton(mode, saveCarousel)} | {getButton(mode, publish)}</div>}
-                </CardTitle>
+            <Card className="w-[533px] h-full whitespace-break-spaces">
                 <CardContent className='m-0 p-0'>
                     <ScrollArea className="w-100 h-full">
+                        <div className="flex gap-2 m-2 float-right">
+                            {"alone" === mode && <div className="">{getButton(mode, enterInEditAndPreviewMode)}</div>}
+                            {"edit" === mode &&
+                                <div className="">
+                                    {getButton(mode, preview)}
+                                    {getButton(mode, saveAll)}
+                                    {/*getButton(mode, save)*/}
+                                    {/*getButton(mode, saveLayout)*/}
+                                </div>
+                            }
+                            {"preview" === mode &&
+                                <div className="">
+                                    {/*getButton(mode, saveCarousel)*/}
+                                    {getButton(mode, publish)}
+                                </div>
+                            }
+                        </div>
                         <div className='p-3 pt-0'>
                             {header}
                         </div>
@@ -258,6 +286,7 @@ export default function SocialNetworkPreview({
                                     <div className='p-3 pt-0'>
                                         {data.content}
                                     </div>
+                                    {footer}
                                 </TabsContent>
                                 <TabsContent value="layout" className="w-full">
                                     <div className='p-3 pt-0'>
@@ -274,7 +303,7 @@ export default function SocialNetworkPreview({
                                 {carousel}
                             </>
                         }
-                        {footer}
+                        {"edit" !== mode && footer}
                     </ScrollArea>
                 </CardContent>
             </Card>

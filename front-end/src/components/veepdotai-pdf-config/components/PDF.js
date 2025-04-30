@@ -14,10 +14,10 @@ import PDFParams from './PDFParams'
  * @param {*} props contains a content String (either markdown or JSON) and an instance of PDFParams
  * @returns a pdf renderer with the new pdf inside
  */
-export default function PDF( {initContent, initParams = null, viewType = "embedded", viewOptions = {}} ) {
+export default function PDF( {initContent, id = null, initParams = null, viewType = "embedded", viewOptions = {}} ) {
   const log = Logger.of(PDF.name)
 
-  const id = useId()
+  //const id = useId()
   
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const [content, setContent] = useState(initContent)
@@ -62,7 +62,7 @@ export default function PDF( {initContent, initParams = null, viewType = "embedd
       { (doc && content?.length) ?
           <>
             { ("embedded" === viewType) && <PDFViewer witdh={400} {...getViewOptions()}>{doc}</PDFViewer> }
-            { ("custom" === viewType) && <PDFLink document={doc} title={params?.title} viewOptions={viewOptions}/> }
+            { ("custom" === viewType) && <PDFLink id={id} document={doc} title={params?.title} viewOptions={viewOptions}/> }
           </>
         :
           <p>Loading...</p>

@@ -42,6 +42,7 @@ import { getIcon } from '@/constants/Icons';
 import { Button } from 'src/components/ui/shadcn/button'
 import Loading from '@/components/common/Loading';
 import { UploadLib } from '@/components/upload-widget/UploadLib';
+import { throws } from 'assert';
 
 //const usePDF = dynamic(() => import('@react-pdf/renderer/usePDF'), { ssr: false })
 /**
@@ -58,6 +59,7 @@ import { UploadLib } from '@/components/upload-widget/UploadLib';
  * @returns 
  */  
 export default function PDFLink({
+        id,
         document,
         title,
         viewOptions,
@@ -81,29 +83,34 @@ export default function PDFLink({
     }
 
     //    function handleProcess(blob): void {
+    //function handleProcess({ url } : {url: string}): void {
     function handleProcess({ url } : {url: string}): void {
         log.trace("handleProcess: url: ", url)
         try {
+            if (!url) throw new Error("No URL available")
+
             fetch(url)
-            .then(response => response.blob())
-            .then((blob) => {
-                let metadata = { type: 'application/pdf' };
-                let file = new File([blob], "mypdf.pdf", metadata)
-                log.trace("handleProcess: file: ", file)
-                if (cookies) {
-                    UploadLib.upload(cookies, file, "CONTENT_UPLOADED")
-                } else {
-                    alert("No available cookies!")
-                    log.trace(t("NoAvailableCookies"))
-                }
-            })
+                .then(response => response.blob())
+                .then((blob) => {
+                    let metadata = { type: 'application/pdf' };
+                    let file = new File([blob], "mypdf.pdf", metadata)
+                    log.trace("handleProcess: file: ", file)
+                    if (cookies) {
+                        UploadLib.upload(cookies, file, "CONTENT_UPLOADED")
+                    } else {
+                        alert("No available cookies!")
+                        log.trace(t("NoAvailableCookies"))
+                    }
+                })
         } catch (e) {
-            alert("Error when processing content")
+            alert("Error when processing content: " + JSON.stringify(e))
         }
     }
 
     function processPDF(topic, msg) {
-        handleProcess(pdfUrl)
+        log.trace("processPDF: topic: ", topic, " msg: ", msg)
+        let pdfUrl = localStorage.getItem("pdfUrl")
+        handleProcess({url: pdfUrl})
     }
 
     function onSuccess(topic, msg) {        
@@ -122,12 +129,19 @@ export default function PDFLink({
     }
 
     useEffect(() => {
+        localStorage.setItem("pdfUrl", pdfUrl)
+    }, [pdfUrl])
+
+    useEffect(() => {
         updateInstance(doc)
     }, [doc])
 
     useEffect(() => {
         PubSub.subscribe("CONTENT_UPLOADED", onSuccess)
-        PubSub.subscribe("PROCESS_PDF", processPDF)
+        if (id) {
+            log.trace(`Suscribe to PROCESS_PDF_${id}`)
+            PubSub.subscribe("PROCESS_PDF_" + id, processPDF)
+        }
     }, [])
 
     log.trace("document:", doc)
@@ -150,13 +164,18 @@ export default function PDFLink({
         <>
             { pdfUrl && pdfUrl != "" &&
                 <>
-                    {showProcessButton && <Button onClick={() => handleProcess(pdfUrl)}>{t("ProcessPDF")}</Button>}
+                    {log.trace("render: pdfUrl: ", pdfUrl)}
                     <div className={`flex justify-center`}>
                         <div style={{marginRight: "-50px"}} className="flex flex-col justify-center">
                             <Button variant="ghost" className={leftButtonCN} onClick={() => pageNumber > 1 && setPageNumber(pageNumber - 1)}>&lt;</Button>
                         </div>
                         <div style={{width: `${width}px`}} className="">
-                            <div className={"p-2 bg-black text-white text-sm font-bold w-100"}>{title} : {numPages ? numPages : "..."} pages</div>
+                            <div className="flex justify-between">
+                                <div className={"p-2 bg-black text-white text-sm font-bold w-100"}>{title} : {numPages ? numPages : "..."} pages</div>
+                                {showProcessButton && <Button className={"p-2 bg-black text-white text-sm font-bold rounded-none"} onClick={() => handleProcess({url: pdfUrl})}>{getIcon('share')}</Button>}
+                                {showProcessButton && <Button className={"p-2 bg-black text-white text-sm font-bold rounded-none z-20"} onClick={() => handleProcess({url: pdfUrl})}>{getIcon('save')}</Button>}
+                                {showProcessButton && <Button className={"p-2 bg-black text-white text-sm font-bold rounded-none z-20"} onClick={() => handleProcess({url: pdfUrl})}>{getIcon('download')}</Button>}
+                            </div>
                             <div style={{width: `${width}px`, minHeight: `${height}px`}}>
                                 <DocView key={title} className="" loading={loading} file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
                                     <PageView height="533px" pageNumber={pageNumber} loading="..." {...viewOptions} />
