@@ -29,8 +29,7 @@ export default function PromptDialog() {
   }
 
   function openDialog(topic, infos) {
-    log.trace(`openDialog: infos:`);
-    log.trace(`openDialog: infos: ${JSON.stringify(infos)}`);
+    log.trace("openDialog: infos:", infos);
     setInfos(infos);
     setOpen(true);
   }
