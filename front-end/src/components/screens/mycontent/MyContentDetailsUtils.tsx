@@ -168,9 +168,9 @@ export default class MyContentDetailsUtils {
       return content;
     } else {
       return (
-        <>
+        <div className='m-auto'>
           {MergedContent.getElement(prompt, data, cid, returnMarkdown)}
-        </>
+        </div>
       )
     }
   }

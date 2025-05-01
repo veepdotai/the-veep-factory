@@ -33,6 +33,7 @@ interface ContentProps {
 
 export default function SocialNetworkPreview({
         viewType = "LinkedIn",
+        editorWithContent = null,
         content,
         id = "",
         mode = "alone",
@@ -73,15 +74,19 @@ export default function SocialNetworkPreview({
     function enterInEditAndPreviewMode() {
         let params = {
             viewType: "LinkedIn",
+            editorWithContent: editorWithContent,
+            localId: localId,
             content: content,
             //mode: "edit",
             attachmentGenerationOptions: attachmentGenerationOptions,
             attachmentViewType: attachmentViewType,
             attachmentViewOptions: attachmentViewOptions    
         }
-
         log.trace("enterInEditAndPreviewMode: ", params)
-        PubSub.publish("SOCIAL_NETWORK_PREVIEW", params)
+
+        let topicSN = "SOCIAL_NETWORK_PREVIEW_" + id
+        log.trace("enterInEditAndPreviewMode: topicSN: ", topicSN)
+        PubSub.publish("SOCIAL_NETWORK_PREVIEW_" + id, params)
     }
 
     function displayEditAndPreviewSideBySide(
@@ -91,6 +96,8 @@ export default function SocialNetworkPreview({
         log.trace("displayEditAndPreviewSideBySide: topic: ", topic, "params: ", message)
         let {
             viewType = "LinkedIn",
+            editorWithContent,
+            localId,
             content,
             attachmentGenerationOptions,
             attachmentViewType = "custom",
@@ -103,7 +110,7 @@ export default function SocialNetworkPreview({
             return (    
                 <ScrollArea className="h-100 w-100">
                     <div className="flex justify-center flex-row gap-5">
-                        <SocialNetworkPreview key={`mpc-${i}-edit`} id={localId} viewType="LinkedIn" mode="edit" content={content}
+                        <SocialNetworkPreview key={`mpc-${i}-edit`} id={localId} viewType="LinkedIn" mode="edit" editorWithContent={editorWithContent} content={content}
                             attachmentGenerationOptions={attachmentGenerationOptions}
                             attachmentViewType={attachmentViewType}
                             attachmentViewOptions={attachmentViewOptions} />
@@ -170,7 +177,7 @@ export default function SocialNetworkPreview({
         )
     }
 
-    function getLinkedInContent(data: ContentProps) {
+    function getLinkedInContent(editorWithContent, data: ContentProps) {
         if (! data.content || typeof data.content !== "string") {
             return <>{t("NoContent")}</>
         }
@@ -274,6 +281,7 @@ export default function SocialNetworkPreview({
                         { "alone" === mode &&
                             <div className='p-3 pt-0'>
                                 {data.content}
+                                {/*editorWithContent && editorWithContent*/}
                             </div>
                         }
                         { "edit" === mode &&
@@ -284,8 +292,9 @@ export default function SocialNetworkPreview({
                                 </TabsList>
                                 <TabsContent value="edit" className="w-full">
                                     <div className='p-3 pt-0'>
-                                        {data.content}
-                                    </div>
+                                        {/*data.content*/}
+                                        {log.trace("getLinkedInContent: data:", data)}
+                                        {editorWithContent}                                    </div>
                                     {footer}
                                 </TabsContent>
                                 <TabsContent value="layout" className="w-full">
@@ -326,19 +335,25 @@ export default function SocialNetworkPreview({
     }
 
     useEffect(() => {
+        if ("" != id) {
+            let topicSN = "SOCIAL_NETWORK_PREVIEW_" + id
+            log.trace("useEffect: subscribe: topicSN: ", topicSN)
+            PubSub.subscribe(topicSN, displayEditAndPreviewSideBySide)
+        }
+    }, [id])
+
+    useEffect(() => {
         let topicPDF = "PDF_EXPORT_OPTIONS_UPDATED"
         PubSub.subscribe(topicPDF, (topic, message) => {
             log.trace("useEffect: topic: ", topic, "message: ", message)
             setOptions(message)
         })
 
-        let topicSN = "SOCIAL_NETWORK_PREVIEW"
-        PubSub.subscribe(topicSN, displayEditAndPreviewSideBySide)
     }, [])
 
     return (
         <>
-            {viewType == "LinkedIn" && getLinkedInContent(content)}
+            {viewType == "LinkedIn" && getLinkedInContent(editorWithContent, content)}
         </>
     )
 }

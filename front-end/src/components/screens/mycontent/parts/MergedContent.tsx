@@ -222,6 +222,41 @@ export default class MergedContent {
       return node
     }
 
+    static getEditor({cid, attrName, title, content, view = "Advanced"}) {
+      let editorContainerCN = "p-0" // "p-0 bg-neutral-100"
+      let editorCN = "p-0"
+      let editorInnerCN = "w-[801px]"
+
+      return (
+        <Content
+          className={`p-1`}
+          contentId={cid}
+          attrName={attrName}
+          title={title}
+          raw={content}
+          contentAsText={Utils.format(content)}
+          contentAsText2CRLF={content}
+          contentAsHtml={parse(Utils.format(content))}
+        >
+          { false ?
+            <Markdown className={style.reactMarkdown} remarkPlugins={[remarkGfm]}>{content}</Markdown>
+          :
+            <div className={editorContainerCN}>
+              <PlateEditor
+                className={editorCN}
+                contentId={cid}
+                attrName={attrName}
+                view={view}
+                input={content}
+                cn={editorInnerCN}>
+              </PlateEditor>
+            </div>      
+
+          }
+        </Content>
+      )
+    }
+
     static getElement(prompt, data, cid, returnMarkdown = false) {
 
       let output = <></>;
@@ -236,26 +271,14 @@ export default class MergedContent {
           if (returnMarkdown) {
             return _content
           } else {
-            output =
-              <Content
-                  contentId={cid}
-                  attrName={attrName}
-                  title={title}
-                  raw={_content}
-                  contentAsText={Utils.format(_content)}
-                  contentAsText2CRLF={_content}
-                  contentAsHtml={parse(Utils.format(_content))}
-                >
-                    { false ?
-                      <Markdown className={style.reactMarkdown} remarkPlugins={[remarkGfm]}>{_content}</Markdown>
-                    :
-                      <div className="p-0 bg-neutral-100">
-                        <PlateEditor className="p-0" view="Advanced" input={_content} contentId={cid} attrName={attrName} cn="w-[800px]">
-                        </PlateEditor>
-                      </div>      
-      
-                  }
-                </Content>
+            let params = {
+              cid: cid,
+              attrName: attrName,
+              title: title,
+              content: _content,
+              view: "Advanced"
+            }
+            output = MergedContent.getEditor(params)
             return output
           }
 

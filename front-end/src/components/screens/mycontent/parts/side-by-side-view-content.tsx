@@ -15,6 +15,7 @@ import SocialNetworkPreview from '../../SocialNetworkPreview';
 import { ScrollArea } from 'src/components/ui/shadcn/scroll-area';
 
 import testdata from 'src/config/data.json'
+import MergedContent from './MergedContent';
 /*
 import 'react-pdf/dist/Page/AnnotationLayer.css'
 import 'react-pdf/dist/esm/Page/TextLayer.css'
@@ -29,7 +30,7 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
     const log = Logger.of(SideBySideViewContent.name)
 
     const MAX = ["xl", "lg", "md", "sm", "xs"]
-    const [viewType, setViewType] = useState() 
+    const [viewType, setViewType] = useState("preview") // normal, carousel, preview 
 
         
     function getViewTypes() {
@@ -56,30 +57,24 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
 
     function getContent(lcid, attrName, title, content, viewType) {
       return (
-        <div className={`h-[800px]`}>
-          <Content className={`p-1`}
-            contentId={lcid}
-            attrName={attrName}
-            title={title}
-            
-            raw={content}
-            contentAsText={format(content)}
-            contentAsText2CRLF={content}
-            contentAsHtml={parse(format(content))}
-          >
-            <div className="p-0 bg-neutral-100">
-                <PlateEditor className="p-0" view="Advanced" input={content} contentId={lcid} attrName={attrName} viewType={viewType}>
-                </PlateEditor>
-            </div>
-          </Content>
-        </div>
+        <>
+        {/*<div className={`m-auto h-100`}>*/}
+          {MergedContent.getEditor({
+            cid: lcid,
+            attrName: attrName,
+            title: title,
+            content: content,
+            view: viewType
+          })}
+        {/*</div>*/}
+        </>
       )
     }
     
     /**
      * Get content through the execution of the provided prompt
      */
-    function getContentThroughPrompt(_promptId, i, viewType) {
+    function getContentThroughPrompt(_promptId, i, viewType, params) {
       let promptId = EKeyLib.encode(_promptId);
 
       let title = ''
@@ -95,7 +90,7 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
         return (<></>)
       }
 
-      // raw content
+      // raw content for preview
       let _content = node?.content ? node.content : node
       let lcid = node?.cid ? node.cid : cid
 
@@ -106,11 +101,14 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
         <>
           {"carousel" == viewType && getCarouselItem(content, i)}
           {"normal" == viewType && content}
-          {"preview" == viewType && getPreviewItem(_content, i)}
+          {"preview" == viewType && getPreviewItem(content, _content, i, params)}
         </>
       )
     }
 
+    /**
+     * Carousel view
+     */
     function getCarouselItem(content, i) {
       return (
         <CarouselItem key={i} className={`pl-1 flex justify-center items-center max-w-${MAX[width - 1]}`}>
@@ -119,45 +117,36 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
       )
     }
 
-    function getContentWithCarousel(contents) {
-      /*
-        <Carousel opts={{align: "start",}} className="w-full max-w-screen-full">
-      */
+    function embedContentWithCarousel(contents) {
+      let carouselCN = "m-auto w-[800px]"
+
       return (
-        <Carousel opts={{align: "start",}} className="w-full w-[800px] max-w-screen-full">
+        <Carousel opts={{align: "start",}} className={carouselCN}>
           <CarouselContent className="-ml-1">
             {contents}
           </CarouselContent>
-          <CarouselPrevious className='absolute left-none right-[5rem] top-0'/>
-          <CarouselNext className='absolute right-[2rem] top-0'/>
+          <CarouselPrevious />
+          <CarouselNext />
         </Carousel>
       )
     }
 
-    function getPreviewItem(content, i) {
-      /*
-      let mediaUrl = "https://humble-space-capybara-v494vgwqp6xcwpv4-3000.app.github.dev/assets/pdf_test_1.pdf"
-      let document1 = <Document file={mediaUrl}>
-          <Page pageNumber={1} height={525} />
-        </Document>
-      */
-      //let document = <PDF initContent={content} params={{}} />      
+    /**
+     * Preview view
+     */
+    function getPreviewItem(editorWithContent, content, i, params) {
       log.trace("getPreviewItem: document: ", document)
 
       return (
         <div key={i} className="flex w-[550px] m-2">
           <ScrollArea className="h-100">
-            {/*
-            <SocialNetworkPreview content={{content: content}} mode="edit" />
-            <SocialNetworkPreview content={{content: content}} mode="preview" {...attachmentParams} />
-            */}
-              <SocialNetworkPreview content={{content: content}} mode="alone" {...attachmentParams} />
-            </ScrollArea>
+              <SocialNetworkPreview editorWithContent={editorWithContent} content={{content: content}} mode="alone" {...params} />
+          </ScrollArea>
         </div>
       )
     }
 
-    function getContentWithPreview(contents) {
+    function embedContentWithPreview(contents) {
       return (
         <ScrollArea className="w-100 h-[800px]">
           <div className={`p-1 w-1/${width} flex flex-wrap`}>
@@ -167,27 +156,34 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
       )
     }
 
-    function getContentWithScrollbar(contents) {
+    /**
+     * Normal view with scrollbars
+     */
+    function embedContentWithScrollbar(contents) {
       return (
-        <div className={`p-1 w-1/${width} flex overflow-x-auto space-x-2`}>
-          <ScrollArea className="h-100">
-            {contents}
+          <ScrollArea className="h-[801px]">
+            {/*<div className={`p-1 w-1/${width} flex overflow-x-auto space-x-2`}>*/}
+            <div className={`p-1 w-1/${width} flex flex-wrap`}>
+                {contents}
+            </div>
           </ScrollArea>
-        </div>
       )
     }
 
-    function getContents(chain, viewType = "normal") {
+    /**
+     * 
+     */
+    function getContents(chain, viewType, params) {
       //let chain = [].concat(prompt.prompts.chain);
         log.trace("getCompareView: chain: " + typeof chain + " / " + JSON.stringify(chain));
         let stepsNb = chain?.length;
-        let contents = chain.map((_promptId, i) => <Fragment key={_promptId}>{getContentThroughPrompt(_promptId, i, viewType)}</Fragment>);
+        let contents = chain.map((_promptId, i) => <Fragment key={_promptId}>{getContentThroughPrompt(_promptId, i, viewType, params)}</Fragment>);
 
         return (
           <div className={`p-1`}>
-            { "carousel" == viewType && getContentWithCarousel(contents)}
-            { "normal" == viewType && getContentWithScrollbar(contents)}
-            { "preview" == viewType && getContentWithPreview(contents)}
+            { "!carousel" == viewType && embedContentWithCarousel(contents)}
+            { "!normal" == viewType && embedContentWithScrollbar(contents)}
+            { "preview" == viewType && embedContentWithPreview(contents)}
           </div>
         );
     }
@@ -204,13 +200,14 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
       attachmentViewOptions: attachmentViewOptions
     }
     
+    //getContents(chain, viewType, attachmentParams)
     return (
       <>
-        <>{getViewTypes()}</>
+        <>{/*getViewTypes()*/}</>
         { chain ?
-            getContents(chain, viewType)
+            getContents(chain, "preview", attachmentParams)
           :
-            <></>
+            <>Loading...</>
         }
       </>
     )
