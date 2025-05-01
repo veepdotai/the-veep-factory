@@ -28,7 +28,7 @@ import PromptsStore from "src/components/screens/PromptsStore";
 import Chat from "src/components/screens/Chat";
 import Support from "src/components/screens/Support";
 */
-import Playground from "src/components/ffmpeg/Playground";
+//import Playground from "src/components/ffmpeg/Playground"
 import { ScreenHeading } from "src/components/common/Heading";
 
 //import Schema from "src/components/schemas/Schema";
@@ -76,7 +76,7 @@ export default function Main({credits, current}) {
     {id: "infos", title: t("infosTitle"), subtitle: t("InfosSubtitle"), content: 
       <>
         <Logs />
-        { isDesktop ? <Playground /> : <></>}
+        {/* isDesktop && <Playground /> : <></>*/}
       </>
     },
 /*
