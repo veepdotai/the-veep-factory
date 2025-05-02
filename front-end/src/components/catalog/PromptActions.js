@@ -16,7 +16,7 @@ export default function PromptActions( { definition, showPromptForm, showPromptE
 
     const [menuType, setMenuType] = useState("dropdown");
     const { profile } = useContext(ProfileContext)
-    log.trace("profile: " + JSON.stringify(profile));
+    log.trace("profile: ", profile);
 
     let defaultUser = Constants.DEFAULT_USER;
     let re = new RegExp(defaultUser);

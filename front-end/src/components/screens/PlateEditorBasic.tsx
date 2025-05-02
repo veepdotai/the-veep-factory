@@ -326,7 +326,7 @@ export function PlateEditorBasic( {input, contentId = null, attrName = null, cn 
       } else {
         log.trace("input is a string: " + input)
         const value = editor.api.markdown.deserialize(input);
-        log.trace("Editor: " + JSON.stringify(value))
+        log.trace("Editor: ", value)
         setContent(value)
       }
     }

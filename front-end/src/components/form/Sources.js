@@ -20,7 +20,7 @@ export default function Sources( props ) {
     const extractTitle = (text) => text?.substring(0, TITLE_LENGTH - 3) + "..."
 
     function addStream(topic, fd) {
-        log.trace("addStream: " + topic + " fd: " + JSON.stringify(fd))
+        log.trace("addStream: " + topic + " fd: ", fd)
         let stream = fd?.get("veepdotai-ai-input-stream"); // should work for direct video input too
         setStreams([
             ...streams,
@@ -29,7 +29,7 @@ export default function Sources( props ) {
     }
 
     function addUrl(topic, fd) {
-        log.trace("addUrl: " + topic + " fd: " + JSON.stringify(fd))
+        log.trace("addUrl: " + topic + " fd: ", fd)
         let url = fd?.get("veepdotai-ai-input-url");
         setUrls([
             ...urls,
@@ -38,7 +38,7 @@ export default function Sources( props ) {
     }
 
     function addFile(topic, fd) {
-        log.trace("addFile: " + topic + " fd: " + JSON.stringify(fd))
+        log.trace("addFile: " + topic + " fd: ", fd)
         let file = fd?.get("veepdotai-ai-input-file");
         setFiles([
             ...files,
@@ -47,7 +47,7 @@ export default function Sources( props ) {
     }
 
     function addFreeText(topic, fd) {
-        log.trace("addFreeText: " + topic + " fd: " + JSON.stringify(fd))
+        log.trace("addFreeText: " + topic + " fd: ", fd)
         let text = fd?.get("veepdotai-ai-input-text");
         if (text) {
             setTexts([

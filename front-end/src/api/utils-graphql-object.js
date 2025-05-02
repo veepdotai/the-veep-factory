@@ -79,7 +79,7 @@ export const UtilsGraphQLObject = {
 			.mutate({
 				mutation: gql`${q}`
 			}).then((result) => {
-				log.trace(`create: ` + JSON.stringify(result));
+				log.trace(`create: `, result);
 				PubSub.publish("TOAST", {
 					"title": t("Status"),
 					"description": <div className="mt-2 w-[500px] rounded-md">{t("DataSaved")}</div>
@@ -139,7 +139,7 @@ export const UtilsGraphQLObject = {
 			.mutate({
 				mutation: gql`${q}`
 			}).then((result) => {
-				log.trace(`update: ` + JSON.stringify(result));
+				log.trace(`update: `, result);
 				let data = result.data.saveMetadata.result
 				let r = {
 					"status": 200,

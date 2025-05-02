@@ -64,7 +64,7 @@ export default function Prompt( { definition, setDisplay } ) {
         myVeeplet.getDefinition().name += "-" + t("Duplicate");
         let veepNs;
         
-        log.trace('Definition: ' + JSON.stringify(myVeeplet));
+        log.trace('Definition: ', myVeeplet);
         veepNs = myVeeplet.getChainId();
 
         pushState(veepNs + "-form");
@@ -112,7 +112,7 @@ export default function Prompt( { definition, setDisplay } ) {
         let myVeeplet = new Veeplet(definition);
         let veepNs;
         
-        log.trace('Definition: ' + JSON.stringify(myVeeplet));
+        log.trace('Definition: ', myVeeplet);
         veepNs = myVeeplet.getChainId();
 
         pushState(veepNs + "-form");
@@ -129,7 +129,7 @@ export default function Prompt( { definition, setDisplay } ) {
         if (! copy) {
             veepNs = myVeeplet.getChainId();
         } else {
-            log.trace('Definition: ' + JSON.stringify(myVeeplet));
+            log.trace('Definition: ', myVeeplet);
             veepNs = myVeeplet.getChainId() + " " + t("Copy");
         }
         pushState(veepNs + "-editor");

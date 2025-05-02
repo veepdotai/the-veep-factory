@@ -18,7 +18,7 @@ import Exit from './MenuItems/Exit';
 
 export default function MenuOptions( props ) {
   const log = Logger.of(MenuOptions.name);
-  log.trace("Menu: " + JSON.stringify(props));
+  log.trace("Menu: ", props);
 
   const { profile } = useContext(ProfileContext);
 
@@ -40,7 +40,7 @@ export default function MenuOptions( props ) {
 
 function OffCanvasMenu({ name, ...props }) {
   const log = Logger.of(OffCanvasMenu.name);
-  log.trace("OffCanvasMenu: " + JSON.stringify(props));
+  log.trace("OffCanvasMenu: ", props);
 
   const [show, setShow] = useState(false);
 
@@ -65,7 +65,7 @@ function OffCanvasMenu({ name, ...props }) {
   }
 
   useEffect(() => {
-    log.trace("Profile: " + JSON.stringify(profile));
+    log.trace("Profile: ", profile);
     log.trace("Avatar url: " + profile.veepdotai_avatar_url);
 
     setIsManager(Utils.isManager(profile));

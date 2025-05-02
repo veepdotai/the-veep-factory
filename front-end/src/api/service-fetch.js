@@ -31,10 +31,10 @@ export async function getGenericData(params, _conf = null) {
       setData = params.setData || null,
       key = params.key || null;
 
-    log.trace(topic + ": " + JSON.stringify(params));
+    log.trace(topic + ": ", params);
     
     let conf = _conf ? _conf : getService(cookies, ns, service);
-    log.trace("conf: " + JSON.stringify(conf));
+    log.trace("conf: ", conf);
     
     let result = null;
 
@@ -42,7 +42,7 @@ export async function getGenericData(params, _conf = null) {
     fetch(conf.service, {...conf.options, "mode": "cors"})
       .then((res) => res?.json())
       .then((data) => {
-        log.trace("AppPreferences: " + JSON.stringify(data));
+        log.trace("AppPreferences: ", data);
         if (key) {
           result = data[key];
         } else {

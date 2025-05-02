@@ -112,7 +112,7 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
 
     function getContents(chain, viewType = "scroll") {
       //let chain = [].concat(prompt.prompts.chain);
-        log.trace("getCompareView: chain: " + typeof chain + " / " + JSON.stringify(chain));
+        log.trace("getCompareView: chain: " + typeof chain + " / ", chain);
         let stepsNb = chain?.length;
         let contents = chain.map((_promptId, i) => getPromptContent(_promptId, i, viewType));
 

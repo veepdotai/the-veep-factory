@@ -181,7 +181,7 @@ export const UtilsGraphQL = {
 				}).then((data) => {
 					log.info('URI: ' + graphqlURI);
 					let content = data.data.post || data.data.vcontents;
-					log.trace("UtilsGraphQL: listOne: data: before sorting: " + JSON.stringify(content));
+					log.trace("UtilsGraphQL: listOne: data: before sorting: ", content);
 
 					let res = JSON.parse(JSON.stringify(content));
 					let edges = res.nodes[0].children.edges // edges is a reference
@@ -194,7 +194,7 @@ export const UtilsGraphQL = {
 
 					log.trace("UtilsGraphQL: after sorting")
 					edges.forEach((edge) => log.trace("UtilsGraphQL: edge.node.databaseId: " + edge.node.databaseId));
-					log.trace("UtilsGraphQL: listOne: data: after sorting: " + JSON.stringify(res));
+					log.trace("UtilsGraphQL: listOne: data: after sorting: ", res);
 
 					return UtilsGraphQL.convert(res);
 				}).catch((e) => {
@@ -231,7 +231,7 @@ export const UtilsGraphQL = {
 			.mutate({
 				mutation: gql`${q}`
 			}).then((result) => {
-				log.trace(`getUsageData: ` + JSON.stringify(result));
+				log.trace(`getUsageData: `, result);
 				let data = result.data.getUsageData.usage_data
 				let r = {
 					"status": 200,

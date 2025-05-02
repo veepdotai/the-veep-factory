@@ -117,7 +117,7 @@ class Veeplet {
             this.definition = definition;
         }
         this.prefix = "ai-section-edcal1-";
-        this.log.trace("Definition: " + JSON.stringify(this.definition));
+        this.log.trace("Definition: ", this.definition);
     }
 
     getDefinition() {

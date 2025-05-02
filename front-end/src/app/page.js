@@ -45,9 +45,9 @@ export default function App() {
   }, [done])
 
   useEffect(() => {
-    log.trace("Cookies: " + JSON.stringify(cookies));
+    log.trace("Cookies: ", cookies);
     if (cookies?.JWT) {
-      log.trace("Cookies JWT: " + JSON.stringify(cookies.JWT));
+      log.trace("Cookies JWT: ", cookies.JWT);
       if (! Utils.isCookieValid(cookies.JWT)) {
         window.location = Constants.WORDPRESS_URL + '/wp-login.php';
       } else {

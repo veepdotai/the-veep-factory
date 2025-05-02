@@ -68,12 +68,12 @@ export default function UploadRFU( {...props} ) {
             setSelectedFile(files[0].file);
         }
         */
-        log.trace("handleChangeStatus: " + JSON.stringify(meta))
+        log.trace("handleChangeStatus: ", meta)
         log.trace(`handleChangeStatus: status: ${meta.status}`)
     }
 
     function checkFile(file) {
-        log.trace("checkFile: " + JSON.stringify(file));
+        log.trace("checkFile: ", file);
 
         let MB = 1024 * 1024;
         let constraints = [

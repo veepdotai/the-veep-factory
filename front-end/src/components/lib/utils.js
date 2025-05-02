@@ -63,7 +63,7 @@ export const Utils = {
 		log.trace('payload64: ' + payload64);
 		if (payload64) {
 		  let payload = JSON.parse(atob(payload64));
-		  log.trace("data: " + JSON.stringify(payload));
+		  log.trace("data: ", payload);
 		  if (payload.data.user.email === Constants.ADMIN_EMAIL) {
 			log.trace('data.data.user.email: ' + payload.data.user.email + ' is manager');
 			//setRoles(["Manager"]);

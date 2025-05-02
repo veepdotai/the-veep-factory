@@ -35,17 +35,17 @@ export const UploadLib = {
         }
         const params = { params: { 'JWT': conf.token } };
 
-        this.log.trace("postVocal: params: " + JSON.stringify(params));
+        this.log.trace("postVocal: params: ", params);
 
         await axios.post(conf.service, formData,
             params,
             config
         ).then((res) => {
-            UploadLib.log.trace("postVocal: result: " + JSON.stringify(res));
+            UploadLib.log.trace("postVocal: result: ", res);
             return res.data;
         }).then(function (data) {
             let contentId = data.data;
-            UploadLib.log.trace("postVocal: contentId: " + JSON.stringify(contentId));
+            UploadLib.log.trace("postVocal: contentId: ", contentId);
 
             //PubSub.publish("CONTENT_ID", contentId);
             if (setContentId) {

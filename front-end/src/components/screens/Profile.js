@@ -12,7 +12,7 @@ export default function Profile() {
   const [fields, setFields] = useState();
 
   function setData(topic, message) {
-    log.trace("Profile: setFields: " + JSON.stringify(message));
+    log.trace("Profile: setFields: ", message);
     setFields(message);
   }
 

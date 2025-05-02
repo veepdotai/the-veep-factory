@@ -35,7 +35,7 @@ export default function MyContentDetails( { id }) {
       .listOne(graphqlURI, cookies, id)
       .then(
         (data) => {
-          log.trace("init: data: " + JSON.stringify(data));
+          log.trace("init: data: ", data);
           setData(data);
       })
   }

@@ -38,7 +38,7 @@ export default function PDFExportForm( {cid, params} ) {
     let defaultCBB = {displayFormLabel: true, cnFormLabel: "w-[200px] text-right"}
 
     function updateFormDisplay(topic, message) {
-      log.trace('updateFormDisplay: message: ' + JSON.stringify(message))
+      log.trace('updateFormDisplay: message: ', message)
 
       let metadata = null
       if ("200" == message?.status) {
@@ -47,7 +47,7 @@ export default function PDFExportForm( {cid, params} ) {
         metadata = message
       }
 
-      log.trace('updateFormDisplay: metadata: ' + JSON.stringify(metadata))
+      log.trace('updateFormDisplay: metadata: ', metadata)
 
       let newParams = {cid: cid, ...metadata, ...params}
       log.trace(`onSubmit: newParamsFormDisplay: ${JSON.stringify(newParams)}`)
@@ -76,7 +76,7 @@ export default function PDFExportForm( {cid, params} ) {
         .listOne(graphqlURI, cookies, cid)
         .then(
           (data) => {
-            log.trace("useEffect: data: " + JSON.stringify(data));
+            log.trace("useEffect: data: ", data);
             let metadataString = data?.nodes[0].tvfMetadata 
             log.trace(`useEffect: metadataString: ${metadataString}`);
 

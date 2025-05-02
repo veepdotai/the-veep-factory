@@ -49,7 +49,7 @@ export default function LinkedInStatus() {
     log.trace("convertSocialNetworksData: " + snd_string);
 
     let snd = JSON.parse(snd_string);
-    log.trace("snd object in json format: " + JSON.stringify(snd));
+    log.trace("snd object in json format: ", snd);
     setThirdPartiesData(snd);
   }
 
@@ -73,7 +73,7 @@ export default function LinkedInStatus() {
  */
 
   function updateLinkedInData(topic, data) {
-    log.trace("updateLinkedInData: " + JSON.stringify(data));
+    log.trace("updateLinkedInData: ", data);
     setLinkedInData(data?.linkedin);
   }
 
@@ -81,7 +81,7 @@ export default function LinkedInStatus() {
    * Get data from the database
    */
   useEffect(() => {
-    log.trace("useEffect: " + JSON.stringify(thirdPartiesData));
+    log.trace("useEffect: ", thirdPartiesData);
     setLinkedInData(thirdPartiesData?.linkedin);
     //PubSub.subscribe("UPDATE_SOCIAL_NETWORKS_DATA", updateSocialNetworksData);
     //PubSub.subscribe("LINKEDIN_SIGNIN_RESULT", updateSocialNetworksData);

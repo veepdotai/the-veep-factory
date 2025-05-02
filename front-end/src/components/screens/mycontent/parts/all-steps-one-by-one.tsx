@@ -32,7 +32,7 @@ export default function AllStepsOneByOneContent( { prompt, data, cid } ) {
     //let chain = [].concat(prompt.prompts.chain);
     let chain = Veeplet.getChainAsArray(prompt.prompts.chain);
     if (chain) {
-      log.trace("getAllStepsOneByOne: chain: " + typeof chain + " / " + JSON.stringify(chain));
+      log.trace("getAllStepsOneByOne: chain: " + typeof chain + " / ", chain);
       let r = chain.map((_promptId, i) => {
         let promptId = EKeyLib.encode(_promptId);
 
@@ -109,7 +109,7 @@ export default function AllStepsOneByOneContent( { prompt, data, cid } ) {
         )
       });
 
-      //log.trace("getContentParts: " + JSON.stringify(r));
+      //log.trace("getContentParts: ", r);
       return r;
     } else {
       return (<></>);

@@ -16,7 +16,7 @@ import SuspenseClick from '../SuspenseClick';
 export default function LinkedIn() {
   const log = Logger.of(LinkedIn.name);
 
-  log.trace("Constants: " + JSON.stringify(Constants));
+  log.trace("Constants: ", Constants);
   const [cookies] = useCookies(['JWT']);
   const [waiting, setWaiting] = useState(false);
   const [disabled, setDisabled] = useState(false);
@@ -49,7 +49,7 @@ export default function LinkedIn() {
         });
     },
     onError: (error) => {
-      log.trace("Error: " + JSON.stringify(error));
+      log.trace("Error: ", error);
       //PubSub.publish("LINKEDIN_SIGNIN_RESULT", false);
     },
   });

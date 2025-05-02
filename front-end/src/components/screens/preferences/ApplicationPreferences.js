@@ -11,7 +11,7 @@ export default function ApplicationPreferences() {
   const [fields, setFields] = useState();
 
   function setData(topic, message) {
-    log.trace("ApplicationPreferences: setFields: " + JSON.stringify(message));
+    log.trace("ApplicationPreferences: setFields: ", message);
     setFields(message);
   }
 

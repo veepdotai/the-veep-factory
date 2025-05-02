@@ -21,7 +21,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 export default function Result( props ) {
     const log = Logger.of(Result.name);
-    log.trace("Props: " + JSON.stringify(props));
+    log.trace("Props: ", props);
 
     const option = props.option; //option could be multivalued
     const name = props.name; //option could be multivalued
@@ -58,9 +58,9 @@ export default function Result( props ) {
      * @param {*} msg 
      */
     const getData = (topic, msg, resume = false) => {
-        log.trace("getData: topic: " + topic + " / msg: " + JSON.stringify(msg));
+        log.trace("getData: topic: " + topic + " / msg: ", msg);
         let conf = getService(cookies, 'options', option)
-        log.trace("getData: getService: " + JSON.stringify(conf));
+        log.trace("getData: getService: ", conf);
 
         fetch(conf.service, {...conf.options, "mode": "cors"})
             .then((res) => res.json())

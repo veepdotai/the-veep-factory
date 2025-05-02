@@ -55,7 +55,7 @@ var done = [];
 
 function DisplayLogs({conf}) {
     const log = Logger.of(DisplayLogs.name);
-    log.trace("conf: " + JSON.stringify(conf));
+    log.trace("conf: ", conf);
 
     var [processing, setProcessing] = useState(true);
 
@@ -98,7 +98,7 @@ function DisplayLogs({conf}) {
     function filterAndPublishData(data) {
         data.map((row) => {
             if (row !== "" && row.match(/_(STARTED|FINISHED|PAUSED|ERROR)_/)) {
-                log.trace("processData: " + JSON.stringify(row));
+                log.trace("processData: ", row);
 
                 let result = row.replace(/.*\s(_[^\s]*_(STARTED|FINISHED|PAUSED|ERROR)_).*/, "$1");
                 let alreadyDone = done.includes(result);

@@ -21,7 +21,7 @@ export function ThirdPartiesDataProvider ( {children} ) {
             log.trace("convertSocialNetworksData: " + snd_string);
         
             let snd = JSON.parse(snd_string);
-            log.trace("snd object in json format: " + JSON.stringify(snd));
+            log.trace("snd object in json format: ", snd);
             setThirdPartiesData(snd);
             //PubSub.publish("LINKEDIN_ACCESS_TOKEN", snd);
         }

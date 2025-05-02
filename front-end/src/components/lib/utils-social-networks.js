@@ -8,7 +8,7 @@ function convertSocialNetworksData(data) {
     log.trace("convertSocialNetworksData: " + snd_string);
   
     let snd = JSON.parse(snd_string);
-    log.trace("snd object in json format: " + JSON.stringify(snd));
+    log.trace("snd object in json format: ", snd);
     setSocialNetworksData(snd);
 }
   

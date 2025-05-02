@@ -21,9 +21,9 @@ import { Separator } from 'src/components/ui/shadcn/separator';
 export default function ContentActions( {actions = null, title = null, icon = null, viewType = "menu"} ) {
   const log = Logger.of(ContentActions.name);
 
-  log.trace("actions: " + JSON.stringify(actions))
-  log.trace("title: " + JSON.stringify(title))
-  log.trace("icon: " + JSON.stringify(icon))
+  log.trace("actions: ", actions)
+  log.trace("title: ", title)
+  log.trace("icon: ", icon)
 
   const isDesktop = useMediaQuery("(min-width: 768px)")
 

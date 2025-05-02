@@ -91,7 +91,7 @@ function PDFExportModel(params) {
 function VeepletModel(params) {
   const log = Logger.of(VeepletModel.name);
 
-  log.trace("params: " + JSON.stringify(params))
+  log.trace("params: ", params)
 
   function getConstraints(minChars = 1) {
     return z.string().min(minChars, {message: t("AtLeast", {length: minChars}),}).optional().or(z.literal(''))
@@ -134,7 +134,7 @@ function VeepletModel(params) {
 
   function getParamValue(data, varName) {    
     let attrs = varName.match(/[a-zA-Z_0-9]+/g)
-    log.trace("attrs: " + JSON.stringify(attrs));
+    log.trace("attrs: ", attrs);
 
     for(let i = 0; i < attrs.length; i++) {
       log.trace("attr: " + attrs[i]);
@@ -144,7 +144,7 @@ function VeepletModel(params) {
         data = "";
       }
     }
-    log.trace("varName / data: " + varName + "/" + JSON.stringify(data));
+    log.trace("varName / data: " + varName + "/", data);
 
     return data
   }

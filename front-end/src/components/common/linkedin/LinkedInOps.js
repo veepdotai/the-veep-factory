@@ -34,7 +34,7 @@ export default function LinkedInOps({content}) {
             resourcePath: ME_RESOURCE,
             accessToken
         });
-        log.trace("meResponse: " + JSON.stringify(meResponse.data));
+        log.trace("meResponse: ", meResponse.data);
     /*
         let id = meResponse.data.id;
         // Publish content

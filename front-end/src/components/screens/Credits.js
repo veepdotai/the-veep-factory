@@ -108,7 +108,7 @@ export default function Credits() {
                 ...row
             }
         })
-        log.trace("buildGraph: _time date converted: " + JSON.stringify(finalData))
+        log.trace("buildGraph: _time date converted: ", finalData)
 
         /*
         let data = results.data.map((item) => {
@@ -165,7 +165,7 @@ export default function Credits() {
                 *      "user_email":"a@b.c"
                 * }]},
                 */
-                log.trace("buildGraph: readString result: " + JSON.stringify(results))
+                log.trace("buildGraph: readString result: ", results)
 
                 let newData = transform(results.data);
                 

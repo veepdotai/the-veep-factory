@@ -69,7 +69,7 @@ export default function MyContentDetails( { id }) {
       .listOne(graphqlURI, cookies, id)
       .then(
         (data) => {
-          log.trace("init: data: " + JSON.stringify(data));
+          log.trace("init: data: ", data);
           setData(data);
       })
   }
@@ -140,7 +140,7 @@ export default function MyContentDetails( { id }) {
     try{
 
       log.trace(`useEffect[data] for ${id}`);
-      log.trace("...useEffect[data]: node __typename: " + JSON.stringify(data.__typename));
+      log.trace("...useEffect[data]: node __typename: ", data.__typename);
       let node = null;
       if (data?.__typename.toLowerCase() === 'post') {
         node = data

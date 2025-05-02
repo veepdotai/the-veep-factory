@@ -20,7 +20,7 @@ export default function Cover( { displayOnFront = true } ) {
   }
 
   function setDocumentationURL(topic, msg) {
-    log.trace("setDocumenationURL: " + JSON.stringify(msg))
+    log.trace("setDocumenationURL: ", msg)
     setDisplay(true);
     setCoverUrl("https://docs.veep.ai");
   }

@@ -102,7 +102,7 @@ export default function Content( {contentId, title, attrName = null, content = "
   ]
 
   actions = actions.map((action) => {
-    log.trace("action: " + JSON.stringify(action))
+    log.trace("action: ", action)
     let result = {...action}
     if (action.action) {
       result.action = () => action.action(action)
@@ -115,10 +115,10 @@ export default function Content( {contentId, title, attrName = null, content = "
 
     return result
   })
-  log.trace("actions (after recomputation): " + JSON.stringify(actions))
+  log.trace("actions (after recomputation): ", actions)
 
   function getSchedulePanel(params) {
-    log.trace("getSchedulePanel: params: " + JSON.stringify(params))
+    log.trace("getSchedulePanel: params: ", params)
     function action() { alert('schedule: NYI') }
 
     const today = new Date()

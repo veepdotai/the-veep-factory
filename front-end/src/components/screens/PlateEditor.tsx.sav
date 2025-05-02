@@ -272,9 +272,9 @@ export function PlateEditor( {mdContent} ) {
 
   useEffect(() =>{
     let editor = getEditor()
-    log.trace("Editor: mdContent: " + JSON.stringify(mdContent))
+    log.trace("Editor: mdContent: ", mdContent)
     const value = editor.api.markdown.deserialize(mdContent);
-    log.trace("Editor: " + JSON.stringify(value))
+    log.trace("Editor: ", value)
     setContent(value)
   }, [])
   

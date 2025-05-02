@@ -56,16 +56,16 @@ const useVeeplet = (cookies, definition, setF) => {
             config
         ).then(function (res) {
             let data = res.data;
-            log.trace("Resultat GET: " + JSON.stringify(data));
+            log.trace("Resultat GET: ", data);
     
             let promptString = getPrompt(data);
             log.trace("Prompt: " + promptString);
 
             let prompt = new Veeplet(TOML.parse(promptString));
-            log.trace("Prompt JSON: " + JSON.stringify(prompt));
+            log.trace("Prompt JSON: ", prompt);
 
             const navbars = prompt.getSections();
-            log.trace("navbars JSON: " + JSON.stringify(navbars));
+            log.trace("navbars JSON: ", navbars);
             //alert("PromptData: " + JSON.stringify(data));
             setF(navbars);
     

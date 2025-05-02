@@ -7,7 +7,7 @@ import { Image } from 'react-bootstrap';
 
 export default function IconProfile ( { avatarUrl } ) {
   const log = Logger.of(IconProfile.name);
-  log.trace("avatarUrl: " + JSON.stringify(avatarUrl));
+  log.trace("avatarUrl: ", avatarUrl);
 
   const [myAvatarUrl, setAvatarUrl] = useState(avatarUrl);
 

@@ -97,7 +97,7 @@ export default function CodeEditor() {
   }
 
   function updateSourceEditor(message) {
-    log.trace("updateSourceEditor: message: " + JSON.stringify(message));
+    log.trace("updateSourceEditor: message: ", message);
 
     let optionName = promptPrefix;
     if (! veeplet ) {
@@ -130,7 +130,7 @@ export default function CodeEditor() {
   }
 */
   function updateSaveButton(message) {
-    log.trace("updateSave: " + JSON.stringify(message));
+    log.trace("updateSave: ", message);
     if (message['result']) {
       setDisabledSaveButton(true)
       setSaving(false);

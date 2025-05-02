@@ -164,9 +164,9 @@ export default class MyContentDetailsForDesktop {
 
   static desktopMarkdownContent(selectedFormat, prompt, data, contentId) {
     let log = MyContentDetailsForDesktop.log
-    log.trace("desktopContent: prompt: " + JSON.stringify(prompt));
+    log.trace("desktopContent: prompt: ", prompt);
     //let content = MyContentDetailsUtils.getContent(prompt, data, contentId, true);
-    //log.trace("desktopContent: content: " + JSON.stringify(content));
+    //log.trace("desktopContent: content: ", content);
 
     return (
       <>
@@ -205,7 +205,7 @@ export function LayoutPanel( {cid, content, data} ) {
   let log = Logger.of(LayoutPanel.name);
 
   if (cid) {
-    log.trace("data: " + JSON.stringify(data))
+    log.trace("data: ", data)
 
     let role = "admin";
     let hasConfigCapabilities = role === "admin" ? true : false;
@@ -220,7 +220,7 @@ export function LayoutPanel( {cid, content, data} ) {
       vo.organizationName = vo?.tvfMetadata?.organizationName
       vo.version = vo?.tvfMetadata?.version
 
-      log.trace("vo: " + JSON.stringify(vo))
+      log.trace("vo: ", vo)
     } else {
       vo = null;
 

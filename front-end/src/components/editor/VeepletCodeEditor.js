@@ -67,7 +67,7 @@ export default function VeepletCodeEditor() {
   }
 
   function updateSourceEditor(message) {
-    log.trace("updateSourceEditor: message: " + JSON.stringify(message));
+    log.trace("updateSourceEditor: message: ", message);
 
     let optionName = promptPrefix;
     if (! veeplet ) {

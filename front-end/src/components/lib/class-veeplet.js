@@ -39,7 +39,7 @@ export default class Veeplet {
             this.definition = def;
         }
         this.prefix = "ai-section-edcal1-";
-        Veeplet.log.trace("Definition: " + JSON.stringify(this.definition));
+        Veeplet.log.trace("Definition: ", this.definition);
     }
 
     /**
@@ -52,16 +52,16 @@ export default class Veeplet {
      * @returns an array
      */
     static getChainAsArray(prompt) {
-        Veeplet.log.trace("static getChain: prompt: " + JSON.stringify(prompt));
+        Veeplet.log.trace("static getChain: prompt: ", prompt);
         if (Array.isArray(prompt)) {
             let pWithoutStop = prompt.filter((value) => /STOP/.test(value) ? false : true)
             Veeplet.log.trace("static getChain: prompt is an array");
-            Veeplet.log.trace("static getChain: prompt is now an array without STOP: " + JSON.stringify(pWithoutStop));
+            Veeplet.log.trace("static getChain: prompt is now an array without STOP: ", pWithoutStop);
             return pWithoutStop;
         } else if (typeof prompt == "string") {
             Veeplet.log.trace("static getChain: prompt is a string");
             let pWithoutStop = prompt.replaceAll(/,\s*STOP\s*/g, "")
-            Veeplet.log.trace("static getChain: prompt is now an array without STOP: " + JSON.stringify(pWithoutStop));
+            Veeplet.log.trace("static getChain: prompt is now an array without STOP: ", pWithoutStop);
             return pWithoutStop.split(/\s*,\s*/);
         }
     }
@@ -70,7 +70,7 @@ export default class Veeplet {
      * @deprecated
      */ 
     static getChainAsArrayBak(prompt) {
-        Veeplet.log.trace("static getChain: prompt: " + JSON.stringify(prompt));
+        Veeplet.log.trace("static getChain: prompt: ", prompt);
         if (Array.isArray(prompt)) {
             Veeplet.log.trace("static getChain: prompt is an array");
             return prompt;
@@ -92,8 +92,8 @@ export default class Veeplet {
             config
         ).then(function (res) {
             let data = res.data;
-            //Veeplet.log.trace("getPromptData GET: " + JSON.stringify(data));
-            Veeplet.log.trace("getPromptData GET: " + JSON.stringify(data));
+            //Veeplet.log.trace("getPromptData GET: ", data);
+            Veeplet.log.trace("getPromptData GET: ", data);
             updateData(data);
     
             PubSub.publish("GET_PROMPT_OPTION_RESULT", data); 
@@ -116,10 +116,10 @@ export default class Veeplet {
         let veepletJson = TOML.parse(tomlSource);
     
         // default values
-        Veeplet.log.trace("handleSave: veepletJson1: " + JSON.stringify(veepletJson));
+        Veeplet.log.trace("handleSave: veepletJson1: ", veepletJson);
         veepletJson.owner.orgId = md5(email);
 
-        Veeplet.log.trace("handleSave: veepletJson2: " + JSON.stringify(veepletJson));
+        Veeplet.log.trace("handleSave: veepletJson2: ", veepletJson);
         
         let source = TOML.stringify(veepletJson).replace(/\n/g, "#EOL#");
         Veeplet.log.trace("handleSave: veepletJson(text): " + source);
@@ -155,7 +155,7 @@ export default class Veeplet {
             config
         ).then(function (res) {
             let data = res.data;
-            Veeplet.log.trace("duplicate: data: " + JSON.stringify(data));
+            Veeplet.log.trace("duplicate: data: ", data);
             PubSub.publish("POST_PROMPT_OPTION_RESULT", data);
             PubSub.publish("PERSONAL_VEEPLET_CHANGED", null);
             PubSub.publish("SHARED_VEEPLET_CHANGED", null);
@@ -177,7 +177,7 @@ export default class Veeplet {
             config
         ).then(function (res) {
             let data = res.data;
-            Veeplet.log.trace("delete: data: " + JSON.stringify(data));
+            Veeplet.log.trace("delete: data: ", data);
             PubSub.publish("DELETE_PROMPT_OPTION_RESULT", data);
             PubSub.publish("PERSONAL_VEEPLET_CHANGED", null);
             PubSub.publish("SHARED_VEEPLET_CHANGED", null);
@@ -201,8 +201,8 @@ export default class Veeplet {
             config
         ).then(function (res) {
             let data = res.data;
-            //Veeplet.log.trace("Resultat POST: " + JSON.stringify(data));
-            Veeplet.log.trace("save: data: " + JSON.stringify(data));
+            //Veeplet.log.trace("Resultat POST: ", data);
+            Veeplet.log.trace("save: data: ", data);
             PubSub.publish("POST_PROMPT_OPTION_RESULT", data);
             PubSub.publish("PERSONAL_VEEPLET_CHANGED", null);
             PubSub.publish("SHARED_VEEPLET_CHANGED", null);
@@ -228,7 +228,7 @@ export default class Veeplet {
         let prompts = this.getDefinition().prompts;
         //let chain = prompts.chain.split(/\s*,\s*/);
         let chain = this.getChainAsArray();
-        Veeplet.log.trace("getSections: prompts: " + JSON.stringify(prompts));
+        Veeplet.log.trace("getSections: prompts: ", prompts);
         Veeplet.log.trace("getSections: chain/typeof: " + JSON.stringify(chain) + "/" + typeof chain);
 
         let defaultTranscriptionPhase = {
@@ -262,7 +262,7 @@ export default class Veeplet {
             }
         });
 
-        Veeplet.log.trace("result: " + JSON.stringify(result));
+        Veeplet.log.trace("result: ", result);
 
         return [
             defaultTranscriptionPhase,
@@ -289,7 +289,7 @@ export default class Veeplet {
     },
     */
     getExtractForCatalog() {
-        Veeplet.log.trace("ExtractForCatalog: " + JSON.stringify(this.getDefinition()));
+        Veeplet.log.trace("ExtractForCatalog: ", this.getDefinition());
         let result = null;
         try {
             result = {

@@ -23,7 +23,7 @@ import { useMediaQuery } from 'usehooks-ts';
 
 export default function Process( props ) {
     const log = Logger.of(Process.name);
-    log.trace("Props: " + JSON.stringify(props));
+    log.trace("Props: ", props);
 
     /**
      * Contains the current phase, where xxx is a base64 encoded string that
@@ -44,7 +44,7 @@ export default function Process( props ) {
     const isDesktop = useMediaQuery("(min-width: 768px)");
 
     function buildNavBars(topic, message) {
-        log.trace("buildNavBars: " + JSON.stringify(message));
+        log.trace("buildNavBars: ", message);
         alert("Message: " + JSON.stringify(message));
     }
 
@@ -79,7 +79,7 @@ export default function Process( props ) {
         /*
         navbars.map((item) => {
             PubSub.subscribe( item.topic, (topic, msg) => {
-                log.trace("useEffect: topic: " + topic + " / msg: " + JSON.stringify(msg));
+                log.trace("useEffect: topic: " + topic + " / msg: ", msg);
                 setNewContent({...topic, ...msg})
             })
         });

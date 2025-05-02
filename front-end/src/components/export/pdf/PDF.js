@@ -72,11 +72,11 @@ export function PDFDocument(props) {
   }
 
   function toc() {
-    log.trace("toc: content: " + JSON.stringify(content));
+    log.trace("toc: content: ", content);
 
     const regex = /(#+ .*)/g;
     const titles = (content + "")?.match(regex);
-    log.trace("toc: titles: " + JSON.stringify(titles));
+    log.trace("toc: titles: ", titles);
 
     return (
       <>
@@ -203,14 +203,14 @@ export function PDFDocument(props) {
   }
 
   function text() {
-    log.trace("text: content: " + JSON.stringify(content));
+    log.trace("text: content: ", content);
 
     const regex = /\r?\n/g;
     const lines = (content + "")?.split(regex);
-    log.trace("text: lines: " + JSON.stringify(lines));
+    log.trace("text: lines: ", lines);
 
     function getContent(line) {
-      log.trace("getContent: line: " + JSON.stringify(line));
+      log.trace("getContent: line: ", line);
 
       let output;
       if (/^#+/.test(line)) {
@@ -286,7 +286,7 @@ export function PDFDocument(props) {
   }
 
   useEffect(() => {
-    log.trace("useEffect: content: " + JSON.stringify(content));
+    log.trace("useEffect: content: ", content);
   }, []);
 
   return (
