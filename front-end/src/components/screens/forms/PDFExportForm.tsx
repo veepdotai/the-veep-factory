@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Logger } from 'react-logger-lib'
 import PubSub from 'pubsub-js'
-import { t } from 'src/components/lib/utils'
+import { t, Utils } from 'src/components/lib/utils'
 
 import { useCookies } from 'react-cookie'
 
@@ -80,7 +80,7 @@ export default function PDFExportForm( {cid, params} ) {
             let metadataString = data?.nodes[0].tvfMetadata 
             log.trace(`useEffect: metadataString: ${metadataString}`);
 
-            metadataString = metadataString.replace(/_G_/g, '"').replace(/_EOL_/g, "\n")
+            metadataString = Utils.normalize(metadataString)
             let metadata = null
             try {
               metadata = JSON.parse(metadataString)

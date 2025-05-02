@@ -2,6 +2,7 @@ import { Logger } from 'react-logger-lib'
 import { gql } from '@apollo/client'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 import { UtilsGraphQL } from './utils-graphql'
+import { Utils } from 'src/components/lib/utils'
 
 import { t } from 'src/components/lib/utils'
 
@@ -115,7 +116,7 @@ export const UtilsGraphQLObject = {
 		let log = UtilsGraphQLObject.log
 
 		let metadataString = metadata ? JSON.stringify(metadata) : null
-		metadataString = metadataString?.replace(/"/g, "_G_").replace(/\n/g, "_EOL_")
+		metadataString = Utils.denormalize(metadataString)
 
 		let getClause = (name, value) => name && value ? `${name}: "${value}",` : ""
 		let q = `

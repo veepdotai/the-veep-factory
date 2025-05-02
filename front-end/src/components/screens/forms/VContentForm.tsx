@@ -8,6 +8,7 @@ import { useCookies } from 'react-cookie'
 import { Constants } from 'src/constants/Constants'
 
 import { UtilsFormCommon as UFC } from '../../lib/utils-form-common'
+import { Utils } from '../../lib/utils'
 
 import { useToast } from "src/components/ui/shadcn/hooks/use-toast"
 import { Button } from "src/components/ui/shadcn/button"
@@ -103,7 +104,7 @@ export default function VContentForm( {cid, params} ) {
             let metadataString = data?.nodes[0].tvfMetadata
             log.trace(`useEffect: metadataString: ${metadataString}`);
 
-            metadataString = metadataString.replace(/_G_/g, '"').replace(/_EOL_/g, "\n")
+            metadataString = Utils.normalize(metadataString)
             let metadata = null
             try {
               metadata = JSON.parse(metadataString)

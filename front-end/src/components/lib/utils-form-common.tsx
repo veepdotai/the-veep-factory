@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Logger } from 'react-logger-lib'
-import { t } from 'src/components/lib/utils'
+import { t, Utils } from 'src/components/lib/utils'
 import PubSub from 'pubsub-js'
 
 import { cn } from "@/lib/utils"
@@ -57,7 +57,7 @@ export const UtilsFormCommon = {
         let o = JSON.stringify(data, null, 2)
         log("o (after JSON stringifying): " + o)
 
-        let odata = o?.replace(/"/g, "_G_").replace(/\n/g, "_EOL_")
+        let odata = Utils.denormalize(o)
         log("odata (after replacing chars): " + odata)
  
         let q = UtilsGraphQLObject.create(graphqlURI, cookies,
@@ -99,7 +99,7 @@ export const UtilsFormCommon = {
             metadata = JSON.parse(metadata)
             log("metadata (object): ", metadata)
             if (typeof metadata.result == "string") {
-                metadata = metadata?.result?.replace(/_EOL_/g, "\n").replace(/_G_/g, '"')
+                metadata = Utils.normalize(metadata?.result)
                 if (metadata) {
                     metadata = JSON.parse(metadata)
                 }
@@ -196,14 +196,13 @@ export const UtilsFormCommon = {
         if (result && typeof result === "string" && result != "") {
             let o_string = ""
             try {
-                o_string = result.replace(/_G_/g, '"').replace(/_EOL_/g, "\n")
+                o_string = Utils.normalize(result)
             } catch(e) {
                 alert("e: " + e)
 
                 o_string = ""
             }
 
-            //let o_string = result.replace(/_G_/g, '"').replace(/_EOL_/g, "\n")
             log("o: " + o_string)
             let o = JSON.parse(o_string)
             log("o: " + JSON.stringify(o))

@@ -150,7 +150,42 @@ export const Utils = {
 		// else it is text, assumong it is markdown
 	  
 		return content
-	  }
+	  },
+
+	  /**
+	   * normalize before using it in the application 
+	   */
+	  normalize(source) {
+		if (! source || "" === source) {
+			return ""
+		} else {
+			let r = source
+						.replace(/_G_/g, '"')	// fix() to mange '"'
+						.replace(/_EOL_/g, "\n") // fix() to manage '\n'
+						.replace(/_AS_/g, "\\")	// fix() to manage '\"'
+			Utils.log.trace("normalize: source: ", source)
+
+			return r
+		}
+	  },
+
+	  /**
+	   * denormalize before saving it in the database
+	   */
+	denormalize(source) {
+		if (! source || "" === source) {
+			return ""
+		} else {
+			let r = source
+						.replace(/"/g, "_G_")	// fix() to mange '"'
+						.replace(/\n/g, "_EOL_") // fix() to manage '\n'
+						.replace(/\\/g, "_AS_")	// fix() to manage '\"'
+			Utils.log.trace("denormalize: source: ", source)
+
+			return r
+		}
+
+	}
 }
 
 export function t(msg) {
