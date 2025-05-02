@@ -10,35 +10,28 @@ import Veeplet from '../../../lib/class-veeplet'
 import Content from '../Content';
 import MyContentDetailsUtils from '../MyContentDetailsUtils';
 import { PlateEditor } from '../../PlateEditor';
+import { Button } from '@/components/ui/button';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import SocialNetworkPreview from '../../SocialNetworkPreview';
 import { ScrollArea } from 'src/components/ui/shadcn/scroll-area';
+import SocialNetworkPreview from '../../SocialNetworkPreview';
 
 import testdata from 'src/config/data.json'
 import MergedContent from './MergedContent';
-/*
-import 'react-pdf/dist/Page/AnnotationLayer.css'
-import 'react-pdf/dist/esm/Page/TextLayer.css'
-import { pdfjs } from 'react-pdf';
-import PDF from '@/components/veepdotai-pdf-config/components/PDF';
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-    'pdfjs-dist/build/pdf.worker.min.mjs',
-    import.meta.url,
-).toString();
-*/
+
 export default function SideBySideViewContent( { prompt, data, cid, width = 1 } ) {
     const log = Logger.of(SideBySideViewContent.name)
 
-    const MAX = ["xl", "lg", "md", "sm", "xs"]
-    const [viewType, setViewType] = useState("preview") // normal, carousel, preview 
+    const USERAPP_DEFAULT_VIEW = "preview"
 
+    const MAX = ["xl", "lg", "md", "sm", "xs"]
+    const [viewType, setViewType] = useState(USERAPP_DEFAULT_VIEW) // normal, carousel, preview 
         
     function getViewTypes() {
       return (
-        <div className="flex flex-row">
-          <button className={`btn btn-sm btn-primary ${viewType == "normal" ? "btn-active" : ""}`} onClick={() => setViewType("normal")}>Normal</button>
-          <button className={`btn btn-sm btn-primary ${viewType == "carousel" ? "btn-active" : ""}`} onClick={() => setViewType("carousel")}>Carousel</button>
-          <button className={`btn btn-sm btn-primary ${viewType == "preview" ? "btn-active" : ""}`} onClick={() => setViewType("preview")}>Preview</button>
+        <div className="flex flex-row gap-2">
+          <Button variant={viewType === "normal" ? "default" : "ghost"} onClick={() => setViewType("normal")}>Normal</Button>
+          <Button variant={viewType === "carousel" ? "default" : "ghost"} onClick={() => setViewType("carousel")}>Carousel</Button>
+          <Button variant={viewType === "preview" ? "default" : "ghost"} onClick={() => setViewType("preview")}>Preview</Button>
         </div>
       )
     }
@@ -122,11 +115,11 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
 
       return (
         <Carousel opts={{align: "start",}} className={carouselCN}>
+          <CarouselPrevious />
+          <CarouselNext />
           <CarouselContent className="-ml-1">
             {contents}
           </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
         </Carousel>
       )
     }
@@ -181,8 +174,8 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
 
         return (
           <div className={`p-1`}>
-            { "!carousel" == viewType && embedContentWithCarousel(contents)}
-            { "!normal" == viewType && embedContentWithScrollbar(contents)}
+            { "carousel" == viewType && embedContentWithCarousel(contents)}
+            { "normal" == viewType && embedContentWithScrollbar(contents)}
             { "preview" == viewType && embedContentWithPreview(contents)}
           </div>
         );
@@ -203,9 +196,9 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
     //getContents(chain, viewType, attachmentParams)
     return (
       <>
-        <>{/*getViewTypes()*/}</>
+        <>{getViewTypes()}</>
         { chain ?
-            getContents(chain, "preview", attachmentParams)
+            getContents(chain, viewType, attachmentParams)
           :
             <>Loading...</>
         }

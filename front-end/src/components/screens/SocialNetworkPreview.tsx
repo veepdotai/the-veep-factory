@@ -43,7 +43,8 @@ export default function SocialNetworkPreview({
         attachmentViewOptions = {}}
     ) {
 
-    let localId = "" === id ? Math.round(Math.random() * 1000000000) + "" : id
+    //let localId = "" === id ? Math.round(Math.random() * 1000000000) + "" : id
+    const [localId, setLocalID] = useState("" === id ? Math.round(Math.random() * 1000000000) + "" : id)
 
     const log = Logger.of(SocialNetworkPreview.name)
     log.trace("attachmentGenerationOptions: ", attachmentGenerationOptions)
@@ -66,7 +67,7 @@ export default function SocialNetworkPreview({
     function saveLayout() {alert("SaveLayout")}
     function saveCarousel() {
         alert("SaveCarousel")
-        PubSub.publish( "PROCESS_PDF_" + id, {})
+        PubSub.publish( "PROCESS_PDF_" + localId, {})
     }
 
     function publish() {alert("Publish")}
@@ -84,9 +85,9 @@ export default function SocialNetworkPreview({
         }
         log.trace("enterInEditAndPreviewMode: ", params)
 
-        let topicSN = "SOCIAL_NETWORK_PREVIEW_" + id
+        let topicSN = "SOCIAL_NETWORK_PREVIEW_" + localId
         log.trace("enterInEditAndPreviewMode: topicSN: ", topicSN)
-        PubSub.publish("SOCIAL_NETWORK_PREVIEW_" + id, params)
+        PubSub.publish("SOCIAL_NETWORK_PREVIEW_" + localId, params)
     }
 
     function displayEditAndPreviewSideBySide(
@@ -231,7 +232,7 @@ export default function SocialNetworkPreview({
         let carousel =
             <div className='w-100'>
                 <PDF className="h-75"
-                    id={id}
+                    id={localId}
                     initContent={getPDFContent(data.content)}
                     initParams={new PDFParams(getAttachmentGenerationOptions())}
                     viewType={getAttachmentViewType()}
@@ -294,7 +295,8 @@ export default function SocialNetworkPreview({
                                     <div className='p-3 pt-0'>
                                         {/*data.content*/}
                                         {log.trace("getLinkedInContent: data:", data)}
-                                        {editorWithContent}                                    </div>
+                                        {editorWithContent && editorWithContent}
+                                    </div>
                                     {footer}
                                 </TabsContent>
                                 <TabsContent value="layout" className="w-full">
@@ -335,12 +337,13 @@ export default function SocialNetworkPreview({
     }
 
     useEffect(() => {
-        if ("" != id) {
-            let topicSN = "SOCIAL_NETWORK_PREVIEW_" + id
+        if ("" != localId) {
+        //if ("" != localId || ! editorWithContent) {
+            let topicSN = "SOCIAL_NETWORK_PREVIEW_" + localId
             log.trace("useEffect: subscribe: topicSN: ", topicSN)
             PubSub.subscribe(topicSN, displayEditAndPreviewSideBySide)
         }
-    }, [id])
+    }, [localId])
 
     useEffect(() => {
         let topicPDF = "PDF_EXPORT_OPTIONS_UPDATED"
