@@ -40,6 +40,7 @@ import { Label } from "src/components/ui/shadcn/label"
 import { UtilsGraphQL } from 'src/api/utils-graphql.js'
 import { Constants } from "src/constants/Constants";
 import { setDefaultAutoSelectFamilyAttemptTimeout } from 'net';
+import Loading from '@/components/common/Loading';
 
 export default function MyContentDetails( { id }) {
   const log = Logger.of(MyContentDetails.name);
@@ -191,7 +192,7 @@ export default function MyContentDetails( { id }) {
   return (
     <Container className='mw-100 h-100 m-0 p-0'>
       {
-        data && prompt && contentId && (
+        data && prompt && contentId ?
             <>
               { ! isDesktop ?
                 <>
@@ -220,9 +221,9 @@ export default function MyContentDetails( { id }) {
                   </ResizablePanelGroup>
                 </>
               }
-
-          </>
-        )
+            </>
+            :
+            <Loading />
       }
     </Container>
   );
