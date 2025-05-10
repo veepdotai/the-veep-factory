@@ -41,6 +41,7 @@ export const UtilsGraphQLVcontent = {
 						title
 						content(format: RAW)
 						uri
+
 						veepdotaiTranscription
 						veepdotaiPrompt
 
@@ -62,6 +63,7 @@ export const UtilsGraphQLVcontent = {
 						tvfPubDate
 						tvfUp
 						tvfDown
+						tvfTemplate
 
 						children {
 							edges {
@@ -72,6 +74,7 @@ export const UtilsGraphQLVcontent = {
 										databaseId
 										title
 										content(format: RAW)
+										
 										veepdotaiDetails
 
 										veepdotaiDomain
@@ -92,6 +95,7 @@ export const UtilsGraphQLVcontent = {
 										tvfPubDate
 										tvfUp
 										tvfDown
+										tvfTemplate
 									}
 								}
 							}

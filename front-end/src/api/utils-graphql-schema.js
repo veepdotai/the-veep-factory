@@ -27,7 +27,7 @@ export const contentSchema = z.object({
 	tvfSubtitle: z.string().optional(),
 	tvfStatus: z.string().optional(),
 	tvfPubDate: z.string().optional(),
-	tvfUpd: z.string().optional(),
+	tvfUp: z.string().optional(),
 	tvfDown: z.string().optional(),
 
 });

@@ -331,6 +331,9 @@
 
   "EnterInEditAndPreviewMode": "Edit and preview",
 
+  "EditAndPreview": "Edit and preview",
+  "EditAndPreviewPDF": "Edit and preview PDF",
+
   "Stop": "Stop"
 
 }

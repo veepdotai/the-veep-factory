@@ -17,9 +17,9 @@ import { ScrollArea, ScrollBar } from "src/components/ui/shadcn/scroll-area"
 import { UtilsGraphQL } from 'src/api/utils-graphql.js'
 import { Constants } from "src/constants/Constants";
 
-export default function MyContentDetails( { id }) {
-  const log = Logger.of(MyContentDetails.name);
-  log.trace(`MyContentDetails: id: ${id}`);
+export default function MyConfigurationDetails( { id }) {
+  const log = Logger.of(MyConfigurationDetails.name)
+  log.trace("id:", id)
 
   const [cookies] = useCookies(['JWT']);
 

@@ -77,7 +77,7 @@ export default function MyConfiguration( {...props} ) {
 
   function datatable() {
     let operations = {
-      "onShow": (row) => setInfo(MyContentActions.showDetails(row)),
+      "onShow": (row) => setInfo(MyConfigurationActions.showDetails(row)),
       "onEdit": (row) => MyConfigurationActions.renameContentTitleDialog(graphqlURI, cookies, row),
       "onDuplicate": null,
       "onFavorite": null,

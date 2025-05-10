@@ -39,31 +39,28 @@ export default class MyContentDetailsUtils {
   }
 
   static getItem(data, i) {
-    let log = MyContentDetailsUtils.log
+    let log = (...args) => MyContentDetailsUtils.log.trace("getItem: ", args)
+
     let result = null
     try{
-      log.trace(`getItem: data: ${JSON.stringify(data)}`)
-      log.trace(`getItem: i: ${i}`)
-
-      result = data.nodes[0].children.edges[i].node;
-
-      log.trace(`getItem: result: ${JSON.stringify(result)}`)
-
+      log("i: ", i, "data: ", data)
+      result = data.nodes[0].children.edges[i].node
     } catch (e) {
-      log.trace(`getItem: exception: ${e}: data: ${JSON.stringify(data)}: i: ${i}`)
-      result = "";
+      log("exception: ", e, "i: ", i, "data: ", data)
+      result = ""
     }
+
+    log("result: ", result)
 
     return result;
   }
 
   static getData(data, i, attrName) {
-    let log = (msg) => MyContentDetailsUtils.log.trace("getData: " + msg)
+    let log = (...args) => MyContentDetailsUtils.log.trace("getData: ", args)
+    
     let result = null
     try{
-      log(`getData: data: ${JSON.stringify(data)}`)
-      log(`getData: i: ${i}`)
-      log(`getData: attrName: ${attrName}`)
+      log("i: ", i, "attrName: ", attrName, "data: ", data)
 
       if (data?.__typename === 'post') {
         if (! attrName) {
@@ -73,28 +70,32 @@ export default class MyContentDetailsUtils {
         }
       } else {
         if ( i === null) {
-          log(`getData: i: ${i}: this is the parent.`)
+          log("this is the parent => i:", i)
           if (! attrName) {
             result = {
+              data: data.nodes[0],
               content: data.nodes[0].content,
               cid: data.nodes[0].databaseId
             };
           } else {
             result = {
+              data: data.nodes[0],
               content: data.nodes[0][attrName],
               cid: data.nodes[0].databaseId
             };
           }
-          log(`result is parent's content!`)
+          log("result is parent's content!")
         } else { // (i >= 0) { // i == 0 is a valid index
-          log(`i: ${i}: this is a child.`)
+          log("this is a child => i: ", i)
           if (! attrName) {
             result = {
+              data: data.nodes[0].children.edges[i].node,
               content: data.nodes[0].children.edges[i].node['content'],
               cid:data.nodes[0].children.edges[i].node['databaseId'],
             };
           } else {
             result = {
+              data: data.nodes[0].children.edges[i].node,
               content: data.nodes[0].children.edges[i].node[attrName],
               cid:data.nodes[0].children.edges[i].node['databaseId'],
             };
@@ -102,10 +103,10 @@ export default class MyContentDetailsUtils {
         }
       }
 
-      log(`getData: result: ${JSON.stringify(result)}`)
+      log("result: ", result)
 
     } catch (e) {
-      log(`getData: exception: ${e}: attrName: ${attrName}.`)
+      log("exception: ", e, "attrName: ", attrName)
       result = "";
     }
 
@@ -192,15 +193,17 @@ export default class MyContentDetailsUtils {
   }
 
   static getCalendarView(prompt, data, cid, width = 1) {
-    const log = (msg) => MyContentDetailsUtils.log.trace(`getCalendarView: ${msg}`)
+    const log = (...args) => MyContentDetailsUtils.log.trace("getCalendarView: ", args)
+
     let parent = data.nodes[0]
     let children = parent.children
-    log(`edges.length: ${children.edges.length}`)
+    log("edges.length: ", children.edges.length)
+
     let events : CalendarProps[] = []
     let date = new Date()
     for(var i = 0; i < children.edges.length; i++) {
       let n = children.edges[i].node
-      MyContentDetailsUtils.log.trace("getCalendarView: n: ", n)
+      log("n: ", n)
       let start = n?.tvfPubDate ? new Date(n.tvfPubDate) : addDays(date, i)
       let end = addHours(start, 1)
       let type = n?.type ? n.type : "TOFU"
@@ -219,7 +222,7 @@ export default class MyContentDetailsUtils {
         //resource: 1,
         //allDay: false,
       }
-      MyContentDetailsUtils.log.trace("getCalendarView: events[" + i + "]", events[i])
+      log("events[" + i + "]", events[i])
     }
     return (
       <>
@@ -229,7 +232,7 @@ export default class MyContentDetailsUtils {
   }
 
   static getTranscriptionContent(cid, data) {
-    let log = MyContentDetailsUtils.log
+    const log = (...args) => MyContentDetailsUtils.log.trace("getCalendarView: ", args)
 
     let part = "Transcription"
     //let attrName = `veepdotai${part}`
@@ -237,9 +240,9 @@ export default class MyContentDetailsUtils {
     let content = data[attrName]
 
     let title = t("Transcription");
-    log.trace("getTranscriptionContent: [no format]" + content + ".")
-    log.trace("getTranscriptionContent: [format=true] => no html parsing" + MyContentDetailsUtils.format(content, true) + ".")
-    log.trace("getTranscriptionContent: [format=false] => html parsing" + MyContentDetailsUtils.format(content, false) + ".")
+    log("[no format]: ", content, ".")
+    log("[format=true] => no html parsing: ", MyContentDetailsUtils.format(content, true), ".")
+    log("[format=false] => html parsing: ", MyContentDetailsUtils.format(content, false), ".")
     
     return (
       <Content

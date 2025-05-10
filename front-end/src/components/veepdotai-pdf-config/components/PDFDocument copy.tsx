@@ -1,7 +1,12 @@
 import { Logger } from 'react-logger-lib';
 import { t } from 'src/components/lib/utils';
 
-import { Link, Page, Text, Image, View, Document } from '@react-pdf/renderer';
+import { Font, Link, Page, Text, Image, View, Document } from '@react-pdf/renderer';
+
+Font.registerEmojiSource({
+  format: 'png',
+  url: 'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/',
+});
 
 import { convert }  from "@/components/veepdotai-pdf-config/lib/AbstractContent"
 
@@ -16,6 +21,7 @@ export default function PDFDocument({content, params}) {
   const log = Logger.of(PDFDocument.name)
 
   let normalizedContent = Array.isArray(content) ? content : convert(content)
+  log.trace("normalizedContent: ", normalizedContent)
 
   let data = {
     title: params?.title,
@@ -43,6 +49,13 @@ export default function PDFDocument({content, params}) {
   log.trace("PDFDocument: params: ", params)
   log.trace("PDFDocument: data: ", data)
 
+
+  function getContentIfRequested({content, requested = true, fixed = false, breakPage = true, styles = {}})  {
+    return (
+      <View fixed={fixed} break={breakPage} style={styles} render={() => requested && "" !== requested && content} />
+    )
+  }
+
   function getNothingImage() {
     return "/assets/images/nothing.png"
   }
@@ -57,30 +70,52 @@ export default function PDFDocument({content, params}) {
     let title = data?.title?.replace(/[^a-zA-Z0-9]/g, "")
     log.trace("firstpage: title: ", title)
 
-    let featuredImage = data?.featuredImage && <Image key={"featuredImage"} style={data?.styles?.featuredImage} src={data?.featuredImage} />
-    log.trace("firstpage: featuredImage: ", featuredImage)
+    function getFeaturedImage() {
+      return (
+        <View style={data?.styles?.featuredImage}>
+          <Image key={"featuredImage"} style={data?.styles?.featuredImage} src={data?.featuredImage} />
+        </View>
+      )
+    }
+
+    function getPart() {
+      return (
+        <>
+            {getContentIfRequested({requested: data?.featuredImage, breakPage: false, content: getFeaturedImage()})}
+
+            {getInlineContent("title", "title")}
+            {getInlineContent("subtitle", "subtitle")}
+
+            {getContentIfRequested({
+              requested: data.displayMetadata ?? false,
+              breakPage: false, 
+              content: (<View style={data?.styles?.metadataBlock}>
+                {/*getInlineContentWithLabel(45, t("Company"), data?.companyName, "company")*/}
+                {getInlineContentWithLabel(30, t("OrganizationName"), data?.organizationName, "organizationName", data?.styles)}
+                {getInlineContentWithLabel(30, t("Author"), data?.author, "author", data?.styles)}
+                {getInlineContentWithLabel(15, t("Version"), data?.version, "version", data?.styles)}
+                {getInlineContentWithLabel(0, t("Date"), data?.date, "date", data?.styles)}
+              </View>)
+            })}
+            {/*data?.backgroundImageCover == getNothingImage() ? background(data?.backgroundImage) : background(data?.backgroundImageCover)*/}
+
+            {/*footer()*/}
+        </>
+      )
+    }
 
     return (
-      <Page style={data?.styles?.firstPage} bookmark={t("CoverPage")} size={data?.dimensions || "A4"}>
-        
-        {getInlineContent("title", "title")}
-        {getInlineContent("subtitle", "subtitle")}
-
-        { data?.featuredImage && <Image key={"featuredImage"} style={data?.styles?.featuredImage} src={data?.featuredImage} /> }
-
-        {/*key={"view-" + data?.title}*/} 
-        <View style={data?.styles?.metadataBlock}>
-          {/*getInlineContentWithLabel(45, t("Company"), data?.companyName, "company")*/}
-          {getInlineContentWithLabel(30, t("OrganizationName"), data?.organizationName, "organizationName", data?.styles)}
-          {getInlineContentWithLabel(30, t("Author"), data?.author, "author", data?.styles)}
-          {getInlineContentWithLabel(15, t("Version"), data?.version, "version", data?.styles)}
-          {getInlineContentWithLabel(0, t("Date"), data?.date, "date", data?.styles)}
-        </View>
-
-        {data?.backgroundImageCover == getNothingImage() ? background(data?.backgroundImage) : background(data?.backgroundImageCover)}
-
-        {/*footer()*/}
-      </Page>
+      <>
+        { true ?
+            <View style={data?.styles?.firstPage}>
+              {getPart()}    
+            </View>
+          :
+            <Page style={data?.styles?.firstPage} bookmark={t("CoverPage")} size={data?.dimensions || "A4"}>
+              {getPart()}    
+            </Page>
+        }
+      </>
     )
 
   }
@@ -92,28 +127,53 @@ export default function PDFDocument({content, params}) {
   function toc() {
     let titles = []
 
+    // titles are extracted from content 
     normalizedContent.map((page) => {
       titles.push(page[1])
     })
 
+    log.trace("toc: titles: ", titles)
+
+    {/*
+        <Page style={data.styles?.tocPage} bookmark={t("TOC")} size={data?.dimensions}>
+        </Page>
+      }
+
+    */}
+    /**
+     * A4: width: 2480, height: 3508
+     */
+    function getPart() {
+      return (
+        <View break style={data.styles?.contentTable}>
+          <View style={data.styles?.contentTableBlock}>
+            <Text style={data.styles?.contentTableTitle}>{t("TOC")}</Text>
+
+            <View style={data.styles?.contentTableLinks}>
+              { titles ?
+                  titles.map((title, i) => {
+                    return (
+                      <>
+                        <Text style={data.styles?.contentTableTitle1}>{title}</Text>
+                        {/*<Text>My link: <Link key={`${title}-${i}`} style={data.styles?.link} src={"#" + (i+1)}>My {title}</Link></Text>*/}
+                      </>
+                    )
+                  })
+                :
+                  <Text>{t("NoContent")}</Text>
+              }
+            </View>
+          </View>
+          {background(data?.backgroundImage)}
+        </View>
+      )
+    }
+
     return (
       <>
-        { titles ?
-          <Page key="toc" style={data.styles?.tocPage} bookmark={t("TOC")} size={data?.dimensions}>
-            <View style={data.styles?.contentTable}>
-              <Text style={data.styles?.contentTableTitle}>{t("TOC")}</Text>
-
-              <View style={data.styles?.contentTableLinks}>
-                {titles.map((title, i) => {
-                  return (
-                    <Link key={`${title}-${i}`} style={data.styles?.link} src={"#" + (i+1)}>{title}</Link>
-                    )
-                  })}
-              </View>
-            </View>
-            {background(data?.backgroundImage)}
-          </Page>
-          :
+        {true ? 
+          getContentIfRequested({requested: data?.displayToc, content: getPart()})
+        :
           <></>
         }
       </>
@@ -138,22 +198,41 @@ export default function PDFDocument({content, params}) {
         <>
           {normalizedContent.map( (page, i) => {
             console.log(page[5])
+
+            function getPart() {
+              return (
+                <>
+                  {header()}
+
+                  <Text style={data.styles?.title1}>{page[1]}</Text>
+                  {page[2].map((subtitle, i) => {
+                    if (typeof(subtitle) == "string"){
+                      return (<Text key={`text-${i}`} style={data.styles?.text}>{subtitle}</Text>)
+                    } else {
+                      return displaySubtitle(1, subtitle)
+                    }
+                  })}
+                  {page[4] != getNothingImage() ? (<Image src={page[4]} style={page[5] != null ? page[5].image : data.styles?.imageContent} />) : (console.log())}
+                  
+                  {footer()}
+                  
+                  {/*background(page[3] == getNothingImage() && data?.backgroundImage != getNothingImage() ? data?.backgroundImage : page[3])*/}
+                  {background(data?.backgroundImage)}
+                </>
+              )
+            }
             return (
-              <Page key={`content-${i}`} style={data.styles?.contentPage} id={page[0]} bookmark={t(page[1])} size={data?.dimensions}>
-                {header()}
-                <Text style={data.styles?.title1}>{page[1]}</Text>
-                {page[2].map((subtitle, i) => {
-                  if (typeof(subtitle) == "string"){
-                    return (<Text key={`text-${i}`} style={data.styles?.text}>{subtitle}</Text>)
-                  } else {
-                    return displaySubtitle(1, subtitle)
-                  }
-                })}
-                {page[4] != getNothingImage() ? (<Image src={page[4]} style={page[5] != null ? page[5].image : data.styles?.imageContent} />) : (console.log())}
-                {footer()}
-                {/*background(page[3] == getNothingImage() && data?.backgroundImage != getNothingImage() ? data?.backgroundImage : page[3])*/}
-                {background(data?.backgroundImage)}
-              </Page>
+              <>
+                {true ?
+                    <View break style={data.styles?.contentPage}>
+                      {getPart()}
+                    </View>
+                  :
+                    <Page key={`content-${i}`} style={data.styles?.contentPage} id={page[0]} bookmark={t(page[1])} size={data?.dimensions}>
+                      {getPart()}
+                    </Page>
+                }
+              </>
             )
           })}
         </>
@@ -161,8 +240,9 @@ export default function PDFDocument({content, params}) {
     } else if (content?.length > 0) {
       //Without a new page every new title
       let bookmark = content[0]?.length > 0 ? t(content[0][1]) : t("Content")
-      return (
-          <Page style={data.styles?.contentPage} id={"content"} bookmark={bookmark} size={data?.dimensions}>
+      function getPart() {
+        return (
+          <>
             {header()}
             {normalizedContent.map( function(page) {
               return (
@@ -185,7 +265,22 @@ export default function PDFDocument({content, params}) {
             })}
             {footer()}
             {background(content[0][3] == getNothingImage() && data?.backgroundImage != getNothingImage() ? data?.backgroundImage : content[0][3])}
-          </Page>
+          </>
+        )
+      }
+
+      return (
+        <>
+          { true ?
+              <View break style={data.styles?.contentPage}>
+                {getPart()}
+              </View>
+            :
+            <Page style={data.styles?.contentPage} id={"content"} bookmark={bookmark} size={data?.dimensions}>
+                {getPart()}
+            </Page>
+          }
+        </>
       )
     }
     else {
@@ -234,14 +329,29 @@ export default function PDFDocument({content, params}) {
   function lastPage(number = 0) {
     log.trace("lastPage: processing...");
 
+    function getPart() {
+      return (
+        <View>
+          <Text style={data.styles?.title}>{data?.backCover[number][3]}</Text>
+          <Text style={data.styles?.backPageContent}>{data?.backCover[number][2]}</Text>
+          {/* background(data?.backCover[number][1])*/}
+          {data?.backgroundImageBackCover && background(data?.backgroundImageBackCover)}
+          {/*footer()*/}
+        </View>
+      )
+    }
     return (
-      <Page key={number} style={data.styles?.lastPage} id="backCover" bookmark={t("BackCover")} size={data?.dimensions}>
-        <Text style={data.styles?.title}>{data?.backCover[number][3]}</Text>
-        <Text style={data.styles?.backPageContent}>{data?.backCover[number][2]}</Text>
-        {/* background(data?.backCover[number][1])*/}
-        {data?.backgroundImageBackCover && background(data?.backgroundImageBackCover)}
-        {/*footer()*/}
-      </Page>
+      <>
+        {true ?
+            <View break>
+              {getPart()}
+            </View>
+          :
+            <Page key={number} style={data.styles?.lastPage} id="backCover" bookmark={t("BackCover")} size={data?.dimensions}>
+              {getPart()}
+            </Page>
+        }
+      </>
     )
   }
 
@@ -252,11 +362,11 @@ export default function PDFDocument({content, params}) {
   function header() {
     log.trace("header: displayHeader: ", data?.displayHeader)
 
-    if (data?.displayHeader) {
+    if (false && data?.displayHeader) {
       log.trace("header: displayHeader == true? ", data?.displayHeader)
       return (
         <View style={data.styles?.header} fixed>
-          <Image style={data.styles?.image} src={data?.featuredImage} />
+          { data?.featuredImage && data?.featuredImage != "" && <Image key={"featuredImage-header"} style={data?.styles?.featuredImage} src={data?.featuredImage} /> }
         </View>
       )
     }
@@ -267,18 +377,19 @@ export default function PDFDocument({content, params}) {
    * @returns the rendered footer
    */
   function footer() {
-    if (data?.displayFooter) {
-      return(
-        <div key="footer">
-          <View style={data.styles?.footerMargin} fixed></View>
-          <View style={data.styles?.footer} fixed>
-            <Text style={data.styles?.footerContent}>{data?.footer}</Text>
-            <Text style={data.styles?.pageNumber} render={({ pageNumber, totalPages }) => (`${pageNumber} / ${totalPages}`)} fixed/>
-          </View>
-        </div>
-      )
-    }
-  }
+    return(
+      <View render={() =>
+        data?.displayFooter && 
+          <>
+            <View style={data.styles?.footerMargin} fixed></View>
+            <View style={data.styles?.footer} fixed>
+              <Text style={data.styles?.footerContent}>{data?.footer}</Text>
+              <Text style={data.styles?.pageNumber} render={({ pageNumber, totalPages }) => (`${pageNumber} / ${totalPages}`)} fixed/>
+            </View>
+          </>
+      } />
+    )
+  }  
 
   /**
    * Renders an image which will be used as a background of the page it is in
@@ -288,7 +399,7 @@ export default function PDFDocument({content, params}) {
   function background(img){
     return (
       <View key="background" style={data.styles?.companyBackground} fixed>
-        <Image style={data.styles?.companyBackgroundImage} src={img}/>
+        <Image style={{...data.styles?.companyBackgroundImage, width : "100%", height: "100%"}} src={img}/>
       </View>
     )
   }
@@ -330,7 +441,7 @@ export default function PDFDocument({content, params}) {
    */
   function getInlineContent(name, _styleName = null) {
     let styleName = getInlineStyle(name, _styleName);
-    log.trace(`getInlineContent: styleName: ${JSON.stringify(styleName)}.`);
+    log.trace("getInlineContent: styleName:", styleName);
 
     return (
       <>
@@ -372,25 +483,28 @@ export default function PDFDocument({content, params}) {
 
   return (
     <>
-    {
-      (content && params) ?
+      {
+        (content && params) ?
+            <Document>
+              <Page style={data.styles?.scontentPage} bookmark={"contenu"} size={data?.dimensions}>
+
+              {firstPage()}
+              {getContentIfRequested({requested: data.displayToc, content: toc()})}
+
+              {contentPages()}
+
+              {data?.backCover?.map(function(item){
+                  return lastPage(item[0]-1)
+                })
+              }
+              </Page>
+            </Document>
+          :
           <Document>
-            {firstPage()}
-            {data?.displayToc ? toc() : (<></>)}
-
-            {contentPages()}
-
-            {data?.backCover?.map(function(item){
-                return lastPage(item[0]-1)
-              })
-            }
+            <Page>
+              <Text>Content is unavailable...</Text>
+            </Page>
           </Document>
-        :
-        <Document>
-          <Page>
-            <Text>Content is unavailable...</Text>
-          </Page>
-        </Document>
       }
     </>
   );

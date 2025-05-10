@@ -23,15 +23,15 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
 
     const USERAPP_DEFAULT_VIEW = "preview"
 
-    const MAX = ["xl", "lg", "md", "sm", "xs"]
+    const MAX = ["xs", "sm", "md", "lg", "xl"]
     const [viewType, setViewType] = useState(USERAPP_DEFAULT_VIEW) // normal, carousel, preview 
         
     function getViewTypes() {
       return (
         <div className="flex flex-row gap-2">
-          <Button variant={viewType === "normal" ? "default" : "ghost"} onClick={() => setViewType("normal")}>Normal</Button>
-          <Button variant={viewType === "carousel" ? "default" : "ghost"} onClick={() => setViewType("carousel")}>Carousel</Button>
-          <Button variant={viewType === "preview" ? "default" : "ghost"} onClick={() => setViewType("preview")}>Preview</Button>
+          <Button variant={viewType === "normal" ? "default" : "ghost"} className="text-md" onClick={() => setViewType("normal")}>Normal</Button>
+          <Button variant={viewType === "carousel" ? "default" : "ghost"} className="text-md" onClick={() => setViewType("carousel")}>Carousel</Button>
+          <Button variant={viewType === "preview" ? "default" : "ghost"} className="text-md" onClick={() => setViewType("preview")}>Preview</Button>
         </div>
       )
     }
@@ -78,7 +78,8 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
         title = prompt.prompts[promptId].label;
         if (title.indexOf("STOP") >= 0) return (<></>);
 
-        node = MyContentDetailsUtils.getData(data, i, attrName);
+        node = MyContentDetailsUtils.getData(data, i, attrName)
+        log.trace("getContentThroughPrompt: node:", node)
       } catch (e) {
         return (<></>)
       }
@@ -94,7 +95,7 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
         <>
           {"carousel" == viewType && getCarouselItem(content, i)}
           {"normal" == viewType && content}
-          {"preview" == viewType && getPreviewItem(content, _content, i, params)}
+          {"preview" == viewType && getPreviewItem(node.data, content, _content, i, params)}
         </>
       )
     }
@@ -127,13 +128,14 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
     /**
      * Preview view
      */
-    function getPreviewItem(editorWithContent, content, i, params) {
+    function getPreviewItem(node, editorWithContent, content, i, params) {
+      log.trace("getPreviewItem: node: ", node)
       log.trace("getPreviewItem: document: ", document)
 
       return (
         <div key={i} className="flex w-[550px] m-2">
           <ScrollArea className="h-100">
-              <SocialNetworkPreview editorWithContent={editorWithContent} content={{content: content}} mode="alone" {...params} />
+              <SocialNetworkPreview data={node} editorWithContent={editorWithContent} content={{content: content}} mode="alone" {...params} />
           </ScrollArea>
         </div>
       )

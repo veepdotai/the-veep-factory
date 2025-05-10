@@ -42,7 +42,9 @@ import { getIcon } from '@/constants/Icons';
 import { Button } from 'src/components/ui/shadcn/button'
 import Loading from '@/components/common/Loading';
 import { UploadLib } from '@/components/upload-widget/UploadLib';
-import { throws } from 'assert';
+
+import PDFDocument from './PDFDocument';
+import PDFParams from './PDFParams';
 
 //const usePDF = dynamic(() => import('@react-pdf/renderer/usePDF'), { ssr: false })
 /**
@@ -60,30 +62,45 @@ import { throws } from 'assert';
  */  
 export default function PDFLink({
         id,
+        //instance,
         document,
         title,
+        initContent,
+        initParams,
         viewOptions,
         showProcessButton = true,
         children
     }) {
     const log = Logger.of(PDFLink.name)
+
+    log.trace("Parameters:##################################################\n",
+        "id:", id,
+        "title:", title,
+        "initContent:", initContent,
+        "initParams:", initParams,
+        "viewOptions:", viewOptions,
+        "showProcessButton:", showProcessButton,
+        "viewOptions:", viewOptions
+    )
+
     const [cookies] = useCookies(['JWT']);
 
-    let doc = document || children
+    const [content, setContent] = useState(initContent)
+    const [params, setParams] = useState(initParams)
+    const mydoc = () => <PDFDocument content={content} params={new PDFParams(params)} />
+
+    let doc = mydoc()
 
     const [pageNumber, setPageNumber] = useState(1)
     const [numPages, setNumPages] = useState<number>()
 
-    const [instance, updateInstance] = usePDF({ document: doc}); 
-    let pdfUrl = instance.url
-    let pdfBlob = instance.blob
+    const [instance, update] = usePDF({document: doc}); 
     
     function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
         setNumPages(numPages);
     }
 
     //    function handleProcess(blob): void {
-    //function handleProcess({ url } : {url: string}): void {
     function handleProcess({ url } : {url: string}): void {
         log.trace("handleProcess: url: ", url)
         try {
@@ -103,12 +120,12 @@ export default function PDFLink({
                     }
                 })
         } catch (e) {
-            alert("Error when processing content: " + JSON.stringify(e))
+            log.trace("handleProcess: e:", e)
         }
     }
 
     function processPDF(topic, msg) {
-        log.trace("processPDF: topic: ", topic, " msg: ", msg)
+        log.trace("processPDF: topic:", topic, " msg:", msg)
         let pdfUrl = localStorage.getItem("pdfUrl")
         handleProcess({url: pdfUrl})
     }
@@ -128,13 +145,32 @@ export default function PDFLink({
         return arr
     }
 
+    function updatePDF(topic, message) {
+        log.trace("updatePDF: viewOptions: ", viewOptions)
+        log.trace("updatePDF: initParams: ", initParams)
+
+        let params = message.params 
+        log.trace("updatePDF: topic: ", topic, "paramsUpdated: ", params)
+        log.trace("updatePDF: params: ", params.attachmentGenerationOptions)
+
+        setParams(params.attachmentGenerationOptions)
+        log.trace("updatePDF: content:", content)
+        setContent(content)
+    }  
+
+    let pdfUrl = instance?.url
+
     useEffect(() => {
         localStorage.setItem("pdfUrl", pdfUrl)
     }, [pdfUrl])
 
     useEffect(() => {
-        updateInstance(doc)
-    }, [doc])
+        log.trace("JCK: useEffect[params]: id: ", id, "style... params: ", params)
+        if (params) {
+            //This will trigger document update through the update method
+            update(<PDFDocument content={content} params={new PDFParams(params)} />)
+        }
+    }, [params, content])
 
     useEffect(() => {
         PubSub.subscribe("CONTENT_UPLOADED", onSuccess)
@@ -142,18 +178,22 @@ export default function PDFLink({
             log.trace(`Suscribe to PROCESS_PDF_${id}`)
             PubSub.subscribe("PROCESS_PDF_" + id, processPDF)
         }
+        PubSub.subscribe("SOURCE_EDITOR_UPDATED", updatePDF)
     }, [])
 
+
     log.trace("document:", doc)
-    log.trace("viewOptions:", viewOptions)
 
     let width = viewOptions.width ? viewOptions.width : 533
     let height = viewOptions.height ? viewOptions.height : 533
     let widthAndHeightCN = (width && `min-w-[${width}px]`) + (height && ` min-h-[${height}px]`)
 
     // className doesn't work on the following Node
-    if (instance.loading) return <div style={{width: `${width}px`, minHeight: `${height}px`}} className="flex items-center justify-center">Loading...</div>
-    if (instance.error) return <div>Something went wrong: {instance.error}</div>;
+    //let pdfUrl = instance?.url
+    let pdfBlob = instance?.blob
+
+    if (instance?.loading) return <div style={{width: `${width}px`, minHeight: `${height}px`}} className="flex items-center justify-center">Loading...</div>
+    if (instance?.error) return <div>Something went wrong: {instance.error}</div>;
 
     let leftButtonCN = pageNumber > 1 ? "place-content-stretch rounded-full bg-black text-white font-bold z-10" : "z-0"
     let rightButtonCN = pageNumber < numPages ? "place-content-stretch rounded-full bg-black text-white font-bold z-10" : "z-0"
@@ -171,13 +211,13 @@ export default function PDFLink({
                         </div>
                         <div style={{width: `${width}px`}} className="">
                             <div className="flex justify-between">
-                                <div className={"p-2 bg-black text-white text-sm font-bold w-100"}>{title} : {numPages ? numPages : "..."} pages</div>
+                                <div className={"p-2 bg-black text-white text-sm font-bold w-100"}>{params.title} : {numPages ? numPages : "..."} pages</div>
                                 {showProcessButton && <Button className={"p-2 bg-black text-white text-sm font-bold rounded-none"} onClick={() => handleProcess({url: pdfUrl})}>{getIcon('share')}</Button>}
                                 {showProcessButton && <Button className={"p-2 bg-black text-white text-sm font-bold rounded-none z-20"} onClick={() => handleProcess({url: pdfUrl})}>{getIcon('save')}</Button>}
                                 {showProcessButton && <Button className={"p-2 bg-black text-white text-sm font-bold rounded-none z-20"} onClick={() => handleProcess({url: pdfUrl})}>{getIcon('download')}</Button>}
                             </div>
                             <div style={{width: `${width}px`, minHeight: `${height}px`}}>
-                                <DocView key={title} className="" loading={loading} file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
+                                <DocView key={params.title} className="" loading={loading} file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
                                     <PageView height="533px" pageNumber={pageNumber} loading="..." {...viewOptions} />
                                 </DocView>
                             </div>

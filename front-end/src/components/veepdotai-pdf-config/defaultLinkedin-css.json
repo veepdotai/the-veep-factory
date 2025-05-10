@@ -7,10 +7,11 @@
   },
 
   "featuredImage": {
-    "top": 175,
+    "!position": "absolute",
+    "top": 50,
     "textAlign": "center",
     "marginHorizontal": "auto",
-    "width": "30%",
+    "!width": "30%",
     "borderRadius": "200px"
   },
   
@@ -41,7 +42,7 @@
   },
 
   "contentTableLinks": {
-    "border": "1px blue solid",
+    "border": "0px blue solid",
     "borderRadius": 50,
     "padding": 10,
     "position": "relative",

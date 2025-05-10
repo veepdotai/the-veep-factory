@@ -4,6 +4,7 @@ import { Logger } from 'react-logger-lib';
 import { createPlateEditor } from '@udecode/plate/react';
 import { MarkdownPlugin } from '@udecode/plate-markdown';
 import { t as _t } from 'i18next'
+import PubSub from 'pubsub-js'
 
 export const Utils = {
 	log: Logger.of("Utils"),
@@ -184,7 +185,13 @@ export const Utils = {
 
 			return r
 		}
+	},
 
+	notifyError(msg) {
+		PubSub.publish("ERROR", {
+			title: t("Error"),
+			description: msg
+		})
 	}
 }
 

@@ -28,7 +28,7 @@ BaseCodeEditor({
     showSaveButton = true}
   ) {
 
-  const log = Logger.of(BaseCodeEditor.name);
+  const log = (...args) => Logger.of(BaseCodeEditor.name).trace(args);
 
   const [disabledSaveButton, setDisabledSaveButton] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -56,7 +56,7 @@ BaseCodeEditor({
   }
 
   function updateSaveButton(message) {
-    log.trace("updateSave: ", message);
+    log("updateSaveButton: ", message);
     if (message) {
       setDisabledSaveButton(true)
     } else {
@@ -67,10 +67,16 @@ BaseCodeEditor({
     setSaving(false);
   }
 
-  function handleAction() {
+  /**
+   * Executes the provided action during BaseCodeEditor instanciation
+   * @param {*} topic 
+   * @param {*} message 
+   */
+  function handleAction(topic, message) {
     setSaving(true)
 
     let source = editorRef.current.getValue();
+    //let source = message.source
     action(source)
   }
 

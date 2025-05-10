@@ -9,6 +9,36 @@ import { mergeDeep } from '@apollo/client/utilities';
 
 const log = Logger.of("PDFParams");
 
+/*
+type PDFProps = {
+    format: any = "linkedin" | "A4" | { height: number, width: number }
+    dimensions?: { height: number, width: number }
+    
+    title?: string
+    subtitle?: string
+    organizationName?: string
+    companyName?: string
+    author?: string
+    version?: string
+
+    companyImage?: string
+    featuredImage: string
+    backgroundImageCover?: string
+    backgroundImage?: string
+    backgroundImageBackCover?: string
+    
+    date?: Date
+    footer?: string
+    backCover: Array<any>
+    displayHeader?: boolean = true
+    displayFooter?: boolean = true
+    displayToc?: boolean = false
+    newPage?: boolean = true
+
+    stylesheet: string
+}
+*/
+
 export default class PDFParams {
     
     /**
@@ -34,23 +64,24 @@ export default class PDFParams {
     constructor (params) {
         log.trace("constructor: params: ", params)
 
-        this.title = params?.title
-        this.subtitle = params?.subtitle || params?.subtitle
-
+        this.dimensions = null
         this.styles = params?.stylesheet || ""
         log.trace("styles: ", this.styles)
+
         this.stylesheet = params?.stylesheet || stylesA4
         log.trace("stylesheet: ", this.stylesheet)
 
-        this.featuredImage = params?.featuredImage
-
         this.format = params?.format || "A4"
         this.setFormat(this.format)
+        
+        this.title = params?.title
+        this.subtitle = params?.subtitle || params?.subtitle
 
+        this.featuredImage = params?.featuredImage        
         this.companyName = params?.companyName || t("DefaultCompanyName")
-        this.companyImg = params?.companyImage || "./assets/images/nothing.png"
-        this.backgroundImg = params?.backgroundImage || "./assets/images/nothing.png"
-        this.backgroundImgCover = params?.backgroundImageCover || "/assets/images/gradients/ff0076-590fb7.png"
+        this.companyImg = params?.companyImage || "/assets/images/nothing.png"
+        this.backgroundImg = params?.backgroundImage || "/assets/images/nothing.png"
+        this.backgroundImgCover = params?.backgroundImageCover || ""
         this.backgroundImgBackCover = params?.backgroundImageBackCover || "/assets/images/gradients/ff0076-590fb7.png"
         
         this.backCover = params?.backCover || [[1, "/assets/images/gradients/ff0076-590fb7.png", t("DefaultBackCoverContent"), t("DefaultBackCoverTitle")]]
@@ -61,9 +92,21 @@ export default class PDFParams {
         this.date = params?.date || moment().format("DD/MM/YYYY")
         this.footer = params?.footer || t("DefaultFooterContent")
 
+        this.displayMetadata = params?.displayMetadata
+        this.displayMetadataOnSpecificPage = params?.displayMetadataOnSpecificPage
+
         this.displayHeader = params?.displayHeader
+        this.displayHeaderOnFirstPage = params?.displayHeaderOnFirstPage
+        this.displayHeaderOnLastPage = params?.displayHeaderOnLastPage
+        this.displayHeaderOnSpecificPage = params?.displayHeaderOnSpecificPage
+
         this.displayFooter = params?.displayFooter
+        this.displayFooterOnFirstPage = params?.displayFooterOnFirstPage
+        this.displayFooterOnLastPage = params?.displayFooterOnLastPage
+        this.displayFooterOnSpecificPage = params?.displayFooterOnSpecificPage
+
         this.displayToc = params?.displayToc
+        this.displayTocOnSpecificPage = params?.displayTocOnSpecificPage
         this.newPage = params?.newPage
 
     }

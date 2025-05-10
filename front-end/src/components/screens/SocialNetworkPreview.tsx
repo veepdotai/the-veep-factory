@@ -9,6 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage, } from "@/components/ui/avatar"
 import { Card, CardContent, CardTitle } from "@/components/ui/card"
 import { ScrollArea, } from '@/components/ui/scroll-area'
 import { Button } from '../ui/shadcn/button';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '../ui/shadcn/tabs';
 
 import JSCodeEditor from 'src/components/editor/JSCodeEditor';
 import { getIcon } from '@/constants/Icons'
@@ -17,7 +18,11 @@ import PubSub from 'pubsub-js'
 
 import PDF from '../veepdotai-pdf-config/components/PDF';
 import PDFParams from '../veepdotai-pdf-config/components/PDFParams';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '../ui/shadcn/tabs';
+import { UtilsGraphQL } from '@/api/utils-graphql';
+import { Constants } from '@/constants/Constants';
+import { useCookies } from 'react-cookie';
+import { UtilsGraphQLVcontent } from '@/api/utils-graphql-vcontent';
+import { UtilsGraphQLObject } from '@/api/utils-graphql-object';
 
 interface ContentProps {
     avatarUrl?: string,
@@ -33,6 +38,7 @@ interface ContentProps {
 
 export default function SocialNetworkPreview({
         viewType = "LinkedIn",
+        data,
         editorWithContent = null,
         content,
         id = "",
@@ -43,34 +49,62 @@ export default function SocialNetworkPreview({
         attachmentViewOptions = {}}
     ) {
 
+    const graphqlURI = Constants.GRAPHQL_URI
+    const cookies = useCookies(['JWT'])
+
+    const log = Logger.of(SocialNetworkPreview.name)
+
+
     //let localId = "" === id ? Math.round(Math.random() * 1000000000) + "" : id
     const [localId, setLocalID] = useState("" === id ? Math.round(Math.random() * 1000000000) + "" : id)
 
-    const log = Logger.of(SocialNetworkPreview.name)
     log.trace("attachmentGenerationOptions: ", attachmentGenerationOptions)
-    
-    const [options, setOptions] = useState({
+
+    log.trace("main: node: ", data)
+    let tvfTemplate = Utils.normalize(data?.tvfTemplate)
+    log.trace("main: tvfTemplate (normalized): ", tvfTemplate)
+
+    const [options, setOptions] = useState(tvfTemplate ? tvfTemplate : {
         attachmentGenerationOptions: attachmentGenerationOptions,
         attachmentViewType: attachmentViewType,
         attachmentViewOptions: attachmentViewOptions
     })    
     const [condensedView, setCondensedView] = useState(true)
 
-    function preview() {PubSub.publish("PROCESS_CODE_EDITOR_CONTENT", {})}
+    function preview() {
+        PubSub.publish("PROCESS_CODE_EDITOR_CONTENT", {})
+    }
+    
     function saveAll() {
         alert("Save All")
         save()
         saveLayout()
         saveCarousel()
     }
-    function save() {alert("Save")}
-    function saveLayout() {alert("SaveLayout")}
+    /**
+     * Saves layout editor content as a metadata of the current document
+     */
+    function save() {
+        PubSub.publish("PROCESS_CODE_EDITOR_CONTENT", {})
+        log.trace("Save")
+        UtilsGraphQLObject.saveMetadata(Constants.WORDPRESS_GRAPHQL_ENDPOINT, cookies, data.databaseId, null, "tvfTemplate", `"This is some new text"`)
+    }
+
+    function saveLayout() {
+        log.trace("SaveLayout")
+        //renameContentTitle: function(graphqlURI, cookies, row, title) {
+        //    UtilsGraphQL.rename(graphqlURI, cookies, row, title)
+        //}    
+
+    }
     function saveCarousel() {
-        alert("SaveCarousel")
+        log.trace("SaveCarousel")
         PubSub.publish( "PROCESS_PDF_" + localId, {})
     }
 
-    function publish() {alert("Publish")}
+    function publish() {
+        log.trace("Publish")
+    }
 
     function enterInEditAndPreviewMode() {
         let params = {
@@ -111,11 +145,11 @@ export default function SocialNetworkPreview({
             return (    
                 <ScrollArea className="h-100 w-100">
                     <div className="flex justify-center flex-row gap-5">
-                        <SocialNetworkPreview key={`mpc-${i}-edit`} id={localId} viewType="LinkedIn" mode="edit" editorWithContent={editorWithContent} content={content}
+                        <SocialNetworkPreview key={`mpc-${i}-edit`} data={data} id={localId} viewType="LinkedIn" mode="edit" editorWithContent={editorWithContent} content={content}
                             attachmentGenerationOptions={attachmentGenerationOptions}
                             attachmentViewType={attachmentViewType}
                             attachmentViewOptions={attachmentViewOptions} />
-                        <SocialNetworkPreview key={`mpc-${i}-preview`} id={localId} viewType="LinkedIn" mode="preview" content={content}
+                        <SocialNetworkPreview key={`mpc-${i}-preview`} data={data} id={localId} viewType="LinkedIn" mode="preview" content={content}
                             attachmentGenerationOptions={attachmentGenerationOptions}
                             attachmentViewType={attachmentViewType}
                             attachmentViewOptions={attachmentViewOptions} />
@@ -127,16 +161,16 @@ export default function SocialNetworkPreview({
         PubSub.publish("PROMPT_DIALOG", {
             outerCN: "max-w-none w-75 h-75",
             innerCN: "",
-            title: "Edit and Preview",
-            description: "Edit and preview in PDF",
+            title: t("EditAndPreview"),
+            description: t("EditAndPreviewPDF"),
             content: display()
         })
 
     }
         
-    function getAttachmentGenerationOptions() { return options.attachmentGenerationOptions }
-    function getAttachmentViewType() { return options.attachmentViewType }
-    function getAttachmentViewOptions() { return options.attachmentViewOptions }
+    function getAttachmentGenerationOptions() { return options?.attachmentGenerationOptions }
+    function getAttachmentViewType() { return options?.attachmentViewType }
+    function getAttachmentViewOptions() { return options?.attachmentViewOptions }
 
     function getPDFContent(content) {
         //let pdfContent = data.content.replace(/.*---.*---(\r?\n?)*(.*)/mis, "$1").trim()

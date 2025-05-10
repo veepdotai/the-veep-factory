@@ -109,6 +109,7 @@ export default function Index() {
       PubSub.subscribe("SELECTED_DOCTYPE", (topic, message) => setActiveTab({activeKey: "add-content"}));
 
       PubSub.subscribe("TOAST", (topic, message) => handleToast(topic, message))
+      PubSub.subscribe("ERROR", (topic, message) => handleToast(topic, message))
 
     }
     

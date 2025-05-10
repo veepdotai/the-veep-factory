@@ -7,6 +7,7 @@ import { UtilsGraphQLClauseBuilder } from './utils-graphql-clause-builder'
 import toast from 'react-hot-toast';
 import { Constants } from '../constants/Constants'
 import { UtilsDataConverter } from '../components/lib/utils-data-converter'
+import { Utils } from '@/components/lib/utils'
 
 // 'vcontent'|'post'
 let CONTENT_TYPE = 'vcontent'
@@ -122,7 +123,56 @@ export const UtilsGraphQL = {
   
 	},
 
+	updateById: function(graphqlURI, cookies, id, attrName, attrValue) {
+		let log = (...args) => UtilsGraphQL.log.trace("updateById: ", args)
+
+		let attrWithValue = `${attrName}: ${attrValue}` 
+		let q = `
+		  mutation UPDATE_VCONTENT {
+			updateVcontent(input: {
+			  clientMutationId: "UpdateVcontent",
+			  id:"${id}",
+			  ${attrWithValue}
+			}) {
+			  vcontent {
+				id
+			  }
+			}
+		  }    
+		`;
+	
+		log("id:", id, "attrName: ", attrName, "attrValue: ", attrValue, "query: ", q, "attrNameWithValue: ", attrWithValue)
+		return UtilsGraphQL
+			.client(graphqlURI, cookies)
+			.mutate({
+				mutation: gql`${q}`
+			})		
+	},
+
 	update: function(graphqlURI, cookies, row, attrName, attrValue) {
+		let log = (args) => UtilsGraphQL.log.trace("update: ", ...args)
+
+		return UtilsGraphQL.updateById(graphqlURI, cookies, row.id, attrName, attrValue)
+				.then((result) => {
+					log(`row: ${row.id}`);
+					PubSub.publish("CONTENT_ELEMENT_UPDATED", row);
+					return {
+						"status": 200,
+						"row": row
+					}
+				}).catch((e) => {
+					log(`row: ${row.id} has not been processed. Exception: ${e}`);
+					PubSub.publish("CONTENT_ELEMENT_UPDATED", { status: "error", data: row });
+					return {
+						"status": 500,
+						"row": row,
+						"msg": `Exception while processing content ${row.id}: ${e}`
+					}
+				})
+	
+	},
+
+	updateSav: function(graphqlURI, cookies, row, attrName, attrValue) {
 		let log = UtilsGraphQL.log
 		let attrWithValue = `${attrName}: ${attrValue}` 
 		let q = `
@@ -198,7 +248,7 @@ export const UtilsGraphQL = {
 
 					return UtilsGraphQL.convert(res);
 				}).catch((e) => {
-					log.error('Error: ' + e);
+					log.error('Error: ', e);
 				})
 
 	},

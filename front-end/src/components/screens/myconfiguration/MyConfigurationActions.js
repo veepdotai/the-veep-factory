@@ -5,7 +5,7 @@ import { t } from 'src/components/lib/utils'
 import { Constants } from "src/constants/Constants";
 import { UtilsGraphQL } from 'src/api/utils-graphql.js';
 
-const MyContentActions = {
+const MyConfigurationActions = {
     log: Logger.of("MyConfigurationActions"),
 
     showDetails: function(row) {
@@ -37,7 +37,7 @@ const MyContentActions = {
     },
 
     moveToTrashConfirmationDialog: function(graphqlURI, cookies, row) {
-        MyContentActions.log.trace(`moveToTrashConfirmationDialog: ${JSON.stringify(row)}`)
+        MyConfigurationActions.log.trace(`moveToTrashConfirmationDialog: ${JSON.stringify(row)}`)
         PubSub.publish("PROMPT_DIALOG", {
             title: t("MoveToTrashConfirmationDialog"),
             description: t("MoveToTrashConfirmationDialogDesc"),
@@ -56,4 +56,4 @@ const MyContentActions = {
     }
 }
 
-export default MyContentActions;
+export default MyConfigurationActions;

@@ -74,7 +74,7 @@ export default function EditorialCalendar({events}) {
     const [conf, setConf] = useState(defaultConf)
 
     const selectEvent = useCallback((event) => {
-        log.trace("title", event)
+        log.trace("selectEvent: ", event)
 
         PubSub.publish("PROMPT_DIALOG", {
             title: t("SocialNetworkPreviewDialog", {socialNetworkName: "LinkedIn"}),

@@ -344,6 +344,12 @@ function register_MetadataFields($baseType) {
 			return ! empty( $value ) ? $value : '';
 		}
 	]);
+	register_graphql_field( $baseType, 'tvfTemplate', [ 'type' => 'String',
+		'resolve' => function( $post ) {
+			$value = get_post_meta( $post->ID, "tvfTemplate", true );
+			return ! empty( $value ) ? $value : '';
+		}
+	]);
 
 }
 
