@@ -27,8 +27,20 @@ export default function JSCodeEditor({source = ""}) {
 
     let jsonSource = Utils.convert2json(source)
     topics.map((topic, i) => {
-      log("handleSave: Publishing: topic: ", topic, " with value: ", jsonSource)
-      PubSub.publish(topic, jsonSource)
+      let message = { params: jsonSource }
+      log("handleSave: Publishing: topic: ", topic, "message: ", message)
+      PubSub.publish(topic, message)
+    })
+  }
+
+  function handleChange(source) {
+    log("handleSave: source: ", source)
+
+    let jsonSource = Utils.convert2json(source)
+    topics.map((topic, i) => {
+      let message = { params: jsonSource }
+      log("handleSave: Publishing: topic: ", topic, "message: ", message)
+      PubSub.publish(topic, message)
     })
   }
 
@@ -80,7 +92,7 @@ export default function JSCodeEditor({source = ""}) {
         language='json'
         initialValue={initialValue}
         action={handleSave}
-        onChange="default"
+        onChange={handleChange}
         languageOptions={languageOptions}
         editorPreOptions={editorPreOptions}
         showSaveButton={false}

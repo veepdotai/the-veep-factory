@@ -65,9 +65,12 @@ BaseCodeEditor({
     log("handleChange")
     setDisabledSaveButton(false)
     let source = editorRef.current.getValue();
+    log("handleChange: source: ", source)
     if ("function" === typeof onChange) {
+      log("handleChange: onChange is a function: let's use it!")
       onChange(source)
     } else if ("default" === onChange) {
+      log("handleChange: onChange == 'default': let's use onChangeDefault!")
       onChangeDefault(source)
     } // else we do nothing: no live editor
   }
