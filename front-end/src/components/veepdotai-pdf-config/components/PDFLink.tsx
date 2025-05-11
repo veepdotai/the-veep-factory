@@ -158,6 +158,43 @@ export default function PDFLink({
         setContent(content)
     }  
 
+    function showActions() {
+        let actions = [
+            {
+                action: () => handleProcess({url: pdfUrl}),
+                text: t("ShareAction"),
+                icon: getIcon('share')
+            },
+            {
+                action: () => handleProcess({url: pdfUrl}),
+                text: t("SaveAction"),
+                icon: getIcon('save'),
+                viewType: 'icon' // among icon|icon+text|text|text+icon
+            },
+            {
+                action: () => handleProcess({url: pdfUrl}),
+                text: t("ShareAction"),
+                icon: getIcon('download')
+            }
+        ]
+
+        return (
+            <>
+                {showProcessButton && 
+                    actions.map((action, i) =>
+                        <Button className={"p-2 bg-black text-white text-sm font-bold rounded-none" + (i > 0 ? " z-20" : "")} onClick={action.action}>
+                            {("icon" == action.viewType && action.icon)
+                                || ("icon+text" == action.viewType && (<>{action.icon} {action.text}</>))
+                                || ("text" == action.viewType && (<>{action.text}</>))
+                                || ("text+icon" == action.viewType && (<>{action.text} {action.icon}</>))
+                            }
+                        </Button>
+                    )
+                }
+            </>
+        )
+    }
+
     let pdfUrl = instance?.url
 
     useEffect(() => {
@@ -212,9 +249,7 @@ export default function PDFLink({
                         <div style={{width: `${width}px`}} className="">
                             <div className="flex justify-between">
                                 <div className={"p-2 bg-black text-white text-sm font-bold w-100"}>{params.title} : {numPages ? numPages : "..."} pages</div>
-                                {showProcessButton && <Button className={"p-2 bg-black text-white text-sm font-bold rounded-none"} onClick={() => handleProcess({url: pdfUrl})}>{getIcon('share')}</Button>}
-                                {showProcessButton && <Button className={"p-2 bg-black text-white text-sm font-bold rounded-none z-20"} onClick={() => handleProcess({url: pdfUrl})}>{getIcon('save')}</Button>}
-                                {showProcessButton && <Button className={"p-2 bg-black text-white text-sm font-bold rounded-none z-20"} onClick={() => handleProcess({url: pdfUrl})}>{getIcon('download')}</Button>}
+                                {showActions()}
                             </div>
                             <div style={{width: `${width}px`, minHeight: `${height}px`}}>
                                 <DocView key={params.title} className="" loading={loading} file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>

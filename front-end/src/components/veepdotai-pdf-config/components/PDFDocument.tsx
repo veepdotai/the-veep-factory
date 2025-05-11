@@ -314,15 +314,16 @@ export default function PDFDocument({content, params}) {
    * @returns The subtitle and its content
    */
   function displaySubtitle(i, subtitle) {
-      log.trace("displaySubtitle: i: ", i);
-      log.trace("displaySubtitle: subtitle: ", subtitle);
+      log.trace("displaySubtitle: i: ", i, "subtitle: ", subtitle);
       
       return (
         <>
           <Text key={subtitle} style={data.styles['title' + (i+1)]}>{subtitle[0]}</Text>
             {subtitle.length > 1 ?
                 <>{typeof(subtitle[1]) == "string"
-                    ? <Text style={data.styles?.text}>{subtitle[1]}</Text>
+                    ? <>
+                        <Text style={data.styles?.text}>{subtitle[1]}</Text>
+                      </>
                     : <>{displaySubtitle(i + 1, subtitle[1])}</>
                   }
                 </>

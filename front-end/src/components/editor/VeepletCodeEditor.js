@@ -17,7 +17,7 @@ export default function VeepletCodeEditor() {
 
   const promptPrefix = "ai-prompt-";
 
-  let topic = ["POST_PROMPT_OPTION_RESULT"]
+  let topics = ["POST_PROMPT_OPTION_RESULT"]
 
   const [initialValue, setInitialValue] = useState(false);
   const { veeplet, setVeeplet } = useContext(VeepletContext);
@@ -102,6 +102,11 @@ export default function VeepletCodeEditor() {
   }, [veeplet]);
 
   return (
-      <BaseCodeEditor topic={topic} language='toml' driver={driver} initialValue={initialValue} action={handleSave} />
+      <BaseCodeEditor
+        topics={topics}
+        language='toml'
+        driver={driver}
+        initialValue={initialValue}
+        action={handleSave} />
   )
 }

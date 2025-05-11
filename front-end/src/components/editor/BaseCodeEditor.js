@@ -67,9 +67,9 @@ BaseCodeEditor({
     let source = editorRef.current.getValue();
     if ("function" === typeof onChange) {
       onChange(source)
-    } else {
+    } else if ("default" === onChange) {
       onChangeDefault(source)
-    } 
+    } // else we do nothing: no live editor
   }
 
   function updateSaveButton(message) {
