@@ -17,7 +17,7 @@ export default function VeepletCodeEditor() {
 
   const promptPrefix = "ai-prompt-";
 
-  let topic = "POST_PROMPT_OPTION_RESULT"
+  let topic = ["POST_PROMPT_OPTION_RESULT"]
 
   const [initialValue, setInitialValue] = useState(false);
   const { veeplet, setVeeplet } = useContext(VeepletContext);
@@ -30,6 +30,7 @@ export default function VeepletCodeEditor() {
   }
 
   function handleSave(source) {
+    log.trace("handleSave: source: ", source);
 
     function getFormData(value) {
       var formData = new FormData();
@@ -38,7 +39,6 @@ export default function VeepletCodeEditor() {
       return formData;
     }
     
-    log.trace("handleSave: source: " + source);
     let veepletJson = TOML.parse(source);
 
     let o = new Veeplet(JSON.stringify(veepletJson));

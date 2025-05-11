@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Logger } from 'react-logger-lib';
 import PubSub from 'pubsub-js';
-import { t } from 'src/components/lib/utils'
+import { t, Utils } from 'src/components/lib/utils'
 
 //import { loader } from '@monaco-editor/react';
 import Editor from '@monaco-editor/react';
@@ -17,10 +17,11 @@ import Loading from '../common/Loading';
  */
 export default function 
 BaseCodeEditor({
-    topics,
+    topics = [],
     language,
     initialValue,
-    action,
+    action = null,
+    onChange = null,
     driver = null,
     editorPreOptions = {},
     editorPostOptions = {},
@@ -51,8 +52,24 @@ BaseCodeEditor({
 
   }
  
-  function handleOnChange() {
+  function onChangeDefault(source) {
+    log("onChangeDefault")
+    topics.map((topic, i) => {
+      let message = {params: source}
+      log("publishing: topic: ", topic, " with value: ", message)
+      PubSub.publish(topic, message)
+    })
+  }
+
+  function handleChange() {
+    log("handleChange")
     setDisabledSaveButton(false)
+    let source = editorRef.current.getValue();
+    if ("function" === typeof onChange) {
+      onChange(source)
+    } else {
+      onChangeDefault(source)
+    } 
   }
 
   function updateSaveButton(message) {
@@ -61,7 +78,8 @@ BaseCodeEditor({
       setDisabledSaveButton(true)
     } else {
       setDisabledSaveButton(false)
-      alert("Can't save data. Take a copy of it if you want to keep it and try again.");
+      log("Can't save data. Take a copy of it if you want to keep it and try again.");
+      Utils.notifyError("Can't save data. Take a copy of it if you don't want to lose it and try again but know that clicking again and again on the button may not work.");
     }
 
     setSaving(false);
@@ -77,7 +95,13 @@ BaseCodeEditor({
 
     let source = editorRef.current.getValue();
     //let source = message.source
-    action(source)
+    let myaction = message?.action
+    if ("function" === typeof myaction) {
+      myaction(source)
+    } else {
+      action(source)
+    }
+    //setSaving(false)
   }
 
   function updateSaveButtonListener(topic, message) {
@@ -117,7 +141,7 @@ BaseCodeEditor({
             }}
             defaultValue={initialValue}
             onMount={handleEditorDidMount}
-            onChange={handleOnChange}
+            onChange={handleChange}
           />
           {showSaveButton && <SuspenseClick waiting={saving} disabled={disabledSaveButton} handleAction={handleAction} label={t("Menu.Save")} />}
         </>

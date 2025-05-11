@@ -7,7 +7,7 @@ import { t as _t } from 'i18next'
 import PubSub from 'pubsub-js'
 
 export const Utils = {
-	log: Logger.of("Utils"),
+	log: (...args) => Logger.of("Utils").trace(args),
 
 	isObject: (item) => {
 		return (item && typeof item === 'object' && !Array.isArray(item));
@@ -60,13 +60,14 @@ export const Utils = {
 	},
 	
 	getRoles: function(JWT) {
+		let log = (...args) => Utils.log("getRoles", args)
 		let payload64 = JWT.replace(/.*\.(.*)\..*/, "$1");
-		log.trace('payload64: ' + payload64);
+		log('payload64:', payload64);
 		if (payload64) {
 		  let payload = JSON.parse(atob(payload64));
-		  log.trace("data: ", payload);
+		  log("data: ", payload);
 		  if (payload.data.user.email === Constants.ADMIN_EMAIL) {
-			log.trace('data.data.user.email: ' + payload.data.user.email + ' is manager');
+			log('data.data.user.email: ', payload.data.user.email, ' is manager');
 			//setRoles(["Manager"]);
 			return true;
 		  }
@@ -77,9 +78,11 @@ export const Utils = {
 	},
 	
 	getPayload: function(JWT) {
+		let log = (...args) => Utils.log("getPayload", args)
+
 		let payload64 = null;
 		let payload = null;
-		this.log.trace('JWT: ' + JWT);
+		log('JWT:', JWT);
 		if (JWT && JWT != "undefined") {
 			payload64 = JWT.replace(/.*\.(.*)\..*/, "$1");
 			payload = JSON.parse(atob(payload64));
@@ -90,13 +93,14 @@ export const Utils = {
 	},
 
 	isCookieValid: function(JWT) {
+		let log = (...args) => Utils.log("isCookieValid", args)
 		let payload = this.getPayload(JWT);
 		// Date.now() is in milliseconds while exp is in sec.
 		if (Math.round(Date.now() / 1000) < payload?.exp) {
-			this.log.trace('JWT Payload (true): ' + payload.exp);
+			log('JWT Payload (true):', payload.exp);
 			return true;
 		} else {
-			this.log.trace('JWT Payload (false): ' + payload?.exp);
+			log('JWT Payload (false):', payload?.exp);
 			return false;
 		}
 	},
@@ -109,18 +113,18 @@ export const Utils = {
 	},
 
 	format(_content, _parse = false) {
-		let log = (msg) => Utils.log.trace(`format: ${msg}`)
+		let log = (...args) => Utils.log("format:", args)
 		if (_content) {
 		  if (! _parse) {
 			let r = _content.replace(/\n/g, "<br />")
-			log("parse: false | content: " + r)
+			log("parse: false | content:", r)
 			return r
 		  } else {
 			//let r = parse(_content.replace(/\n/g, "<br />"))
 			let r = _content.replace(/(<br\s+\/>)+/g, "\n\n")
 			//r = "Trois\nDeux\nUn\n" 
 			
-			log("parse: true | content: " + r)
+			log("parse: true | content:", r)
 			return r 
 		  }
 		} else {
@@ -129,26 +133,25 @@ export const Utils = {
 	  },
 
 	  convertCrtToMarkdown(content) {
-		let log = (msg) => Utils.log.trace(`convertCrtToMarkdown: ${msg}`)
+		let log = (...args) => Utils.log("convertCrtToMarkdown:", args)
 
 		if (content?.startsWith('[{')) {
 			// It is a json string
-			log("Content is in CRT format: " + content[0])
+			log("Content is in CRT format: ", content[0])
 			content = Utils.convertDoubleQuotesToQuotesInJSON(content)
-			log("content after \" replacement with ': content: " + content);
+			log("content after \" replacement with ': content: ", content);
 	  
 			let content_o = []
 			try {
 				content_o = JSON.parse(content)
 			} catch (e) {
-				log(e)
-				log("Can't convert json_string in js object")
+				log("Exception: Can't convert json_string in js object:", e)
 				content_o = [{"children":[{"text":t("ErrorWhileSavingMainContent")}],"type":"p"}]
 			}
 			const editor = createPlateEditor({ value: content_o, plugins: [MarkdownPlugin] });      
 			content = editor.api.markdown.serialize();      
 		}
-		// else it is text, assumong it is markdown
+		// else it is text, assuming it is markdown
 	  
 		return content
 	  },
@@ -157,6 +160,8 @@ export const Utils = {
 	   * normalize before using it in the application 
 	   */
 	  normalize(source) {
+		let log = (...args) => Utils.log("normalize", args)
+
 		if (! source || "" === source) {
 			return ""
 		} else {
@@ -164,7 +169,7 @@ export const Utils = {
 						.replace(/_G_/g, '"')	// fix() to mange '"'
 						.replace(/_EOL_/g, "\n") // fix() to manage '\n'
 						.replace(/_AS_/g, "\\")	// fix() to manage '\"'
-			Utils.log.trace("normalize: source: ", source)
+			log("normalize: source: ", source)
 
 			return r
 		}
@@ -174,6 +179,8 @@ export const Utils = {
 	   * denormalize before saving it in the database
 	   */
 	denormalize(source) {
+		let log = (...args) => Utils.log("denormalize:", args)
+
 		if (! source || "" === source) {
 			return ""
 		} else {
@@ -181,7 +188,7 @@ export const Utils = {
 						.replace(/"/g, "_G_")	// fix() to mange '"'
 						.replace(/\n/g, "_EOL_") // fix() to manage '\n'
 						.replace(/\\/g, "_AS_")	// fix() to manage '\"'
-			Utils.log.trace("denormalize: source: ", source)
+			log("denormalize: source: ", source)
 
 			return r
 		}
@@ -192,6 +199,25 @@ export const Utils = {
 			title: t("Error"),
 			description: msg
 		})
+	},
+
+	convert2json(source) {
+		let log = (...args) => Utils.log("convert2json", args)
+
+		if (! source || source === "") {
+			log("source is empty but it can't. It must contain a valid JSON string that can be parsed into a json object")
+			throw new Error("Source can't be empty or undefined or null. It must contain a valid JSON string that can be parsed into a json object.")
+		} else {
+			let jsonSource = null
+			try {
+				jsonSource = JSON.parse(source)
+				//log("jsonSource: ", jsonSource)
+				return jsonSource
+			} catch (e) {
+				log("Exception: ", e, "source can't be parsed as an json object: ", source)
+				throw new Error("source must contain a valid JSON string that can be parsed into a json object")
+			}
+		}
 	}
 }
 

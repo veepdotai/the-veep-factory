@@ -35,39 +35,33 @@ export default function JSCodeEditor({source = ""}) {
   }
 
   function handleSave(source) {
-
-    log("handleSave: source: ", source)
-    function getFormData(value) {
-      var formData = new FormData();
-      formData.append('value', value);
-  
-      return formData;
-    }
-
-    if (! source || source === "") {
-      log("handleSave: source is empty but it can't. It must contain a valid JSON configuration file for the PDF component to display its content with your layout")
-    } else {
-      let jsonSource = null
-      try {
-        jsonSource = JSON.parse(source)
-        log("handleSave: jsonSource: ", jsonSource)
-
-        if (jsonSource) {
-          topics.map((topic, i) => {
-            let message = {params: jsonSource}
-            log("handleSave: publishing: topic: ", topic, " with value: ", message)
-            PubSub.publish(topic, message)
-          })
-        }
-      } catch (e) {
-        // Publish this error somewhere for the user to know there is a problem
-        alert("handleSave: exception: " + e + ". Your source is not valid. It can't be loaded as json.")
-        Utils.notifyError("handleSave: exception: " + e + ". Your source is not valid. It can't be loaded as json.")
-        log("handleSave: exception: ", e, "source: ", source)
-      }
+    log("handleSave: source:", source)  
+    try {
+      let jsonSource = Utils.convert2json(source)
+      topics.map((topic, i) => {
+        let message = {params: jsonSource}
+        log("handleSave: publishing: topic: ", topic, " with value: ", message)
+        PubSub.publish(topic, message)
+      })
+    } catch (e) {
+      Utils.notifyError("handleSave: exception: " + e + ". Your source is not valid. It can't be loaded as json.")
     }
   }
 
+    function handleOnChange(source) {
+      log("handleOnChange")
+      try {
+        let jsonSource = Utils.convert2json(source)
+        topics.map((topic, i) => {
+          let message = {params: jsonSource}
+          log("publishing: topic: ", topic, " with value: ", message)
+          PubSub.publish(topic, message)
+        })
+      } catch (e) {
+        Utils.notifyError("handleSave: exception: " + e + ". Your source is not valid. It can't be loaded as json.")
+      }
+    }
+  
   function updateSourceEditor(message) {
     log("updateSourceEditor: message: ", message);
 
@@ -116,6 +110,7 @@ export default function JSCodeEditor({source = ""}) {
         language='json'
         initialValue={initialValue}
         action={handleSave}
+        onChange={handleOnChange}
         languageOptions={languageOptions}
         editorPreOptions={editorPreOptions}
         showSaveButton={false}

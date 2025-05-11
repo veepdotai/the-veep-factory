@@ -49,7 +49,7 @@ export default function SocialNetworkPreview({
         attachmentViewOptions = {}}
     ) {
 
-    const graphqlURI = Constants.GRAPHQL_URI
+    const graphqlURI = Constants.WORDPRESS_GRAPHQL_ENDPOINT
     const cookies = useCookies(['JWT'])
 
     const log = Logger.of(SocialNetworkPreview.name)
@@ -72,9 +72,16 @@ export default function SocialNetworkPreview({
     const [condensedView, setCondensedView] = useState(true)
 
     function preview() {
-        PubSub.publish("PROCESS_CODE_EDITOR_CONTENT", {})
+        PubSub.publish("PROCESS_CODE_EDITOR_CONTENT", {action: handleSave})
     }
     
+    function handleSave(source) {
+        log.trace("handleSave from SNP")
+        log.trace("handleSave from SNP: local source", source)
+        log.trace("handleSave from SNP: global cookies", cookies)
+        log.trace("handleSave from SNP: global graphqlURI", graphqlURI)
+    }
+
     function saveAll() {
         alert("Save All")
         save()
@@ -85,18 +92,15 @@ export default function SocialNetworkPreview({
      * Saves layout editor content as a metadata of the current document
      */
     function save() {
-        PubSub.publish("PROCESS_CODE_EDITOR_CONTENT", {})
         log.trace("Save")
         UtilsGraphQLObject.saveMetadata(Constants.WORDPRESS_GRAPHQL_ENDPOINT, cookies, data.databaseId, null, "tvfTemplate", `"This is some new text"`)
     }
 
-    function saveLayout() {
+    function saveLayout(layoutSource) {
         log.trace("SaveLayout")
-        //renameContentTitle: function(graphqlURI, cookies, row, title) {
-        //    UtilsGraphQL.rename(graphqlURI, cookies, row, title)
-        //}    
-
+        UtilsGraphQLObject.saveMetadata(Constants.WORDPRESS_GRAPHQL_ENDPOINT, cookies, data.databaseId, null, "tvfTemplate", `"${layoutSource}"`)
     }
+
     function saveCarousel() {
         log.trace("SaveCarousel")
         PubSub.publish( "PROCESS_PDF_" + localId, {})
