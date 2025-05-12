@@ -6,6 +6,7 @@ require_once "veepdotai_graphql_mutations_admin.php";
 require_once "veepdotai_graphql_mutations_data.php";
 require_once "veepdotai_graphql_mutations_metadata.php";
 require_once "veepdotai_graphql_mutations_schedule.php";
+require_once "veepdotai_graphql_mutations_publish.php";
 require_once "veepdotai_graphql_mutations_test.php";
 require_once "veepdotai_graphql_mutations_usage.php";
 require_once "veepdotai_graphql_mutations_upload.php";
@@ -15,6 +16,7 @@ add_action( 'init', function() {
     \Veepdotai\Graphql\Mutations\Data\register();
     \Veepdotai\Graphql\Mutations\Metadata\register();
     \Veepdotai\Graphql\Mutations\Schedule\register();
+    \Veepdotai\Graphql\Mutations\Publish\register();
     \Veepdotai\Graphql\Mutations\Test\register();
     \Veepdotai\Graphql\Mutations\Usage\register();
     \Veepdotai\Graphql\Mutations\Upload\register();
