@@ -93,16 +93,9 @@ export default function LinkedInStatus() {
   }, [thirdPartiesData]);
 
   return (
-    <>
-      {linkedInData ?
-        <>
-          Data:
-          <GenericForm title={t('Menu.ApplicationPreferences')} data={linkedInData} />
-        </>
-        :
-        <>{t("NoDataAvailable")}</>
-      }
-    </>
-
+    <div class="flex flex-row">
+      <div class="text-lg">{t("AccessToken")}</div>
+      <div class="">{linkedInData ? JSON.stringify(linkedInData.access_token) : t("NoDataAvailable")}</div>
+    </div>
   );
 }
