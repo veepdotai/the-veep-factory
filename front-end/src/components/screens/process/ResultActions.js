@@ -31,7 +31,7 @@ export default function ResultActions( { content } ) {
                     </CopyToClipboard>
                 </Col>
                 <Col>
-                    <LinkedInOps content={content} />
+                    {/*<LinkedInOps content={content} />*/}
                     {/*
                     <Button variant='outline-info' className='p1 btn btn-sm fs-6'>
                         <Icon iconName="Share" size="12"/>
