@@ -126,12 +126,13 @@ function upload_document($access_token, $upload_url) {
 			//"body" => $filePayload
 			"body" => \GuzzleHttp\Psr7\stream_for(fopen($content_path, 'r'))
 		]);
-		log("$fn: response: " . print_r($response, true));
+		log("$fn: response: " . print_r( $response, true ));
 		
 		if ($response->getStatusCode() == 201) {
-			$data = json_decode($response->getBody()->getContents(), true);
-			log( "$fn: Success: " . print_r( $data, true ) );
-			return $data;
+			//$data = json_decode($response->getBody()->getContents(), true);
+			//log( "$fn: Success: " . print_r( $data, true ) );
+			//return $data;
+			return true;
 		} else {
 			//log("$fn: Error: " . $response->getLastBody()->errors[0]->message);
 			log("$fn: Error: " . print_r( $response, true) );
@@ -225,7 +226,8 @@ function create_post($access_token, $body) {
 		if ($response->getStatusCode() == 201) {
 			log("$fn: post has been created on LinkedIn successfully" );
 			//$data = json_decode($response->getBody()->getContents(), true);
-			$data = json_decode($response, true);
+			//$data = json_decode($response, true);
+			$data = $response;
 			log("$fn: data: " . print_r($data, true));
 			return $data;
 		} else {
@@ -303,18 +305,22 @@ function register_publish_linkedin() {
 			log( "$fn: upload_url: " . $upload_url );
 			$document = $result["value"]["document"];
 			log( "$fn: document: " . $document );
-			$result = upload_document($access_token, $upload_url);
-			log( "$fn: upload_document() => result: " . $result );
+			//$result = upload_document($access_token, $upload_url);
+			upload_document($access_token, $upload_url);
+			return [
+				"result" => "coucou",
+			];
+			//log( "$fn: upload_document() => result: " . print_r( $result, true) );
 
 			$resource = create_resource($access_token, $id, $content, $document);
 			$result = create_post($access_token, $resource);
 
 			$data = [];
 			if ( $result ) {
-				log( "$fn: result: $result" );
+				log( "$fn: result: " . print_r( $result, true) );
 				$data = [
 					"user_id" => $user->user_login,
-					"content_id" => $result,
+					"content_id" => $document,
 //					"uploadUrlExpiresAt" => $result->value->uploadUrlExpiresAt,
 //					"uploadUrl" => json_decode($result)->value->uploadUrl,
 //					"document" => json_decode($result)->value->document,
@@ -323,11 +329,12 @@ function register_publish_linkedin() {
 			} else {
 				$data = [
 					"user_id" => $user->user_login,
-					"content_id" => $result,
+					"content_id" => null,
 					"result" => false,
 				];
 			}
 	
+			log( "$fn: data: " . print_r( $data, true ));
 			return [
 				"result" => json_encode( $data ),
 			];
@@ -335,64 +342,3 @@ function register_publish_linkedin() {
 	] );
 }
 
-/**
- * Gets tvfMetadata 
- */
-function register_list_metadata() {
-	register_graphql_mutation( 'listMetadata', [
-
-		'description' => __( 'Gets data (cid, metadata) => value)', 'your-textdomain' ),
-
-		'inputFields'         => [
-			'contentId' => [
-				'type' => 'String',
-				'description' => __( 'Object contentId', 'your-textdomain' ),
-			],
-			'metadata' => [
-				'type' => 'String',
-				'description' => __( 'Object metadata', 'your-textdomain' ),
-			],
-
-		],
-	
-		'outputFields'        => [
-			'result' => [
-				'type' => 'String',
-				'description' => __( 'Result operation as a json object', 'your-textdomain' ),
-			]
-		],
-	
-		'mutateAndGetPayload' => function( $input, $context, $info ) {
-			$fn = "listMetadata";
-			$pn = "veepdotai-";
-			$prompt_prefix = "ai-prompt-";
-	
-			$contentId = sanitize_text_field( $input['contentId'] );
-			$metadata = sanitize_text_field( $input['metadata'] );
-
-			$user = wp_get_current_user();
-			log( "$fn: user: " . print_r( $user, true) . "." );
-	
-			$result = get_post_meta( $contentId, "tvfMetadata", true );
-			log( "$fn: tvfMetadata: result: $result" );
-
-			$data = [];
-			if ( $result ) {
-				log( "$fn: result: true" );
-				$data = [
-					"user_id" => $user->user_login,
-					"result" => $result,
-				];
-			} else {
-				$data = [
-					"user_id" => $user->user_login,
-					"result" => false,
-				];
-			}
-	
-			return [
-				'result' => json_encode( $data ),
-			];
-		}
-	] );
-}
