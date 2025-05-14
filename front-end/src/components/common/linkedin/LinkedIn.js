@@ -23,14 +23,14 @@ export default function LinkedIn() {
   const [key, setKey] = useState(0)
 
   const redirectUri = Constants.LINKEDIN_CLIENT_REDIRECT_URI || `${typeof window === 'object' && window.location.origin}/linkedin`
-  log("redirectUri: " + redirectUri)
+  log("redirectUri: ", redirectUri)
 
   const { linkedInLogin } = useLinkedIn({
     clientId: Constants.LINKEDIN_CLIENT_ID,
     scope: Constants.SCOPE,
     redirectUri: redirectUri,
     onSuccess: (code) => {
-      log("useLinkedIn: setKey: key: " + key);
+      log("useLinkedIn: setKey: key: ", key);
       setKey(key + 1)
       log("useLinkedIn: onSuccess: auth code: ", code);
       PubSub.publish("LINKEDIN_SIGNIN_RESULT", code)

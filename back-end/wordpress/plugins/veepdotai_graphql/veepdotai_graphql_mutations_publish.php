@@ -281,7 +281,7 @@ function register_publish_linkedin() {
 			$document = $result["value"]["document"];
 			log( "$fn: document: " . $document );
 
-			$wp_root_dir = "/workspaces/the-veep-factory/back-end/wordpress/htdocs/wp-content/uploads";
+			$wp_root_dir = wp_upload_dir()['basedir'];
 			$content_storage_path_in_uploads = $generatedArtefact;
 			$content_path = $wp_root_dir . $content_storage_path_in_uploads;
 

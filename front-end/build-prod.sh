@@ -251,13 +251,14 @@ deploy_server_veepdotai_plugins() {
     echo "Deploy build $TAG at... $(date '+%Y%m%d-%H%M')"
     echo "=> $USER@$HOST"
 
+    #mput -r "$SERVER_LOCAL_DIR/wp-content/plugins/veepdotai_front_js"
+
     sshpass -f $TOK_FILE sftp -oStrictHostKeyChecking=no -oBatchMode=no -b - "$USER@$HOST" << !
 cd $SERVER_DIST_DIR/wp-content/plugins
 mput -r "$SERVER_LOCAL_DIR/wp-content/plugins/veepdotai"
 mput -r "$SERVER_LOCAL_DIR/wp-content/plugins/veepdotai_billing"
 mput -r "$SERVER_LOCAL_DIR/wp-content/plugins/veepdotai_dsl"
 mput -r "$SERVER_LOCAL_DIR/wp-content/plugins/veepdotai_extractors"
-mput -r "$SERVER_LOCAL_DIR/wp-content/plugins/veepdotai_front_js"
 mput -r "$SERVER_LOCAL_DIR/wp-content/plugins/veepdotai_graphql"
 mput -r "$SERVER_LOCAL_DIR/wp-content/plugins/veepdotai_login_to_headless_wp"
 mput -r "$SERVER_LOCAL_DIR/wp-content/plugins/veepdotai_misc"
