@@ -20,10 +20,8 @@ import PubSub from 'pubsub-js'
 
 import PDF from '../veepdotai-pdf-config/components/PDF';
 import PDFParams from '../veepdotai-pdf-config/components/PDFParams';
-import { UtilsGraphQL } from '@/api/utils-graphql';
 import { Constants } from '@/constants/Constants';
 import { useCookies } from 'react-cookie';
-import { UtilsGraphQLVcontent } from '@/api/utils-graphql-vcontent';
 import { UtilsGraphQLObject } from '@/api/utils-graphql-object';
 import { UtilsGraphQLPublish } from '@/api/utils-graphql-publish';
 
@@ -51,11 +49,11 @@ export default function SocialNetworkPreview({
         attachmentViewType = "custom",
         attachmentViewOptions = {}}
     ) {
+        
+    const log = (...args) => Logger.of(SocialNetworkPreview.name).trace(args)
 
     const graphqlURI = Constants.WORDPRESS_GRAPHQL_ENDPOINT
     const cookies = useCookies(['JWT'])
-
-    const log = (...args) => Logger.of(SocialNetworkPreview.name).trace(args)
 
     //let localId = "" === id ? Math.round(Math.random() * 1000000000) + "" : id
     const [localId, setLocalID] = useState("" === id ? Math.round(Math.random() * 1000000000) + "" : id)
@@ -244,8 +242,8 @@ export default function SocialNetworkPreview({
         //if ("object" == typeof action) {
             o.action = action
             o.name = o.action.name
-            log("getButton: o1: ", o)
             o.icon = getIcon(o.name)
+            log("getButton: o1: ", o)
         } else {
             o = action
         }
