@@ -334,6 +334,10 @@
   "EditAndPreview": "Edit and preview",
   "EditAndPreviewPDF": "Edit and preview PDF",
 
+  "DataSaved": "Data has been saved.",
+
+  "UploadingContent": "The content is being uploaded.",
+
   "Stop": "Stop"
 
 }

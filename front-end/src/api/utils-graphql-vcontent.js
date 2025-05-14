@@ -64,6 +64,7 @@ export const UtilsGraphQLVcontent = {
 						tvfUp
 						tvfDown
 						tvfTemplate
+						tvfGeneratedAttachment
 
 						children {
 							edges {
@@ -96,6 +97,7 @@ export const UtilsGraphQLVcontent = {
 										tvfUp
 										tvfDown
 										tvfTemplate
+										tvfGeneratedAttachment
 									}
 								}
 							}

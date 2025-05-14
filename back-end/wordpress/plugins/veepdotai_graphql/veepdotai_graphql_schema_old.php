@@ -350,6 +350,12 @@ function register_MetadataFields($baseType) {
 			return ! empty( $value ) ? $value : '';
 		}
 	]);
+	register_graphql_field( $baseType, 'tvfGeneratedAttachment', [ 'type' => 'String',
+		'resolve' => function( $post ) {
+			$value = get_post_meta( $post->ID, "tvfGeneratedAttachment", true );
+			return ! empty( $value ) ? $value : '';
+		}
+	]);
 
 }
 

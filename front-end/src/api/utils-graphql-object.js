@@ -112,7 +112,7 @@ export const UtilsGraphQLObject = {
 	 * @param {*} topics may be one topic (string) or a topic (string) array 
 	 * @returns 
 	 */
-	saveMetadata: function(graphqlURI, cookies, contentId, title, metadata, topics = null, name = null, value = null) {
+	saveMetadata: function({graphqlURI, cookies, contentId, title = null, metadata = null, topics = null, name = null, value = null}) {
 		let log = UtilsGraphQLObject.log
 
 		let metadataString = metadata ? JSON.stringify(metadata) : null

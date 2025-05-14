@@ -101,16 +101,21 @@ export default function PDFLink({
     }
 
     //    function handleProcess(blob): void {
-    function handleProcess({ url } : {url: string}): void {
-        log.trace("handleProcess: url: ", url)
+    function handleProcess({ url, fileName } : {url: string}): void {
+        log.trace("handleProcess: url: ", url, "fileName:", fileName)
         try {
             if (!url) throw new Error("No URL available")
+
+            PubSub.publish("TOAST", {
+                "title": t("Saving..."),
+                "description": <div className="mt-2 w-[500px] rounded-md">{t("UploadingContent")}</div>
+            })
 
             fetch(url)
                 .then(response => response.blob())
                 .then((blob) => {
                     let metadata = { type: 'application/pdf' };
-                    let file = new File([blob], "mypdf.pdf", metadata)
+                    let file = new File([blob], fileName, metadata)
                     log.trace("handleProcess: file: ", file)
                     if (cookies) {
                         UploadLib.upload(cookies, file, "CONTENT_UPLOADED")
@@ -126,8 +131,10 @@ export default function PDFLink({
 
     function processPDF(topic, msg) {
         log.trace("processPDF: topic:", topic, " msg:", msg)
+        let fileName = msg.fileName
+        log.trace("processPDF: fileName:", fileName)
         let pdfUrl = localStorage.getItem("pdfUrl")
-        handleProcess({url: pdfUrl})
+        handleProcess({url: pdfUrl, fileName: fileName})
     }
 
     function onSuccess(topic, msg) {        
@@ -249,7 +256,7 @@ export default function PDFLink({
                         <div style={{width: `${width}px`}} className="">
                             <div className="flex justify-between">
                                 <div className={"p-2 bg-black text-white text-sm font-bold w-100"}>{params.title} : {numPages ? numPages : "..."} pages</div>
-                                {showActions()}
+                                {false && showActions()}
                             </div>
                             <div style={{width: `${width}px`, minHeight: `${height}px`}}>
                                 <DocView key={params.title} className="" loading={loading} file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>

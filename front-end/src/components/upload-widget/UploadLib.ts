@@ -68,8 +68,7 @@ export const UploadLib = {
         .then((res) => {
             UploadLib.log.trace("upload: success: res: ", res)
             let data = JSON.parse(res.data.upload.status)
-            UploadLib.log.trace("upload: success: data: ", data)
-            UploadLib.log.trace("upload: success: topic: ", topic)
+            UploadLib.log.trace("upload: success: data: ", data, "topic:", topic)
             PubSub.publish(topic, {form: form, data: data})
         })
         .catch((error) => {

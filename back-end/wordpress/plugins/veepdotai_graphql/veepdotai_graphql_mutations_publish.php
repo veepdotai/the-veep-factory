@@ -92,56 +92,33 @@ function initialize_upload($access_token, $owner_id) {
 	}
 }
 
-function upload_document($access_token, $upload_url) {
+function upload_document($access_token, $upload_url, $content_path) {
 	$fn = "upload_document";
 	log( "$fn: upload_url: " . print_r( $upload_url, true) );
-
-	$base_uri = preg_replace("#(https?://[^/]*)/.*#", "$1", $upload_url);
-	$path = preg_replace("#https?://[^/]*(/.*)#", "$1", $upload_url);
-	log( "$fn: base_uri: " . $base_uri );
-	log( "$fn: path: " . $path );
-
-	$wp_root_dir = "/workspaces/the-veep-factory/back-end/wordpress/htdocs/wp-content/uploads";
-	$content = "/2025/05/file.pdf";
-	$content_path = $wp_root_dir . $content;
-	$filename = "myfilename";
-
-	$filePayload = [
-        'name'     => "myfile",
-		'contents' => \GuzzleHttp\Psr7\stream_for(fopen($content_path, 'r')),
-        'filename' => $filename,
-    ];
-	log( "$fn: filePayload: " . print_r( $filePayload, true) );
+	log( "$fn: content_path: " . print_r( $content_path, true) );
 
 	try {
-		//$client = new Client(['base_uri' => $base_uri]);
-		//$response = $client->request('POST', $path, [
 		$client = new Client();
 		$response = $client->request('POST', $upload_url, [
 			'headers' => [
 				"Authorization" => "Bearer " . $access_token,
-				//"Content-length" => ""
 			],
 			"debug" => true,
-			//"body" => $filePayload
 			"body" => \GuzzleHttp\Psr7\stream_for(fopen($content_path, 'r'))
 		]);
 		log("$fn: response: " . print_r( $response, true ));
-		
 		if ($response->getStatusCode() == 201) {
 			//$data = json_decode($response->getBody()->getContents(), true);
-			//log( "$fn: Success: " . print_r( $data, true ) );
-			//return $data;
+			log( "$fn: Success: " . print_r( $response, true ) );
 			return true;
 		} else {
-			//log("$fn: Error: " . $response->getLastBody()->errors[0]->message);
 			log("$fn: Error: " . print_r( $response, true) );
 			return null;
 		}
 
 	} catch(Exception $e) {
 		log( "$fn: Exception:" . print_r( $e, true ) );
-		echo $e->getMessage();
+		echo "JCK: " . $e->getMessage();
 	}
 
 }
@@ -170,7 +147,7 @@ function create_resource($access_token, $id, $content, $document = "", $lifecycl
 
 	if ( $document !== "" ) {
 		$li_post["media"] = [
-			"title" => "this is my jck title",
+			"title" => "My title",
 			"id" => "$document"
 		];
 		log("$fn: an urn document has been provided: " . $document);
@@ -187,7 +164,7 @@ function create_resource($access_token, $id, $content, $document = "", $lifecycl
 			],
 			"content" => [
 				"media" => [
-					"title" => "this is my jck title",
+					"title" => "My title",
 					"id" => "$document"
 				],
 			],
@@ -248,9 +225,9 @@ function register_publish_linkedin() {
 
 		'description' => __( 'Publishes content on LinkedIn', 'your-textdomain' ),
 		'inputFields'         => [
-			'content' => [
+			'contentId' => [
 				'type' => 'String',
-				'description' => __( 'Object content id', 'your-textdomain' ),
+				'description' => __( 'Main content id, that gets all the data related to this object, not only the generated carousel reference', 'your-textdomain' ),
 			],
 		],
 	
@@ -261,17 +238,32 @@ function register_publish_linkedin() {
 			]
 		],
 	
+		/**
+		 * 
+		 */
 		'mutateAndGetPayload' => function( $input, $context, $info ) {
-			$access_token = "AQWGiJvdcW0bIHTaeq8pAgxPoEkFFOuGGkMgVmzVLQ38bVHY0_-HJp3vPpJl9fc2pspfxnHTIGe_RVgkxj5Jozre8P4g_ejI3BEdMohGsZ86SimINhfSDvBeL8UHfN-yEI4UJnn4ayMGePMgO3y_IDCOz3I6cvt2kmnCqH0JybtwrDxEzjT-5eMEVilIWY00mZDdnwwbMVAQtCb2qzKZ50CS86rX3Ph7Pk7VjB5-Bt2U1z9FrfuW5WVdBAcYEwQlwSBbI0S3QXjSQvgwv8XbHZ3dJIIxB8hDPKSWDuW1nukEP-_kW6vC5FQuZiC24l6h9IyGH6A4vRAIRBrGgZn12UzwiFNdAw";
-			$id = "bMeVSCrIAh";
-
 			$fn = "publishOnLinkedIn";
 			$pn = "veepdotai-";
 	
-			$content = sanitize_text_field( $input['content'] );
-	
+			$contentId = sanitize_text_field( $input['contentId'] );
+			$post = get_post( $contentId );
+			$meta = get_post_meta( $contentId );
+			$generatedArtefact = $meta["tvfGeneratedAttachment"][0];
+			$postContent = $post->post_content;
+
+			$content = preg_replace("/(.*)---[^-]*---.*/mis", "$1", $postContent);
+
 			$user = wp_get_current_user();
-			log( "$fn: user: " . print_r( $user, true) . "." );
+			$snd = \Veepdotai_Util::get_option("ai-social-networks-data");
+			$json_snd = json_decode( $snd );
+			$access_token = $json_snd->linkedin->access_token;
+			$owner_id = $json_snd->linkedin->owner_id;
+
+			if ( ! $owner_id) {
+				$owner_id = get_linkedin_id($access_token);
+				$json_snd->linkedin->owner_id = $owner_id;
+				\Veepdotai_Util::set_option("ai-social-networks-data", json_encode($json_snd));
+			}
 
 			$meta_input = ["publicationStatus"];
 
@@ -279,40 +271,25 @@ function register_publish_linkedin() {
 			// * publishContentOnLinkedIn("content", "12345") => this is a contentId => go and get the corresponding content to publish
 			// * publishContentOnLinkedIn("content", "some text in markdown format") => this is content to publish
 
-			/*
-			$post_array = [ "ID" => $content_id ];
-			if ( $title ) 		$post_array["post_title"] = $title;
-			if ( $meta_input ) 	$post_array["meta_input"] = $meta_input;
-			log( __METHOD__ . ": post_array: " . print_r( $post_array, true ) );
-
-			$result = wp_update_post( $post_array );
-			log( "$fn: wp_update_post: content_id: result: $result" );
-			*/
-
-			//createUgc()
-
-			// Get memberid
-			//$result = get_linkedin_id($access_token);
-			
-			// Create a single commentary
-			//$resource = create_resource($access_token, $id, $content);
-			//$result = create_post($access_token, $resource);
-
 			// InitializeUploadRequest
-			$result = initialize_upload($access_token, $id);
+			$result = initialize_upload($access_token, $owner_id);
 			log( "$fn: uploadUrl: " . print_r( $result, true ) );
+
 			$upload_url = $result["value"]["uploadUrl"];
 			log( "$fn: upload_url: " . $upload_url );
+
 			$document = $result["value"]["document"];
 			log( "$fn: document: " . $document );
-			//$result = upload_document($access_token, $upload_url);
-			upload_document($access_token, $upload_url);
-			return [
-				"result" => "coucou",
-			];
-			//log( "$fn: upload_document() => result: " . print_r( $result, true) );
 
-			$resource = create_resource($access_token, $id, $content, $document);
+			$wp_root_dir = "/workspaces/the-veep-factory/back-end/wordpress/htdocs/wp-content/uploads";
+			$content_storage_path_in_uploads = $generatedArtefact;
+			$content_path = $wp_root_dir . $content_storage_path_in_uploads;
+
+			$result = upload_document($access_token, $upload_url, $content_path);
+			//return [ "result" => "coucou: ${result}." ];
+
+
+			$resource = create_resource($access_token, $owner_id, $content, $document);
 			$result = create_post($access_token, $resource);
 
 			$data = [];
@@ -321,9 +298,6 @@ function register_publish_linkedin() {
 				$data = [
 					"user_id" => $user->user_login,
 					"content_id" => $document,
-//					"uploadUrlExpiresAt" => $result->value->uploadUrlExpiresAt,
-//					"uploadUrl" => json_decode($result)->value->uploadUrl,
-//					"document" => json_decode($result)->value->document,
 					"result" => true,
 				];
 			} else {

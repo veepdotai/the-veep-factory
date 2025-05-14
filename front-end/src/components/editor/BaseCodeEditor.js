@@ -100,9 +100,15 @@ BaseCodeEditor({
     //let source = message.source
     let myaction = message?.action
     if ("function" === typeof myaction) {
+      //log("handleAction: calling ", myaction?.name, ", provided in message, with source parameter:", source)
+      log("handleAction: calling myaction, provided in message, with source parameter:", source)
       myaction(source)
-    } else {
+    } else if (action) {
+      //log("handleAction: calling ", action?.name, ", configured in component call, with source parameter:", source)
+      log("handleAction: calling action, configured in component call, with source parameter:", source)
       action(source)
+    } else {
+      log("handleAction: no configured action. Doing nothing with source parameter:", source)
     }
     //setSaving(false)
   }

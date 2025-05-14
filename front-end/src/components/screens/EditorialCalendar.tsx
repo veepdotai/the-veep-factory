@@ -120,8 +120,17 @@ export default function EditorialCalendar({events}) {
   
         log.trace("EditorialCalendar: moveEvent: event.id: ", event.id, "start: ", start, "ISOString: ", start.toISOString(), "end: ", end)
         //UtilsGraphQL.update(graphqlURI, cookies, {id: event.id}, "tvfPubDate", start.toISOString())
-        UtilsGraphQLObject
-            .saveMetadata(graphqlURI, cookies, event.id, null, null, null, "tvfPubDate", start.toISOString())
+        let params = {
+            graphqlURI: graphqlURI,
+            cookies: cookies,
+            contentId: event.id,
+            name: "tvfPubDate",
+            value: start.toISOString()
+        }
+        log("GraphQL params:", params)
+
+        //UtilsGraphQLObject.saveMetadata(graphqlURI, cookies, event.id, null, null, null, "tvfPubDate", start.toISOString())
+        UtilsGraphQLObject.saveMetadata(params)
 /*
             .then((result) => {
                 setMyEvents((prev) => {

@@ -169,7 +169,7 @@ export const Utils = {
 						.replace(/_G_/g, '"')	// fix() to mange '"'
 						.replace(/_EOL_/g, "\n") // fix() to manage '\n'
 						.replace(/_AS_/g, "\\")	// fix() to manage '\"'
-			log("normalize: source: ", source)
+			log("normalize: source: ", r)
 
 			return r
 		}
@@ -194,6 +194,13 @@ export const Utils = {
 		}
 	},
 
+	notify({title, description}) {
+		PubSub.publish("TOAST", {
+			title: title,
+			description: description
+		})
+	},
+
 	notifyError(msg) {
 		PubSub.publish("ERROR", {
 			title: t("Error"),
@@ -201,12 +208,14 @@ export const Utils = {
 		})
 	},
 
-	convert2json(source) {
+	convert2json(source, throwError = true) {
 		let log = (...args) => Utils.log("convert2json", args)
 
 		if (! source || source === "") {
 			log("source is empty but it can't. It must contain a valid JSON string that can be parsed into a json object")
-			throw new Error("Source can't be empty or undefined or null. It must contain a valid JSON string that can be parsed into a json object.")
+			if (throwError) {
+				throw new Error("Source can't be empty or undefined or null. It must contain a valid JSON string that can be parsed into a json object.")
+			}
 		} else {
 			let jsonSource = null
 			try {
@@ -215,7 +224,9 @@ export const Utils = {
 				return jsonSource
 			} catch (e) {
 				log("Exception: ", e, "source can't be parsed as an json object: ", source)
-				throw new Error("source must contain a valid JSON string that can be parsed into a json object")
+				if (throwError) {
+					throw new Error("source must contain a valid JSON string that can be parsed into a json object")
+				}
 			}
 		}
 	}

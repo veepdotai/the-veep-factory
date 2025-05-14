@@ -336,6 +336,10 @@
   "EditAndPreview": "Editer et prévisualiser",
   "EditAndPreviewPDF": "Editer et prévisualiser le PDF",
   
+  "DataSaved": "Les données ont été sauvegardées.",
+
+  "UploadingContent": "Le contenu est en cours de téléchargement sur le seveur.",
+
   "Stop": "Stop"
 
 }

@@ -23,25 +23,28 @@ import Upload from '../upload-widget/page'
 
 
 export const UtilsFormCommon = {
-    log: Logger.of("UtilsFormCommon"),
+    log: (...args) => Logger.of("UtilsFormCommon").trace(args),
 
     onSubmitMetadata: function(graphqlURI, cookies, cid, data, topic, toast, name = null, value = null) {
-        let log = (msg) => UtilsFormCommon.log.trace("onSubmitMetadata: " + msg)
+        let log = (...args) => UtilsFormCommon.log("onSubmitMetadata: ", args)
 
         let lcn = "mt-2 w-[500px] rounded-md"
         let o = data ? JSON.stringify(data, null, 2) : null
-        log("Submitting data: " + o)
+        log("Submitting data: ", o)
 
-        let q = UtilsGraphQLObject.saveMetadata(graphqlURI, cookies,
-          cid,
-          data?.title,
-          data,
-          topic,
-          name,
-          value
-        )
-  
-        log("GraphQL response: " + q)
+        let params = {
+            graphqlURI: graphqlURI,
+            cookies: cookies,
+            contentId: cid,
+            title: data?.title,
+            metadata: data,
+            topics: topic,
+            name: name,
+            value: value
+        }
+        log("GraphQL params:", params)
+        let q = UtilsGraphQLObject.saveMetadata(params)  
+        log("GraphQL response: ", q)
 
         toast && toast({
           title: t("Status"),
@@ -52,7 +55,7 @@ export const UtilsFormCommon = {
     },
 
     onSubmit: function(graphqlURI, cookies, name, topic, data) {
-        let log = (msg) => UtilsFormCommon.log.trace("onSubmit: " + msg)
+        let log = (msg) => UtilsFormCommon.log("onSubmit: ", msg)
         
         let o = JSON.stringify(data, null, 2)
         log("o (after JSON stringifying): " + o)
@@ -82,17 +85,16 @@ export const UtilsFormCommon = {
   
     // It is form display, not an update in the database
     updateForm: function(form, topic, message) {
-        //let log = (msg) => UtilsFormCommon.log.trace("updateForm: " + msg)
-        let log = UtilsFormCommon.log
+        let log = (...args) => UtilsFormCommon.log("updateForm: ", args)
 
-        log.trace("message: ", message)
+        log("message: ", message)
         form.reset(message)
     },
 
     // It is form display, not an update in the database
     // So user must click on Save to persist data
     updateFormFromStringForm: function(form, formMetadata, metadata, mergingStrategy = null) {
-        let log = (...args) => UtilsFormCommon.log.trace("updateFormFromStringForm: ", args)
+        let log = (...args) => UtilsFormCommon.log("updateFormFromStringForm: ", args)
 
         let newMetadata = null
         if (typeof metadata == "string" && metadata) {
@@ -163,25 +165,24 @@ export const UtilsFormCommon = {
     },
 
     updateStringForm: function(form, formMetadata, topic, message) {
-        //let log = (msg) => UtilsFormCommon.log.trace("updateForm: " + msg)
-        let log = UtilsFormCommon.log
-        log.trace("updateStringForm: topic: ", topic)
+        let log = (...args) => UtilsFormCommon.log("updateForm: ", args)
+        log("updateStringForm: topic: ", topic)
 
         let metadata = null
         if ("200" == message?.status || message?.result) {
             metadata = message.result
-            log.trace("updateStringForm: message.result: ", message?.result)
+            log("updateStringForm: message.result: ", message?.result)
         } else {
             metadata = message
-            log.trace("updateStringForm: message.result: ", message?.result)
+            log("updateStringForm: message.result: ", message?.result)
         }
-        log.trace("updateStringForm: metadata: ", metadata)
+        log("updateStringForm: metadata: ", metadata)
 
         return UtilsFormCommon.updateFormFromStringForm(form, formMetadata, metadata)
     },
     
     updateFormOld: function(form, topic, message) {
-        let log = (msg) => UtilsFormCommon.log.trace("updateForm: " + msg)
+        let log = (...args) => UtilsFormCommon.log("updateForm: ", args)
 
         log("message: " + JSON.stringify(message))
         let result = ""
@@ -212,7 +213,8 @@ export const UtilsFormCommon = {
     },
 
     getFieldType: function(form, field, fieldName, fieldType = "input", fieldValues = "", fieldOptions) {
-        let log = (...args) => UtilsFormCommon.log.trace("getFieldType: ", args);
+        let log = (...args) => UtilsFormCommon.log("getFieldType: ", args);
+
         log("field: " + fieldName, field)
         let lcn = fieldOptions?.cn || "" 
         if (fieldType === "input") {

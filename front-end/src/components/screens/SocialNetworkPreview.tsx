@@ -4,6 +4,8 @@ import { useEffect, useId, useState } from 'react'
 import { Logger } from 'react-logger-lib'
 import { t, Utils } from "src/components/lib/utils"
 
+import moment from 'moment'
+
 import { cn } from '../ui/shadcn/utils'
 import { Avatar, AvatarFallback, AvatarImage, } from "@/components/ui/avatar"
 import { Card, CardContent, CardTitle } from "@/components/ui/card"
@@ -23,6 +25,7 @@ import { Constants } from '@/constants/Constants';
 import { useCookies } from 'react-cookie';
 import { UtilsGraphQLVcontent } from '@/api/utils-graphql-vcontent';
 import { UtilsGraphQLObject } from '@/api/utils-graphql-object';
+import { UtilsGraphQLPublish } from '@/api/utils-graphql-publish';
 
 interface ContentProps {
     avatarUrl?: string,
@@ -52,19 +55,18 @@ export default function SocialNetworkPreview({
     const graphqlURI = Constants.WORDPRESS_GRAPHQL_ENDPOINT
     const cookies = useCookies(['JWT'])
 
-    const log = Logger.of(SocialNetworkPreview.name)
-
+    const log = (...args) => Logger.of(SocialNetworkPreview.name).trace(args)
 
     //let localId = "" === id ? Math.round(Math.random() * 1000000000) + "" : id
     const [localId, setLocalID] = useState("" === id ? Math.round(Math.random() * 1000000000) + "" : id)
 
-    log.trace("attachmentGenerationOptions: ", attachmentGenerationOptions)
+    log("attachmentGenerationOptions: ", attachmentGenerationOptions)
 
-    log.trace("main: node: ", data)
-    let tvfTemplate = Utils.normalize(data?.tvfTemplate)
-    log.trace("main: tvfTemplate (normalized): ", tvfTemplate)
+    log("main: node: ", data)
+    let tvfTemplate = Utils.convert2json(Utils.normalize(data?.tvfTemplate), false)
+    log("main: databaseId:", data.databaseId, "localId:", localId, "tvfTemplate (normalized): ", tvfTemplate)
 
-    const [options, setOptions] = useState(tvfTemplate ? tvfTemplate : {
+    const [options, setOptions] = useState(tvfTemplate && "" !== tvfTemplate? tvfTemplate : {
         attachmentGenerationOptions: attachmentGenerationOptions,
         attachmentViewType: attachmentViewType,
         attachmentViewOptions: attachmentViewOptions
@@ -72,42 +74,82 @@ export default function SocialNetworkPreview({
     const [condensedView, setCondensedView] = useState(true)
 
     function preview() {
-        PubSub.publish("PROCESS_CODE_EDITOR_CONTENT", {action: handleSave})
+        //PubSub.publish("PROCESS_CODE_EDITOR_CONTENT", {action: handleSave})
     }
     
     function handleSave(source) {
-        log.trace("handleSave from SNP")
-        log.trace("handleSave from SNP: local source", source)
-        log.trace("handleSave from SNP: global cookies", cookies)
-        log.trace("handleSave from SNP: global graphqlURI", graphqlURI)
+        log("handleSave from SNP")
+        log("handleSave from SNP: local source", source)
+        log("handleSave from SNP: global cookies", cookies)
+        log("handleSave from SNP: global graphqlURI", graphqlURI)
     }
 
     function saveAll() {
-        alert("Save All")
-        save()
+        Utils.notify({title: t("Saving all..."), description: t("Saves layout and carousel")})
+        saveContent()
         saveLayout()
         saveCarousel()
     }
+
+    function saveContent() {
+        log("saveContent")
+    }
+    
     /**
      * Saves layout editor content as a metadata of the current document
      */
-    function save() {
-        log.trace("Save")
-        UtilsGraphQLObject.saveMetadata(Constants.WORDPRESS_GRAPHQL_ENDPOINT, cookies, data.databaseId, null, "tvfTemplate", `"This is some new text"`)
+    function handleSaveLayout(layoutSource) {
+        log("handleSaveLayout: layoutSource:", layoutSource)
+        let params = {
+            graphqlURI: Constants.WORDPRESS_GRAPHQL_ENDPOINT,
+            cookies: cookies,
+            contentId: data.databaseId,
+            name: "tvfTemplate",
+            value: Utils.denormalize(layoutSource)
+        }
+        log("handleSaveLayout: params:", params)
+        UtilsGraphQLObject.saveMetadata(params)
     }
 
-    function saveLayout(layoutSource) {
-        log.trace("SaveLayout")
-        UtilsGraphQLObject.saveMetadata(Constants.WORDPRESS_GRAPHQL_ENDPOINT, cookies, data.databaseId, null, "tvfTemplate", `"${layoutSource}"`)
+    function saveLayout() {
+        log("saveLayout")
+        PubSub.publish("PROCESS_CODE_EDITOR_CONTENT", {action: handleSaveLayout})
     }
 
     function saveCarousel() {
-        log.trace("SaveCarousel")
-        PubSub.publish( "PROCESS_PDF_" + localId, {})
+        log("saveCarousel")
+        let fileName = data.databaseId + "-" + localId + ".pdf"
+        let attachmentPath = moment().format("/YYYY/MM/") + fileName
+        PubSub.publish( "PROCESS_PDF_" + localId, {fileName: fileName})
+        let params = {
+            graphqlURI: Constants.WORDPRESS_GRAPHQL_ENDPOINT,
+            cookies: cookies,
+            contentId: data.databaseId,
+            name: "tvfGeneratedAttachment",
+            value: attachmentPath
+        }
+        log("saveCarousel: params:", params)
+        UtilsGraphQLObject.saveMetadata(params)
     }
 
     function publish() {
-        log.trace("Publish")
+        log("publish")
+        let params = {
+            graphqlURI: Constants.WORDPRESS_GRAPHQL_ENDPOINT,
+            cookies: cookies,
+            content_id: data.databaseId,
+            topics: []
+        }
+        log("publish: params:", params)
+        UtilsGraphQLPublish.publishOnLinkedIn(params)
+            .then((data) => {
+                log("publish: data:", data)
+                alert("publish done!")
+            })
+            .catch((e) => {
+                log("publish: catch e:", e)
+                alert("Erreur:" + JSON.stringify(e))
+            })
     }
 
     function enterInEditAndPreviewMode() {
@@ -121,10 +163,10 @@ export default function SocialNetworkPreview({
             attachmentViewType: attachmentViewType,
             attachmentViewOptions: attachmentViewOptions    
         }
-        log.trace("enterInEditAndPreviewMode: ", params)
+        log("enterInEditAndPreviewMode: ", params)
 
         let topicSN = "SOCIAL_NETWORK_PREVIEW_" + localId
-        log.trace("enterInEditAndPreviewMode: topicSN: ", topicSN)
+        log("enterInEditAndPreviewMode: topicSN: ", topicSN)
         PubSub.publish("SOCIAL_NETWORK_PREVIEW_" + localId, params)
     }
 
@@ -132,7 +174,7 @@ export default function SocialNetworkPreview({
         topic,
         message
     ) {
-        log.trace("displayEditAndPreviewSideBySide: topic: ", topic, "params: ", message)
+        log("displayEditAndPreviewSideBySide: topic: ", topic, "params: ", message)
         let {
             viewType = "LinkedIn",
             editorWithContent,
@@ -178,9 +220,9 @@ export default function SocialNetworkPreview({
 
     function getPDFContent(content) {
         //let pdfContent = data.content.replace(/.*---.*---(\r?\n?)*(.*)/mis, "$1").trim()
-        log.trace("getPDFContent: before transformation: content: ", content)
+        log("getPDFContent: before transformation: content: ", content)
         let pdfContent = content.replace(/.*---[^\r\n]*---(.*)/mis, "$1")
-        log.trace("getPDFContent: ", pdfContent)
+        log("getPDFContent: ", pdfContent)
         return pdfContent
     }
 
@@ -202,13 +244,13 @@ export default function SocialNetworkPreview({
         //if ("object" == typeof action) {
             o.action = action
             o.name = o.action.name
-            log.trace("getButton: o1: ", o)
+            log("getButton: o1: ", o)
             o.icon = getIcon(o.name)
         } else {
             o = action
         }
 
-        log.trace("getButton: o2: ", o)
+        log("getButton: o2: ", o)
         return (
             <Button variant={"ghost"} className="w-none" onClick={() => o.action()}>
                 {o.icon} {t(Utils.capitalize(o.name, true))}
@@ -332,7 +374,7 @@ export default function SocialNetworkPreview({
                                 <TabsContent value="edit" className="w-full">
                                     <div className='p-3 pt-0'>
                                         {/*data.content*/}
-                                        {log.trace("getLinkedInContent: data:", data)}
+                                        {log("getLinkedInContent: data:", data)}
                                         {editorWithContent && editorWithContent}
                                     </div>
                                     {footer}
@@ -378,7 +420,7 @@ export default function SocialNetworkPreview({
         if ("" != localId) {
         //if ("" != localId || ! editorWithContent) {
             let topicSN = "SOCIAL_NETWORK_PREVIEW_" + localId
-            log.trace("useEffect: subscribe: topicSN: ", topicSN)
+            log("useEffect: subscribe: topicSN: ", topicSN)
             PubSub.subscribe(topicSN, displayEditAndPreviewSideBySide)
         }
     }, [localId])
@@ -386,7 +428,7 @@ export default function SocialNetworkPreview({
     useEffect(() => {
         let topicPDF = "PDF_EXPORT_OPTIONS_UPDATED"
         PubSub.subscribe(topicPDF, (topic, message) => {
-            log.trace("useEffect: topic: ", topic, "message: ", message)
+            log("useEffect: topic: ", topic, "message: ", message)
             setOptions(message)
         })
 
