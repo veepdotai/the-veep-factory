@@ -18,10 +18,10 @@ import { convert }  from "@/components/veepdotai-pdf-config/lib/AbstractContent"
  * @returns 
  */
 export default function PDFDocument({content, params}) {
-  const log = Logger.of(PDFDocument.name)
+  const log = (...args) => Logger.of(PDFDocument.name).trace(args)
 
   let normalizedContent = Array.isArray(content) ? content : convert(content)
-  log.trace("normalizedContent: ", normalizedContent)
+  log("normalizedContent:", normalizedContent)
 
   let data = {
     title: params?.title,
@@ -38,21 +38,33 @@ export default function PDFDocument({content, params}) {
     backCover: params?.backCover || [],
     dimensions: params?.dimensions || "A4",
 
-    displayHeader: params?.displayHeader,
-    displayFooter: params?.displayFooter,
+    displayFirstPage: params?.displayFirstPage,
+    displayMetadata: params?.displayMetadata,
     displayToc: params?.displayToc,
+    displayTocOnFirstPage: params?.displayTocOnFirstPage,
+
+    displayHeader: params?.displayHeader,
+    displayHeaderOnFirstPage: params?.displayHeaderOnFirstPage,
+    displayHeaderOnLastPage: params?.displayHeaderOnLastPage,
+    displayHeaderOnSpecificPage: params?.displayHeaderOnSpecificPage,
+
+    displayFooter: params?.displayFooter,
+    displayFooterOnFirstPage: params?.displayFooterOnFirstPage,
+    displayFooterOnLastPage: params?.displayFooterOnLastPage,
+    displayFooterOnSpecificPage: params?.displayFooterOnSpecificPage,
     newPage: params?.newPage,
 
     styles: params?.styles || {},
   }
 
-  log.trace("PDFDocument: params: ", params)
-  log.trace("PDFDocument: data: ", data)
+  log("PDFDocument: params: ", params)
+  log("PDFDocument: data: ", data)
 
 
-  function getContentIfRequested({content, requested = true, fixed = false, breakPage = true, styles = {}})  {
+  function getContentIfRequested({content, requested = true, fixed = false, breakPage = true, styles = {"width": 800, "height": 800},
+})  {
     return (
-      <View fixed={fixed} break={breakPage} style={styles} render={() => requested && "" !== requested && content} />
+      <View fixed={fixed} break={breakPage} style={styles} render={() => requested && "" !== requested && content()} />
     )
   }
 
@@ -65,14 +77,14 @@ export default function PDFDocument({content, params}) {
    * @returns The first page of the PDF
    */
   function firstPage() {
-    log.trace("firstPage: processing...");
+    log("firstPage: processing...");
 
     let title = data?.title?.replace(/[^a-zA-Z0-9]/g, "")
-    log.trace("firstpage: title: ", title)
+    log("firstpage: title: ", title)
 
     function getFeaturedImage() {
       return (
-        <View style={data?.styles?.featuredImage}>
+        <View fixed style={data?.styles?.featuredImageContainer}>
           <Image key={"featuredImage"} style={data?.styles?.featuredImage} src={data?.featuredImage} />
         </View>
       )
@@ -81,7 +93,8 @@ export default function PDFDocument({content, params}) {
     function getPart() {
       return (
         <>
-            {getContentIfRequested({requested: data?.featuredImage, breakPage: false, content: getFeaturedImage()})}
+            {/*getContentIfRequested({requested: data?.featuredImage, breakPage: false, content: getFeaturedImage})*/}
+            {getFeaturedImage()}
 
             {getInlineContent("title", "title")}
             {getInlineContent("subtitle", "subtitle")}
@@ -89,7 +102,7 @@ export default function PDFDocument({content, params}) {
             {getContentIfRequested({
               requested: data.displayMetadata ?? false,
               breakPage: false, 
-              content: (<View style={data?.styles?.metadataBlock}>
+              content: () => (<View style={data?.styles?.metadataBlock}>
                 {/*getInlineContentWithLabel(45, t("Company"), data?.companyName, "company")*/}
                 {getInlineContentWithLabel(30, t("OrganizationName"), data?.organizationName, "organizationName", data?.styles)}
                 {getInlineContentWithLabel(30, t("Author"), data?.author, "author", data?.styles)}
@@ -99,7 +112,7 @@ export default function PDFDocument({content, params}) {
             })}
             {/*data?.backgroundImageCover == getNothingImage() ? background(data?.backgroundImage) : background(data?.backgroundImageCover)*/}
 
-            {/*footer()*/}
+            {footer()}
         </>
       )
     }
@@ -108,7 +121,7 @@ export default function PDFDocument({content, params}) {
       <>
         { true ?
             <View style={data?.styles?.firstPage}>
-              {getPart()}    
+              {getContentIfRequested({requested: data?.displayFirstPage, breakPage: true, content: getPart})}
             </View>
           :
             <Page style={data?.styles?.firstPage} bookmark={t("CoverPage")} size={data?.dimensions || "A4"}>
@@ -132,7 +145,7 @@ export default function PDFDocument({content, params}) {
       titles.push(page[1])
     })
 
-    log.trace("toc: titles: ", titles)
+    log("toc: titles: ", titles)
 
     {/*
         <Page style={data.styles?.tocPage} bookmark={t("TOC")} size={data?.dimensions}>
@@ -172,7 +185,7 @@ export default function PDFDocument({content, params}) {
     return (
       <>
         {true ? 
-          getContentIfRequested({requested: data?.displayToc, content: getPart()})
+          getContentIfRequested({requested: data?.displayToc, content: getPart})
         :
           <></>
         }
@@ -197,7 +210,7 @@ export default function PDFDocument({content, params}) {
       return (
         <>
           {normalizedContent.map( (page, i) => {
-            console.log(page[5])
+            log("contentPages: page ${i}:", page[5])
 
             function getPart() {
               return (
@@ -212,7 +225,7 @@ export default function PDFDocument({content, params}) {
                       return displaySubtitle(1, subtitle)
                     }
                   })}
-                  {page[4] != getNothingImage() ? (<Image src={page[4]} style={page[5] != null ? page[5].image : data.styles?.imageContent} />) : (console.log())}
+                  {page[4] != getNothingImage() && (<Image src={page[4]} style={page[5] != null ? page[5].image : data.styles?.imageContent} />)}
                   
                   {footer()}
                   
@@ -272,9 +285,11 @@ export default function PDFDocument({content, params}) {
       return (
         <>
           { true ?
-              <View break style={data.styles?.contentPage}>
-                {getPart()}
-              </View>
+              <>
+                {/*<View break style={data.styles?.contentPage}>*/}
+                {getContentIfRequested({requested: true, breakPage: data?.newPage, styles: data.styles?.contentPage, content: getPart})}
+                {/*</View>*/}
+              </>
             :
             <Page style={data.styles?.contentPage} id={"content"} bookmark={bookmark} size={data?.dimensions}>
                 {getPart()}
@@ -299,16 +314,16 @@ export default function PDFDocument({content, params}) {
    * @returns The subtitle and its content
    */
   function displaySubtitle(i, subtitle) {
-      log.trace("displaySubtitle: i: ", i);
-      log.trace("displaySubtitle: subtitle: ", subtitle);
+      log("displaySubtitle: i: ", i, "subtitle: ", subtitle);
       
       return (
         <>
-          {/*<Text style={data.styles?.subtitle}>{subtitle[0]}</Text>*/}
-          <Text key={subtitle} style={data.styles['title' + (i+1)]}>title: {i}: {subtitle[0]}</Text>
+          <Text key={subtitle} style={data.styles['title' + (i+1)]}>{subtitle[0]}</Text>
             {subtitle.length > 1 ?
                 <>{typeof(subtitle[1]) == "string"
-                    ? <Text style={data.styles?.text}>{subtitle[1]}</Text>
+                    ? <>
+                        <Text style={data.styles?.text}>{subtitle[1]}</Text>
+                      </>
                     : <>{displaySubtitle(i + 1, subtitle[1])}</>
                   }
                 </>
@@ -327,7 +342,7 @@ export default function PDFDocument({content, params}) {
    * @returns The rendered last page
    */
   function lastPage(number = 0) {
-    log.trace("lastPage: processing...");
+    log("lastPage: processing...");
 
     function getPart() {
       return (
@@ -343,7 +358,7 @@ export default function PDFDocument({content, params}) {
     return (
       <>
         {true ?
-            <View break>
+            <View break style={data.styles?.lastPage}>
               {getPart()}
             </View>
           :
@@ -356,21 +371,33 @@ export default function PDFDocument({content, params}) {
   }
 
   /**
-   * Renders the header in a view, usable in a page
-   * @returns the rendered header
+   * Renders the footer in a view, usable in a page. It contains the page number and displays it
+   * @returns the rendered footer
    */
   function header() {
-    log.trace("header: displayHeader: ", data?.displayHeader)
-
-    if (false && data?.displayHeader) {
-      log.trace("header: displayHeader == true? ", data?.displayHeader)
-      return (
-        <View style={data.styles?.header} fixed>
-          { data?.featuredImage && data?.featuredImage != "" && <Image key={"featuredImage-header"} style={data?.styles?.featuredImage} src={data?.featuredImage} /> }
-        </View>
-      )
-    }
-  }
+    return(
+      <View style={data?.styles?.headerContainer} render={({ pageNumber, totalPages }) => {
+        if (data?.displayHeader) {
+          if ((1 == pageNumber && ! data?.displayHeaderOnFirstPage)
+              || (totalPages == pageNumber && ! data?.displayHeaderOnLastPage)
+              || (! data?.displayHeaderOnSpecificPage?.split(/,|\s|\|/).includes(pageNumber))) {
+            return <></>
+          } else {
+            return (
+              <>
+                <View style={data.styles?.header} fixed>
+                  <Text style={data.styles?.headerContent}>{data?.header}</Text>
+                  <Text style={data.styles?.pageNumber} render={({ pageNumber, totalPages }) => (`${pageNumber} / ${totalPages}`)} fixed/>
+                </View>
+              </>
+            )
+          }
+        } else {
+          return <></>
+        }
+      }} />
+    )
+  }  
 
   /**
    * Renders the footer in a view, usable in a page. It contains the page number and displays it
@@ -378,16 +405,26 @@ export default function PDFDocument({content, params}) {
    */
   function footer() {
     return(
-      <View render={() =>
-        data?.displayFooter && 
-          <>
-            <View style={data.styles?.footerMargin} fixed></View>
-            <View style={data.styles?.footer} fixed>
-              <Text style={data.styles?.footerContent}>{data?.footer}</Text>
-              <Text style={data.styles?.pageNumber} render={({ pageNumber, totalPages }) => (`${pageNumber} / ${totalPages}`)} fixed/>
-            </View>
-          </>
-      } />
+      <View style={data?.styles?.footerContainer} render={({ pageNumber, totalPages }) => {
+        if (data?.displayFooter) {
+          if ((1 == pageNumber && ! data?.displayFooterOnFirstPage)
+              || (totalPages == pageNumber && ! data?.displayFooterOnLastPage)
+              || (! data?.displayFooterOnSpecificPage?.split(/,|\s|\|/).includes(pageNumber))) {
+            return <></>
+          } else {
+            return (
+              <>
+                <View style={data.styles?.footer} fixed>
+                  <Text style={data.styles?.footerContent}>{data?.footer}</Text>
+                  <Text style={data.styles?.pageNumber} render={({ pageNumber, totalPages }) => (`${pageNumber} / ${totalPages}`)} fixed/>
+                </View>
+              </>
+            )
+          }
+        } else {
+          return <></>
+        }
+      }} />
     )
   }  
 
@@ -411,15 +448,15 @@ export default function PDFDocument({content, params}) {
    * @returns 
    */
   function getInlineStyle(name, _style = null) {
-    log.trace(`getInlineStyle: name: ${name}.`);
+    log(`getInlineStyle: name: ${name}.`);
 
     let textStyle = {};
     let style = "";
     if (_style == null || _style == "") {
       style = name ? name[0].toUpperCase() + name.substring(1) : "";
-      log.trace(`getInlineStyle: style: ${style}.`);
+      log(`getInlineStyle: style: ${style}.`);
     } else {
-      log.trace(`getInlineStyle: name: ${name}.`);
+      log(`getInlineStyle: name: ${name}.`);
       style = _style[0].toLowerCase() + _style.substring(1);;
     }
 
@@ -429,7 +466,7 @@ export default function PDFDocument({content, params}) {
       textStyle = data.styles[style];
     }
 
-    log.trace(`getInlineStyle: textStyle: ${JSON.stringify(textStyle)}.`);
+    log(`getInlineStyle: textStyle: ${JSON.stringify(textStyle)}.`);
     return textStyle;
   }
 
@@ -441,7 +478,7 @@ export default function PDFDocument({content, params}) {
    */
   function getInlineContent(name, _styleName = null) {
     let styleName = getInlineStyle(name, _styleName);
-    log.trace("getInlineContent: styleName:", styleName);
+    log("getInlineContent: styleName:", styleName);
 
     return (
       <>
@@ -489,9 +526,9 @@ export default function PDFDocument({content, params}) {
               <Page style={data.styles?.scontentPage} bookmark={"contenu"} size={data?.dimensions}>
 
               {firstPage()}
-              {getContentIfRequested({requested: data.displayToc, content: toc()})}
+              {getContentIfRequested({requested: data.displayToc, content: toc})}
 
-              {contentPages()}
+              {getContentIfRequested({requested: true, content: contentPages})}
 
               {data?.backCover?.map(function(item){
                   return lastPage(item[0]-1)

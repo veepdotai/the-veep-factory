@@ -43,7 +43,7 @@ import { Button } from 'src/components/ui/shadcn/button'
 import Loading from '@/components/common/Loading';
 import { UploadLib } from '@/components/upload-widget/UploadLib';
 
-import PDFDocument from './PDFDocument';
+import PDFDocument from './pdf-document/PDFDocument';
 import PDFParams from './PDFParams';
 
 //const usePDF = dynamic(() => import('@react-pdf/renderer/usePDF'), { ssr: false })

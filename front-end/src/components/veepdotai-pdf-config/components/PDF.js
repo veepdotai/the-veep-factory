@@ -7,7 +7,7 @@ import { PDFViewer } from '@react-pdf/renderer'
 import { usePDF } from '@react-pdf/renderer';
 
 import PDFLink from './PDFLink'
-import PDFDocument from './PDFDocument'
+import PDFDocument from './pdf-document/PDFDocument'
 import PDFParams from './PDFParams'
 
 /**
