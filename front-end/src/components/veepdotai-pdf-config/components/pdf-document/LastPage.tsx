@@ -25,7 +25,7 @@ export default function LastPage({params, number = 0}) {
   function getPart() {
     return (
       <View>
-        <Text style={params.styles?.title}>{params?.backCover[number][3]}</Text>
+        <Text style={params.styles?.backPageTitle}>{params?.backCover[number][3]}</Text>
         <Text style={params.styles?.backPageContent}>{params?.backCover[number][2]}</Text>
         {/* DocUtils.background(params, params?.backCover[number][1])*/}
         {params?.backgroundImageBackCover && DocUtils.background(params, params?.backgroundImageBackCover)}

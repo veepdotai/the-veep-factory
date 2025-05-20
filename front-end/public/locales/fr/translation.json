@@ -340,6 +340,16 @@
 
   "UploadingContent": "Le contenu est en cours de téléchargement sur le seveur.",
 
+  "SaveOnLinkedInAsDRAFT": "Sauvegarder sur LI.",  
+  "SavedOnLinkedInAsDRAFTOK": "Sauvegarde comme brouillon sur LI.",
+  "SavedOnLinkedInAsDRAFTOKDesc": "La sauvegarde comme brouillon sur LinkedIn est terminée.",
+
+  "SaveOnLinkedInAsPUBLISHED": "Publier sur LI.",  
+  "SavedOnLinkedInAsPUBLISHEDOK": "Publication sur LI.",
+  "SavedOnLinkedInAsPUBLISHEDOKDesc": "La publication sur LinkedIn est terminée.",
+
+  "SavedOnLinkedInException": "La sauvegarde sur LinkedIn génère une erreur.",
+
   "Stop": "Stop"
 
 }

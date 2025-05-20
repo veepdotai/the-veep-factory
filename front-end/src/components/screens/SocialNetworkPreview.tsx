@@ -130,12 +130,23 @@ export default function SocialNetworkPreview({
         UtilsGraphQLObject.saveMetadata(params)
     }
 
-    function publish() {
+    function saveOnLinkedInAsDRAFT() {
+        log("saveOnlinkedInAsDRAFT")
+        publishOnLinkedIn("DRAFT")
+    }
+
+    function saveOnLinkedInAsPUBLISHED() {
+        log("saveOnLinkedInAsPUBLISHED")
+        publishOnLinkedIn("PUBLISHED")
+    }
+
+    function publishOnLinkedIn(lifecycleState = "DRAFT") {
         log("publish")
         let params = {
             graphqlURI: Constants.WORDPRESS_GRAPHQL_ENDPOINT,
             cookies: cookies,
             content_id: data.databaseId,
+            lifecycleState: lifecycleState,
             topics: []
         }
         log("publish: params:", params)
@@ -145,8 +156,21 @@ export default function SocialNetworkPreview({
                 alert("publish done!")
             })
             .catch((e) => {
-                log("publish: catch e:", e)
-                alert("Erreur:" + JSON.stringify(e))
+                console.log("publishException", e)
+                let label = "SavedOnLinkedInAs" + lifecycleState + "OK"
+                if (Array.isArray(e) && 0 === e.length
+                    || 0 === Object.keys(e).length) {
+                    log("publish: catch: is probably not really an error. e:", JSON.stringify(e))
+                    label = "SavedOnLinkedInAs" + lifecycleState + "OK"
+                    Utils.notify({title: t(label), description: t(label + "Desc")})
+                    log("Publishing on LinkedIn as:", lifecycleState)
+                } else {
+                    Utils.notify({
+                        title: t("SavedOnLinkedInException"),
+                        description: JSON.stringify(e)
+                    })
+                    log("publish: catch: it seems to be a true error: e:", e)
+                }
             })
     }
 
@@ -236,19 +260,20 @@ export default function SocialNetworkPreview({
      * @param action 
      * @returns 
      */
-    function getButton(mode, action: actionProps ) {
+    function getButton(mode, action: actionProps, buttonLabel ) {
         let o = {}
         if ("function" === typeof action) {
         //if ("object" == typeof action) {
             o.action = action
-            o.name = o.action.name
+            o.name = buttonLabel
             o.icon = getIcon(o.name)
             log("getButton: o1: ", o)
+            console.log("getButton: o1: ", o)
         } else {
             o = action
         }
 
-        log("getButton: o2: ", o)
+        console.log("getButton: o2: ", o)
         return (
             <Button variant={"ghost"} className="w-none" onClick={() => o.action()}>
                 {o.icon} {t(Utils.capitalize(o.name, true))}
@@ -338,19 +363,21 @@ export default function SocialNetworkPreview({
                 <CardContent className='m-0 p-0'>
                     <ScrollArea className="w-100 h-full">
                         <div className="flex gap-2 m-2 float-right">
-                            {"alone" === mode && <div className="">{getButton(mode, enterInEditAndPreviewMode)}</div>}
+                            {"alone" === mode && <div className="">{getButton(mode, enterInEditAndPreviewMode, "enterInEditAndPreviewMode")}</div>}
                             {"edit" === mode &&
                                 <div className="">
-                                    {getButton(mode, preview)}
-                                    {getButton(mode, saveAll)}
-                                    {/*getButton(mode, save)*/}
-                                    {/*getButton(mode, saveLayout)*/}
+                                    {getButton(mode, preview, "preview")}
+                                    {getButton(mode, saveAll, "saveAll")}
+                                    {/*getButton(mode, save, "save")*/}
+                                    {/*getButton(mode, saveLayout, "saveLayout")*/}
                                 </div>
                             }
                             {"preview" === mode &&
                                 <div className="">
-                                    {/*getButton(mode, saveCarousel)*/}
-                                    {getButton(mode, publish)}
+                                    {/*getButton(mode, saveCarousel, "saveCarousel")*/}
+                                    {getButton(mode, saveOnLinkedInAsDRAFT, "saveOnLinkedInAsDRAFT")}
+                                    {getButton(mode, saveOnLinkedInAsPUBLISHED, "saveOnLinkedInAsPUBLISHED")}
+                                    {/*getButton(mode, publish, "publish")*/}
                                 </div>
                             }
                         </div>

@@ -84,7 +84,12 @@ export default class PDFParams {
         this.backgroundImgCover = params?.backgroundImageCover || ""
         this.backgroundImgBackCover = params?.backgroundImageBackCover || "/assets/images/gradients/ff0076-590fb7.png"
         
-        this.backCover = params?.backCover || [[1, "/assets/images/gradients/ff0076-590fb7.png", t("DefaultBackCoverContent"), t("DefaultBackCoverTitle")]]
+        this.backCover = [[
+            1,
+            params?.backCover || "/assets/images/gradients/ff0076-590fb7.png",
+            params?.backCoverContent || t("DefaultBackCoverContent"),
+            params?.backCoverTitle || t("DefaultBackCoverTitle")
+        ]]
 
         this.organizationName = params?.organizationName
         this.author = params?.author || t("DefaultAuthor") 

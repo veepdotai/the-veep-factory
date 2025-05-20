@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Logger } from 'react-logger-lib';
 //import { t } from 'src/components/lib/utils'
-import { t } from 'src/components/lib/utils'
+import { t, Utils } from 'src/components/lib/utils'
 
 import PubSub from "pubsub-js"
 
@@ -106,10 +106,17 @@ export default function PDFLink({
         try {
             if (!url) throw new Error("No URL available")
 
+            Utils.notify({
+                "title": t("Saving..."),
+                "description": <div className="mt-2 w-[500px] rounded-md">{t("UploadingContent")}</div>
+            })
+
+            /*
             PubSub.publish("TOAST", {
                 "title": t("Saving..."),
                 "description": <div className="mt-2 w-[500px] rounded-md">{t("UploadingContent")}</div>
             })
+            */
 
             fetch(url)
                 .then(response => response.blob())
@@ -137,11 +144,18 @@ export default function PDFLink({
         handleProcess({url: pdfUrl, fileName: fileName})
     }
 
-    function onSuccess(topic, msg) {        
+    function onSuccess(topic, msg) {     
+        Utils.notify({
+            "title": t("Status Of PDF Upload"),
+            "description": <div className="mt-2 w-[500px] rounded-md">{t("DataSaved")}</div>
+        })
+
+/*
         PubSub.publish("TOAST", {
             "title": t("Status Of PDF Upload"),
             "description": <div className="mt-2 w-[500px] rounded-md">{t("DataSaved")}</div>
         })
+*/
     }
 
     function getArray(l) {

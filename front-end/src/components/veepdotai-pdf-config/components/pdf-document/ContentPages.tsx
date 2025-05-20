@@ -38,11 +38,11 @@ export default function ContentPages({content, normalizedContent, params}) {
       
       return (
         <>
-          <Text key={subtitle} style={params.styles['title' + (i+1)]}>{subtitle[0]}</Text>
+          <Text key={subtitle} style={params?.styles['title' + (i+1)]}>{subtitle[0]}</Text>
             {subtitle.length > 1 ?
                 <>{typeof(subtitle[1]) == "string"
                     ? <>
-                        <Text style={params.styles?.text}>{subtitle[1]}</Text>
+                        <Text style={params?.styles?.text}>{subtitle[1]}</Text>
                       </>
                     : <>{displaySubtitle(i + 1, subtitle[1])}</>
                   }
@@ -59,22 +59,22 @@ export default function ContentPages({content, normalizedContent, params}) {
     return (
       <>
         {normalizedContent.map( (page, i) => {
-          log("contentPages: page ${i}:", page[5])
+          log("newpage:", params?.newPage, "contentPages: page ${i}:", page[5])
 
           function getPart() {
             return (
               <>
                 {DocUtils.header(params)}
 
-                <Text style={params.styles?.title1}>{page[1]}</Text>
+                <Text style={params?.styles?.title1}>{page[1]}</Text>
                 {page[2].map((subtitle, i) => {
                   if (typeof(subtitle) == "string"){
-                    return (<Text key={`text-${i}`} style={params.styles?.text}>{subtitle}</Text>)
+                    return (<Text key={`text-${i}`} style={params?.styles?.text}>{subtitle}</Text>)
                   } else {
                     return displaySubtitle(1, subtitle)
                   }
                 })}
-                {page[4] != DocUtils.getNothingImage() && (<Image src={page[4]} style={page[5] != null ? page[5].image : params.styles?.imageContent} />)}
+                {page[4] != DocUtils.getNothingImage() && (<Image src={page[4]} style={page[5] != null ? page[5].image : params?.styles?.imageContent} />)}
                 
                 {DocUtils.footer(params)}
                 
@@ -86,11 +86,11 @@ export default function ContentPages({content, normalizedContent, params}) {
           return (
             <>
               {true ?
-                  <View break style={params.styles?.contentPage}>
+                  <View break style={params?.styles?.contentPage}>
                     {getPart()}
                   </View>
                 :
-                  <Page key={`content-${i}`} style={params.styles?.contentPage} id={page[0]} bookmark={t(page[1])} size={params?.dimensions}>
+                  <Page key={`content-${i}`} style={params?.styles?.contentPage} id={page[0]} bookmark={t(page[1])} size={params?.dimensions}>
                     {getPart()}
                   </Page>
               }
@@ -107,21 +107,23 @@ export default function ContentPages({content, normalizedContent, params}) {
         <>
           {DocUtils.header(params)}
           {normalizedContent.map( function(page) {
+            log("newpage:", params?.newPage, "contentPages: page ${i}:", page[5])
+
             return (
               <View id={page[0]}>
-                <Text style={params.styles?.title1}>{page[1]}</Text>
+                <Text style={params?.styles?.title1}>{page[1]}</Text>
                 {
                   page[2].map((subtitle) => {
                     if (typeof(subtitle) == "string") {
                       return (
-                        <Text style={params.styles?.text}>{subtitle}</Text>
+                        <Text style={params?.styles?.text}>{subtitle}</Text>
                       )
                     } else {
                       return displaySubtitle(1, subtitle)
                     }
                   })
                 }
-                {page[4] != DocUtils.getNothingImage() ? (<Image src={page[4]} style={page[5] != null ? page[5].image : params.styles?.imageContent} />) : (console.log())}
+                {page[4] != DocUtils.getNothingImage() ? (<Image src={page[4]} style={page[5] != null ? page[5].image : params?.styles?.imageContent} />) : (console.log())}
               </View>
             )
           })}
@@ -135,12 +137,12 @@ export default function ContentPages({content, normalizedContent, params}) {
       <>
         { true ?
             <>
-              {/*<View break style={params.styles?.contentPage}>*/}
-              {DocUtils.getContentIfRequested({requested: true, breakPage: params?.newPage, styles: params.styles?.contentPage, content: getPart})}
+              {/*<View break style={params?.styles?.contentPage}>*/}
+              {DocUtils.getContentIfRequested({requested: true, breakPage: params?.newPage, styles: params?.styles?.contentPage, content: getPart})}
               {/*</View>*/}
             </>
           :
-            <Page style={params.styles?.contentPage} id={"content"} bookmark={bookmark} size={params?.dimensions}>
+            <Page style={params?.styles?.contentPage} id={"content"} bookmark={bookmark} size={params?.dimensions}>
                 {getPart()}
             </Page>
         }

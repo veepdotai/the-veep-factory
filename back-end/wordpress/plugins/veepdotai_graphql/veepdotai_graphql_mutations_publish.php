@@ -229,6 +229,14 @@ function register_publish_linkedin() {
 				'type' => 'String',
 				'description' => __( 'Main content id, that gets all the data related to this object, not only the generated carousel reference', 'your-textdomain' ),
 			],
+			'lifecycleState' => [
+				'type' => 'String',
+				'description' => __( 'Content lifecycleState [DRAFT|PUBLISHED]. If DRAFT, it appears in post window when you click on Start a new post ', 'your-textdomain' ),
+			],
+			'visibility' => [
+				'type' => 'String',
+				'description' => __( 'Content visibility [PUBLIC...]. Only default PUBLIC is supported for the moment', 'your-textdomain' ),
+			],
 		],
 	
 		'outputFields'        => [
@@ -246,6 +254,11 @@ function register_publish_linkedin() {
 			$pn = "veepdotai-";
 	
 			$contentId = sanitize_text_field( $input['contentId'] );
+			$lifecycleState = sanitize_text_field( $input['lifecycleState'] );
+			$lifecycleState = $lifecycleState == "" ? "DRAFT" : $lifecycleState;
+			$visibility = sanitize_text_field( $input['visibility'] );
+			$visibility = $visibility == "" ?  "PUBLIC" : $visibility;
+			
 			$post = get_post( $contentId );
 			$meta = get_post_meta( $contentId );
 			$generatedArtefact = $meta["tvfGeneratedAttachment"][0];
@@ -289,7 +302,7 @@ function register_publish_linkedin() {
 			//return [ "result" => "coucou: ${result}." ];
 
 
-			$resource = create_resource($access_token, $owner_id, $content, $document);
+			$resource = create_resource($access_token, $owner_id, $content, $document, $lifecycleState, $visibility);
 			$result = create_post($access_token, $resource);
 
 			$data = [];

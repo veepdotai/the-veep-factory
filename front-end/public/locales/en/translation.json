@@ -338,6 +338,16 @@
 
   "UploadingContent": "The content is being uploaded.",
 
+  "SaveOnLinkedInAsDRAFT": "Save on LI.",  
+  "SavedOnLinkedInAsDRAFTOK": "Save as DRAFT on LinkedIn.",
+  "SavedOnLinkedInAsDRAFTOKDesc": "Content has been saved as Draft on LinkedIn.",
+
+  "SaveOnLinkedInAsPUBLISHED": "Publier sur LI.",  
+  "SavedOnLinkedInAsPUBLISHEDOK": "Save as PUBLISHED on LinkedIn.",
+  "SavedOnLinkedInAsPUBLISHEDOKDesc": "Content has been published on LinkedIn.",
+
+  "SavedOnLinkedInException": "Saving content on LinkedIn throws an error.",
+
   "Stop": "Stop"
 
 }

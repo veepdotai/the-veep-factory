@@ -78,11 +78,14 @@ export default function PDFDocument({content, params}) {
                 requested: data.displayToc,
                 content: () => <Toc normalizedContent={normalizedContent} params={data} />}
               )}
-              {DocUtils.getContentIfRequested({
+              {/*DocUtils.getContentIfRequested({
                 requested: true,
-                styles: {"width": 800, "height": 800},
+                breakPage: false,
+                //styles: {"width": 800, "height": 800},
                 content: () => <ContentPages content={content} normalizedContent={normalizedContent} params={data} />}
-              )}
+              )*/}
+              <ContentPages content={content} normalizedContent={normalizedContent} params={data} />
+
               {data?.backCover?.map(function(item) {return <LastPage params={data} number={item[0]-1} />})}
               </Page>
             </Document>

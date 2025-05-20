@@ -6,10 +6,10 @@ import { UtilsGraphQL } from './utils-graphql'
 export const UtilsGraphQLPublish = {
 	log: (...args) => Logger.of("UtilsGraphQLPublish").trace($args),
 
-	publishOnLinkedIn: function({graphqlURI, cookies, content_id, topics = []}) {
+	publishOnLinkedIn: function({graphqlURI, cookies, content_id, lifecycleState = "DRAFT", topics = []}) {
 
 		let q = `mutation MyMutation {
-			publishOnLinkedIn(input: {contentId: "${content_id}"}) {
+			publishOnLinkedIn(input: {contentId: "${content_id}", lifecycleState: "${lifecycleState}"}) {
 				clientMutationId
 				result
 			}
