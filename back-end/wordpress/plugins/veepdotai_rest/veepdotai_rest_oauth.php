@@ -3,11 +3,19 @@
 require_once 'vendor/autoload.php';
 use GuzzleHttp\Client;
 
+
 define('BASE_URI_PROVIDER', 'https://www.linkedin.com');
-define('CLIENT_ID', LINKEDIN_CLIENT_ID);
-define('CLIENT_SECRET', LINKEDIN_CLIENT_SECRET);
-define('CLIENT_REDIRECT_URI', LINKEDIN_CLIENT_REDIRECT_URI);
-define('SCOPE', LINKEDIN_SCOPE);
+if ( defined( "LINKEDIN_CLIENT_ID" ) ) {
+        define('CLIENT_ID', CONF_CLIENT_ID);
+        define('CLIENT_SECRET', CONF_CLIENT_SECRET);
+        define('CLIENT_REDIRECT_URI', CONF_CLIENT_REDIRECT_URI);
+        define('SCOPE', CONF_CLIENT_SCOPE);
+} else {
+        define('CLIENT_ID', LINKEDIN_CLIENT_ID);
+        define('CLIENT_SECRET', LINKEDIN_CLIENT_SECRET);
+        define('CLIENT_REDIRECT_URI', LINKEDIN_CLIENT_REDIRECT_URI);
+        define('SCOPE', LINKEDIN_SCOPE);
+}
 
 class Veepdotai_OAuth_REST_Controller extends WP_REST_Controller {
 
@@ -67,7 +75,7 @@ class Veepdotai_OAuth_REST_Controller extends WP_REST_Controller {
         //$user = wp_get_current_user()->user_login;
 
         $code = sanitize_text_field( $request[ 'code' ] );
-        $redirect_uri = LINKEDIN_CLIENT_REDIRECT_URI ? LINKEDIN_CLIENT_REDIRECT_URI : sanitize_url( $request[ 'redirectUri' ] );
+        $redirect_uri = CLIENT_REDIRECT_URI ? CLIENT_REDIRECT_URI : sanitize_url( $request[ 'redirectUri' ] );
         self::log( "debug", "get_item: redirect_uri: " . $redirect_uri);
 
         try {
