@@ -43,7 +43,7 @@ export default function PromptActions( { definition, showPromptForm, showPromptE
                             {! shared ?
                                 <>
                                     <Dropdown.Item onClick={() => showPromptForm()}>{getIcon("config")} {t("Configure")}</Dropdown.Item>
-                                    { Utils.isManager(profile) && (
+                                    { Utils.hasPromptSourceEditorPrivilege(profile) && (
                                         <Dropdown.Item onClick={() => showPromptEditor()}>{getIcon("editor")} {t("Source")}</Dropdown.Item>
                                     )}
                                     <Dropdown.Item onClick={() => showInfo()}>{getIcon("infos")} {t("Infos")}</Dropdown.Item>

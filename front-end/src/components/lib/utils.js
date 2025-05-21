@@ -51,9 +51,19 @@ export const Utils = {
 		}
 	},
 
+	hasPromptSourceEditorPrivilege: function(profile) {
+		if (Utils.isManager(profile)
+			|| profile?.roles?.includes("veepdotai_role_advanced_user")
+			|| "demo@veep.ai" === profile?.user_email ) {
+			return true
+		} else {
+			return false
+		}
+	},
+
 	isManager: function(profile) {
 		try {
-			return JSON.stringify(profile.roles)?.indexOf('veepdotai_role_admin') != -1;
+			return JSON.stringify(profile?.roles)?.indexOf('veepdotai_role_admin') != -1;
 		} catch (e) {
 			return false;
 		}
