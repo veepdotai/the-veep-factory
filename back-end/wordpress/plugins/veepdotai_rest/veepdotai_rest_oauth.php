@@ -5,7 +5,7 @@ use GuzzleHttp\Client;
 
 
 define('BASE_URI_PROVIDER', 'https://www.linkedin.com');
-if ( defined( "LINKEDIN_CLIENT_ID" ) ) {
+if ( ! defined( "LINKEDIN_CLIENT_ID" ) ) {
         define('CLIENT_ID', CONF_CLIENT_ID);
         define('CLIENT_SECRET', CONF_CLIENT_SECRET);
         define('CLIENT_REDIRECT_URI', CONF_CLIENT_REDIRECT_URI);
