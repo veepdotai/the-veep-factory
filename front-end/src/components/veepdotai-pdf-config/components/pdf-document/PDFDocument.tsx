@@ -67,7 +67,7 @@ export default function PDFDocument({content, params}) {
   log("PDFDocument: params: ", params)
   log("PDFDocument: data: ", data)
 
-  if (data.hyphenation) {
+  if (! data?.hyphenation) {
     Font.registerHyphenationCallback(word => ([word]));
   }
 
