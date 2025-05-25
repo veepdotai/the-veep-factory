@@ -227,7 +227,7 @@ export default function SocialNetworkPreview({
         }
        
         PubSub.publish("PROMPT_DIALOG", {
-            outerCN: "max-w-none w-75 h-75",
+            outerCN: "max-w-none w-100 h-100",
             innerCN: "",
             title: t("EditAndPreview"),
             description: t("EditAndPreviewPDF"),
@@ -279,6 +279,27 @@ export default function SocialNetworkPreview({
                 {o.icon} {t(Utils.capitalize(o.name, true))}
             </Button>
         )
+    }
+
+    function getModeSize(mode) {
+
+        let width = Utils.getUserValue("SocialNetworkPreview_DEFAULT_WIDTH", 533)
+        
+        switch (mode) {
+            case "edit":
+                width = Utils.getUserValue("SocialNetworkPreview_DEFAULT_EDIT_WIDTH", 830)
+                break
+            case "alone":
+                width = Utils.getUserValue("SocialNetworkPreview_DEFAULT_ALONE_WIDTH", 533)
+                break
+            case "preview":
+                width = Utils.getUserValue("SocialNetworkPreview_DEFAULT_PEVIEW_WIDTH", 533)
+                break
+            default:
+                width = Utils.getUserValue("SocialNetworkPreview_DEFAULT_WIDTH", 533)
+        }
+
+        return width
     }
 
     function getLinkedInContent(editorWithContent, data: ContentProps) {
@@ -359,7 +380,7 @@ export default function SocialNetworkPreview({
             </div>
 
         return (
-            <Card className="w-[533px] h-full whitespace-break-spaces">
+            <Card className={`w-[${getModeSize(mode)}px] h-full whitespace-break-spaces`}>
                 <CardContent className='m-0 p-0'>
                     <ScrollArea className="w-100 h-full">
                         <div className="flex gap-2 m-2 float-right">
