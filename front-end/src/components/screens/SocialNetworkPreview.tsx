@@ -275,7 +275,7 @@ export default function SocialNetworkPreview({
 
         console.log("getButton: o2: ", o)
         return (
-            <Button variant={"ghost"} className="w-none" onClick={() => o.action()}>
+            <Button variant={"ghost"} className="w-none border-1" onClick={() => o.action()}>
                 {o.icon} {t(Utils.capitalize(o.name, true))}
             </Button>
         )

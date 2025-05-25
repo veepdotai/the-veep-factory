@@ -83,7 +83,9 @@ export default class PDFParams {
         this.backgroundImg = params?.backgroundImage || "/assets/images/nothing.png"
         this.backgroundImgCover = params?.backgroundImageCover || ""
         this.backgroundImgBackCover = params?.backgroundImageBackCover || "/assets/images/gradients/ff0076-590fb7.png"
-        
+
+        this.hyphenation = params?.hyphenation || false
+
         this.backCover = [[
             1,
             params?.backCover || "/assets/images/gradients/ff0076-590fb7.png",

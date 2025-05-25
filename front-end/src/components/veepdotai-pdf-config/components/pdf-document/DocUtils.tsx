@@ -40,6 +40,7 @@ const DocUtils = {
    * @returns the rendered footer
    */
   header: function(params) {
+    DocUtils.log("header: params: ", params);
     return(
       <View style={params?.styles?.headerContainer} render={({ pageNumber, totalPages }) => {
         if (params?.displayHeader) {

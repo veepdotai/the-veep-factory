@@ -69,14 +69,18 @@ export default function ContentPages({content, normalizedContent, params}) {
                 <Text style={params?.styles?.title1}>{page[1]}</Text>
                 {page[2].map((subtitle, i) => {
                   if (typeof(subtitle) == "string"){
-                    return (<Text key={`text-${i}`} style={params?.styles?.text}>{subtitle}</Text>)
+                    return (
+                      <>
+                        {DocUtils.getContentIfRequested({requested: typeof(subtitle) == "string", fixed: false, breakPage: false, content: () => (<Text key={`text-${i}`} style={params?.styles?.text}>{subtitle}</Text>)})}
+                      </>
+                    )
                   } else {
-                    return displaySubtitle(1, subtitle)
+                    return DocUtils.getContentIfRequested({requested: typeof(subtitle) !== "string", fixed: false, breakPage: false, content: () => displaySubtitle(1, subtitle)})
                   }
                 })}
                 {page[4] != DocUtils.getNothingImage() && (<Image src={page[4]} style={page[5] != null ? page[5].image : params?.styles?.imageContent} />)}
                 
-                {DocUtils.footer(params)}
+                {/*/DocUtils.footer(params)/*/}
                 
                 {/*DocUtils.background(params, page[3] == DocUtils.getNothingImage() && params?.backgroundImage != DocUtils.getNothingImage() ? params?.backgroundImage : page[3])*/}
                 {DocUtils.background(params, params?.backgroundImage)}

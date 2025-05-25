@@ -61,10 +61,15 @@ export default function PDFDocument({content, params}) {
     newPage: params?.newPage,
 
     styles: params?.styles || {},
+    hyphenation: params?.hyphenation
   }
 
   log("PDFDocument: params: ", params)
   log("PDFDocument: data: ", data)
+
+  if (data.hyphenation) {
+    Font.registerHyphenationCallback(word => ([word]));
+  }
 
   return (
     <>

@@ -170,6 +170,24 @@ export default function PDFLink({
         log.trace("updatePDF: viewOptions: ", viewOptions)
         log.trace("updatePDF: initParams: ", initParams)
 
+        if (message?.params) {
+            let params = message.params 
+            log.trace("updatePDF: topic: ", topic, "paramsUpdated: ", params)
+            log.trace("updatePDF: params: ", params.attachmentGenerationOptions)
+            setParams(params.attachmentGenerationOptions)
+        }
+
+        if (message?.content) {
+            let mycontent = message.content 
+            log.trace("updatePDF: content:", mycontent)
+            setContent(mycontent)
+        }
+    }  
+
+    function updatePDF2(topic, message) {
+        log.trace("updatePDF: viewOptions: ", viewOptions)
+        log.trace("updatePDF: initParams: ", initParams)
+
         let params = message.params 
         log.trace("updatePDF: topic: ", topic, "paramsUpdated: ", params)
         log.trace("updatePDF: params: ", params.attachmentGenerationOptions)

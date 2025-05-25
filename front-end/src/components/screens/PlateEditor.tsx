@@ -304,6 +304,13 @@ export function PlateEditor( {input, contentId = null, attrName = null, custom =
     }
   }
 
+  function onChange(value) {
+      const content = JSON.stringify(value.value);
+      setEditorContent(contentId, content)
+      let markdownContent = Utils.convertCrtToMarkdown(content)
+      PubSub.publish("SOURCE_EDITOR_UPDATED", {content: markdownContent})
+  }
+
   function getEditorElement(style = "", variant = "") {
     return (
       <Editor
@@ -358,10 +365,7 @@ export function PlateEditor( {input, contentId = null, attrName = null, custom =
             <DndProvider backend={HTML5Backend}>
               <Plate
                 editor={getEditor(content)} 
-                onChange={ value => {
-                  const content = JSON.stringify(value.value);
-                  setEditorContent(contentId, content)
-                }}
+                onChange={onChange}
                 className='p-2 toto dis_focus:ring-0 dis_focus:ring-offset-0'
               >
                 <FixedToolbar>
