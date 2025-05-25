@@ -13,6 +13,10 @@ export const Utils = {
 		return (item && typeof item === 'object' && !Array.isArray(item));
 	},
 	
+	getUserValue: (param, defaultValue) => {
+		return Constants["USERAPP_" + param] || defaultValue
+	},
+
 	mergeDeep: (target, ...sources) => {
 		if (!sources.length) return target;
 		const source = sources.shift();if (Utils.isObject(target) && Utils.isObject(source)) {
