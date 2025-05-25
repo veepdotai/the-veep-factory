@@ -4,6 +4,8 @@ import { Logger } from 'react-logger-lib';
 //import { t } from 'src/components/lib/utils'
 import { t, Utils } from 'src/components/lib/utils'
 
+import { ErrorBoundary } from "react-error-boundary"
+
 import PubSub from "pubsub-js"
 
 import { usePDF } from '@react-pdf/renderer';
@@ -234,6 +236,26 @@ export default function PDFLink({
         )
     }
 
+    function getDocview() {
+        function logError(error, info) {
+            log.error("ErrorBoundary caught an error:", error, "info:", info)
+            PubSub.publish("TOAST", {
+                "title": t("Error"),
+                "description": <div className="mt-2 w-[500px] rounded-md">
+                    <p>{JSON.stringify(error)}</p>
+                    <p>{JSON.stringify(info)}</p>
+                </div>
+            })
+        }
+
+        return (
+            <ErrorBoundary fallback={<h1>There is an error</h1>} onError={logError} >
+                <DocView key={params.title} className="" loading={loading} file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
+                    <PageView height="533px" pageNumber={pageNumber} loading="..." {...viewOptions} />
+                </DocView>
+            </ErrorBoundary>
+        )
+    }
     let pdfUrl = instance?.url
 
     useEffect(() => {
@@ -291,9 +313,7 @@ export default function PDFLink({
                                 {false && showActions()}
                             </div>
                             <div style={{width: `${width}px`, minHeight: `${height}px`}}>
-                                <DocView key={params.title} className="" loading={loading} file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
-                                    <PageView height="533px" pageNumber={pageNumber} loading="..." {...viewOptions} />
-                                </DocView>
+                                {getDocview()}
                             </div>
                             <div className="p-2 bg-black text-white text-sm font-bold w-100">{t("Page")} {pageNumber} {t("Of")} {numPages ? numPages : "..."}</div>
                         </div>

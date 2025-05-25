@@ -15,7 +15,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { ScrollArea } from 'src/components/ui/shadcn/scroll-area';
 import SocialNetworkPreview from '../../SocialNetworkPreview';
 
-import testdata from 'src/config/data.json'
+import defaultData from 'src/config/layout-default.json'
 import MergedContent from './MergedContent';
 
 export default function SideBySideViewContent( { prompt, data, cid, width = 1 } ) {
@@ -185,9 +185,9 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
 
     let chain = Veeplet.getChainAsArray(prompt.prompts.chain);
 
-    let attachmentGenerationOptions = {...testdata.attachmentGenerationOptions}
-    let attachmentViewType = testdata.attachmentViewType 
-    let attachmentViewOptions = {...testdata.attachmentViewOptions}
+    let attachmentGenerationOptions = {...defaultData.attachmentGenerationOptions}
+    let attachmentViewType = defaultData.attachmentViewType 
+    let attachmentViewOptions = {...defaultData.attachmentViewOptions}
 
     let attachmentParams = {
       attachmentGenerationOptions: attachmentGenerationOptions,
