@@ -1,0 +1,138 @@
+{
+  "attachmentGenerationOptions": {
+    "title": "Marketing content2",
+    "subtitle": "This is a subtitle",
+    "backCoverTitle": "Some title",
+    "backCoverContent": "Some content",
+
+    "format": "LinkedIn",
+    "!format": "A4",
+    "hyphenation": false,
+
+    "organizationName": "Veep.AI",
+    "author": "Jean-Christophe Kermagoret",
+    "version": "1.0.0",
+    "date": "12/04/2025",
+
+    "header": "The open source content factory",
+    "footer": "Veep.AI - The Veep Factory",
+
+    "!backgroundImage": "https://images.pexels.com/photos/2088205/pexels-photo-2088205.jpeg",
+    "!backgroundImageCover": "https://images.pexels.com/photos/2088205/pexels-photo-2088205.jpeg",
+    "featuredImage": "https://media.licdn.com/dms/image/v2/C5603AQH1QwJjj0fKQQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1519680310585?e=1752105600&v=beta&t=jShAAqMIBLXAXuT6Dc52SginjoVyT9PsWAdwf03YQWM",
+    "backgroundImageBackCover": "https://upload.wikimedia.org/wikipedia/commons/b/b5/Lion_dAfrique.jpg",
+
+    "dimensions": {
+      "width": 800,
+      "height": 800
+    },
+    "!dimensions": "A4",
+
+    "displayMetadata": false,
+    "displayHeader": true,
+    "displayHeaderOnFirstPage": false,
+    "displayHeaderOnLastPage": true,
+    "displayFooter": true,
+    "displayFooterOnFirstPage": true,
+    "displayFooterOnSpecificPage": "4,5,8",
+    "displayFooterOnLastPage": true,
+    "displayToc": false,
+    "displayTocOnFirstPage": false,
+    "displayTocOnSpecificPage": 2,
+    "!displayToc": true,
+    "newPage": true,
+
+    "stylesheet": {
+      "title": {
+        "fontSize": 130,
+        "fontWeight": "bold"
+      },
+      "!subtitle": {
+        "fontSize": 35
+    },
+
+    "contentPage": {
+        "backgroundColor": "black",
+        "color": "white",
+        "width": "100%",
+        "height": "760",
+        "flexDirection": "column",
+        "padding": 100,
+        "!margin": "10px",
+        "!padding": "10px",
+        "border": "0px solid black"
+    },
+
+    "text": {
+        "margin": 50,
+        "padding": 10,
+        "backgroundColor": "grey",
+        "borderRadius": 10
+      },
+
+      "featuredImageContainer": {
+        "width": "100%"
+      },
+      "featuredImage": {
+        "position": "absolute",
+        "top": 500,
+        "left": 300,
+        "right": 300,
+        "width": 200,
+        "height": 200
+      },
+      "footerContainer": {
+        "position": "absolute",
+        "bottom": 10,
+        "width": "100%"
+      },
+      "lastPage": {
+        "width": "100%",
+        "height": "100%",
+        "flexDirection": "column",
+        "paddingTop": 0,
+        "paddingBottom": 0
+      },
+
+      "backPageTitle": {
+        "fontSize": 100,
+        "fontWeight": 900,
+        "margin": 50,
+        "marginTop": 100,
+        "textAlign": "center"
+      },
+      "backPageContent": {
+        "fontSize": 50,
+        "width": "780px",
+        "height": "780px",
+        "textAlign": "center",
+        "marginVertical": "auto",
+        "color": "grey"
+      },
+      "!metadataLine": {
+        "color": "black"
+      },
+      "!author": {
+        "label": {
+          "color": "black"
+        },
+        "value": {
+          "color": "red"
+        }
+      }
+    }
+  },
+
+  "attachmentViewType": "custom",
+
+  "attachmentViewOptions": {
+    "orientation": "landscape",
+    "width": 700,
+    "height": 700,
+    "!showToolbar": true,
+    "className": "",
+    "style": {},
+    "!canvasBackground": "orange",
+    "!rotate": "90"
+  }
+}
