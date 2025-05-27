@@ -1,9 +1,9 @@
 {
   "attachmentGenerationOptions": {
-    "title": "Marketing content2",
-    "subtitle": "This is a subtitle",
-    "backCoverTitle": "Some title",
-    "backCoverContent": "Some content",
+    "title": "Entre a title",
+    "subtitle": "Enter a subtitle",
+    "backCoverTitle": "Intéressé par ce contenu ?",
+    "backCoverContent": "🔔Suivez-moi",
 
     "format": "LinkedIn",
     "!format": "A4",
@@ -44,7 +44,7 @@
 
     "stylesheet": {
       "title": {
-        "fontSize": 130,
+        "fontSize": 100,
         "fontWeight": "bold"
       },
       "!subtitle": {
@@ -57,7 +57,7 @@
         "width": "100%",
         "height": "760",
         "flexDirection": "column",
-        "padding": 100,
+        "padding": 50,
         "!margin": "10px",
         "!padding": "10px",
         "border": "0px solid black"
@@ -95,10 +95,11 @@
       },
 
       "backPageTitle": {
-        "fontSize": 100,
+        "fontSize": 90,
         "fontWeight": 900,
         "margin": 50,
         "marginTop": 100,
+        "marginBottom": 200,
         "textAlign": "center"
       },
       "backPageContent": {
