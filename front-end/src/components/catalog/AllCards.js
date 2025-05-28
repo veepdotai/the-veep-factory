@@ -107,12 +107,13 @@ export default function AllCards( { type, id, title, formScreen = null, cat = nu
   }
 
   function displayNav(categories, defaultEventKey) {
+    let firstDone = false
     let items = categories.map((cat, i) => {
       let aisByCategory = getAIsByCategory({category: cat})
       return (
         <>
           { aisByCategory?.length > 0 &&
-            <TabsTrigger key={cat} value={i == 0 ? defaultEventKey : cat}>{cat}</TabsTrigger>
+            <TabsTrigger key={cat} value={ !firstDone ? firstDone = true && defaultEventKey : cat}>{cat}</TabsTrigger>
           }
         </>
       )
@@ -150,12 +151,13 @@ export default function AllCards( { type, id, title, formScreen = null, cat = nu
   }
 
   function showContentsByGrid(categories, defaultEventKey) {
+    let firstDone = false
     let contents = categories.map((cat, i) => {
       let aisByCategory = getAIsByCategory({category: cat})
       return (
         <>
           { aisByCategory?.length > 0 &&
-              <TabsContent key={cat} value={i == 0 ? defaultEventKey : cat}>
+              <TabsContent key={cat} value={ !firstDone ? firstDone = true && defaultEventKey : cat}>
                 {/*<div className='grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2'>*/}
                 <div className='flex w-max space-x-4 p-4'>
                 {
