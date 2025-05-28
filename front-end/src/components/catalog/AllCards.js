@@ -90,8 +90,13 @@ export default function AllCards( { type, id, title, formScreen = null, cat = nu
 
   function displayNav(categories, defaultEventKey) {
     let items = categories.map((cat, i) => {
+      let aisByCategory = getAIsByCategory(cat)
       return (
-          <TabsTrigger key={cat} value={i == 0 ? defaultEventKey : cat}>{cat}</TabsTrigger>
+        <>
+          { aisByCategory?.length > 0 &&
+            <TabsTrigger key={cat} value={i == 0 ? defaultEventKey : cat}>{cat}</TabsTrigger>
+          }
+        </>
       )
     })
 
@@ -128,23 +133,28 @@ export default function AllCards( { type, id, title, formScreen = null, cat = nu
 
   function showContentsByGrid(categories, defaultEventKey) {
     let contents = categories.map((cat, i) => {
+      let aisByCategory = getAIsByCategory(cat)
       return (
-        <TabsContent key={cat} value={i == 0 ? defaultEventKey : cat}>
-          {/*<div className='grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2'>*/}
-          <div className='flex w-max space-x-4 p-4'>
-          {
-              getAIsByCategory(cat).map((ai) => {
-                log.trace("Category: " + cat + ", AI: " + ai.name);
-                return (
-                  <>
-                    {/*<div {...config}>*/}
-                    <Prompt key={cat + ai.name} definition={ai} setDisplay={() => PubSub.publish("HIDE_CATALOGS", null)} />
-                  </>                  
-                )
-              })
-            }
-          </div>
-        </TabsContent>
+        <>
+          { aisByCategory?.length > 0 &&
+              <TabsContent key={cat} value={i == 0 ? defaultEventKey : cat}>
+                {/*<div className='grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2'>*/}
+                <div className='flex w-max space-x-4 p-4'>
+                {
+                    aisByCategory.map((ai) => {
+                      log.trace("Category: " + cat + ", AI: " + ai.name);
+                      return (
+                        <>
+                          {/*<div {...config}>*/}
+                          <Prompt key={cat + ai.name} definition={ai} setDisplay={() => PubSub.publish("HIDE_CATALOGS", null)} />
+                        </>                  
+                      )
+                    })
+                  }
+                </div>
+              </TabsContent>
+          }
+        </>
       )
     })
 
@@ -216,9 +226,6 @@ export default function AllCards( { type, id, title, formScreen = null, cat = nu
     //    PubSub.subscribe("SHOW_AI_DETAILS", showInfoModal);
   }, [])
   
-
-  //let categoriesByCat = 
-
   return (
     <>
       {
