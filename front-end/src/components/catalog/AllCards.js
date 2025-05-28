@@ -84,13 +84,31 @@ export default function AllCards( { type, id, title, formScreen = null, cat = nu
     return 
   }
 
-  function getAIsByCategory(category) {
-    return directory?.filter((row) => { return row.status === "active" && row.category === category});
+  function getAIsByCategory({category, filterName = "status", filterValue = "active", sortFilterName = "heading", sortFilterFn = null}) {
+    let mySortFilterFn = (ai1, ai2) => {
+      if (ai1[sortFilterName] > ai2[sortFilterName]) {
+        return 1
+      } else if (ai1[sortFilterName] < ai2[sortFilterName]) {
+        return -1
+      } else {
+        return 0
+      }
+    }
+
+    let ais = directory?.filter((row) => { return row[filterName] === filterValue && row.category === category})
+
+    if (sortFilterFn) {
+      ais?.sort(sortFilterFn)
+    } else {
+      ais?.sort(mySortFilterFn)
+    }
+
+    return ais
   }
 
   function displayNav(categories, defaultEventKey) {
     let items = categories.map((cat, i) => {
-      let aisByCategory = getAIsByCategory(cat)
+      let aisByCategory = getAIsByCategory({category: cat})
       return (
         <>
           { aisByCategory?.length > 0 &&
@@ -133,7 +151,7 @@ export default function AllCards( { type, id, title, formScreen = null, cat = nu
 
   function showContentsByGrid(categories, defaultEventKey) {
     let contents = categories.map((cat, i) => {
-      let aisByCategory = getAIsByCategory(cat)
+      let aisByCategory = getAIsByCategory({category: cat})
       return (
         <>
           { aisByCategory?.length > 0 &&
