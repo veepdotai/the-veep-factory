@@ -24,6 +24,8 @@ import { Constants } from '@/constants/Constants';
 import { useCookies } from 'react-cookie';
 import { UtilsGraphQLObject } from '@/api/utils-graphql-object';
 import { UtilsGraphQLPublish } from '@/api/utils-graphql-publish';
+import PDFExportForm from './forms/PDFExportForm';
+import DynamicForm from './forms/DynamicForm';
 
 interface ContentProps {
     avatarUrl?: string,
@@ -302,28 +304,18 @@ export default function SocialNetworkPreview({
         return width
     }
 
-/*
-    function handleForm() {
-        log("handleForm")
-        let attachmentOptions = {
-            ...getAttachmentGenerationOptions(),
-            title: getAttachmentGenerationOptions()?.title + "X"
-        }
-        log("handleForm: attachmentOptions", attachmentOptions)
-        let myOptions = {
-            attachmentGenerationOptions: attachmentOptions,
-            attachmentViewType: getAttachmentViewType(),
-            attachmentViewOptions: getAttachmentViewOptions()
-        }
-        log("handleForm: myOptions", myOptions)
-        setOptions(myOptions)
+    function onUpdateCallback(topic, message) {
+        log("onUpdateCallback:", message)
     }
-*/
-    function handleForm() {
-        log("handleForm")
+
+    function onSubmitCallback(data) {
+        log("onSubmitCallback: data:", data)
         let attachmentOptions = {
             ...options.attachmentGenerationOptions,
-            "title": options.attachmentGenerationOptions?.title + "X",
+            "title": data?.title,
+            "subtitle": data?.subtitle,
+            "backCoverTitle": data?.backCoverTitle,
+            "backCoverContent": data?.backCoverSubtitle,
             "backgroundImage": "https://images.pexels.com/photos/2088205/pexels-photo-2088205.jpeg"
         }
         log("handleForm: attachmentOptions", attachmentOptions)
@@ -463,7 +455,19 @@ export default function SocialNetworkPreview({
                                 </TabsContent>
                                 <TabsContent value="metadata" className="w-full">
                                     <div>
-                                        <Button onClick={handleForm}>Add x</Button>
+                                        <DynamicForm
+                                            params={{
+                                                title: options.attachmentGenerationOptions?.title || "",
+                                                subtitle: options.attachmentGenerationOptions?.subtitle || "",
+                                                backCoverTitle: options.attachmentGenerationOptions?.backCoverTitle || "",
+                                                backCoverSubtitle: options.attachmentGenerationOptions?.backCoverContent || "",
+
+                                            }}
+                                            type={"pdf-export"}
+                                            onSubmitCallback={onSubmitCallback}
+                                            onUpdateCallback={onUpdateCallback}
+                                            syncWithDatabase={false}
+                                        />
                                     </div>
                                 </TabsContent>
                                 <TabsContent value="layout" className="w-full">

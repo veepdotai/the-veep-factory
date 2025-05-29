@@ -23,7 +23,6 @@ BaseCodeEditor({
     action = null,
     onChange = null,
     driver = null,
-    driver = null,
     width = 830,
     editorPostOptions = {},
     languageOptions = {},

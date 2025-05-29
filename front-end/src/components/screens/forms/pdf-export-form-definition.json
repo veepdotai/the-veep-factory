@@ -1,0 +1,82 @@
+[
+    {
+        "id": "0",
+        "name": "title",
+        "group": "main",
+        "type": "textarea",
+        "constraints": "",
+        "options": "",
+        "className": "",
+        "position": 0
+    },
+    {
+        "id": "1",
+        "name": "subtitle",
+        "group": "main",
+        "type": "textarea",
+        "constraints": "",
+        "options": "",
+        "className": "",
+        "position": 1
+    },
+    {
+        "id": "2",
+        "name": "backCoverTitle",
+        "group": "main/back",
+        "type": "textarea",
+        "constraints": "",
+        "options": "",
+        "className": "",
+        "position": 2
+    },
+    {
+        "id": "3",
+        "name": "backCoverSubtitle",
+        "group": "main/back",
+        "type": "textarea",
+        "constraints": "",
+        "options": "",
+        "className": "",
+        "position": 3
+    },
+    {
+        "id": "4",
+        "name": "displayTOC",
+        "group": "options",
+        "type": "checkbox",
+        "constraints": "",
+        "options": "",
+        "className": "",
+        "position": 4
+    },
+    {
+        "id": "5",
+        "name": "displayHeader",
+        "group": "options",
+        "type": "checkbox",
+        "constraints": "",
+        "options": "",
+        "className": "",
+        "position": 5
+    },
+    {
+        "id": "6",
+        "name": "displayFooter",
+        "group": "options",
+        "type": "checkbox",
+        "constraints": "",
+        "options": "",
+        "className": "",
+        "position": 6
+    },
+    {
+        "id": "7",
+        "name": "newBreak",
+        "group": "options",
+        "type": "checkbox",
+        "constraints": "",
+        "options": "",
+        "className": "",
+        "position": 7
+    }
+]

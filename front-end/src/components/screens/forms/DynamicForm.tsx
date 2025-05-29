@@ -18,6 +18,7 @@ import editorialFormDefinition from "./editorial-form-definition.json"
 import formFormDefinition from "./form-form-definition.json"
 import brandVoiceFormDefinition from "./brand-form-definition.json"
 import templateFormDefinition from "./template-form-definition.json"
+import pdfExportFormDefinition from "./pdf-export-form-definition.json"
 
 import { Button } from "src/components/ui/shadcn/button"
 import { Form, } from "src/components/ui/shadcn/form"
@@ -26,8 +27,8 @@ import { UtilsGraphQLObject } from '../../../api/utils-graphql-object'
 import Loading from 'src/components/common/Loading'
 import JSON2Form from '@/components/import-to-form/JSON2Form'
 
-export default function DynamicForm({ type }) {
-  const log = Logger.of(DynamicForm.name);
+export default function DynamicForm({ type, params = null, onSubmitCallback = null, onUpdateCallback = null, syncWithDatabase = true }) {
+  const log = (...args) => Logger.of(DynamicForm.name).trace(args);
 
   const graphqlURI = Constants.WORDPRESS_GRAPHQL_ENDPOINT;
   const [cookies] = useCookies(['JWT']);
@@ -45,6 +46,8 @@ export default function DynamicForm({ type }) {
         return brandVoiceFormDefinition
       case 'template':
         return templateFormDefinition
+      case 'pdf-export':
+        return pdfExportFormDefinition
       default:
         return formFormDefinition
     }
@@ -60,7 +63,7 @@ export default function DynamicForm({ type }) {
       formDefinitionObject[field.name] = getConstraints(field.constraints || minChars)
       return null
     })
-    log.trace("getFormSchema: formDefinitionObject: ", formDefinitionObject)
+    log("getFormSchema: formDefinitionObject: ", formDefinitionObject)
     return formDefinitionObject
   }
 
@@ -70,7 +73,7 @@ export default function DynamicForm({ type }) {
       formDefinitionObject[field.name] = field
       return null
     })
-    log.trace("getFormDefinitionByFieldsName: formDefinitionObject: ", formDefinitionObject)
+    log("getFormDefinitionByFieldsName: formDefinitionObject: ", formDefinitionObject)
     return formDefinitionObject
   }
 
@@ -80,12 +83,12 @@ export default function DynamicForm({ type }) {
       defaultValues[field.name] = field.values || ""
       return null
     })
-    log.trace("getDefaultValuesFromFormDefinition: defaultValues: ", defaultValues)
+    log("getDefaultValuesFromFormDefinition: defaultValues: ", defaultValues)
     return defaultValues  
   }
 
   function importForm() {
-    log.trace("importForm")
+    log("importForm")
     const getValueById = (fieldName) => document.getElementById(fieldName).value 
 
     //alert(`json: ${getValueById("importFormJson")} / ${getValueById("importFormFieldsList")} / ${getValueById("importFormStrategy") || 'merge-after'}`)
@@ -95,7 +98,7 @@ export default function DynamicForm({ type }) {
       let mergingStrategy = getValueById("importFormStrategy")
       return UFC.updateFormFromStringForm(form, formMetadata, metadata, mergingStrategy)
     } catch(e) {
-      log.trace("importForm: pb while updating: e: ", e)
+      log("importForm: pb while updating: e: ", e)
       alert("importForm: pb while updating: e: " + e)
     }
   }
@@ -108,7 +111,7 @@ export default function DynamicForm({ type }) {
    * @returns 
    */
   function updateForm(topic, message) {
-    log.trace("updateForm: ", "topic: ", topic, "message: ", message)
+    log("updateForm: ", "topic: ", topic, "message: ", message)
     return UFC.updateStringForm(form, formMetadata, topic, message)
   }
 
@@ -185,8 +188,21 @@ export default function DynamicForm({ type }) {
   }
 
   useEffect(() => {
-    PubSub.subscribe(topic, updateForm)
-    UtilsGraphQLObject.listOne(graphqlURI, cookies, name, topic)
+    if (onUpdateCallback) {
+      PubSub.subscribe(topic, onUpdateCallback)
+    } else {
+      PubSub.subscribe(topic, updateForm)
+    }
+
+    if (syncWithDatabase) {
+      UtilsGraphQLObject.listOne(graphqlURI, cookies, name, topic)
+    }
+
+    if (params && onUpdateCallback) {
+      log("useEffect: params: ", params)
+      form.reset(params)
+      //onUpdateCallback(null, params)
+    }
   }, [])
 
   const minChars = 2
@@ -200,7 +216,7 @@ export default function DynamicForm({ type }) {
   formMetadata.formDefinitionByFieldsName = getFormDefinitionByFieldsName(formMetadata.formDefinition)
   formMetadata.defaultValues = getDefaultValuesFromFormDefinition(formMetadata.formDefinition)
   formMetadata.formSchema = getFormSchema(formMetadata.formDefinition)
-  log.trace("formMetadata: ", formMetadata)
+  log("formMetadata: ", formMetadata)
 
   const FormSchema = z.object(formMetadata.formSchema)
   let form = useForm<z.infer<typeof FormSchema>>({
@@ -215,7 +231,7 @@ export default function DynamicForm({ type }) {
 //  let defaultCBB = { displayFormLabel: true, cnFormLabel: "w-[200px] text-right" }
   let defaultCBB = { displayFormLabel: true, cnFormLabel: "w-[400px] text-left" }
 
-  log.trace("updateForm: formMetadata.formDefinition: ", formMetadata.formDefinition)
+  log("updateForm: formMetadata.formDefinition: ", formMetadata.formDefinition)
 
   let normalizedFormDefinition = formMetadata.formDefinition.filter(({ name }) => name ? true : false)
   normalizedFormDefinition = normalizedFormDefinition.map((field) => {
@@ -239,7 +255,7 @@ export default function DynamicForm({ type }) {
   //alert('DefaultValue: ' + JSON.stringify(Object.keys(fieldsByGroup)[0]))
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmitCallback ? onSubmitCallback : onSubmit)} className="space-y-6">
 
         <Tabs defaultValue={t(Utils.camelize(Object.keys(fieldsByGroup)[0]))}>
 
