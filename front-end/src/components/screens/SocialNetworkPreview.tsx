@@ -90,7 +90,7 @@ export default function SocialNetworkPreview({
     }
 
     function saveContent() {
-        log("saveContent")
+        log("saveContent: nothing is done. The user must do it by hand in the editor.")
     }
     
     /**
@@ -302,6 +302,41 @@ export default function SocialNetworkPreview({
         return width
     }
 
+/*
+    function handleForm() {
+        log("handleForm")
+        let attachmentOptions = {
+            ...getAttachmentGenerationOptions(),
+            title: getAttachmentGenerationOptions()?.title + "X"
+        }
+        log("handleForm: attachmentOptions", attachmentOptions)
+        let myOptions = {
+            attachmentGenerationOptions: attachmentOptions,
+            attachmentViewType: getAttachmentViewType(),
+            attachmentViewOptions: getAttachmentViewOptions()
+        }
+        log("handleForm: myOptions", myOptions)
+        setOptions(myOptions)
+    }
+*/
+    function handleForm() {
+        log("handleForm")
+        let attachmentOptions = {
+            ...options.attachmentGenerationOptions,
+            "title": options.attachmentGenerationOptions?.title + "X",
+            "backgroundImage": "https://images.pexels.com/photos/2088205/pexels-photo-2088205.jpeg"
+        }
+        log("handleForm: attachmentOptions", attachmentOptions)
+        let myOptions = {
+            attachmentGenerationOptions: attachmentOptions,
+            attachmentViewType: options.attachmentViewType,
+            attachmentViewOptions: options.attachmentViewOptions
+        }
+        log("handleForm: myOptions", myOptions)
+        //setOptions(myOptions)
+        PubSub.publish("SIMULATE_HANDLE_CHANGE", {jsonSource: myOptions})
+    }
+
     function getLinkedInContent(editorWithContent, data: ContentProps) {
         if (! data.content || typeof data.content !== "string") {
             return <>{t("NoContent")}</>
@@ -386,7 +421,7 @@ export default function SocialNetworkPreview({
                         <div className="flex gap-2 m-2 float-right">
                             {"alone" === mode && <div className="">{getButton(mode, enterInEditAndPreviewMode, "enterInEditAndPreviewMode")}</div>}
                             {"edit" === mode &&
-                                <div className="">
+                                <div className="flex gap-2">
                                     {getButton(mode, preview, "preview")}
                                     {getButton(mode, saveAll, "saveAll")}
                                     {/*getButton(mode, save, "save")*/}
@@ -394,7 +429,7 @@ export default function SocialNetworkPreview({
                                 </div>
                             }
                             {"preview" === mode &&
-                                <div className="">
+                                <div className="flex gap-2">
                                     {/*getButton(mode, saveCarousel, "saveCarousel")*/}
                                     {getButton(mode, saveOnLinkedInAsDRAFT, "saveOnLinkedInAsDRAFT")}
                                     {getButton(mode, saveOnLinkedInAsPUBLISHED, "saveOnLinkedInAsPUBLISHED")}
@@ -414,8 +449,9 @@ export default function SocialNetworkPreview({
                         { "edit" === mode &&
                             <Tabs defaultValue="edit" className="w-full">
                                 <TabsList className="w-full">
-                                    <TabsTrigger value="edit" className="w-1/2 text-center">{t("Edit")}</TabsTrigger>
-                                    <TabsTrigger value="layout" className="w-1/2 text-center">{t("Layout")}</TabsTrigger>
+                                    <TabsTrigger value="edit" className="w-1/3 text-center">{t("Edit")}</TabsTrigger>
+                                    <TabsTrigger value="metadata" className="w-1/3 text-center">{t("Metadata")}</TabsTrigger>
+                                    <TabsTrigger value="layout" className="w-1/3 text-center">{t("Layout")}</TabsTrigger>
                                 </TabsList>
                                 <TabsContent value="edit" className="w-full">
                                     <div className='p-3 pt-0'>
@@ -424,6 +460,11 @@ export default function SocialNetworkPreview({
                                         {editorWithContent && editorWithContent}
                                     </div>
                                     {footer}
+                                </TabsContent>
+                                <TabsContent value="metadata" className="w-full">
+                                    <div>
+                                        <Button onClick={handleForm}>Add x</Button>
+                                    </div>
                                 </TabsContent>
                                 <TabsContent value="layout" className="w-full">
                                     <div className='p-3 pt-0'>
@@ -475,7 +516,11 @@ export default function SocialNetworkPreview({
         let topicPDF = "PDF_EXPORT_OPTIONS_UPDATED"
         PubSub.subscribe(topicPDF, (topic, message) => {
             log("useEffect: topic: ", topic, "message: ", message)
-            setOptions(message)
+            if (message?.params) {
+                setOptions(message.params)
+            } else {
+                setOptions(message)
+            }
         })
 
     }, [])

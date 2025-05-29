@@ -23,7 +23,8 @@ BaseCodeEditor({
     action = null,
     onChange = null,
     driver = null,
-    editorPreOptions = {},
+    driver = null,
+    width = 830,
     editorPostOptions = {},
     languageOptions = {},
     showSaveButton = true}
@@ -128,6 +129,7 @@ BaseCodeEditor({
       initialValue ?
         <>
           <Editor
+            width={width}
             height="50vh"
             defaultLanguage={language}
             options={{

@@ -33,15 +33,30 @@ export default function JSCodeEditor({source = ""}) {
     })
   }
 
-  function handleChange(source) {
-    log("handleSave: source: ", source)
-
-    let jsonSource = Utils.convert2json(source)
+  function publishToTopics(jsonSource) {
     topics.map((topic, i) => {
       let message = { params: jsonSource }
       log("handleSave: Publishing: topic: ", topic, "message: ", message)
       PubSub.publish(topic, message)
     })
+
+  }
+
+  /**
+   * When source code editor is updated through state, it is not consiedered as a change, so we need to simulate it
+   * @param {*} ptopic 
+   * @param {*} message 
+   */
+  function simulateHandleChange(ptopic, message) {
+    log("simulateHandleChange: source: ", source)
+    let jsonSource = message.jsonSource
+    publishToTopics(jsonSource)
+  }
+
+  function handleChange(source) {
+    log("handleChange: source: ", source)
+    let jsonSource = Utils.convert2json(source)
+    publishToTopics(jsonSource)
   }
 
   function updateSourceEditor(message) {
@@ -80,6 +95,7 @@ export default function JSCodeEditor({source = ""}) {
   }
 
   useEffect(() => {
+    PubSub.subscribe("SIMULATE_HANDLE_CHANGE", simulateHandleChange)
   }, []);
 
   let languageOptions = {}
