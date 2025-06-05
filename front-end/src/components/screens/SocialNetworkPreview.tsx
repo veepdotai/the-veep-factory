@@ -49,8 +49,8 @@ export default function SocialNetworkPreview({
         action = null,
         attachmentGenerationOptions = {},
         attachmentViewType = "custom",
-        attachmentViewOptions = {}}
-    ) {
+        attachmentViewOptions = {}
+    }) {
         
     const log = (...args) => Logger.of(SocialNetworkPreview.name).trace(args)
 
@@ -64,7 +64,7 @@ export default function SocialNetworkPreview({
 
     log("main: node: ", data)
     let tvfTemplate = Utils.convert2json(Utils.normalize(data?.tvfTemplate), false)
-    log("main: databaseId:", data.databaseId, "localId:", localId, "tvfTemplate (normalized): ", tvfTemplate)
+    log("main: databaseId:", data?.databaseId, "localId:", localId, "tvfTemplate (normalized): ", tvfTemplate)
 
     const [options, setOptions] = useState(tvfTemplate && "" !== tvfTemplate? tvfTemplate : {
         attachmentGenerationOptions: attachmentGenerationOptions,
@@ -103,28 +103,46 @@ export default function SocialNetworkPreview({
         let params = {
             graphqlURI: Constants.WORDPRESS_GRAPHQL_ENDPOINT,
             cookies: cookies,
-            contentId: data.databaseId,
+            contentId: data?.databaseId,
             name: "tvfTemplate",
             value: Utils.denormalize(layoutSource)
         }
-        log("handleSaveLayout: params:", params)
-        UtilsGraphQLObject.saveMetadata(params)
+
+        if ("" !== params.value) {
+            log("handleSaveLayout: params:", params)
+            UtilsGraphQLObject.saveMetadata(params)
+        } else {
+            Utils.notify({
+                title: t(""),
+                description: t("")
+            })
+            log("handleSaveLayout: params:", params)
+        }
+
     }
 
     function saveLayout() {
         log("saveLayout")
-        PubSub.publish("PROCESS_CODE_EDITOR_CONTENT", {action: handleSaveLayout})
+
+        let myOptions = {
+            attachmentGenerationOptions: options?.attachmentGenerationOptions,
+            attachmentViewType: options?.attachmentViewType,
+            attachmentViewOptions: options?.attachmentViewOptions
+        }
+        log("handleForm: myOptions", myOptions)
+        handleSaveLayout(myOptions)
+        //PubSub.publish("PROCESS_CODE_EDITOR_CONTENT", {action: handleSaveLayout})
     }
 
     function saveCarousel() {
         log("saveCarousel")
-        let fileName = data.databaseId + "-" + localId + ".pdf"
+        let fileName = data?.databaseId + "-" + localId + ".pdf"
         let attachmentPath = moment().format("/YYYY/MM/") + fileName
         PubSub.publish( "PROCESS_PDF_" + localId, {fileName: fileName})
         let params = {
             graphqlURI: Constants.WORDPRESS_GRAPHQL_ENDPOINT,
             cookies: cookies,
-            contentId: data.databaseId,
+            contentId: data?.databaseId,
             name: "tvfGeneratedAttachment",
             value: attachmentPath
         }
@@ -147,7 +165,7 @@ export default function SocialNetworkPreview({
         let params = {
             graphqlURI: Constants.WORDPRESS_GRAPHQL_ENDPOINT,
             cookies: cookies,
-            content_id: data.databaseId,
+            content_id: data?.databaseId,
             lifecycleState: lifecycleState,
             topics: []
         }
@@ -245,7 +263,7 @@ export default function SocialNetworkPreview({
     function getPDFContent(content) {
         //let pdfContent = data.content.replace(/.*---.*---(\r?\n?)*(.*)/mis, "$1").trim()
         log("getPDFContent: before transformation: content: ", content)
-        let pdfContent = content.replace(/.*---[^\r\n]*---(.*)/mis, "$1")
+        let pdfContent = content?.replace(/.*---[^\r\n]*---(.*)/mis, "$1")
         log("getPDFContent: ", pdfContent)
         return pdfContent
     }
@@ -321,8 +339,8 @@ export default function SocialNetworkPreview({
         log("handleForm: attachmentOptions", attachmentOptions)
         let myOptions = {
             attachmentGenerationOptions: attachmentOptions,
-            attachmentViewType: options.attachmentViewType,
-            attachmentViewOptions: options.attachmentViewOptions
+            attachmentViewType: options?.attachmentViewType,
+            attachmentViewOptions: options?.attachmentViewOptions
         }
         log("handleForm: myOptions", myOptions)
         //setOptions(myOptions)
@@ -330,7 +348,7 @@ export default function SocialNetworkPreview({
     }
 
     function getLinkedInContent(editorWithContent, data: ContentProps) {
-        if (! data.content || typeof data.content !== "string") {
+        if (! data?.content || typeof data?.content !== "string") {
             return <>{t("NoContent")}</>
         }
 
@@ -338,21 +356,21 @@ export default function SocialNetworkPreview({
         let textStyle = "text-xs text-slate-500"
         
         let maxBaselineLength = 50
-        let baseline = data?.baseline ? data.baseline : t("DefaultLIBaseline")
+        let baseline = data?.baseline ? data?.baseline : t("DefaultLIBaseline")
         
-        let content = data.content.replace(/(.*)---[^\r\n]*---.*/mis, "$1")
+        let content = data?.content.replace(/(.*)---[^\r\n]*---.*/mis, "$1")
         //let content = data.content
         let maxLength = 80
-        let condensedLines = content.substring(0, maxLength).split(/\n/)
-        let allLines = content.split(/\n/)
+        let condensedLines = content?.substring(0, maxLength).split(/\n/)
+        let allLines = content?.split(/\n/)
 
-        let author = data.author
+        let author = data?.author
 
         let header =
             <div className="pt-2 flex flex-row">
                 <Avatar className="">
-                    <AvatarImage src={data.avatarUrl} alt={data.author} />
-                    <AvatarFallback>{author ? author.substring(0, 2).toUpperCase() : "CN"}</AvatarFallback>
+                    <AvatarImage src={data?.avatarUrl} alt={data?.author} />
+                    <AvatarFallback>{author ? author?.substring(0, 2).toUpperCase() : "CN"}</AvatarFallback>
                 </Avatar>
                 <div className="ms-2 flex-column">
                     <div className="text-strong text-xs align-middle">{author} {dotChar} <span className={textStyle}>1st</span></div>
@@ -364,12 +382,12 @@ export default function SocialNetworkPreview({
         let truncatedContent = 
             <div id="rootLinkedinContent" className="mt-2 text-slate-800 text-xs">
                 <div id="linkedinContent">
-                    { ! condensedView && allLines.map((line, i) => <p key={i} className="">{line}&nbsp;</p>)}
-                    { condensedView && condensedLines.map((line, i) => {
+                    { ! condensedView && allLines?.map((line, i) => <p key={i} className="">{line}&nbsp;</p>)}
+                    { condensedView && condensedLines?.map((line, i) => {
                         return (
                             <p key={i} className="">
                                 {line}
-                                { i == condensedLines.length - 1 &&
+                                { i == condensedLines?.length - 1 &&
                                     <a className="cursor-pointer hover:text-underline" onClick={(e) => {setCondensedView(false)}}>
                                         <span className="text-slate-500">&nbsp;...more</span>
                                     </a>
@@ -384,7 +402,7 @@ export default function SocialNetworkPreview({
             <div className='w-100'>
                 <PDF className="h-75"
                     id={localId}
-                    initContent={getPDFContent(data.content)}
+                    initContent={getPDFContent(data?.content)}
                     initParams={new PDFParams(getAttachmentGenerationOptions())}
                     viewType={getAttachmentViewType()}
                     viewOptions={getAttachmentViewOptions()}
@@ -396,7 +414,7 @@ export default function SocialNetworkPreview({
                 <div className="flex justify-between w-100 pt-1">
                     {["Up", "Support", "Publish", "Share"].map((action) => 
                         <a key={action} onClick={() => alert(t("JustPreview"))} className="px-3 py-1 rounded-1 hover:cursor-pointer hover:bg-slate-100 text-xs d-inline align-middle">
-                            {getIcon(action.toLowerCase())} {t("LI" + action)}
+                            {getIcon(action?.toLowerCase())} {t("LI" + action)}
                         </a>)
                     }
                 </div>
@@ -434,7 +452,7 @@ export default function SocialNetworkPreview({
                         </div>
                         { "alone" === mode &&
                             <div className='p-3 pt-0'>
-                                {data.content}
+                                {data?.content}
                                 {/*editorWithContent && editorWithContent*/}
                             </div>
                         }
@@ -457,10 +475,10 @@ export default function SocialNetworkPreview({
                                     <div>
                                         <DynamicForm
                                             params={{
-                                                title: options.attachmentGenerationOptions?.title || "",
-                                                subtitle: options.attachmentGenerationOptions?.subtitle || "",
-                                                backCoverTitle: options.attachmentGenerationOptions?.backCoverTitle || "",
-                                                backCoverSubtitle: options.attachmentGenerationOptions?.backCoverContent || "",
+                                                title: options?.attachmentGenerationOptions?.title || "",
+                                                subtitle: options?.attachmentGenerationOptions?.subtitle || "",
+                                                backCoverTitle: options?.attachmentGenerationOptions?.backCoverTitle || "",
+                                                backCoverSubtitle: options?.attachmentGenerationOptions?.backCoverContent || "",
 
                                             }}
                                             type={"pdf-export"}
@@ -521,7 +539,7 @@ export default function SocialNetworkPreview({
         PubSub.subscribe(topicPDF, (topic, message) => {
             log("useEffect: topic: ", topic, "message: ", message)
             if (message?.params) {
-                setOptions(message.params)
+                setOptions(message?.params)
             } else {
                 setOptions(message)
             }

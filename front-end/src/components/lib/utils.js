@@ -198,7 +198,11 @@ export const Utils = {
 		if (! source || "" === source) {
 			return ""
 		} else {
-			let r = source
+			let layoutSource = source
+			if ("object" === typeof source) {
+				layoutSource = JSON.stringify(source)
+			}
+			let r = layoutSource
 						.replace(/"/g, "_G_")	// fix() to mange '"'
 						.replace(/\n/g, "_EOL_") // fix() to manage '\n'
 						.replace(/\\/g, "_AS_")	// fix() to manage '\"'
