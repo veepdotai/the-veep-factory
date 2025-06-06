@@ -458,7 +458,7 @@ export default function PromptForm({definition, handleClose}) {
                             let eventKey = i == 1 ? row : row;
                             //let eventKey = i == 1 ? "__prompt__FiRsT__" : row;
                             //let eventKey = i == 1 ? "__prompt__FiRsT__" : "rowIs" + i;
-                            if (i > 0) { // i == 0 => prompts.chain
+                            if (! ["chain", "output"].includes(row)) { // i == 0 => prompts.chain
                               return (
                                 <Stack key={eventKey} direction="horizontal" gap={3}>
                                   <Nav.Item className="w-100">
