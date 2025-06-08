@@ -50,6 +50,7 @@ export default function Process( props ) {
 
     useEffect(() => {
         if (navbars) {
+            log.trace("useEffect: navbars:", navbars)
             setLinks(
                 navbars.map((item) => {
                     return (
@@ -105,7 +106,12 @@ export default function Process( props ) {
                     {/*<Nav variant="underline" className="">*/}
                         {
                             ! isDesktop ?
-                                <NavDropdown className="w-100" id="process-menu-contents" title="Generated contents" activeKey="Dropdown-generated-contents">
+                                <NavDropdown
+                                    className="w-100"
+                                    id="process-menu-contents"
+                                    title="Generated contents"
+                                    activeKey="Dropdown-generated-contents"
+                                >
                                     {links}
                                 </NavDropdown>
                             :

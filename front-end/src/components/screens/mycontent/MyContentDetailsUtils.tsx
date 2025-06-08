@@ -22,14 +22,14 @@ export default class MyContentDetailsUtils {
 
 //  static format(_content, _parse = false, needle = "(\\.|\\!|\\?)\\s+([A-Z])", replacement = "$1<br /><br />$2") {
   static format(_content, _parse = false, needle = "(\\.|\\!|\\?)\\s+([A-Z])", replacement = "$1\n\n$2") {
-      if (_content) {
+    if (_content && "" !== _content) {
       // by default: _content.replace(/\.\s+/g, "<br /><br />");
       let needleRe = new RegExp(`${needle}`, "g")
-      let r = _content.replace(needleRe, replacement)
       if (! _parse) {
+        let r = _content?.replace(needleRe, replacement)
         return r
       } else {
-        let r = _content.replace(/(<br\s+\/>)+/g, "\n\n")
+        let r = _content?.replace(/(<br\s+\/>)+/g, "\n\n")
         return r
         //return parse(r);
       }
@@ -63,7 +63,7 @@ export default class MyContentDetailsUtils {
       log("i: ", i, "attrName: ", attrName, "data: ", data)
 
       if (data?.__typename === 'post') {
-        if (! attrName) {
+        if (! attrName || "" === attrName) {
           result = data[`veepdotaiPhase${i}Content`];
         } else {
           result = data[attrName]

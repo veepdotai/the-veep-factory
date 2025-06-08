@@ -75,9 +75,9 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
       let node = {}
 
       try {
-        title = prompt.prompts[promptId].label;
-        if (title.indexOf("STOP") >= 0) return (<></>);
+        if ("STOP" === _promptId) return (<></>)
 
+        title = prompt.prompts[promptId].label;
         node = MyContentDetailsUtils.getData(data, i, attrName)
         log.trace("getContentThroughPrompt: node:", node)
       } catch (e) {
@@ -170,9 +170,10 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
      */
     function getContents(chain, viewType, params) {
       //let chain = [].concat(prompt.prompts.chain);
-        log.trace("getCompareView: chain: " + typeof chain + " / ", chain);
+        log.trace("getContents: chain: " + typeof chain + " / ", chain);
         let stepsNb = chain?.length;
         let contents = chain.map((_promptId, i) => <Fragment key={_promptId}>{getContentThroughPrompt(_promptId, i, viewType, params)}</Fragment>);
+        log.trace("getContents: contents:", contents);
 
         return (
           <div className={`p-1`}>

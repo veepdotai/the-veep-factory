@@ -226,6 +226,13 @@ class Generation_Process {
         self::log( __METHOD__ . ": content_id: $content_id." );
 
         $meta = get_post_meta( $content_id );
+
+        if ( isset( $meta[ "veepdotaiParent" ] ) && $meta[ "veepdotaiParent" ][0]) {
+            $parent_id = $meta[ "veepdotaiParent" ][0];
+            $meta = get_post_meta( $parent_id );
+        } else {
+            $parent_id = $content_id;
+        }
         self::log( __METHOD__ . ": meta: " . print_r( $meta, true ) );
 
         /**
@@ -300,12 +307,14 @@ class Generation_Process {
                     continue;
                 }
 
-                if ( $prompt == "STOP" ) {
+                //if ( $prompt == "STOP" ) {
+                if ( $label == "STOP" ) {
                     self::log_step_paused2( $pid, "_CONTENT_GENERATION_", "cid:${new_content_id}");
                     //self::update_last_step_done( $chain[$i + 1], $content_id );
-                    self::update_last_step_done( $i + 1, $content_id );
+                    self::update_last_step_done( $i + 1, $parent_id );
                     self::log( __METHOD__ . ": please pause!");
-                    return $content_id;
+                    return $parent_id;
+                    //return $content_id;
                 } else {
                     self::log_step_continued2( $pid, "_CONTENT_GENERATION_", "cid:${new_content_id}");
                 }
@@ -314,7 +323,8 @@ class Generation_Process {
             }
 
             // The step must be done so we do it!
-            $new_content_id = self::generate($content_id, $pid, $veeplet, $instructions, "_PHASE${label_encoded}_GENERATION_", "ai-section-edcal1-phase${label_encoded}", $result, $i, $label_encoded);
+            //$new_content_id = self::generate($content_id, $pid, $veeplet, $instructions, "_PHASE${label_encoded}_GENERATION_", "ai-section-edcal1-phase${label_encoded}", $result, $i, $label_encoded);
+            $new_content_id = self::generate($parent_id, $pid, $veeplet, $instructions, "_PHASE${label_encoded}_GENERATION_", "ai-section-edcal1-phase${label_encoded}", $result, $i, $label_encoded);
 
             self::log( __METHOD__ . ": write_generation_details - content_id: {$new_content_id}" );
             do_action( "write_generation_details", $user, $new_content_id );

@@ -54,14 +54,16 @@ export default class Veeplet {
     static getChainAsArray(prompt) {
         Veeplet.log.trace("static getChain: prompt: ", prompt);
         if (Array.isArray(prompt)) {
+            Veeplet.log.trace("static getChain: prompt is an array")
             let pWithoutStop = prompt.filter((value) => /STOP/.test(value) ? false : true)
-            Veeplet.log.trace("static getChain: prompt is an array");
-            Veeplet.log.trace("static getChain: prompt is now an array without STOP: ", pWithoutStop);
-            return pWithoutStop;
+            Veeplet.log.trace("static getChain: prompt is now an array without STOP: ", pWithoutStop)
+            //return prompt
+            return pWithoutStop
         } else if (typeof prompt == "string") {
             Veeplet.log.trace("static getChain: prompt is a string");
             let pWithoutStop = prompt.replaceAll(/,\s*STOP\s*/g, "")
             Veeplet.log.trace("static getChain: prompt is now an array without STOP: ", pWithoutStop);
+            //return prompt.split(/\s*,\s*/);
             return pWithoutStop.split(/\s*,\s*/);
         }
     }
@@ -242,23 +244,36 @@ export default class Veeplet {
         let i = 0;
         let result = chain.map((_promptId) => {
             let promptId = EKeyLib.encode(_promptId);
-            Veeplet.log.trace(`getSections: promptId: ${promptId}`);
+            if ("STOP" === _promptId) {
+                let key = `phase${promptId}`;
+                let _topic = `_PHASE${promptId}_GENERATION_`;
+                return {
+                    name: "STOP",
+                    title: "🛑", // ⛔
+                    topic: _topic + "FINISHED_",
+                    option: this.prefix + key,
+                    contentListeners: _topic
+                }
+            } else {
 
-            let prompt = prompts[promptId];
-            Veeplet.log.trace(`getSections: prompt: ${prompt}`);
-            //let _topic = (prompt.topic || "_" + prompt.name.toUpperCase());
-            //let _topic = (prompt.topic || "_PHASE" + i + "_GENERATION_");
-            let _topic = (prompt?.topic || `_PHASE${promptId}_GENERATION_`);
-            Veeplet.log.trace(`getSections: _topic: ${_topic}`);
-            //let key = "phase" + i;
-            let key = `phase${promptId}`;
-            i++;
-            return {
-                name: prompt.label,
-                title: prompt.label == "STOP" ? "🛑" : prompt.label, // ⛔
-                topic: _topic + "FINISHED_",
-                option: this.prefix + key,
-                contentListeners: _topic
+                Veeplet.log.trace(`getSections: promptId: ${promptId}`);
+    
+                let prompt = prompts[promptId];
+                Veeplet.log.trace(`getSections: prompt: ${prompt}`);
+                //let _topic = (prompt.topic || "_" + prompt.name.toUpperCase());
+                //let _topic = (prompt.topic || "_PHASE" + i + "_GENERATION_");
+                let _topic = (prompt?.topic || `_PHASE${promptId}_GENERATION_`);
+                Veeplet.log.trace(`getSections: _topic: ${_topic}`);
+                //let key = "phase" + i;
+                let key = `phase${promptId}`;
+                i++;
+                return {
+                    name: prompt.label,
+                    title: prompt.label,
+                    topic: _topic + "FINISHED_",
+                    option: this.prefix + key,
+                    contentListeners: _topic
+                }
             }
         });
 

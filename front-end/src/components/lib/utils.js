@@ -128,16 +128,14 @@ export const Utils = {
 
 	format(_content, _parse = false) {
 		let log = (...args) => Utils.log("format:", args)
-		if (_content) {
+		if (_content && "" !== _content) {
 		  if (! _parse) {
-			let r = _content.replace(/\n/g, "<br />")
+			let r = _content?.replace(/\n/g, "<br />")
 			log("parse: false | content:", r)
 			return r
 		  } else {
 			//let r = parse(_content.replace(/\n/g, "<br />"))
-			let r = _content.replace(/(<br\s+\/>)+/g, "\n\n")
-			//r = "Trois\nDeux\nUn\n" 
-			
+			let r = _content?.replace(/(<br\s+\/>)+/g, "\n\n")			
 			log("parse: true | content:", r)
 			return r 
 		  }
