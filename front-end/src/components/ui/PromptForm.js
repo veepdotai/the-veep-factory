@@ -493,7 +493,7 @@ export default function PromptForm({definition, handleClose}) {
                               let eventKey = i == 1 ? row : row;
                               //let eventKey = i == 1 ? "__prompt__FiRsT__" : row;
                               //let eventKey = i == 1 ? "__prompt__FiRsT__" : "rowIs" + i;
-                              if (i > 0) {
+                            if (! ["chain", "output"].includes(row)) { // i > 0 => ! prompts.chain && ! prompts.output
                                 return (
                                   <Tab.Pane key={eventKey} eventKey={eventKey}>
                                     <Row>

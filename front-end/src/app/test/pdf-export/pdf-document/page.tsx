@@ -37,6 +37,8 @@ La plate-forme pour faire du business qui connecte tous les pros
 
 `
 
+initText = testdata.textSlides
+
 export default function MyPDFDocument() {
   const log = Logger.of(MyPDFDocument.name)
 
