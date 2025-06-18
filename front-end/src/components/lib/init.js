@@ -4,6 +4,8 @@ import { Constants } from "src/constants/Constants"
 import initAppJSLogs from './init-logs.js'
 import { pushState } from './utils-analytics.js';
 
+import defaultUserAppConfig from './default-user-app-config.json'
+
 export default function initVeepdotaiApp(setCookie, setDone) {
     const log = Logger.of(initVeepdotaiApp.name);
 
@@ -66,6 +68,11 @@ export default function initVeepdotaiApp(setCookie, setDone) {
 
         if (Constants.DEFAULT_USER == null) {
             Constants.DEFAULT_USER = "demo";
+        }
+
+        if (Constants.DEFAULT_USER_APP_CONFIG == null) {
+            Constants.DEFAULT_USER_APP_CONFIG = defaultUserAppConfig
+            log.trace("initConstants: Constants.DEFAULT_USER_APP_CONFIG:", Constants.DEFAULT_USER_APP_CONFIG)
         }
 
         return Constants;

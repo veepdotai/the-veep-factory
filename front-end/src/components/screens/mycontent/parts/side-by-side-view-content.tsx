@@ -1,6 +1,7 @@
-import { Fragment, useState } from 'react';
-import { Logger } from 'react-logger-lib';
-
+import { Fragment, useState } from 'react'
+import { Logger } from 'react-logger-lib'
+import { UtilsContent } from "../../../lib/utils-content"
+import { Utils, guv } from "../../../lib/utils"
 import parse from 'html-react-parser';
 
 import EKeyLib from '../../../lib/util-ekey';
@@ -17,21 +18,28 @@ import SocialNetworkPreview from '../../SocialNetworkPreview';
 
 import defaultData from 'src/config/layout-default.json'
 import MergedContent from './MergedContent';
+import { cn } from '@/lib/utils'; 
 
 export default function SideBySideViewContent( { prompt, data, cid, width = 1 } ) {
     const log = Logger.of(SideBySideViewContent.name)
 
-    const USERAPP_DEFAULT_VIEW = "preview"
+    const _guv = (param, defaultData) => guv("SideBySideViewContent_" + param, defaultData)
+
+    const DEV = {
+      "DEFAULT_VIEW": "preview",
+      "DEFAULT_PREVIEW_WIDTH": "[500px]",
+      "DEFAULT_PREVIEW_HEIGHT": "[200px]",
+    }
 
     const MAX = ["xs", "sm", "md", "lg", "xl"]
-    const [viewType, setViewType] = useState(USERAPP_DEFAULT_VIEW) // normal, carousel, preview 
+    const [viewType, setViewType] = useState(_guv("DEFAULT_VIEW", DEV)) // normal, carousel, preview 
         
     function getViewTypes() {
       return (
-        <div className="flex flex-row gap-2">
-          <Button variant={viewType === "normal" ? "default" : "ghost"} className="text-md" onClick={() => setViewType("normal")}>Normal</Button>
-          <Button variant={viewType === "carousel" ? "default" : "ghost"} className="text-md" onClick={() => setViewType("carousel")}>Carousel</Button>
-          <Button variant={viewType === "preview" ? "default" : "ghost"} className="text-md" onClick={() => setViewType("preview")}>Preview</Button>
+        <div className="flex flex-row text-sm gap-2">
+          <Button variant={viewType === "normal" ? "default" : "ghost"} className="m-0 p-0" onClick={() => setViewType("normal")}>Normal</Button>
+          <Button variant={viewType === "carousel" ? "default" : "ghost"} className="m-0 p-0" onClick={() => setViewType("carousel")}>Carousel</Button>
+          <Button variant={viewType === "preview" ? "default" : "ghost"} className="m-0 p-0" onClick={() => setViewType("preview")}>Preview</Button>
         </div>
       )
     }
@@ -46,58 +54,6 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
         } else {
           return "";
         }
-    }
-
-    function getContent(lcid, attrName, title, content, viewType) {
-      return (
-        <>
-        {/*<div className={`m-auto h-100`}>*/}
-          {MergedContent.getEditor({
-            cid: lcid,
-            attrName: attrName,
-            title: title,
-            content: content,
-            view: viewType
-          })}
-        {/*</div>*/}
-        </>
-      )
-    }
-    
-    /**
-     * Get content through the execution of the provided prompt
-     */
-    function getContentThroughPrompt(_promptId, i, viewType, params) {
-      let promptId = EKeyLib.encode(_promptId);
-
-      let title = ''
-      let attrName = ''
-      let node = {}
-
-      try {
-        if ("STOP" === _promptId) return (<></>)
-
-        title = prompt.prompts[promptId].label;
-        node = MyContentDetailsUtils.getData(data, i, attrName)
-        log.trace("getContentThroughPrompt: node:", node)
-      } catch (e) {
-        return (<></>)
-      }
-
-      // raw content for preview
-      let _content = node?.content ? node.content : node
-      let lcid = node?.cid ? node.cid : cid
-
-      // embeds content with editor
-      let content = getContent(lcid, attrName, title, _content, viewType)
-
-      return (
-        <>
-          {"carousel" == viewType && getCarouselItem(content, i)}
-          {"normal" == viewType && content}
-          {"preview" == viewType && getPreviewItem(node.data, content, _content, i, params)}
-        </>
-      )
     }
 
     /**
@@ -125,6 +81,10 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
       )
     }
 
+    function getNormalItem(content) {
+      return content
+    }
+
     /**
      * Preview view
      */
@@ -132,10 +92,23 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
       log.trace("getPreviewItem: node: ", node)
       log.trace("getPreviewItem: document: ", document)
 
+
+      let outerCN = `flex w-${_guv("DEFAULT_PREVIEW_WIDTH", DEV)} m-2`
+      log.trace("getPreviewItem: outerCN:", outerCN)
+
+      let innerCN = `h-${_guv("DEFAULT_PREVIEW_HEIGHT", DEV)}` // "h-100" 
+      log.trace("getPreviewItem: innerCN:", innerCN)
+
       return (
-        <div key={i} className="flex w-[550px] m-2">
-          <ScrollArea className="h-100">
-              <SocialNetworkPreview data={node} editorWithContent={editorWithContent} content={{content: content}} mode="alone" {...params} />
+        <div key={i} className={cn(outerCN, innerCN)}>
+          <ScrollArea className={innerCN}>
+              <SocialNetworkPreview
+                data={node}
+                editorWithContent={editorWithContent}
+                content={{content: content}}
+                mode="alone"
+                {...params}
+              />
           </ScrollArea>
         </div>
       )
@@ -165,14 +138,44 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
       )
     }
 
+    function getViewItem({data, editorWithContent, content, viewType, i, params}) {
+      log.trace("getViewItem: data:", data, "editorWithContent:", editorWithContent, "content:", content, "viewType:", viewType, "i:", i, "params:", params)
+      let res
+      switch (viewType) {
+        case "carousel":
+          res = getCarouselItem(content, i)
+          break;
+        case "normal":
+          res = getNormalItem(content)
+          break;
+        case "preview":
+          res = getPreviewItem(data, editorWithContent, content, i, params)
+          break;
+        default:
+      }
+
+      log.trace("res:", res)
+      return res
+    }
+
     /**
      * 
      */
-    function getContents(chain, viewType, params) {
+    function getContents(data, chain, viewType, params) {
+        log.trace("getContents: data:", data, "chain:", chain, "viewType:", viewType, "params:", params)
+
       //let chain = [].concat(prompt.prompts.chain);
-        log.trace("getContents: chain: " + typeof chain + " / ", chain);
         let stepsNb = chain?.length;
-        let contents = chain.map((_promptId, i) => <Fragment key={_promptId}>{getContentThroughPrompt(_promptId, i, viewType, params)}</Fragment>);
+        let getContentsParams = (prompt, data, _promptId, i, viewType, params) => {
+          log.trace("getContentsParams: data:", data, "_promptId:", _promptId, "i:", i, "viewType:", viewType, "params:", params)
+
+          return UtilsContent.getParamsForContentThroughPrompt(prompt, data, _promptId, i, viewType, params) 
+        }
+        let contents = chain.map((_promptId, i) =>
+          <Fragment key={_promptId}>
+            {log.trace("getContentsParamsInChain.map:", getContentsParams(prompt, data, _promptId, i, viewType, params))}
+            {getViewItem(getContentsParams(prompt, data, _promptId, i, viewType, params))}
+          </Fragment>);
         log.trace("getContents: contents:", contents);
 
         return (
@@ -184,24 +187,29 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
         );
     }
 
-    let chain = Veeplet.getChainAsArray(prompt.prompts.chain);
+    function getOptions(options) {
+      let attachmentGenerationOptions = {...options.attachmentGenerationOptions}
+      let attachmentViewType = options.attachmentViewType 
+      let attachmentViewOptions = {...options.attachmentViewOptions}
+  
+      let attachmentParams = {
+        attachmentGenerationOptions: attachmentGenerationOptions,
+        attachmentViewType: attachmentViewType,
+        attachmentViewOptions: attachmentViewOptions
+      }
 
-    let attachmentGenerationOptions = {...defaultData.attachmentGenerationOptions}
-    let attachmentViewType = defaultData.attachmentViewType 
-    let attachmentViewOptions = {...defaultData.attachmentViewOptions}
-
-    let attachmentParams = {
-      attachmentGenerationOptions: attachmentGenerationOptions,
-      attachmentViewType: attachmentViewType,
-      attachmentViewOptions: attachmentViewOptions
+      return attachmentParams
     }
+
+    let chain = Veeplet.getChainAsArray(prompt.prompts.chain);
     
     //getContents(chain, viewType, attachmentParams)
     return (
       <>
+      
         <>{getViewTypes()}</>
         { chain ?
-            getContents(chain, viewType, attachmentParams)
+            getContents(data, chain, viewType, getOptions(defaultData))
           :
             <>Loading...</>
         }

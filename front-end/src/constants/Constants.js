@@ -22,8 +22,8 @@ export const Constants = {
     PDFJS_EXTERNAL_ROOT: process.env.NEXT_PUBLIC_PDFJS_EXTERNAL_ROOT ?? null,
     DEFAULT_USER: process.env.NEXT_PUBLIC_DEFAULT_USER ?? null,
     ADMIN_EMAIL: process.env.NEXT_PUBLIC_ADMIN_EMAIL ?? null,
-    ACCESS_TOKEN: process.env.NODE_ENV == "production" ? process.env.ACCESS_TOKEN : "",
-};
+    ACCESS_TOKEN: process.env.NODE_ENV == "production" ? process.env.ACCESS_TOKEN : ""
+}
 
-export const graphqlURI = Constants.WORDPRESS_GRAPHQL_ENDPOINT;
+export const graphqlURI = Constants.WORDPRESS_GRAPHQL_ENDPOINT
 

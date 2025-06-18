@@ -1,0 +1,14 @@
+{
+    "SocialNetworkPreview": {
+        "DEFAULT_WIDTH": 533,
+        "DEFAULT_EDIT_WIDTH": 800,
+        "DEFAULT_ALONE_WIDTH": 533,
+        "DEFAULT_PREVIEW_WIDTH": 533
+    },
+    "SideBySideViewContent": {
+        "DEFAULT_VIEW": "preview",
+        "DEFAULT_PREVIEW_WIDTH": "[500px]",
+        "DEFAULT_PREVIEW_HEIGHT": "[200px]"
+    }
+
+}

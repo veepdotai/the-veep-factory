@@ -138,7 +138,9 @@ export default function initAppJSLogs(level = "NONE") {
     localStorage.setItem('JSCodeEditor', level);
 
     localStorage.setItem('getColumns', level);
+    localStorage.setItem('Utils', level);
     localStorage.setItem('UtilsForm', level);
     localStorage.setItem('UtilsFormCommon', level);
+    localStorage.setItem('UtilsContent', level);
 
 }

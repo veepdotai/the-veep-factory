@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useState } from 'react'
 import { Logger } from 'react-logger-lib'
-import { t, Utils } from "src/components/lib/utils"
+import { t, guv, Utils } from "src/components/lib/utils"
 
 import moment from 'moment'
 
@@ -302,22 +302,25 @@ export default function SocialNetworkPreview({
     }
 
     function getModeSize(mode) {
+        log("getModeSize: mode: ", mode)
 
-        let width = Utils.getUserValue("SocialNetworkPreview_DEFAULT_WIDTH", 533)
+        let width = guv("SocialNetworkPreview_DEFAULT_WIDTH", 533)
         
         switch (mode) {
             case "edit":
-                width = Utils.getUserValue("SocialNetworkPreview_DEFAULT_EDIT_WIDTH", 830)
+                width = guv("SocialNetworkPreview_DEFAULT_EDIT_WIDTH", 800)
                 break
             case "alone":
-                width = Utils.getUserValue("SocialNetworkPreview_DEFAULT_ALONE_WIDTH", 533)
+                width = guv("SocialNetworkPreview_DEFAULT_ALONE_WIDTH", 533)
                 break
             case "preview":
-                width = Utils.getUserValue("SocialNetworkPreview_DEFAULT_PEVIEW_WIDTH", 533)
+                width = guv("SocialNetworkPreview_DEFAULT_PREVIEW_WIDTH", 533)
                 break
             default:
-                width = Utils.getUserValue("SocialNetworkPreview_DEFAULT_WIDTH", 533)
+                width = guv("SocialNetworkPreview_DEFAULT_WIDTH", 533)
         }
+
+        log("getModeSize: width: ", width)
 
         return width
     }
@@ -481,6 +484,7 @@ export default function SocialNetworkPreview({
                                                 backCoverSubtitle: options?.attachmentGenerationOptions?.backCoverContent || "",
 
                                             }}
+                                            importButton={false}
                                             type={"pdf-export"}
                                             onSubmitCallback={onSubmitCallback}
                                             onUpdateCallback={onUpdateCallback}
