@@ -27,7 +27,7 @@ import { UtilsGraphQLObject } from '../../../api/utils-graphql-object'
 import Loading from 'src/components/common/Loading'
 import JSON2Form from '@/components/import-to-form/JSON2Form'
 
-export default function DynamicForm({ type, params = null, onSubmitCallback = null, onUpdateCallback = null, syncWithDatabase = true }) {
+export default function DynamicForm({ type, params = null, importButton = true, onImportCallback = null, onSubmitCallback = null, onUpdateCallback = null, syncWithDatabase = true }) {
   const log = (...args) => Logger.of(DynamicForm.name).trace(args);
 
   const graphqlURI = Constants.WORDPRESS_GRAPHQL_ENDPOINT;
@@ -146,25 +146,33 @@ export default function DynamicForm({ type, params = null, onSubmitCallback = nu
     let fields = fdbg[group]
     let fieldsBySubgroup = Object.groupBy(fields, ({ subgroup }) => subgroup || "empty")
 
+    function getCN(cn, defaultOptions) {
+      if (cn) {
+        return {"cn": cn, ...defaultOptions}
+      } else {
+        return defaultOptions
+      }
+    }
+
     let res
     if (!fieldsBySubgroup) {
       res = fields.map((field) => {
-        return UFC.getFormField(form, field.name, field.type, field.options, defaultCBB)
+        return UFC.getFormField(form, field.name, field.type, field.options, getCN(field.className, defaultCBB))
       })
     } else {
       res = Object.keys(fieldsBySubgroup)
             .map((subgroup, i) => {
               if (subgroup == "empty") {
-                return fieldsBySubgroup[subgroup].map((field) => UFC.getFormField(form, field.name, field.type, field.options, defaultCBB))
+                return fieldsBySubgroup[subgroup].map((field) => UFC.getFormField(form, field.name, field.type, field.options, getCN(field.className, defaultCBB)))
               } else {
                 let subGroup = t(Utils.camelize(subgroup))
                 return (
-                  <div>
+                  <div className="w-full m-5">
                     <div key={`${subGroup}-section`} className={sectionCn}>
                       {subGroup}
                     </div>
                     <div key={`${subGroup}-items`} className=''>{/*{{ paddingLeft: "3rem"}}*/}
-                      {fieldsBySubgroup[subgroup].map((field) => UFC.getFormField(form, field.name, field.type, field.options, defaultCBB))}
+                      {fieldsBySubgroup[subgroup].map((field) => UFC.getFormField(form, field.name, field.type, field.options, getCN(field.className, defaultCBB)))}
                     </div>
                   </div>
                 )
@@ -175,11 +183,9 @@ export default function DynamicForm({ type, params = null, onSubmitCallback = nu
     return (
       <TabsContent value={t(Utils.camelize(group))} className={defaultTabsContentLayout}>
         <div className="float-right">
-          <div className='w-[300px] grid grid-cols-3 gap-2'>
-            <Button onClick={(e) => displayImportDialog(e)}>{t("Import")}</Button>
-            <Button type="submit">{t("Submit")}</Button>
+            { importButton && <Button className="mx-1" onClick={(e) => displayImportDialog(e)}>{t("Import")}</Button> }
+            <Button className="mx-1" type="submit">{t("Submit")}</Button>
             {/*<Button type="reset">{t("Reset")}</Button>*/}
-          </div>
         </div>
 
         {res}

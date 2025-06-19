@@ -6,7 +6,7 @@
         "type": "textarea",
         "constraints": "",
         "options": "",
-        "className": "",
+        "className": "w-full h-[80px]",
         "position": 0
     },
     {
@@ -16,7 +16,7 @@
         "type": "textarea",
         "constraints": "",
         "options": "",
-        "className": "",
+        "className": "w-full h-[80px]",
         "position": 1
     },
     {
@@ -26,7 +26,7 @@
         "type": "textarea",
         "constraints": "",
         "options": "",
-        "className": "",
+        "className": "w-full h-[80px]",
         "position": 2
     },
     {
@@ -36,7 +36,7 @@
         "type": "textarea",
         "constraints": "",
         "options": "",
-        "className": "",
+        "className": "w-full h-[80px]",
         "position": 3
     },
     {
