@@ -9,6 +9,9 @@
         "DEFAULT_VIEW": "preview",
         "DEFAULT_PREVIEW_WIDTH": "[500px]",
         "DEFAULT_PREVIEW_HEIGHT": "[200px]"
+    },
+    "BaseCodeEditor": {
+        "WIDTH": 800,
+        "HEIGHT": "50vh"
     }
-
 }

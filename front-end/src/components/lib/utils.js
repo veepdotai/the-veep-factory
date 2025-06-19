@@ -13,8 +13,28 @@ export const Utils = {
 		return (item && typeof item === 'object' && !Array.isArray(item));
 	},
 	
-	getUserValue: (param, defaultValue) => {
-		return Constants["USERAPP_" + param] || defaultValue
+	getUserValue: (name, defaultValue = null) => {
+		let component = name.replace(/^([a-zA-Z0-9]+)_.*/, "$1")
+		let param = name.replace(/^[a-zA-Z0-9]+_(.*)/, "$1")
+		Utils.log("getUserValue: component:", component, "param:", param, "defaultValue:", defaultValue)
+
+		let userApp = "DEFAULT_USER_APP_CONFIG"
+		let userValue = ""
+		try {
+			userValue = Constants[userApp][component][param] 
+			Utils.log(`getUserValue: Constants[${userApp}][${component}][${param}]:`, userValue)
+
+			return userValue
+		} catch(e) {
+			Utils.log(`getUserValue: Constants[${userApp}][${component}][${param}] not found:`, e)
+			if (Utils.isObject(defaultValue)) {
+				userValue = defaultValue[param]
+			} else {
+				userValue = defaultValue
+			}
+			Utils.log(`getUserValue: userValue:`, userValue)
+			return userValue
+	  	}			
 	},
 
 	mergeDeep: (target, ...sources) => {
@@ -255,4 +275,8 @@ export function t(msg) {
 	} else {
 		return msgTranslated
 	}	
+}
+
+export function guv(pref, app) {
+	return Utils.getUserValue(pref, app)
 }

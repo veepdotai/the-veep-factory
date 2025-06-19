@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Logger } from 'react-logger-lib';
 import PubSub from 'pubsub-js';
-import { t, Utils } from 'src/components/lib/utils'
+import { t, Utils, guv } from 'src/components/lib/utils'
 
 //import { loader } from '@monaco-editor/react';
 import Editor from '@monaco-editor/react';
@@ -23,13 +23,19 @@ BaseCodeEditor({
     action = null,
     onChange = null,
     driver = null,
-    width = 830,
+    width = null,
+    height = null,
     editorPostOptions = {},
     languageOptions = {},
     showSaveButton = true}
   ) {
 
   const log = (...args) => Logger.of(BaseCodeEditor.name).trace(args);
+
+  const _guv = (name, defaultValue = null) => guv("BaseCodeEditor_" + name, defaultValue);
+
+  let _width = width ? width : _guv("WIDTH", 800)
+  let _height = height ? height : _guv("HEIGHT", "50vh")
 
   const [disabledSaveButton, setDisabledSaveButton] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -128,8 +134,8 @@ BaseCodeEditor({
       initialValue ?
         <>
           <Editor
-            width={width}
-            height="50vh"
+            width={_width}
+            height={_height}
             defaultLanguage={language}
             options={{
               readOnly: false,

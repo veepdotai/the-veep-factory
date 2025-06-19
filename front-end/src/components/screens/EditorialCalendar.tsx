@@ -65,6 +65,8 @@ export default function EditorialCalendar({events}) {
             //mediaUrl: "https://researchtorevenue.wordpress.com/wp-content/uploads/2015/04/1r41ai10801601_fong.pdf",
             ...content,
         }
+        
+        // <SocialNetworkPreview data={node} editorWithContent={editorWithContent} content={{content: content}} mode="alone" {...params} />
         return (
             <SocialNetworkPreview content={_content} />
         )

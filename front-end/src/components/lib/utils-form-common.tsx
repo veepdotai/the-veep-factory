@@ -215,8 +215,9 @@ export const UtilsFormCommon = {
     getFieldType: function(form, field, fieldName, fieldType = "input", fieldValues = "", fieldOptions) {
         let log = (...args) => UtilsFormCommon.log("getFieldType: ", args);
 
-        log("field: " + fieldName, field)
+        log("field: " + fieldName, field, "fieldValues:", fieldValues, "fieldOptions:", fieldOptions)
         let lcn = fieldOptions?.cn || "" 
+
         if (fieldType === "input") {
             //let fieldValue = fieldValues ?? undefined
             let fieldValue = fieldValues
@@ -416,7 +417,7 @@ export const UtilsFormCommon = {
     getFormField: function(form, fieldName, fieldType = "input", fieldValues = null, fieldOptions = {}) {
         let _fieldName = fieldName.replace(/([^\.]*)$/, "$1")
         let fo = fieldOptions
-        let lcnFormField = "w-75"
+        let lcnFormField = "w-100"
         let lcnFieldLabel = `${fo?.cnFormLabel} font-bold text-sm mt-4 pe-2 pb-2`
         let lcnFieldDesc = `${lcnFormField} m-3 mb-4 text-xs`
         if (["listofvalues", "combobox", "checkbox"].includes(fieldType)) {
