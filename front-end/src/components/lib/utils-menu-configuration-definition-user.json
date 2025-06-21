@@ -7,7 +7,8 @@
       "items": [
         { "id": "brand-voice", "itemType": "form", "label": {"f": ["t", "BrandVoice"]}},
         { "id": "editorial-line", "itemType": "form", "label": {"f": ["t", "EditorialLine"]}},
-        { "id": "template", "itemType": "form", "label": {"f": ["t", "Template"]}}
+        { "id": "template", "itemType": "form", "label": {"f": ["t", "Template"]}},
+        { "id": "images", "itemType": "medialibrary", "label": {"f": ["t", "MediaLibrary"]}}
       ]
     }
 ]

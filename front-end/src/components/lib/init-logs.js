@@ -142,5 +142,7 @@ export default function initAppJSLogs(level = "NONE") {
     localStorage.setItem('UtilsForm', level);
     localStorage.setItem('UtilsFormCommon', level);
     localStorage.setItem('UtilsContent', level);
+    
+    localStorage.setItem('MediaLibrary', level);
 
 }

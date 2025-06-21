@@ -4,6 +4,7 @@ import { t } from 'src/components/lib/utils'
 import { Container, Tab } from 'react-bootstrap';
 import { ScreenHeading } from "src/components/common/Heading";
 import MyContent from "src/components/screens/mycontent/MyContent";
+import MediaLibrary from "src/components/MediaLibrary";
 import AllCards from '../catalog/AllCards';
 
 import { Button } from "@/components/ui/button"
@@ -179,6 +180,15 @@ export const UtilsMenu = {
                     <ScreenHeading {...props} />
                     <MyConfiguration type={row.id} />
                     <Spreadsheet />
+                  </Tab.Pane>
+                )
+                break
+              case "medialibrary":
+                return (
+                  <Tab.Pane key={row.id} eventKey={row.id}>
+                    <ScreenHeading {...props} />
+                    {/*<MyConfiguration type={row.id} />*/}
+                    <MediaLibrary />
                   </Tab.Pane>
                 )
                 break
