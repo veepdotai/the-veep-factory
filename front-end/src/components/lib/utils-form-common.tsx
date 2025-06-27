@@ -20,6 +20,7 @@ import { Textarea } from "src/components/ui/shadcn/textarea"
 import { getIcon } from '@/constants/Icons'
 import { UtilsGraphQLObject } from '@/api/utils-graphql-object'
 import Upload from '../upload-widget/page'
+import MediaLibrary from '../MediaLibrary'
 
 
 export const UtilsFormCommon = {
@@ -230,6 +231,45 @@ export const UtilsFormCommon = {
                     {/*<Input className={cn} placeholder={t(fieldName + "PlaceHolder")} {...field} />*/}
                     <Upload form={form} className={lcn} fieldName={fieldName} {...field} />
                 </>
+            )
+        } else if (fieldType === "medialibrary") {
+            function openMediaLibrary(e) {
+                e.preventDefault()
+                PubSub.publish("PROMPT_DIALOG", {
+                    title: t('Media Library'),
+                    description: t('Select or upload media items'),
+                    content: <MediaLibrary fieldName={fieldName} embeddingType='nomodal' />,
+                    actions: [
+                        {
+                            label: t('Close'),
+                        }
+                    ],
+                    outerCN: "flex flex-col items-start w-full h-full max-w-8xl"
+                })
+                
+            }
+
+            function onSelect(topic, mediaItem) {
+                let log = (...args) => UtilsFormCommon.log("onSelect: ", args)
+                log("content: ", mediaItem)
+
+                if (mediaItem && mediaItem.thumbnailUrl) {
+                    log("mediaItemUrl: ", mediaItem.thumbnailUrl)
+                    form.setValue(fieldName, mediaItem.thumbnailUrl)
+                }
+            }
+
+            let lcn = "w-[200px]"
+            let topic = "MEDIA_ITEM_SELECTED"
+            PubSub.subscribe(topic + "_" + fieldName, onSelect)
+
+            return (
+                <div class="flex gap-2">
+                    <Input id={"input-" + fieldName} className={lcn} {...field} />
+                    <Button onClick={openMediaLibrary}>
+                        {t("OpenMediaLibrary")}
+                    </Button>
+                </div>
             )
         } else if (fieldType === "textarea") {
             return (

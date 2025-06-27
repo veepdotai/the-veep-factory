@@ -16,7 +16,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from "src/components/ui/shadcn/input"
 import { UploadLib } from './UploadLib'
 
-export default function Upload({ className, fieldName, form, ...field }) {
+export default function Upload({ className, fieldName, form, allowMultiple = false, maxFiles = 1, ...field }) {
   const log = Logger.of(Upload.name)
 
   const [cookies] = useCookies(['JWT']);
@@ -65,12 +65,12 @@ export default function Upload({ className, fieldName, form, ...field }) {
   return (
     <div className="Upload">
       <Input id={"input-" + fieldName} className={cn("sr-only", className)} {...field} />
-      {form.getValues(fieldName) ? <img src={form.getValues(fieldName)} width="100"/> : <></>}
+      {false && form.getValues(fieldName) ? <img src={form.getValues(fieldName)} width="100"/> : <></>}
       <FilePond
         files={files}
         onupdatefiles={handleFiles}
-        allowMultiple={false}
-        maxFiles={1}
+        allowMultiple={allowMultiple}
+        maxFiles={maxFiles}
         //server="/api"
         name="files"
         labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'

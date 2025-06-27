@@ -15,6 +15,7 @@ import { Constants } from 'src/constants/Constants'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './ui/shadcn/tabs'
 import { Card, /*CardAction,*/ CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from './ui/shadcn/button'
+import { Checkbox } from './ui/shadcn/checkbox'
 import { Badge } from './ui/shadcn/badge'
 import { Icons, getIcon } from '@/constants/Icons'
 import DynamicForm from './screens/forms/DynamicForm'
@@ -27,8 +28,8 @@ import {
 } from "src/components/ui/shadcn/dialog"
 
 
-export default function MediaLibrary({embeddingType = "nomodal"}) {
-    const log = Logger.of(MediaLibrary.name)
+export default function MediaLibrary({fieldName, embeddingType = "nomodal"}) {
+    const log = (...args) => Logger.of(MediaLibrary.name).trace(args)
     
     const _guv = (name, defaultValue = null) => guv("MediaLibrary_" + name);
 
@@ -53,16 +54,16 @@ export default function MediaLibrary({embeddingType = "nomodal"}) {
                 fileLibraryList={mediaItems}
                 isOpen={true}
                 fileUploadCallback={() => {
-                    log.trace('File upload callback triggered');
+                    log('File upload callback triggered');
                 }}
                 filesDeleteCallback={() => {
-                    log.trace('File delete callback triggered');
+                    log('File delete callback triggered');
                 }}
                 filesSelectCallback={() => {
-                    log.trace('Files select callback triggered');
+                    log('Files select callback triggered');
                 }}
                 finishUploadCallback={() => {
-                    log.trace('Finish upload callback triggered');
+                    log('Finish upload callback triggered');
                 }}
                 onClose={() => {}}
             />
@@ -78,7 +79,7 @@ export default function MediaLibrary({embeddingType = "nomodal"}) {
                 <TabsTrigger value="videos">{t('Videos')}</TabsTrigger>
                 <TabsTrigger value="audio">{t('Audio')}</TabsTrigger>
                 <TabsTrigger value="documents">{t('Documents')}</TabsTrigger>
-                <TabsTrigger value="upload">{t('Upload')}</TabsTrigger>
+                <TabsTrigger className="mx-2" value="upload">{t('Upload')}</TabsTrigger>
             </TabsList>
         )
     }
@@ -88,7 +89,7 @@ export default function MediaLibrary({embeddingType = "nomodal"}) {
         let objectViewTypes = ["object-fill", "object-none"]
 
         function setOvt(ovt) {
-            log.trace("setOvt: before: ovt:", ovt)
+            log("setOvt: before: ovt:", ovt)
             setObjectViewType(ovt)
         }
 
@@ -186,8 +187,13 @@ export default function MediaLibrary({embeddingType = "nomodal"}) {
         let mediaType = mediaItem.mediaType
         let mimeType = mediaItem.mimeType
 
-        log.trace("getMediaItemView: mediaItem:", mediaItem)
-        log.trace("getMediaItemView: mimeType:", mimeType, " startsWith application:", mimeType.startsWith("application"))
+        log("getMediaItemView: mediaItem:", mediaItem)
+        log("getMediaItemView: mimeType:", mimeType, " startsWith application:", mimeType.startsWith("application"))
+
+        function selectMediaItem(mediaItem) {
+            log("selectMediaItem: mediaItem:", mediaItem)
+            PubSub.publish("MEDIA_ITEM_SELECTED_" + fieldName, mediaItem)
+        }
 
         return (
             <Card key={mediaItem.id} className={outerCN}>
@@ -199,10 +205,12 @@ export default function MediaLibrary({embeddingType = "nomodal"}) {
                     </CardHeader>
                 }
                 <CardContent className={contentCN}>
-                    { "image" === mediaType && getImageViewer(mediaItem, objectViewType) }
-                    { ("video" === mediaType || mimeType.startsWith("video")) && getVideoViewer(mediaItem, objectViewType) }
-                    { ("audio" === mediaType || mimeType.startsWith("audio")) && getAudioViewer(mediaItem, objectViewType) }
-                    { mimeType.startsWith("application") && getDocumentViewer(mediaItem, objectViewType) }
+                    <div onClick={() => selectMediaItem(mediaItem)} className="">
+                        { "image" === mediaType && getImageViewer(mediaItem, objectViewType) }
+                        { ("video" === mediaType || mimeType.startsWith("video")) && getVideoViewer(mediaItem, objectViewType) }
+                        { ("audio" === mediaType || mimeType.startsWith("audio")) && getAudioViewer(mediaItem, objectViewType) }
+                        { mimeType.startsWith("application") && getDocumentViewer(mediaItem, objectViewType) }
+                    </div>
                 </CardContent>
                 <CardFooter className={metadataCN}>
                     <p className="font-bold overflow-x">{mediaItem?.fileName?.replace(/.*([^\\]*)$/, "$1")?.substr(0, 30)}</p>
@@ -230,7 +238,7 @@ export default function MediaLibrary({embeddingType = "nomodal"}) {
         }
         
         return (
-            <div class="flex flex-wrap gap-1">
+            <div className="flex flex-wrap gap-1">
                 {
                     mediaItems.map((mediaItem) =>
                         getMediaItemView(mediaItem, objectViewType)
@@ -273,7 +281,7 @@ export default function MediaLibrary({embeddingType = "nomodal"}) {
 
         return (
             <div className="media-library-container">
-                <Tabs defaultValue="all" className="w-full m-2">
+                <Tabs defaultValue="images" className="w-full m-2">
                     <div className="flex flex-row justify-between items-center mb-4">
                         {tabSelectors}
                         {objectSelectors}
@@ -300,7 +308,7 @@ export default function MediaLibrary({embeddingType = "nomodal"}) {
     function update() {
         UtilsGraphQL.getMediaItems(graphqlURI, cookies)
             .then((nodes) => {
-                log.trace("useEffect: Media items fetched successfully", nodes)
+                log("useEffect: Media items fetched successfully", nodes)
                 let result = []
                 result = nodes.map((node) => {
                     let media = {
@@ -318,19 +326,21 @@ export default function MediaLibrary({embeddingType = "nomodal"}) {
                         "mimeType": node.mimeType || '',
                         "mediaType": node.mediaType || '',
                     }
-                    log.trace("useEffect: Media item processed", media)
+                    log("useEffect: Media item processed", media)
                     return media
                 })
-                log.trace("useEffect:", result)
+                log("useEffect:", result)
                 setItemsList(result)
                 setLoading(false)
             })
             .catch((error) => {
-                log.trace('Error fetching media items', error)
+                log('Error fetching media items', error)
             })
     }
 
     function getModal(mediaLibrary) {
+        alert('Entering getModal')
+        log("getModal: mediaLibrary:", mediaLibrary)
         PubSub.publish("PROMPT_DIALOG", {
             title: t('Media Library'),
             description: t('Select or upload media items'),
@@ -359,16 +369,20 @@ export default function MediaLibrary({embeddingType = "nomodal"}) {
 
     //let viewType = 'react-media-library'
     let viewType = 'shadcn-media-library'
+    log("MediaLibrary: viewType:", viewType, " embeddingType:", embeddingType)
 
     return (
         <>
-        { embeddingType !== "modal" ?
+        { embeddingType === "nomodal" ?
+                itemsList.length > 0 && objectViewType ?
+                        getMediaLibrary(viewType, itemsList, objectViewType)
+                    :
+                        <Loading />
+            :
                 itemsList.length > 0 && objectViewType ?
                         getModal(getMediaLibrary(viewType, itemsList, objectViewType))
                     :
                         <Loading />
-            :
-                <>getModal(getMediaLibrary(viewType, itemsList, objectViewType))</>
         }
         </>
     )
