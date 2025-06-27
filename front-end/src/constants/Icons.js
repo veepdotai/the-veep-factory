@@ -1,20 +1,18 @@
 import * as Md from "react-icons/md";
-import { GiOrganigram } from "react-icons/gi"
-import { IoNewspaperOutline } from "react-icons/io5"
-import { TbRobot } from "react-icons/tb";
-import { BsTruck } from "react-icons/bs";
-import { FcManager, FcVoicePresentation, FcBusinesswoman } from "react-icons/fc";
-import { GrUserWorker } from "react-icons/gr";
-import { TbTargetArrow } from "react-icons/tb";
-import { GiMoneyStack } from "react-icons/gi";
-import { FcSalesPerformance } from "react-icons/fc";
-import { HiMiniMagnifyingGlass } from "react-icons/hi2";
-import { FaComputer, FaIndustry } from "react-icons/fa6";
-import { LiaIndustrySolid } from "react-icons/lia";
-import { GoLaw } from "react-icons/go";
-import { FiUser, FiUserPlus, FiUserCheck } from "react-icons/fi";
+import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { BiWorld } from "react-icons/bi";
-import { LuLoader } from "react-icons/lu";
+import { BsTruck } from "react-icons/bs";
+import { FaComputer, FaIndustry } from "react-icons/fa6";
+import { FcManager, FcVoicePresentation, FcBusinesswoman, FcSalesPerformance } from "react-icons/fc";
+import { FiUser, FiUserPlus, FiUserCheck } from "react-icons/fi";
+import { GrUserWorker } from "react-icons/gr";
+import { GiMoneyStack, GiOrganigram } from "react-icons/gi";
+import { GoLaw, GoScreenFull, GoScreenNormal } from "react-icons/go";
+import { HiMiniMagnifyingGlass, HiMiniViewfinderCircle } from "react-icons/hi2";
+import { IoNewspaperOutline } from "react-icons/io5"
+import { LiaIndustrySolid } from "react-icons/lia";
+import { TbRobot } from "react-icons/tb";
+import { TbTargetArrow } from "react-icons/tb";
 
 export function getIcon(iconName) {
     return Icons[iconName] || Icons.default
@@ -138,4 +136,11 @@ export const Icons = {
     "dpt-randd":            <Md.MdOutlineScience {...attr} />,
     "dpt-sales":            <FcSalesPerformance {...attr} />,
 
+    "plus":                 <AiOutlinePlus {...attr} />,
+    "minus":                <AiOutlineMinus {...attr} />,
+    "object-cover":         <Md.MdOutlineViewCarousel {...attr} />,
+    "object-fill":          <GoScreenFull {...attr} />,
+    "object-fit":           <GoScreenNormal {...attr} />,
+    "object-contains":      <HiMiniViewfinderCircle {...attr} />,
+    "object-none":          <Md.MdDisabledByDefault {...attr} />,
 }

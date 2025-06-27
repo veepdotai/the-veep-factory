@@ -23,16 +23,10 @@ import { cn } from '@/lib/utils';
 export default function SideBySideViewContent( { prompt, data, cid, width = 1 } ) {
     const log = Logger.of(SideBySideViewContent.name)
 
-    const _guv = (param, defaultData) => guv("SideBySideViewContent_" + param, defaultData)
-
-    const DEV = {
-      "DEFAULT_VIEW": "preview",
-      "DEFAULT_PREVIEW_WIDTH": "[500px]",
-      "DEFAULT_PREVIEW_HEIGHT": "[200px]",
-    }
+    const _guv = (param, defaultData = null) => guv("SideBySideViewContent_" + param)
 
     const MAX = ["xs", "sm", "md", "lg", "xl"]
-    const [viewType, setViewType] = useState(_guv("DEFAULT_VIEW", DEV)) // normal, carousel, preview 
+    const [viewType, setViewType] = useState(_guv("VIEW")) // normal, carousel, preview 
         
     function getViewTypes() {
       return (
@@ -93,10 +87,10 @@ export default function SideBySideViewContent( { prompt, data, cid, width = 1 } 
       log.trace("getPreviewItem: document: ", document)
 
 
-      let outerCN = `flex w-${_guv("DEFAULT_PREVIEW_WIDTH", DEV)} m-2`
+      let outerCN = `flex w-${_guv("PREVIEW_WIDTH")} m-2`
       log.trace("getPreviewItem: outerCN:", outerCN)
 
-      let innerCN = `h-${_guv("DEFAULT_PREVIEW_HEIGHT", DEV)}` // "h-100" 
+      let innerCN = `h-${_guv("PREVIEW_HEIGHT")}` // "h-100" 
       log.trace("getPreviewItem: innerCN:", innerCN)
 
       return (

@@ -14,11 +14,12 @@ import { z } from "zod"
 import { UtilsFormCommon as UFC } from '../../lib/utils-form-common'
 import { Utils } from '../../lib/utils'
 
-import editorialFormDefinition from "./editorial-form-definition.json"
-import formFormDefinition from "./form-form-definition.json"
-import brandVoiceFormDefinition from "./brand-form-definition.json"
-import templateFormDefinition from "./template-form-definition.json"
-import pdfExportFormDefinition from "./pdf-export-form-definition.json"
+import editorialFormDefinition from "./definitions/editorial-form-definition.json"
+import formFormDefinition from "./definitions/form-form-definition.json"
+import brandVoiceFormDefinition from "./definitions/brand-form-definition.json"
+import templateFormDefinition from "./definitions/template-form-definition.json"
+import uploadFormDefinition from "./definitions/upload-form-definition.json"
+import pdfExportFormDefinition from "./definitions/pdf-export-form-definition.json"
 
 import { Button } from "src/components/ui/shadcn/button"
 import { Form, } from "src/components/ui/shadcn/form"
@@ -27,7 +28,15 @@ import { UtilsGraphQLObject } from '../../../api/utils-graphql-object'
 import Loading from 'src/components/common/Loading'
 import JSON2Form from '@/components/import-to-form/JSON2Form'
 
-export default function DynamicForm({ type, params = null, importButton = true, onImportCallback = null, onSubmitCallback = null, onUpdateCallback = null, syncWithDatabase = true }) {
+export default function DynamicForm({
+  type,
+  params = null,
+  importButton = true,
+  onImportCallback = null,
+  onSubmitCallback = null,
+  onUpdateCallback = null,
+  syncWithDatabase = true
+}) {
   const log = (...args) => Logger.of(DynamicForm.name).trace(args);
 
   const graphqlURI = Constants.WORDPRESS_GRAPHQL_ENDPOINT;
@@ -48,6 +57,8 @@ export default function DynamicForm({ type, params = null, importButton = true, 
         return templateFormDefinition
       case 'pdf-export':
         return pdfExportFormDefinition
+      case 'upload':
+        return uploadFormDefinition
       default:
         return formFormDefinition
     }

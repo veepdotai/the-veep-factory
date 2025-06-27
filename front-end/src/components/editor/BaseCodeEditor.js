@@ -32,10 +32,10 @@ BaseCodeEditor({
 
   const log = (...args) => Logger.of(BaseCodeEditor.name).trace(args);
 
-  const _guv = (name, defaultValue = null) => guv("BaseCodeEditor_" + name, defaultValue);
+  const _guv = (name) => guv("BaseCodeEditor_" + name);
 
-  let _width = width ? width : _guv("WIDTH", 800)
-  let _height = height ? height : _guv("HEIGHT", "50vh")
+  let _width = width ? width : _guv("WIDTH")
+  let _height = height ? height : _guv("HEIGHT")
 
   const [disabledSaveButton, setDisabledSaveButton] = useState(true);
   const [saving, setSaving] = useState(false);

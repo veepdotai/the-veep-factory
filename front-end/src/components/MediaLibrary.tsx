@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useCookies } from 'react-cookie'
-
 import { Logger } from 'react-logger-lib'
+import PubSub from 'pubsub-js'
 import { ReactMediaLibrary } from 'react-media-library'
 
-import { t } from 'src/components/lib/utils'
+import { cn } from '@/lib/utils'
+import { t, Utils, guv } from 'src/components/lib/utils'
 
 import { UtilsGraphQL } from 'src/api/utils-graphql'
 
@@ -13,13 +14,35 @@ import Loading from 'src/components/common/Loading'
 import { Constants } from 'src/constants/Constants'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './ui/shadcn/tabs'
 import { Card, /*CardAction,*/ CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { get } from 'http'
+import { Button } from './ui/shadcn/button'
+import { Badge } from './ui/shadcn/badge'
+import { Icons, getIcon } from '@/constants/Icons'
+import DynamicForm from './screens/forms/DynamicForm'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "src/components/ui/shadcn/dialog"
 
-export default function MediaLibrary() {
+
+export default function MediaLibrary({embeddingType = "nomodal"}) {
     const log = Logger.of(MediaLibrary.name)
+    
+    const _guv = (name, defaultValue = null) => guv("MediaLibrary_" + name);
 
     const graphqlURI = Constants.WORDPRESS_GRAPHQL_ENDPOINT
     const [cookies] = useCookies(['JWT'])
+
+    const [loading, setLoading] = useState(true)
+    const [timestamp, setTimestamp] = useState(Date.now())
+    const [objectViewType, setObjectViewType] = useState('object-cover')
+    const [viewSize, setViewSize] = useState({
+        width: parseInt(_guv("WIDTH")),
+        height: parseInt(_guv("HEIGHT")),
+        metadataHeight: parseInt(_guv("METADATA_HEIGHT"))
+    })
 
     const [itemsList, setItemsList] = useState([])
 
@@ -55,54 +78,83 @@ export default function MediaLibrary() {
                 <TabsTrigger value="videos">{t('Videos')}</TabsTrigger>
                 <TabsTrigger value="audio">{t('Audio')}</TabsTrigger>
                 <TabsTrigger value="documents">{t('Documents')}</TabsTrigger>
+                <TabsTrigger value="upload">{t('Upload')}</TabsTrigger>
             </TabsList>
         )
     }
 
-    function getMediaItemDefaultView(mediaItem) {
+    function getObjectSelectors() {
+        //let objectViewTypes = ["object-contain", "object-cover", "object-fill", "object-none"]
+        let objectViewTypes = ["object-fill", "object-none"]
+
+        function setOvt(ovt) {
+            log.trace("setOvt: before: ovt:", ovt)
+            setObjectViewType(ovt)
+        }
+
         return (
-            <div key={mediaItem.id} className="media-item w-[256px] h-[256px] p-4 border rounded-lg shadow-md">
-                <img src={mediaItem.thumbnailUrl} alt={mediaItem.title} />
-                <h3>{mediaItem.title}</h3>
-                <p>{mediaItem.description}</p>
-                <p>{mediaItem.size} bytes</p>
-                <p>Created at: {new Date(mediaItem.createdAt).toLocaleDateString()}</p>
+            <div className="">
+                {objectViewTypes.map((ovt) => ovt === objectViewType ?
+                        <Button className="disabled border-black" variant="outline" size="icon">{getIcon(ovt)}</Button>
+                    :
+                        <Button className="" variant="ghost" size="icon" onClick={() => setOvt(ovt)}>{getIcon(ovt)}</Button>
+                )}
             </div>
         )
     }
-    
-    function getImageViewer(mediaItem) {
+
+    function getViewSizeSelectors() {
         return (
-            <img src={mediaItem.thumbnailUrl} alt={mediaItem.title} />
+            <div className="flex flex-row gap-1">
+                <div>{viewSize.width} x {viewSize.height} px</div>
+                <Button key="plus" variant="ghost" size="icon" onClick={() =>
+                    setViewSize({
+                        width: viewSize.width + parseInt(_guv("WIDTH_INCREASE")),
+                        height: viewSize.height + parseInt(_guv("HEIGHT_INCREASE")),
+                        metadataHeight: viewSize.metadataHeight
+                    })}>{getIcon("plus")}</Button>
+                <Button key="minus" variant="ghost" size="icon" onClick={() =>
+                    setViewSize({
+                        width: viewSize.width - parseInt(_guv("WIDTH_INCREASE")),
+                        height: viewSize.height - parseInt(_guv("HEIGHT_INCREASE")),
+                        metadataHeight: viewSize.metadataHeight
+                    })}>{getIcon("minus")}</Button>
+            </div>
+        )        
+    }
+
+    function getGenericCN(objectViewType2) {
+        return cn('_w-full _h-full rounded-lg', objectViewType)
+    }
+
+    function getImageViewer(mediaItem, objectViewType) {
+        return (
+            <>
+                {/*<img src={mediaItem.thumbnailUrl} width={mediaItem.width} height={mediaItem.height} alt={mediaItem.title} className="" />*/}
+                <img src={mediaItem.thumbnailUrl} width={viewSize.width} height={viewSize.height} alt={mediaItem.title} className={getGenericCN(objectViewType)} />
+            </>
         )
     }
 
-    function getVideoViewer() {
+    function getVideoViewer(mediaItem, objectViewType) {
         return (
-            <video alt={mediaItem.title} controls autoplay muted className="w-full h-full rounded-lg shadow-md">
+            <video alt={mediaItem.title} controls width={viewSize.width} height={viewSize.height} className={getGenericCN(objectViewType)}>
                 <source src={mediaItem.thumbnailUrl} type={mediaItem.mimeType} />
+                Your browser does not support the video element.
             </video>
         )
     }
     
-    function getAudioViewer() {
+    function getAudioViewer(mediaItem, objectViewType) {
         return (
-            <audio controls className="w-full h-full rounded-lg shadow-md">
+            <audio controls className={getGenericCN(objectViewType)}>
                 <source src={mediaItem.thumbnailUrl} type={mediaItem.mimeType} />
                 Your browser does not support the audio element.
             </audio>
         )
     }
     
-    function getDocumentViewer() {
-        return (
-            <object data={mediaItem.thumbnailUrl + "#toolbar=1"}
-                type={mediaItem.mimeType}
-                width='100%' height='256px'
-                className="w-full h-full rounded-lg shadow-md"
-            >
-            </object>
-        )
+    function getDocumentViewer(mediaItem, objectViewType) {
         /*
             <PDFViewer className="w-full h-full rounded-lg shadow-md">
                 <Document file={mediaItem.thumbnailUrl}>
@@ -110,84 +162,142 @@ export default function MediaLibrary() {
                 </Document>
             </PDFViewer>
         */
+        return (
+            <object data={mediaItem.thumbnailUrl}
+                type={mediaItem.mimeType}
+                width='100%' height={`${viewSize.height}px`}
+                className={getGenericCN(objectViewType)}
+            >
+            </object>
+        )
     }
 
-    function getMediaItemView(mediaItem) {
-        let width = mediaItem.width || 256
-        let height = mediaItem.height || 256
-        let cn = `w-[${width}] h-[${height}] p-4 border rounded-lg shadow-md`
+    function getMediaItemView(mediaItem, objectViewType) {
+        let outerCN = `relative m-1 p-1 border rounded-lg shadow-md`
+ 
+        let contentWidth = viewSize.width
+        let contentHeight = viewSize.height + viewSize.metadataHeight + 20
+        let contentCN = `w-[${contentWidth}px] h-[${contentHeight}px] m-1 p-1`
+ 
+        let metadataWidth = viewSize.width
+        let metadataHeight = viewSize.metadataHeight
+        let metadataCN = `w-[${metadataWidth}px] h-[${metadataHeight}px] absolute bottom-0 m-1 p-1 flex flex-col text-xs items-start`
+
+        let mediaType = mediaItem.mediaType
+        let mimeType = mediaItem.mimeType
+
+        log.trace("getMediaItemView: mediaItem:", mediaItem)
+        log.trace("getMediaItemView: mimeType:", mimeType, " startsWith application:", mimeType.startsWith("application"))
 
         return (
-            <Card key={mediaItem.id} className={cn}>
-                <CardHeader>
-                    <CardTitle>{mediaItem.title}</CardTitle>
-                    <CardDescription>{mediaItem.description}</CardDescription>
-                    {/*<CardAction>Card Action</CardAction>*/}
-                </CardHeader>
-                <CardContent>
-                    { "image" === mediaItem.mediaType && getImageViewer(mediaItem) }
-                    { "video" === mediaItem.mediaType && getVideoViewer(mediaItem) }
-                    { "audio" === mediaItem.mediaType && getAudioViewer(mediaItem) }
-                    { "file" === mediaItem.mediaType && getDocumentViewer(mediaItem) }
+            <Card key={mediaItem.id} className={outerCN}>
+                {false &&
+                    <CardHeader>
+                        <CardTitle>{mediaItem.title}</CardTitle>
+                        <CardDescription>{mediaItem.description}</CardDescription>
+                        {/*<CardAction>Card Action</CardAction>*/}
+                    </CardHeader>
+                }
+                <CardContent className={contentCN}>
+                    { "image" === mediaType && getImageViewer(mediaItem, objectViewType) }
+                    { ("video" === mediaType || mimeType.startsWith("video")) && getVideoViewer(mediaItem, objectViewType) }
+                    { ("audio" === mediaType || mimeType.startsWith("audio")) && getAudioViewer(mediaItem, objectViewType) }
+                    { mimeType.startsWith("application") && getDocumentViewer(mediaItem, objectViewType) }
                 </CardContent>
-                <CardFooter className='flex flex-col gap-2'>
-                    <div>{mediaItem.description}</div>
-                    <div>{mediaItem.size} bytes</div>
-                    <div>Created at: {mediaItem.createdAt}</div>
-                    <div>MimeType: {mediaItem.mimeType}</div>
-                    <div>MediaType: {mediaItem.mediaType}</div>
+                <CardFooter className={metadataCN}>
+                    <p className="font-bold overflow-x">{mediaItem?.fileName?.replace(/.*([^\\]*)$/, "$1")?.substr(0, 30)}</p>
+                    {false && <div>Description: {mediaItem?.description}</div>}
+                    <div className="flex flex-row gap-1 justify-start items-center">
+                        <div>{Math.round(parseInt(mediaItem?.size)/1024)}Kb</div>
+                        <div>{mediaItem?.createdAt}</div>
+                    </div>
+                    <div><Badge>{mediaItem?.mimeType}</Badge></div>
+                    {false && <div>MediaType: {mediaItem.mediaType}</div>}
                 </CardFooter>
             </Card>
         )
     }
 
-    function getTabsContent(mediaItems) {
+    function getTabContent(mediaItems, objectViewType, selectedViewType = 'all') {
+        if (!mediaItems || mediaItems.length === 0) {
+            return <div className="text-center p-4">{t('No media items found')}</div>
+        }
+
+        if (["image", "video", "audio"].includes(selectedViewType)) {
+            mediaItems = mediaItems.filter((item) => item.mediaType === selectedViewType || item.mimeType.startsWith(selectedViewType))
+        } else if (selectedViewType === 'file') {
+            mediaItems = mediaItems.filter((item) => item.mediaType === 'file' && ! item.mimeType.startsWith('video') && ! item.mimeType.startsWith('audio'))
+        }
+        
+        return (
+            <div class="flex flex-wrap gap-1">
+                {
+                    mediaItems.map((mediaItem) =>
+                        getMediaItemView(mediaItem, objectViewType)
+                    )
+                }
+            </div>
+        )
+    }
+
+    function getTabsContent(mediaItems, objectViewType) {
         return (
             <>
                 <TabsContent value="all">
-                    <div class="grid grid-cols-4 gap-1">
-                    {
-                        mediaItems.map((mediaItem) =>
-                            getMediaItemView(mediaItem)
-                        )
-                    }
-                    </div>
+                    {getTabContent(mediaItems, objectViewType, 'all')}
                 </TabsContent>
                 <TabsContent value="images">
-                    Images
+                    {getTabContent(mediaItems, objectViewType, 'image')}
                 </TabsContent>
                 <TabsContent value="videos">
-                    Vidéos
+                    {getTabContent(mediaItems, objectViewType, 'video')}
                 </TabsContent>
                 <TabsContent value="audio">
-                    Audios
+                    {getTabContent(mediaItems, objectViewType, 'audio')}
                 </TabsContent>
                 <TabsContent value="documents">
-                    Documents
+                    {getTabContent(mediaItems, objectViewType, 'file')}
+                </TabsContent>
+                <TabsContent value="upload">
+                    <DynamicForm type="upload" importButton={false} />
                 </TabsContent>
             </>
         )
     }
 
-    function getTabView(mediaItems) {
-        let selectors = getTabsList(mediaItems)
-        let content = getTabsContent(mediaItems)
+    function getTabView(mediaItems, objectViewType) {
+        let tabSelectors = getTabsList(mediaItems)
+        let objectSelectors = getObjectSelectors()
+        let viewSizeSelectors = getViewSizeSelectors()
+        let content = getTabsContent(mediaItems, objectViewType)
 
         return (
             <div className="media-library-container">
-                <Tabs defaultValue="all" className="w-full">
-                    {selectors}
+                <Tabs defaultValue="all" className="w-full m-2">
+                    <div className="flex flex-row justify-between items-center mb-4">
+                        {tabSelectors}
+                        {objectSelectors}
+                        { false && viewSizeSelectors}
+                        <div className="me-1">
+                            {loading ? "Loading" : <Button variant="ghost" size="icon" onClick={refresh}>{getIcon("refresh")}</Button>}
+                        </div>
+                    </div>
                     {content}
                 </Tabs>
             </div>
         )
     }
 
-    function getShadcnMediaLibrary(mediaItems) {
-        return getTabView(mediaItems)
+    function getShadcnMediaLibrary(mediaItems, objectViewType) {
+        return getTabView(mediaItems, objectViewType)
     }
 
-    useEffect(() => {
+    function refresh() {
+        setLoading(true)
+        setTimestamp(Date.now())
+    }
+
+    function update() {
         UtilsGraphQL.getMediaItems(graphqlURI, cookies)
             .then((nodes) => {
                 log.trace("useEffect: Media items fetched successfully", nodes)
@@ -213,25 +323,53 @@ export default function MediaLibrary() {
                 })
                 log.trace("useEffect:", result)
                 setItemsList(result)
+                setLoading(false)
             })
             .catch((error) => {
                 log.trace('Error fetching media items', error)
             })
-    }, [])
+    }
+
+    function getModal(mediaLibrary) {
+        PubSub.publish("PROMPT_DIALOG", {
+            title: t('Media Library'),
+            description: t('Select or upload media items'),
+            content: mediaLibrary,
+            actions: [
+                {
+                    label: t('Close'),
+                }
+            ],
+            outerCN: "max-w-3xl"
+        })
+    }
+
+    function getMediaLibrary(viewType, itemsList, objectViewType) {
+        return (
+            <div className="overflow-y-auto">
+                {"react-media-library" === viewType && getReactMediaLibrary(itemsList)}
+                {"shadcn-media-library" === viewType && getShadcnMediaLibrary(itemsList, objectViewType)}
+            </div>
+        )
+    }
+
+    useEffect(() => {
+        update()
+    }, [timestamp])
 
     //let viewType = 'react-media-library'
     let viewType = 'shadcn-media-library'
 
     return (
         <>
-            { itemsList.length > 0 ?
-                    <>
-                        {"react-media-library" === viewType && getReactMediaLibrary(itemsList)}
-                        {"shadcn-media-library" === viewType && getShadcnMediaLibrary(itemsList)}
-                    </>
-                :
-                    <Loading />
-}
+        { embeddingType !== "modal" ?
+                itemsList.length > 0 && objectViewType ?
+                        getModal(getMediaLibrary(viewType, itemsList, objectViewType))
+                    :
+                        <Loading />
+            :
+                <>getModal(getMediaLibrary(viewType, itemsList, objectViewType))</>
+        }
         </>
     )
 }

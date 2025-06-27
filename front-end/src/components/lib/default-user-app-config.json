@@ -11,7 +11,15 @@
         "DEFAULT_PREVIEW_HEIGHT": "[200px]"
     },
     "BaseCodeEditor": {
-        "WIDTH": 800,
-        "HEIGHT": "50vh"
+        "DEFAULT_WIDTH": 800,
+        "DEFAULT_HEIGHT": "50vh"
+    },
+    "MediaLibrary": {
+        "DEFAULT_WIDTH": 256,
+        "DEFAULT_HEIGHT": 256,
+        "DEFAULT_WIDTH_INCREASE": 64,
+        "DEFAULT_HEIGHT_INCREASE": 64,
+        "DEFAULT_METADATA_HEIGHT": 64,
+        "!DEFAULT_METADATA_WIDTH": 200
     }
 }

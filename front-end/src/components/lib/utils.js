@@ -13,27 +13,48 @@ export const Utils = {
 		return (item && typeof item === 'object' && !Array.isArray(item));
 	},
 	
+	/**
+	 * https://github.com/veepdotai/the-veep-factory/issues/209
+	 * 
+	 * At least, 3 default user values are available:
+	 * - DEFAULT_DEV_VALUE when provided as second parameter
+	 * - DEFAULT_USER_VALUE that overrides default value
+	 * - DEFAULT_VALUE stored in the default configuration file (default-user-app-config.json)
+	 * 
+	 * @param {*} name  
+	 * @param {*} defaultValue 
+	 * @returns 
+	 */
 	getUserValue: (name, defaultValue = null) => {
 		let component = name.replace(/^([a-zA-Z0-9]+)_.*/, "$1")
 		let param = name.replace(/^[a-zA-Z0-9]+_(.*)/, "$1")
 		Utils.log("getUserValue: component:", component, "param:", param, "defaultValue:", defaultValue)
 
 		let userApp = "DEFAULT_USER_APP_CONFIG"
-		let userValue = ""
+		let userValue = null
+		let defaultUserValue = ""
 		try {
-			userValue = Constants[userApp][component][param] 
-			Utils.log(`getUserValue: Constants[${userApp}][${component}][${param}]:`, userValue)
+			userValue = Constants[userApp] && Constants[userApp][component] && param in Constants[userApp][component] ? Constants[userApp][component][param] : undefined
 
-			return userValue
-		} catch(e) {
-			Utils.log(`getUserValue: Constants[${userApp}][${component}][${param}] not found:`, e)
-			if (Utils.isObject(defaultValue)) {
-				userValue = defaultValue[param]
+			if (userValue !== undefined) {
+				Utils.log(`getUserValue: Constants[${userApp}][${component}][${param}]:`, userValue)
+				return userValue
 			} else {
-				userValue = defaultValue
+				let defaultParam = "DEFAULT_" + param
+				defaultValue = Constants[userApp] && Constants[userApp][component] && defaultParam in Constants[userApp][component] ? Constants[userApp][component][defaultParam] : undefined
+				if (defaultValue !== undefined) {
+					Utils.log(`getUserValue: default value: Constants[${userApp}][${component}][${param}]:`, defaultValue)
+					return defaultValue
+				}
 			}
-			Utils.log(`getUserValue: userValue:`, userValue)
-			return userValue
+
+			Utils.log(`getUserValue not found: Constants[${userApp}][${component}][${param}|DEFAULT_${param}] =>`, undefined)
+			return undefined
+
+		} catch(e) {
+			Utils.log(`getUserValue: problem while getting the user|default value [${userApp}][${component}][${param}|DEFAULT_${param}]: not found:`, e)
+
+			return undefined
 	  	}			
 	},
 
@@ -277,6 +298,6 @@ export function t(msg) {
 	}	
 }
 
-export function guv(pref, app) {
+export function guv(pref, app = null) {
 	return Utils.getUserValue(pref, app)
 }

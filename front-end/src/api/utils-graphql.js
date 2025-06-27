@@ -3,6 +3,7 @@ import { gql } from '@apollo/client'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 import { UtilsGraphQLPost } from './utils-graphql-post'
 import { UtilsGraphQLVcontent } from './utils-graphql-vcontent'
+import { UtilsGraphQLMediaItems } from './utils-graphql-mediaitems'
 import { UtilsGraphQLClauseBuilder } from './utils-graphql-clause-builder'
 import toast from 'react-hot-toast';
 import { Constants } from '../constants/Constants'
@@ -249,6 +250,47 @@ export const UtilsGraphQL = {
 					return UtilsGraphQL.convert(res);
 				}).catch((e) => {
 					log.error('Error: ', e);
+				})
+
+	},
+
+	getMediaItems: function(graphqlURI, cookies, source = "wordpress") {
+		let log = (...args) => UtilsGraphQL.log.trace("listMediaItems:", args)
+		let q = '';
+		if (source === 'wordpress') {
+			q = UtilsGraphQLMediaItems.listWordpress();
+		}
+		// else if (source === 'unsplash') {{
+		//	q = UtilsGraphQLMediaItems.listUnsplash(id);
+		//}
+
+		log("q:", q)
+
+		return UtilsGraphQL
+				.client(graphqlURI, cookies)
+				.query({
+					query: gql`${q}`
+				}).then((data) => {
+					log('URI:', graphqlURI);
+					log('data:', data);
+					let items = data.data.mediaItems;
+					log("items:", items);
+
+					//let res = JSON.parse(JSON.stringify(content));
+					let edges = items.edges // edges is a reference
+					log("UtilsGraphQL: before sorting")
+					/*
+					edges.sort((a, b) => {						
+						return a.node.databaseId - b.node.databaseId;
+					})
+					*/
+					let nodes = []
+					edges.map((edge) => nodes.push(edge.node));
+					log("UtilsGraphQL: after sorting")
+
+					return nodes
+				}).catch((e) => {
+					log('Error: ', e);
 				})
 
 	},
