@@ -1,13 +1,26 @@
 'use client'
 
 import { useState } from "react";
+import { Logger } from "react-logger-lib";
+import PubSub from "pubsub-js"
+
 import { ReactGrid, Column, Row, Cell, NumberCell, TextCell } from "@silevis/reactgrid";
 import { NonEditableCell } from "@silevis/reactgrid";
 
 import handleRowReorder from "./utils-reactgrid";
+
+import { t } from "src/components/lib/utils"
+
 import { Button } from "src/components/ui/shadcn/button";
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Label } from "@/components/ui/label"
+import { start } from "repl";
+import meta from "@/stories/Button.stories";
+import { position } from "html2canvas/dist/types/css/property-descriptors/position";
 
 export default function Spreadsheet() {
+  const log = Logger.of(Spreadsheet.name)
 
   interface FieldConfiguration {
     id: string,
@@ -16,19 +29,28 @@ export default function Spreadsheet() {
     type: string
     constraints: string
     options: string
-    className: string,
+    className: string
+    label?: string
+    comment?: string
     position: number
   }
     
   const FormSpreadsheet = () => {
 
-    const columnLabels = ['id', 'name', 'group', 'type', 'constraints', 'options', 'className', 'position']
-    let formConfiguration: FieldConfiguration[] = []
-    for(var i = 0; i <= 50; i++) {
-      formConfiguration.push(
-        { id: `${i}`, name: "", group: "", type: "", constraints: "", options: "", className: "", position: i },
-      )
+    const columnLabels = ['id', 'name', 'group', 'type', 'constraints', 'options', 'className', 'label', 'comment', 'position']
+
+    function initData(start = 0, end = 50) {
+      let formConfiguration: FieldConfiguration[] = []
+      for(var i = start; i <= end; i++) {
+        formConfiguration.push(
+          { id: `${i}`, name: "", group: "", type: "", constraints: "", options: "", className: "", label: "", comment: "", position: i },
+        )
+      }
+
+      return formConfiguration
     }
+
+    let formConfiguration = initData()  // Create an empty array
 
     const [data, setData] = useState(formConfiguration)
 
@@ -43,17 +65,17 @@ export default function Spreadsheet() {
       prev: any[],
       usePrevValue: boolean = false
     ): any[] => {
-      console.log("changes: ", changes)
-      console.log("cellChanges: ", cellChanges)
+      log.trace("changes: ", changes)
+      log.trace("cellChanges: ", cellChanges)
       changes.forEach((change) => {
         const index = change.rowId;
         const fieldName = change.columnId;
         const cell = usePrevValue ? change.previousCell : change.newCell;
-        console.log("prev: ", prev)
-        console.log("change: ", change)
-        console.log("index: ", index)
-        console.log("fieldName: ", fieldName)
-        //prev[index] ? prev[index][fieldName] = cell.text : console.log("prev[index] == null");
+        log.trace("prev: ", prev)
+        log.trace("change: ", change)
+        log.trace("index: ", index)
+        log.trace("fieldName: ", fieldName)
+        //prev[index] ? prev[index][fieldName] = cell.text : log.trace("prev[index] == null");
         prev[index][fieldName] = cell.text;
       });
       return [...prev];
@@ -92,12 +114,12 @@ export default function Spreadsheet() {
     };
 
     const handleChanges = (changes: any[]/*CellChange<TextCell>[]*/) => {
-      console.log("storeChanges: changes: ", changes)
+      log.trace("storeChanges: changes: ", changes)
       applyChanges(changes, data);
     };
    
     const handleUndoChanges = () => {
-      console.log("undoChanges: cellChanges: ", cellChanges, cellChangesIndex)
+      log.trace("undoChanges: cellChanges: ", cellChanges, cellChangesIndex)
       if (cellChangesIndex >= 0) {
         setData((prev) =>
           undoChanges(cellChanges[cellChangesIndex], prev)
@@ -106,7 +128,7 @@ export default function Spreadsheet() {
     };
    
     const handleRedoChanges = () => {
-      console.log("redoChanges: cellChanges: ", cellChanges, cellChangesIndex)
+      log.trace("redoChanges: cellChanges: ", cellChanges, cellChangesIndex)
       if (cellChangesIndex + 1 <= cellChanges.length - 1) {
         setData((prev) =>
           redoChanges(cellChanges[cellChangesIndex + 1], prev)
@@ -115,9 +137,71 @@ export default function Spreadsheet() {
     };
 
     const handleSave = () => {
-      console.log("saving data: ", data)
-      console.log("saving data in json: ", JSON.stringify(data))
-      alert("Data saved: " + JSON.stringify(data))
+      let rows = data?.filter((row) => row.name !== "")
+      rows = rows.map((row, i) => { return {...row, id: i, position: i}})
+      log.trace("saving data: ", rows)
+      log.trace("saving data in json: ", JSON.stringify(rows, null, 2))
+      alert("Data saved: " + JSON.stringify(rows, null, 2))
+    };
+
+    const handleLoad = () => {
+      log.trace("handleLoad: loading data")
+
+      function loadForm() {
+        let cn4Label = "align-top w-[150px] mt-4 mb-3 font-semibold"
+        let cn4Textarea = "mb-2 border-1"
+
+        return (
+            <div className="">
+                <fieldset>
+                    <Label className={cn4Label} htmlFor='importFormJson' id='jsonLabel'>{t("JsonToImport")}</Label>
+                    <Textarea className={cn4Textarea} id="importFormJson" name="json" placeholder={t("PasteJson")} />
+                </fieldset>
+            </div>
+        )
+      }
+
+      function importData() {
+        log.trace("handleLoad: importData")
+
+        const getValueById = (fieldName) => document.getElementById(fieldName).value 
+
+        try {
+          let metadata = JSON.parse(getValueById("importFormJson"))
+          log.trace("handleLoad: importData: metadata: ", metadata)
+          alert('handleLoad: importData: metadata: ' + JSON.stringify(metadata, null, 2))
+
+          let extendedMetadata = initData(metadata?.length)
+          log.trace("handleLoad: importData: extendedMetadata: ", extendedMetadata)
+
+          let newMetadata = metadata?.concat(extendedMetadata) 
+          log.trace("handleLoad: importData: newMetadata: ", newMetadata)
+
+          setData(newMetadata)
+        } catch(e) {
+          log.trace("importForm: pb while updating: e: ", e)
+          alert("importForm: pb while updating: e: " + e)
+        }
+
+      }
+
+      function displayLoadDialog() {
+          log.trace("displayLoadDialog")
+          //e.preventDefault()
+          PubSub.publish("PROMPT_DIALOG", {
+              title: t("FormLoadDialog"),
+              description: t("FormLoadDialogDesc"),
+              content: loadForm(),
+              actions: [{
+                  label: t("Cancel")
+              }, {
+                  label: t("OK"),
+                  click: () => importData()
+              }]
+          })
+      }
+
+      displayLoadDialog()
     };
 
     const [columns, setColumns] = useState<Column[]>(columnLabels.map((row, i) => { return {colIndex: i, width: row.width ?? 100, resizable: row.resizable ?? true} }))
@@ -149,7 +233,7 @@ export default function Spreadsheet() {
      * 
      */
     function updateData(reorderedData) {
-      //console.log("reorderedData:", reorderedData)
+      //log.trace("reorderedData:", reorderedData)
       setData(reorderedData)
     }
 
@@ -181,23 +265,23 @@ export default function Spreadsheet() {
        * data doesn't contain the header
        */
       function updateCol(id: number, key: number | string, newText: string) {
-        console.log("previous: ", data[id][key])
+        log.trace("previous: ", data[id][key])
         handleChanges([{rowId: id, columnId: key, previousCell: {text: data[id][key]}, newCell: {text: newText}}])
         /*
         setData((prev) => {
           let res = prev.map((p) => {
               let prevText = p[key]
               if (p.id == id) {
-                console.log("p: ", p)
+                log.trace("p: ", p)
                 let changes = [{...p, rowId: p.id, columnId: key, previousCell: {text: prevText}, newCell: {text: newText}}] 
-                console.log("changes: ", changes)
+                log.trace("changes: ", changes)
                 storeChanges(changes)
                 return { ...p, [key]: newText }
               } else {
                   return p
               }
           })
-          console.log("updateCol: res: ", res)
+          log.trace("updateCol: res: ", res)
           return res
         })
           */
@@ -253,24 +337,30 @@ export default function Spreadsheet() {
               return;
           }
         }
-      }}
-    >
-      {/*
-        <Button onClick={handleUndoChanges}>Undo</Button>
-        <Button onClick={handleRedoChanges}>Redo</Button>
-        */}
-        <Button onClick={handleSave}>Save</Button>
+      }}>
 
-        <ReactGrid
-          columns={columns}
-          //styledRanges={styledRanges}
-          enableRowSelectionOnFirstColumn
-          onRowReorder={(selectedRowIndexes, destinationRowIdx) => handleRowReorder(data, selectedRowIndexes, destinationRowIdx, updateData)}
-          onResizeColumn={(width, columnIdx) => handleResizeColumn(width, columnIdx, setColumns)}
-          /*onCellsChanged={handleChanges}*/
-          cells={getCells(headerRow, data)}
-          //stickyLeftColumns={1}
-        />
+        <div className="inline-flex items-center gap-2">
+          {/*
+            <Button onClick={handleUndoChanges}>Undo</Button>
+            <Button onClick={handleRedoChanges}>Redo</Button>
+          */}
+            <Button onClick={handleSave}>{t("Save")}</Button>
+            <Button onClick={handleLoad}>{t("Load")}</Button>
+        </div>
+
+        <div className="inline-flex items-center">
+          <ReactGrid
+            columns={columns}
+            //styledRanges={styledRanges}
+            enableRowSelectionOnFirstColumn
+            onRowReorder={(selectedRowIndexes, destinationRowIdx) => handleRowReorder(data, selectedRowIndexes, destinationRowIdx, updateData)}
+            onResizeColumn={(width, columnIdx) => handleResizeColumn(width, columnIdx, setColumns)}
+            /*onCellsChanged={handleChanges}*/
+            cells={getCells(headerRow, data)}
+            //stickyLeftColumns={1}
+          />                    
+        </div>
+
       </div>
     )
   }
