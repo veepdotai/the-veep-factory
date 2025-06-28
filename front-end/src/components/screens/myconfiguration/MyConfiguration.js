@@ -6,6 +6,8 @@ import PubSub from 'pubsub-js';
 import { Constants } from "src/constants/Constants";
 import { UtilsGraphQL } from 'src/api/utils-graphql.js';
 import { UtilsDataConverter } from 'src/components/lib/utils-data-converter.js'
+
+import { Button } from "@/components/ui/button"
 import DataTableBase from 'src/components/common/DataTableBase.js';
 import ContentPanel from 'src/components/content-panel/ContentPanel.js'
 
@@ -31,6 +33,7 @@ export default function MyConfiguration( {...props} ) {
   const graphqlURI = Constants.WORDPRESS_GRAPHQL_ENDPOINT;
   const [cookies] = useCookies(['JWT']);
 
+  const [displayType, setDisplayType] = useState(props?.displayType || "side-main");
   const [data, setData] = useState([]);
   const [pending, setPending] = useState(true);
   const [info, setInfo] = useState({});
@@ -51,11 +54,18 @@ export default function MyConfiguration( {...props} ) {
     log.trace("getData: topic: ", topic, " msg: ", msg)
 
     setData([{
-      "title": "Hello",
-      "menuType": "home",
+      "group": "ClientA",
+      "configuration": "www.veep.ai",
       "name": "JCK",
       "id": "1"
-    }])
+    },
+    {
+      "group": "ClientB",
+      "configuration": "www.lokavivo.eu",
+      "name": "JCK",
+      "id": "2"
+    }
+  ])
 
     /*
     if (graphqlURI && cookies) {
@@ -77,7 +87,7 @@ export default function MyConfiguration( {...props} ) {
 
   function datatable() {
     let operations = {
-      "onShow": (row) => setInfo(MyConfigurationActions.showDetails(row)),
+      "onShow": (row) => { alert("row: " + JSON.stringify(row)) /*setInfo(MyConfigurationActions.showDetails(row))*/},
       "onEdit": (row) => MyConfigurationActions.renameContentTitleDialog(graphqlURI, cookies, row),
       "onDuplicate": null,
       "onFavorite": null,
@@ -115,7 +125,17 @@ export default function MyConfiguration( {...props} ) {
 
   let form = <DynamicForm type={props.type} />
 
+  /**
+   * 
+   */
   return (
-      <ContentPanel side={datatable} info={info} content={form} displayType="main"/>
+    <>
+      <div class="flex flex-row gap-2">
+        <Button onClick={() => setDisplayType("sheet")}>Sheet</Button>
+        <Button onClick={() => setDisplayType("side-main")}>Side Main</Button>
+        <Button onClick={() => setDisplayType("main")}>Main</Button>
+      </div>
+      <ContentPanel side={datatable} info={info} content={form} displayType={displayType} />
+    </>
 );
 }

@@ -1,0 +1,15 @@
+[
+    { 
+      "id": "context",
+      "title": "Context",
+      "label": "ContextLabel",
+      "itemType": "screen",
+      "items": [
+        { "id": "brand-voice", "itemType": "form", "label": {"f": ["t", "BrandVoice"]}},
+        { "id": "editorial-line", "itemType": "form", "label": {"f": ["t", "EditorialLine"]}},
+        { "id": "template", "itemType": "form", "label": {"f": ["t", "Template"]}},
+        { "id": "pdf-export", "itemType": "form", "label": {"f": ["t", "PdfExport"]}},
+        { "id": "spreadsheet", "itemType": "spreadsheet", "label": "Spreadsheet"}
+      ]
+    }
+]

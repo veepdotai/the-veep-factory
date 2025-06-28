@@ -1,0 +1,36 @@
+[
+  {
+      "id": "function-sales",
+      "title": {"f": ["t", "SalesFunction"]},
+      "items": [
+        { "id": "case-study", "dontcreate": false, "itemType": "query", "label": "Case studies",
+          "query": { "view": {"f": ["t", "Marketing2"]}, "status": "DRAFT", "meta": { "key": "veepdotaiCategory", "compare": "LIKE", "value": "Communication"}}},
+        {"f": ["details", "Marketing"]},
+        {"f": ["details", "Sales"]}
+      ]
+  },
+  {
+      "id": "function-production",
+      "title": {"f": ["t", "ProductionConsultingServicesFunction"]},
+      "items": [
+          {"f": ["details", "Management"]},
+          {"f": ["details", "Production"]},
+          {"f": ["details", "Consulting"]},
+          {"f": ["details", "Service"]},
+          {"f": ["details", "Quality"]},
+          {"f": ["details", "RandD"]}
+      ]
+  },
+  {
+      "id": "function-support",
+      "title": {"f": ["t", "SupportFunction"]},
+      "items": [
+          {"f": ["details", "Finance"]},
+          {"f": ["details", "Communication"]},
+          {"f": ["details", "HR"]},
+          {"f": ["details", "IT"]},
+          {"f": ["details", "Logistics"]},
+          {"f": ["details", "Procurement"]}
+      ]
+  }
+]
