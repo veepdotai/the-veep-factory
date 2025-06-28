@@ -8,25 +8,15 @@ import MediaLibrary from "src/components/MediaLibrary";
 import AllCards from '../catalog/AllCards';
 
 import { Button } from "@/components/ui/button"
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"
+import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+
 import { Utils } from './utils';
+import startMenuDefinition from './menu-definitions/utils-menu-start-definition.json'
+import dataMenuDefinition from './menu-definitions/utils-menu-data-definition.json'
 
-import startMenuDefinition from './utils-menu-start-definition.json'
-
-import dataMenuDefinition from './utils-menu-data-definition.json'
-
-import configurationMenuDefinition from './utils-menu-configuration-definition.json'
-import configurationMenuDefinitionForUser from './utils-menu-configuration-definition-user.json'
-import configurationMenuDefinitionForAdmin from './utils-menu-configuration-definition-admin.json'
+import configurationMenuDefinition from './menu-definitions/utils-menu-configuration-definition.json'
+import configurationMenuDefinitionForUser from './menu-definitions/utils-menu-configuration-definition-user.json'
+import configurationMenuDefinitionForAdmin from './menu-definitions/utils-menu-configuration-definition-admin.json'
 
 import Spreadsheet from '../spreadsheet/Spreadsheet';
 import DynamicForm from '../screens/forms/DynamicForm';
@@ -134,7 +124,7 @@ export const UtilsMenu = {
   },
 
   getConfigurationMenu: function() {
-    const role = "user"
+    const role = "admin"
     
     let menuDefinition = []
     if ("user" === role) {

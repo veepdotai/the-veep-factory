@@ -213,6 +213,16 @@ export const UtilsFormCommon = {
         }
     },
 
+    /**
+     * 
+     * @param form 
+     * @param field 
+     * @param fieldName 
+     * @param fieldType "input", "upload", "medialibrary", "textarea", "select", "checkbox", "listofvalues", "combobox", "date" 
+     * @param fieldValues 
+     * @param fieldOptions 
+     * @returns 
+     */
     getFieldType: function(form, field, fieldName, fieldType = "input", fieldValues = "", fieldOptions) {
         let log = (...args) => UtilsFormCommon.log("getFieldType: ", args);
 
@@ -303,26 +313,31 @@ export const UtilsFormCommon = {
             )
         } else if (["checkbox"].includes(fieldType)) {
             log("checkbox: ");
+
+            let formFieldName = "displayOptions"
+            let formLabel = t("displayOptionsLabel")
+            let formDescription = t("displayOptionsDesc")
             let items = [
                 {id: "displayHeader", label: t("displayHeaderLabel")},
                 {id: "displayFooter", label: t("displayFooterLabel")},
                 {id: "displayTOC", label: t("displayTOCLabel")},
                 {id: "displayBreakOnPage", label: t("displayBreakOnPageLabel")},
             ]
+
             let f = <FormField
                 control={form.control}
                 name="items"
                 render={() => (
                     <FormItem>
                         <div className="mb-4">
-                            <FormLabel className="text-base">{t("displayOptionsLabel")}</FormLabel>
-                            <FormDescription>{t("displayOptionsDesc")}</FormDescription>
+                            <FormLabel className="text-base">{formLabel}</FormLabel>
+                            <FormDescription>{formDescription}</FormDescription>
                         </div>
                         {items.map((item) => (
                             <FormField
                                 key={item.id}
                                 control={form.control}
-                                name="displayOptions"
+                                name={formFieldName}
                                 render={({field}) => {
                                     log(`fields: ${JSON.stringify(field)}`)
                                     return (
