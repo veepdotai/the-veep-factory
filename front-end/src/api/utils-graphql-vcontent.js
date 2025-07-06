@@ -1,5 +1,4 @@
 import { Logger } from 'react-logger-lib'
-import { contentSchema } from './utils-graphql-schema'
 
 export const UtilsGraphQLVcontent = {
 	log: Logger.of("UtilsGraphQLVcontent"),

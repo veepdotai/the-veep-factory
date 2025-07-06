@@ -30,6 +30,7 @@ import JSON2Form from '@/components/import-to-form/JSON2Form'
 
 export default function DynamicForm({
   type,
+  cardinality = "single",
   params = null,
   importButton = true,
   onImportCallback = null,
@@ -42,8 +43,18 @@ export default function DynamicForm({
   const graphqlURI = Constants.WORDPRESS_GRAPHQL_ENDPOINT;
   const [cookies] = useCookies(['JWT']);
 
+  const [id, setId] = useState(null)
+
+  const cType = Utils.camelize(type)
   const name = "form-" + Utils.camelize(type)
-  const topic = Utils.camelize(type) + "_DATA_FETCHED"
+  const topics = [
+    Utils.camelize(type) + "_DATA_FETCHED",
+    "SHOW_" + Utils.camelize(type),
+  ]
+
+  const topicsOnSubmit = [
+    "REFRESH_CONTENT_" + Utils.camelize(type),
+  ]
 
   function getFormDefinitionFromType(type) {
     switch (type) {
@@ -107,7 +118,7 @@ export default function DynamicForm({
     try {
       let metadata = JSON.parse(getValueById("importFormJson"))
       let mergingStrategy = getValueById("importFormStrategy")
-      return UFC.updateFormFromStringForm(form, formMetadata, metadata, mergingStrategy)
+      return UFC.refreshFormFromStringForm(form, formMetadata, metadata, mergingStrategy)
     } catch(e) {
       log("importForm: pb while updating: e: ", e)
       alert("importForm: pb while updating: e: " + e)
@@ -121,14 +132,15 @@ export default function DynamicForm({
    * @param message the fetched data
    * @returns 
    */
-  function updateForm(topic, message) {
-    log("updateForm: ", "topic: ", topic, "message: ", message)
-    return UFC.updateStringForm(form, formMetadata, topic, message)
+  function refreshForm(topic, message) {
+    log("refreshForm: ", "topic: ", topic, "message: ", message)
+    setId(message?.objectId || null)
+    return UFC.refreshStringForm(form, formMetadata, topic, message)
   }
 
   //function onSubmit(data: z.infer<typeof FormSchema>) {
   function onSubmit(data) {
-    return UFC.onSubmit(graphqlURI, cookies, name, topic, data)
+    return UFC.onSubmit(graphqlURI, cookies, name, topicsOnSubmit, data)
   }
 
   //function renameContentTitleDialog(graphqlURI, cookies, row) {
@@ -206,19 +218,23 @@ export default function DynamicForm({
 
   useEffect(() => {
     if (onUpdateCallback) {
-      PubSub.subscribe(topic, onUpdateCallback)
+      topics.map((topic) => PubSub.subscribe(topic, onUpdateCallback))
     } else {
-      PubSub.subscribe(topic, updateForm)
+      topics.map((topic) => PubSub.subscribe(topic, refreshForm))
     }
 
     if (syncWithDatabase) {
-      UtilsGraphQLObject.listOne(graphqlURI, cookies, name, topic)
+      UtilsGraphQLObject.listOne(graphqlURI, cookies, name, topics)
     }
 
     if (params && onUpdateCallback) {
       log("useEffect: params: ", params)
       form.reset(params)
       //onUpdateCallback(null, params)
+    } else {
+      log("useEffect: no params, form.reset()")
+      //form.reset(formMetadata.defaultValues)
+      form.reset(params)
     }
   }, [])
 
@@ -229,6 +245,7 @@ export default function DynamicForm({
    */
   let formMetadata = {}
   formMetadata.type = type
+  formMetadata.cardinality = cardinality
   formMetadata.formDefinition = getFormDefinitionFromType(type)
   formMetadata.formDefinitionByFieldsName = getFormDefinitionByFieldsName(formMetadata.formDefinition)
   formMetadata.defaultValues = getDefaultValuesFromFormDefinition(formMetadata.formDefinition)
@@ -268,10 +285,8 @@ export default function DynamicForm({
     (group) => <TabsTrigger key={`group-${group}]`} className={cn} value={t(Utils.camelize(group))}>{t(Utils.camelize(group))}</TabsTrigger>
   )
 
-  //alert('DefaultValue: ' + t(Utils.camelize(Object.keys(fieldsByGroup[0])[0])))
-  //alert('DefaultValue: ' + JSON.stringify(Object.keys(fieldsByGroup)[0]))
   return (
-    <Form {...form}>
+    <Form key={"form-" + id} {...form}>
       <form onSubmit={form.handleSubmit(onSubmitCallback ? onSubmitCallback : onSubmit)} className="space-y-6">
 
         <Tabs defaultValue={t(Utils.camelize(Object.keys(fieldsByGroup)[0]))}>

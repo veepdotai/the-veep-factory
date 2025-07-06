@@ -21,6 +21,7 @@ import { getIcon } from '@/constants/Icons'
 import { UtilsGraphQLObject } from '@/api/utils-graphql-object'
 import Upload from '../upload-widget/page'
 import MediaLibrary from '../MediaLibrary'
+import JSCodeEditor from '../editor/JSCodeEditor'
 
 
 export const UtilsFormCommon = {
@@ -55,8 +56,8 @@ export const UtilsFormCommon = {
         })
     },
 
-    onSubmit: function(graphqlURI, cookies, name, topic, data) {
-        let log = (msg) => UtilsFormCommon.log("onSubmit: ", msg)
+    onSubmit: function(graphqlURI, cookies, name, topics, data) {
+        let log = (...args) => UtilsFormCommon.log("onSubmit: ", args)
         
         let o = JSON.stringify(data, null, 2)
         log("o (after JSON stringifying): " + o)
@@ -64,14 +65,19 @@ export const UtilsFormCommon = {
         let odata = Utils.denormalize(o)
         log("odata (after replacing chars): " + odata)
  
-        let q = UtilsGraphQLObject.create(graphqlURI, cookies,
-          name,
-          odata,
-          topic
+        let q = UtilsGraphQLObject.create(
+            {
+                "graphqlURI": graphqlURI,
+                "cookies": cookies,
+                "name": name,
+                "value": odata,
+                "topics": topics,
+                "objectId": data?.objectId || null
+            }
         )
   
-        log("GraphQL request: " + q)
-        log("Submitting data: " + JSON.stringify(data, null, 2))
+        log("GraphQL request: ", q)
+        log("Submitting data: ", data)
 
         PubSub.publish('TOAST', {
           title: t("Status"),
@@ -85,8 +91,8 @@ export const UtilsFormCommon = {
     },
   
     // It is form display, not an update in the database
-    updateForm: function(form, topic, message) {
-        let log = (...args) => UtilsFormCommon.log("updateForm: ", args)
+    refreshForm: function(form, topic, message) {
+        let log = (...args) => UtilsFormCommon.log("refreshForm: ", args)
 
         log("message: ", message)
         form.reset(message)
@@ -94,7 +100,7 @@ export const UtilsFormCommon = {
 
     // It is form display, not an update in the database
     // So user must click on Save to persist data
-    updateFormFromStringForm: function(form, formMetadata, metadata, mergingStrategy = null) {
+    refreshFormFromStringForm: function(form, formMetadata, metadata, mergingStrategy = null) {
         let log = (...args) => UtilsFormCommon.log("updateFormFromStringForm: ", args)
 
         let newMetadata = null
@@ -165,21 +171,21 @@ export const UtilsFormCommon = {
         }
     },
 
-    updateStringForm: function(form, formMetadata, topic, message) {
-        let log = (...args) => UtilsFormCommon.log("updateForm: ", args)
-        log("updateStringForm: topic: ", topic)
+    refreshStringForm: function(form, formMetadata, topic, message) {
+        let log = (...args) => UtilsFormCommon.log("refreshStringForm: ", args)
+        log("topic: ", topic)
 
         let metadata = null
         if ("200" == message?.status || message?.result) {
             metadata = message.result
-            log("updateStringForm: message.result: ", message?.result)
+            log("message.result: ", message?.result)
         } else {
             metadata = message
-            log("updateStringForm: message.result: ", message?.result)
+            log("message.result: ", message?.result)
         }
-        log("updateStringForm: metadata: ", metadata)
+        log("metadata: ", metadata)
 
-        return UtilsFormCommon.updateFormFromStringForm(form, formMetadata, metadata)
+        return UtilsFormCommon.refreshFormFromStringForm(form, formMetadata, metadata)
     },
     
     updateFormOld: function(form, topic, message) {
@@ -218,7 +224,7 @@ export const UtilsFormCommon = {
      * @param form 
      * @param field 
      * @param fieldName 
-     * @param fieldType "input", "upload", "medialibrary", "textarea", "select", "checkbox", "listofvalues", "combobox", "date" 
+     * @param fieldType "input", "upload", "medialibrary", "textarea", "select", "checkbox", "listofvalues", "combobox", "date", "codeeditor", "jscodeeditor"
      * @param fieldValues 
      * @param fieldOptions 
      * @returns 
@@ -274,7 +280,7 @@ export const UtilsFormCommon = {
             PubSub.subscribe(topic + "_" + fieldName, onSelect)
 
             return (
-                <div class="flex gap-2">
+                <div className="flex gap-2">
                     <Input id={"input-" + fieldName} className={lcn} {...field} />
                     <Button onClick={openMediaLibrary}>
                         {t("OpenMediaLibrary")}
@@ -465,6 +471,13 @@ export const UtilsFormCommon = {
                   />
                 </PopoverContent>
               </Popover>
+            )
+        } else if (fieldType === "codeeditor") {
+            let source = field.value || ""
+            return (
+                <div className="">
+                    <JSCodeEditor source={source} />
+                </div>
             )
         }
     },

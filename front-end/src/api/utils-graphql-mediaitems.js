@@ -1,5 +1,4 @@
 import { Logger } from 'react-logger-lib'
-import { contentSchema } from './utils-graphql-schema'
 
 export const UtilsGraphQLMediaItems = {
 	log: Logger.of("UtilsGraphQLMediaItems"),

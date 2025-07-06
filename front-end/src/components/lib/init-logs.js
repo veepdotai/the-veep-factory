@@ -35,6 +35,7 @@ export default function initAppJSLogs(level = "NONE") {
     localStorage.setItem('Cover', level);
     localStorage.setItem('Dashboard', level);
     localStorage.setItem('MyContent', level);
+    localStorage.setItem('MyConfiguration', level);
     localStorage.setItem('SideBySideViewContent', level);
     localStorage.setItem('MyContentDetails', level);
     localStorage.setItem('MyContentDetailsUtils', level);
@@ -104,6 +105,7 @@ export default function initAppJSLogs(level = "NONE") {
     localStorage.setItem('UtilsGraphQLVcontent', level);
     localStorage.setItem('UtilsGraphQLMonitoring', level);
     localStorage.setItem('UtilsGraphQLEditorialLine', level);
+    localStorage.setItem('UtilsGraphQLConfiguration', level);
     localStorage.setItem('UtilsDataConverter', level);
     localStorage.setItem('WaitForIt', 'OFF');
     

@@ -768,7 +768,7 @@ class Generation_Process {
         // Create vcontent
         $post_array = array(
             "post_type" => GENERATED_CONTENT,
-            "post_title" => $computed_title,
+            "post_title" => isset( $custom_metadata[ "title" ] ) ? $custom_metadata[ "title" ] : $computed_title,
             "post_content" => $only_content,
             "post_parent" => $id,
             "meta_input" => $metadata
@@ -799,15 +799,21 @@ class Generation_Process {
     }
 
     public static function extract_metadata( $raw_metadata ) {
+        self::log( __METHOD__ . ": extract_metadata: " . print_r( $raw_metadata, true ) );
         $metadata = [];
         // Extracts metadata from each line or raw_metadata
         $lines = explode( "\n", $raw_metadata );
         
         for($i = 0; $i < count( $lines ); $i++) {
             $line =  $lines[$i];
+            self::log( __METHOD__ . ": extract_metadata: line: " . $line );
+
             if ( $line ) { // some lines may be empty
                 preg_match_all("/([^:]*)\S*:\S*(.*)/", $lines[$i], $matches);
+                self::log( __METHOD__ . ": extract_metadata: " . $matches[1] . ": " . $matches[2] );
                 if ( count( $matches ) == 3 && $matches[1] && $matches[2]) {
+                    // All metadata are taken into consideration
+                    // The fact they are tvf or not is processed later
                     $metadata[ $matches[1][0] ] = trim( $matches[2][0] );
                 }
             }

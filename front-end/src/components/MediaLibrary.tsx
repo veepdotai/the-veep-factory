@@ -369,7 +369,7 @@ export default function MediaLibrary({fieldName, embeddingType = "nomodal"}) {
 
     //let viewType = 'react-media-library'
     let viewType = 'shadcn-media-library'
-    log("MediaLibrary: viewType:", viewType, " embeddingType:", embeddingType)
+    log("viewType:", viewType, " embeddingType:", embeddingType)
 
     return (
         <>

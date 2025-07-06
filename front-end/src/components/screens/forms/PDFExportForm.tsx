@@ -53,7 +53,7 @@ export default function PDFExportForm( {cid, params} ) {
       log.trace(`onSubmit: newParamsFormDisplay: ${JSON.stringify(newParams)}`)
       //PubSub.publish("INFOS_PANEL_UPDATED", newParams)
 
-      return UFC.updateForm(form, topic, metadata)  
+      return UFC.refreshForm(form, topic, metadata)  
     }
 
     //function onSubmit(data: z.infer<typeof FormSchema>) {

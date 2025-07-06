@@ -1,4 +1,4 @@
-import { t } from 'src/components/lib/utils'
+import { t, Utils } from 'src/components/lib/utils'
 import PubSub from 'pubsub-js'
 
 import { Button } from 'src/components/ui/shadcn/button'
@@ -45,8 +45,14 @@ export default function DataTableBase( props ) {
 	let dtViewType = "compact"
 	let cns = classNames[dtViewType]
 	
+	let type = Utils.camelize(props?.type || "vcontent")
+	let topics = [
+		"REFRESH_CONTENT_" + type,
+	]
+
 	function handleRefresh() {
-		PubSub.publish( "CONTENTS_LIST_TO_REFRESH", null);
+		topics.map((topic) => PubSub.publish(topic, null));
+		//PubSub.publish( "REFRESH_CONTENT_" + topic, null);
 	}
 
 	return (

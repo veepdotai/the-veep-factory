@@ -1,23 +1,22 @@
 import { Logger } from 'react-logger-lib'
 import { gql } from '@apollo/client'
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
-import { UtilsGraphQL } from './utils-graphql'
-import { Utils } from 'src/components/lib/utils'
+import PubSub from 'pubsub-js'
 
-import { t } from 'src/components/lib/utils'
+import { UtilsGraphQL } from './utils-graphql'
+import { Utils, t } from 'src/components/lib/utils'
 
 export const UtilsGraphQLObject = {
-	log: Logger.of("UtilsGraphQLObject"),
+	log: (...args) => Logger.of("UtilsGraphQLObject").trace(args),
 
 	/**
 	 * When data is retrieved, its content is published on the provided topic
 	 * so listening parts can be updated
 	 */
-	listOne: function(graphqlURI, cookies, name, topic) {
-		let log = (...args) => UtilsGraphQLObject.log.trace("listOne: ", args)
+	listOne: function(graphqlURI, cookies, name, topics, cardinality = "single") {
+		let log = (...args) => UtilsGraphQLObject.log("listOne: ", args)
 		let q = `
 			mutation list {
-				listData(input: { option: "${name}" }) {
+				listData(input: { option: "${name}" ${"single" === cardinality ? "" : `, cardinality="${cardinality}"`} }) {
 					result
 				}
 			}
@@ -41,12 +40,12 @@ export const UtilsGraphQLObject = {
 					"status": 200,
 					"result": data
 				}
-				PubSub.publish(topic, r);
+				topics.map((topic) => PubSub.publish(topic, r))
 				return r
 			}).catch((e) => {
 				log(`list: error while fetching option value for ${name}. Exception: ${e}`);
 				let r = { "status": 500, "error": e, "msg": `Exception while creating ${name}: ${e}`}
-				PubSub.publish(topic, r);
+				topics.map((topic) => PubSub.publish(topic, r))
 				return r
 			})
 
@@ -61,26 +60,31 @@ export const UtilsGraphQLObject = {
 	 * @param {*} oldName The name of the old option in case of a rename
 	 * @returns 
 	 */
-	create: function(graphqlURI, cookies, name, value, topic, oldName = null) {
+	create: function({graphqlURI, cookies, name, value, topics, oldName = null, objectId = null}) {
 		let log = UtilsGraphQLObject.log
 		//saveData(input: { option: "${name}", value: "${value}" ${oldName ? `, "oldName": "${oldName}"`: "" }) {
 		//log.trace(`create: before: query: ${q}`)
+		
+		function paramIfNotNull(paramName, paramValue) {
+			return paramValue ? `, ${paramName}: "${paramValue}"` : ""
+		}
+
 		let q = `
 			mutation create {
-				saveData(input: { option: "${name}", value: "${value}" }) {
+				saveData(input: { option: "${name}", value: "${value}" ${paramIfNotNull("objectId", objectId)} }) {
 					result
 				}
 			}
 		`;
 	
-		log.trace(`create: after: query: ${q}`)
+		log(`create: after: query: ${q}`)
 
 		return UtilsGraphQL
 			.client(graphqlURI, cookies)
 			.mutate({
 				mutation: gql`${q}`
 			}).then((result) => {
-				log.trace(`create: `, result);
+				log("create: ", result);
 				PubSub.publish("TOAST", {
 					"title": t("Status"),
 					"description": <div className="mt-2 w-[500px] rounded-md">{t("DataSaved")}</div>
@@ -91,12 +95,16 @@ export const UtilsGraphQLObject = {
 					"status": 200,
 					"result": data
 				}
-				PubSub.publish(topic, r);
+				log("create: publishing on topics", topics)
+				topics?.map((topic) => {
+					log("create: publishing topic:", topic, "with r:", r)
+					PubSub.publish(topic, r)
+				})
 				return r
 			}).catch((e) => {
-				log.trace(`create: error while creating data. Exception: ${e}`);
+				log("create: error while creating data. Exception:", e)
 				let r = { "status": 500, "error": e, "msg": `Exception while creating ${name}: ${e}`}
-				PubSub.publish(topic, r);
+				//topics.map((topic) => PubSub.publish(topic, r))
 				return r
 			})
 	

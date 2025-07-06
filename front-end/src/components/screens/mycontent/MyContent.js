@@ -75,6 +75,7 @@ export default function MyContent( {...props} ) {
     return (
       <DataTableBase
         dtViewType={dtViewType}
+        type="vcontent"
         title={view}
         columns={getColumns}
         data={data}
@@ -97,7 +98,7 @@ export default function MyContent( {...props} ) {
     PubSub.subscribe("CONTENT_ELEMENT_REMOVED", getData);
     PubSub.subscribe("CONTENT_ELEMENT_UPDATED", getData);
 
-    PubSub.subscribe("CONTENTS_LIST_TO_REFRESH", getData);
+    PubSub.subscribe("REFRESH_CONTENT_Vcontent", getData);
 
     getData();
 	}, [graphqlURI, cookies]);

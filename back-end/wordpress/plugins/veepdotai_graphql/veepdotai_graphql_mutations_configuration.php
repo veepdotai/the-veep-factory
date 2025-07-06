@@ -1,0 +1,278 @@
+<?php
+
+namespace Veepdotai\Graphql\Mutations\Configuration;
+
+/**
+ * @package Veepdotai\Graphql\Mutations\Configuration
+ * @version 0.0.1
+ * Registers custom graphql operations
+ * 
+ */
+
+function register() {
+	register_configuration();
+}
+
+function log( $msg ) {
+	\Veepdotai_Util::log( 'debug', 'GraphQL Mutations\Configuration: ' . $msg );
+}
+
+
+function register_configuration() {
+
+	/**
+	 * createConfiguration create options from the provided parameters
+	 * 
+	 * 
+	 */
+	register_graphql_mutation( 'createConfiguration', [
+
+		'description' => __( 'Configuration create mutation', 'your-textdomain' ),
+		'inputFields'         => [
+			'type' => [
+				'type' => 'String',
+				'description' => __( 'Object type', 'your-textdomain' ),
+			],
+			'id' => [
+				'type' => 'String',
+				'description' => __( 'Object id', 'your-textdomain' ),
+			],
+			'name' => [
+				'type' => 'String',
+				'description' => __( 'Object name', 'your-textdomain' ),
+			],
+			'value' => [
+				'type' => 'String',
+				'description' => __( 'Object value', 'your-textdomain' ),
+			],
+			'status' => [
+				'type' => 'String',
+				'description' => __( 'Object status', 'your-textdomain' ),
+			],
+		],
+	
+		'outputFields'        => [
+			'result' => [
+				'type' => 'String',
+				'description' => __( 'Configuration object', 'your-textdomain' ),
+			]
+		],
+	
+		'mutateAndGetPayload' => function( $input, $context, $info ) {
+			$prefix = "createConfiguration";
+
+			$data = [
+				"type" => sanitize_text_field( $input["type"] ),
+				"id" => sanitize_text_field( $input["id"] ),
+				"name" => sanitize_text_field( $input["name"] ),
+				"value" => sanitize_text_field( $input["value"] ),
+				"status" => sanitize_text_field( $input["status"] )
+			];
+
+			log( $prefix . ': data: ' . print_r( $data, true ) );
+			//Veepdotai_Util::set_option( 'veepdotai-' . $data["type"] . '-' . $data["id"], $data["value"] );
+			$result = [
+				'status' => 'success',
+				'msg' => __( 'Configuration created successfully', 'your-textdomain' ),
+				//'items' => json_encode( $data ),
+				'items' => $data,
+			];
+
+			log( $prefix . ": result: " . print_r( $result, true ) );
+			return [ 'result' => json_encode( $result ) ]; 
+		}
+	] );
+
+	register_graphql_mutation( 'getConfiguration', [
+
+		'description' => __( 'Get configuration mutation', 'your-textdomain' ),
+		'inputFields'         => [
+			'type' => [
+				'type' => 'String',
+				'description' => __( 'Object type', 'your-textdomain' ),
+			],
+			'id' => [
+				'type' => 'String',
+				'description' => __( 'Object id', 'your-textdomain' ),
+			],
+		],
+	
+		'outputFields'        => [
+			'result' => [
+				'type' => 'String',
+				'description' => __( 'Configuration object', 'your-textdomain' ),
+			]
+		],
+	
+		'mutateAndGetPayload' => function( $input, $context, $info ) {
+			$prefix = "getConfiguration";
+
+			$data = [
+				"type" => sanitize_text_field( $input["type"] ),
+				"id" => sanitize_text_field( $input["id"] ),
+			];
+
+			log(  $prefix . ': data: ' . print_r( $data, true ) );
+			//\Veepdotai_Util::set_option( 'veepdotai-' . $data["type"] . '-' . $data["id"], $data["value"] );
+
+			$item = [
+				'type' => $data['type'],
+				'id' => $data['id'],
+				'group' => 'Sample Experience Group',
+				'name' => 'Sample Experience Name',
+				'value' => 'Sample Experience Value',
+				'status' => 'active',
+			];
+
+			$result = [
+				'status' => 'success',
+				'msg' => __( 'Configuration retrieved successfully', 'your-textdomain' ),
+				'items' => $item,
+			];
+
+			log( $prefix . "result: " . print_r( $result, true ) );
+			return [ 'result' => json_encode( $result ) ]; 
+		}
+	] );
+
+	register_graphql_mutation( 'listConfiguration', [
+
+		'description' => __( 'List Configuration mutation', 'your-textdomain' ),
+		'inputFields'         => [
+			'type' => [
+				'type' => 'String',
+				'description' => __( 'Object type', 'your-textdomain' ),
+			],
+			'id' => [
+				'type' => 'String',
+				'description' => __( 'Object id', 'your-textdomain' ),
+			],
+			'name' => [
+				'type' => 'String',
+				'description' => __( 'Object name', 'your-textdomain' ),
+			],
+			'status' => [
+				'type' => 'String',
+				'description' => __( 'Object status', 'your-textdomain' ),
+			],
+		],
+	
+		'outputFields'        => [
+			'result' => [
+				'type' => 'String',
+				'description' => __( 'Configuration objects array', 'your-textdomain' ),
+			]
+		],
+	
+		'mutateAndGetPayload' => function( $input, $context, $info ) {
+			$prefix = "listConfiguration";
+
+			$data = [
+				"type" => sanitize_text_field( $input["type"] ),
+				"id" => isset($input["id"]) && sanitize_text_field( $input["id"] ),
+				"name" => sanitize_text_field( $input["name"] ),
+				"status" => sanitize_text_field( $input["status"] )
+			];
+
+			log( $prefix . ': data: ' . print_r( $data, true ) );
+			//Veepdotai_Util::set_option( 'veepdotai-' . $data["type"] . '-' . $data["id"], $data["value"] );
+
+	        global $wpdb;
+
+			$user_login = wp_get_current_user()->user_login;
+			$type = $data['type'];
+			$my_option_name = "${user_login}-veepdotai-form-${type}";
+			log( $prefix . ": my_option_name: " . $my_option_name );
+
+			$vars = [
+				$wpdb->esc_like( $my_option_name ) . '%'
+			];
+			$sql = $wpdb->prepare(
+				"SELECT option_name, option_value "
+				. "FROM $wpdb->options "
+				. "WHERE option_name LIKE %s;",
+				$vars
+			);
+			$options = $wpdb->get_results( $sql );
+			log( $prefix . ": options: " . print_r( $options, true ) );
+
+			$convertFn = function( $item ) {
+				$name = $item->option_name;
+				preg_match( '/-([a-zA-Z]*)(-?([0-9]*))?$/', $name, $matches );
+				if ( $matches && count( $matches ) >= 2 ) {
+					$object_id = null;
+					if (count( $matches ) === 4 ) {
+						$object_id = $matches[3];
+					}
+					$result = [
+						'type' => $matches[1],
+						'objectId' => $object_id,
+						'value' => $item->option_value,
+					];
+					log( $prefix . ": convertFn: result: " . print_r( $result, true ) );
+					return $result;
+				} else {
+					return null;
+				}
+			};
+			$resultsFn = array_map( $convertFn, $options );
+			log( $prefix . ": resultsFn: " . print_r( $resultsFn, true ) );
+			$result = [
+				'status' => 'success',
+				'msg' => __( 'Configuration selected successfully', 'your-textdomain' ),
+				'original' => $options,
+				'items' => $resultsFn,
+			];
+
+			log( $prefix . ": final result: " . print_r( $result, true ) );
+			return [ 'result' => json_encode ( $result ) ]; 
+		}
+	] );
+
+	register_graphql_mutation( 'deleteConfiguration', [
+
+		'description' => __( 'Delete Configuration mutation', 'your-textdomain' ),
+		'inputFields'         => [
+			'type' => [
+				'type' => 'String',
+				'description' => __( 'Type name', 'your-textdomain' ),
+			],
+			'id' => [
+				'type' => 'String',
+				'description' => __( 'Object id', 'your-textdomain' ),
+			],
+		],
+	
+		'outputFields'        => [
+			'result' => [
+				'type' => 'String',
+				'description' => __( 'Boolean', 'your-textdomain' ),
+			]
+		],
+	
+		'mutateAndGetPayload' => function( $input, $context, $info ) {
+			$prefix = "deleteConfiguration";
+
+			$data = [
+				"type" => sanitize_text_field( $input["type"] ),
+				"id" => sanitize_text_field( $input["id"] ),
+			];
+
+			log( $prefix . ': data: ' . print_r( $data, true ) );
+			$ret = [
+				"result" => \Veepdotai_Util::delete_option( 'veepdotai-form-' . $data["type"] . '-' . $data["id"] )
+			];
+
+			$result = [
+				'status' => 'success',
+				'msg' => __( 'Configuration deleted successfully', 'your-textdomain' ),
+				'items' => $ret,
+			];
+
+			log("result: " . print_r( $result, true ) );
+			return [ 'result' => json_encode( $result ) ]; 
+		}
+	] );
+
+}
+

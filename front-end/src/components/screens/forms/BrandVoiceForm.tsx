@@ -40,9 +40,9 @@ export default function BrandVoiceForm() {
       anecdotes: getConstraints(minChars),
     })
     
-    function updateForm(topic, message) {
-      log.trace("updateForm: ", "topic: ", topic, "message: ", message)
-      return UFC.updateStringForm(form, topic, message)
+    function refreshForm(topic, message) {
+      log.trace("refreshForm: ", "topic: ", topic, "message: ", message)
+      return UFC.refreshStringForm(form, topic, message)
     }
 
     //function onSubmit(data: z.infer<typeof FormSchema>) {
@@ -57,7 +57,7 @@ export default function BrandVoiceForm() {
     })
 
     useEffect(() => {
-      PubSub.subscribe( topic, updateForm)
+      PubSub.subscribe( topic, refreshForm)
       UtilsGraphQLObject.listOne(graphqlURI, cookies, name, topic)
     }, [])
 

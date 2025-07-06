@@ -1,4 +1,62 @@
 [
+  {
+    "id": 4,
+    "name": "objectId",
+    "group": "meta",
+    "type": "input",
+    "constraints": "",
+    "options": "",
+    "className": "",
+    "label": "",
+    "comment": "",
+    "position": 4
+  },
+  {
+    "id": 0,
+    "name": "group",
+    "group": "meta",
+    "type": "input",
+    "constraints": "",
+    "values": "",
+    "className": "",
+    "position": 0,
+    "options": ""
+  },
+  {
+    "id": 1,
+    "name": "name",
+    "group": "meta",
+    "type": "input",
+    "constraints": "",
+    "values": "",
+    "className": "",
+    "position": 1,
+    "options": ""
+  },
+  {
+    "id": 2,
+    "name": "description",
+    "group": "meta",
+    "type": "textarea",
+    "constraints": "",
+    "values": "",
+    "className": "w-full h-[80px]",
+    "position": 2,
+    "options": ""
+  },
+  {
+    "id": 3,
+    "name": "status",
+    "group": "meta",
+    "type": "listofvalues",
+    "constraints": "",
+    "options": "On|Off|Draft|Trash",
+    "className": "",
+    "label": "",
+    "comment": "",
+    "position": 3
+  },
+
     {
         "id": "0",
         "name": "image",
