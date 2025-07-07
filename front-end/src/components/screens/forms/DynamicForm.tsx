@@ -14,12 +14,12 @@ import { z } from "zod"
 import { UtilsFormCommon as UFC } from '../../lib/utils-form-common'
 import { Utils } from '../../lib/utils'
 
-import editorialFormDefinition from "./definitions/editorial-form-definition.json"
-import formFormDefinition from "./definitions/form-form-definition.json"
-import brandVoiceFormDefinition from "./definitions/brand-form-definition.json"
-import templateFormDefinition from "./definitions/template-form-definition.json"
-import uploadFormDefinition from "./definitions/upload-form-definition.json"
-import pdfExportFormDefinition from "./definitions/pdf-export-form-definition.json"
+import defaultEditorialLineFormDefinition from "./definitions/editorial-line-form-definition.json"
+import defaultFormFormDefinition from "./definitions/form-form-definition.json"
+import defaultBrandVoiceFormDefinition from "./definitions/brand-form-definition.json"
+import defaultTemplateFormDefinition from "./definitions/template-form-definition.json"
+import defaultUploadFormDefinition from "./definitions/upload-form-definition.json"
+import defaultPdfExportFormDefinition from "./definitions/pdf-export-form-definition.json"
 
 import { Button } from "src/components/ui/shadcn/button"
 import { Form, } from "src/components/ui/shadcn/form"
@@ -27,9 +27,124 @@ import { Tabs, TabsContent, TabsList, TabsTrigger, } from "src/components/ui/sha
 import { UtilsGraphQLObject } from '../../../api/utils-graphql-object'
 import Loading from 'src/components/common/Loading'
 import JSON2Form from '@/components/import-to-form/JSON2Form'
+import { UtilsGraphQLConfiguration } from '@/api/utils-graphql-configuration'
 
-export default function DynamicForm({
+const defaultDefinitions = [
+    { formName: "editorial-line", formDef: defaultEditorialLineFormDefinition },
+    { formName: "form", formDef: defaultFormFormDefinition },
+    { formName: "brand-voice", formDef: defaultBrandVoiceFormDefinition },
+    { formName: "template", formDef: defaultTemplateFormDefinition },
+    { formName: "upload", formDef: defaultUploadFormDefinition },
+    { formName: "pdf-export", formDef: defaultPdfExportFormDefinition },
+]
+
+export default function DynamicForm({type, ...props}) {
+  const log = (...args) => Logger.of(DynamicForm.name).trace(args)
+  //const log = (...args) => console.log("DynamicForm", args)
+
+  log("type:", type, "props: ", props)
+
+  const graphqlURI = Constants.WORDPRESS_GRAPHQL_ENDPOINT;
+  const [cookies] = useCookies(['JWT']);
+
+  const [definition, setDefinition] = useState(null)
+
+  function getFormDefinitionFromType(type, definitions) {
+    log("getFormDefinitionFromType:", type)
+    let definition = definitions?.find((definition) => {
+        log("type:", type, "definition:", definition)
+        return type === definition.formName
+    })?.formDef
+
+  /*  if (! definition && "form" !== type) {
+      definition = getFormDefinitionFromType("form", definitions)
+    }
+  */
+    return definition
+  }
+
+  function initDefinition(type, cType, defaultDefinitions) {
+    let def = null
+    UtilsGraphQLConfiguration.
+      listConfiguration(graphqlURI, cookies, "Form", cType)
+      .then((data) => {
+        log("useEffect: type:", type, "data from db: data:", data)
+        let ldefinition = data?.length > 0 && data[0]?.definition 
+        if (ldefinition) {
+
+          let defString = Utils.normalize(ldefinition)
+          log("useEffect: type:", type, "normalized data.definition: def: ", defString)
+
+          def = JSON.parse(defString)
+          log("useEffect: type:", type, "json data.definition: def: ", def)
+
+          if (!def) {
+            def = getFormDefinitionFromType(type, defaultDefinitions)
+            log("useEffect: type:", type, "default definition because can't convert data.definition from db: def: ", def)
+          }
+        } else {
+          def = getFormDefinitionFromType(type, defaultDefinitions)
+          log("useEffect: type:", type, "default definition: def: ", def)
+        }
+
+        /**
+         * Type is inknown. Provide a default basic definition.
+         */
+        if (!def) {
+          def = getFormDefinitionFromType("form", defaultDefinitions)
+          log("useEffect: type:", type, "default form definition because nothing has been provided: def: ", def)
+        }
+
+        setDefinition(def)
+
+      })
+      .catch((e) => {
+        log("ERROR: useEffect: type:", type, "getFormDefinition: e: ", e)
+
+        def = getFormDefinitionFromType("form", defaultDefinitions)
+        log("useEffect: type:", type, "default form definition because an exception has been raised: def: ", def)
+
+        setDefinition(def)
+      })
+  }
+
+  useEffect(() => {
+    let cType = Utils.camelize(type)
+    log("useEffect: cType:", cType)
+    log("useEffect: Form type:", type, "cType: ", cType, "Type complet: Form-" + cType)
+
+    if (! definition) {
+      let def = null
+      if (!cType) {
+          def = getFormDefinitionFromType("Form", defaultDefinitions)
+          log("useEffect: data from defaultDefinitions: ", def)
+          setDefinition(def)
+      } else {
+        initDefinition(type, cType, defaultDefinitions)
+      }
+    }
+
+  }, [definition])
+  
+  return (
+    <>
+      {
+        definition ?
+            <>
+              <Button size="icon" onClick={() => setDefinition(null)}>Reload</Button>
+              {<DisplayForm type={type} formDefinition={definition} {...props} />}
+            </>
+          :
+            <Loading />
+      }
+    </>
+  )
+
+}
+
+function DisplayForm({
   type,
+  formDefinition,
   cardinality = "single",
   params = null,
   importButton = true,
@@ -38,12 +153,12 @@ export default function DynamicForm({
   onUpdateCallback = null,
   syncWithDatabase = true
 }) {
-  const log = (...args) => Logger.of(DynamicForm.name).trace(args);
+  const log = (...args) => Logger.of("DynamicForm.DisplayForm").trace(args)
+
+  const [id, setId] = useState(null)
 
   const graphqlURI = Constants.WORDPRESS_GRAPHQL_ENDPOINT;
   const [cookies] = useCookies(['JWT']);
-
-  const [id, setId] = useState(null)
 
   const cType = Utils.camelize(type)
   const name = "form-" + Utils.camelize(type)
@@ -56,23 +171,18 @@ export default function DynamicForm({
     "REFRESH_CONTENT_" + Utils.camelize(type),
   ]
 
-  function getFormDefinitionFromType(type) {
-    switch (type) {
-      case 'editorial-line':
-        return editorialFormDefinition
-      case 'form':
-        return formFormDefinition
-      case 'brand-voice':
-        return brandVoiceFormDefinition
-      case 'template':
-        return templateFormDefinition
-      case 'pdf-export':
-        return pdfExportFormDefinition
-      case 'upload':
-        return uploadFormDefinition
-      default:
-        return formFormDefinition
+  function getFormDefinitionFromType(type, definitions) {
+    log("getFormDefinitionFromType:", type)
+    let definition = definitions?.find((definition) => {
+        log("type:", type, "definition:", definition)
+        return type === definition.formName
+    })?.formDef
+
+  /*  if (! definition && "form" !== type) {
+      definition = getFormDefinitionFromType("form", definitions)
     }
+  */
+    return definition
   }
 
   function getConstraints(minChars = 1) {
@@ -81,7 +191,7 @@ export default function DynamicForm({
 
   function getFormSchema(formDefinition) {
     let formDefinitionObject = {}
-    formDefinition.map((field) => {
+    formDefinition?.map((field) => {
       formDefinitionObject[field.name] = getConstraints(field.constraints || minChars)
       return null
     })
@@ -216,6 +326,49 @@ export default function DynamicForm({
     )
   }
 
+  /**
+   * Should be refactored in a specific component
+   */
+  function getFormMetadata(type, cardinality, formDefinition) {
+    let formMetadata = {}
+    formMetadata.type = type
+    formMetadata.cardinality = cardinality
+    formMetadata.formDefinition = formDefinition
+    formMetadata.formDefinitionByFieldsName = getFormDefinitionByFieldsName(formMetadata.formDefinition)
+    formMetadata.defaultValues = getDefaultValuesFromFormDefinition(formMetadata.formDefinition)
+    formMetadata.formSchema = getFormSchema(formMetadata.formDefinition)
+    log("formMetadata: ", formMetadata)
+
+    return formMetadata
+  }
+
+  function getForm(formMetadata) {
+    const FormSchema = z.object(formMetadata.formSchema)
+    let form = useForm<z.infer<typeof FormSchema>>({
+      resolver: zodResolver(FormSchema),
+      defaultValues: formMetadata.defaultValues
+    })
+    return form
+  }
+
+  function getNormalizedFormDefinition(formMetadata) {
+    let normalizedFormDefinition = formMetadata.formDefinition.filter(({ name }) => name ? true : false)
+    normalizedFormDefinition = normalizedFormDefinition.map((field) => {
+      let group = field.group
+      if (group.indexOf("/")) {
+        return {
+          ...field,
+          group: group.replace(/([^\/]*)\/.*/, "$1"),
+          subgroup: group.replace(/[^\/]*\/(.*)/, "$1")
+        }
+      } else {
+        return field
+      }
+    })
+
+    return normalizedFormDefinition
+  }
+
   useEffect(() => {
     if (onUpdateCallback) {
       topics.map((topic) => PubSub.subscribe(topic, onUpdateCallback))
@@ -240,23 +393,8 @@ export default function DynamicForm({
 
   const minChars = 2
 
-  /**
-   * Should be refactored in a class
-   */
-  let formMetadata = {}
-  formMetadata.type = type
-  formMetadata.cardinality = cardinality
-  formMetadata.formDefinition = getFormDefinitionFromType(type)
-  formMetadata.formDefinitionByFieldsName = getFormDefinitionByFieldsName(formMetadata.formDefinition)
-  formMetadata.defaultValues = getDefaultValuesFromFormDefinition(formMetadata.formDefinition)
-  formMetadata.formSchema = getFormSchema(formMetadata.formDefinition)
-  log("formMetadata: ", formMetadata)
-
-  const FormSchema = z.object(formMetadata.formSchema)
-  let form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: formMetadata.defaultValues
-  })
+  let formMetadata = getFormMetadata(type, cardinality, formDefinition)
+  let form = getForm(formMetadata)
 
   let cn = "text-sm font-bold"
   let sectionCn = "pt-5 flex items-center text-md font-bold text-black after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:after:border-neutral-600"
@@ -265,40 +403,29 @@ export default function DynamicForm({
 //  let defaultCBB = { displayFormLabel: true, cnFormLabel: "w-[200px] text-right" }
   let defaultCBB = { displayFormLabel: true, cnFormLabel: "w-[400px] text-left" }
 
-  log("updateForm: formMetadata.formDefinition: ", formMetadata.formDefinition)
-
-  let normalizedFormDefinition = formMetadata.formDefinition.filter(({ name }) => name ? true : false)
-  normalizedFormDefinition = normalizedFormDefinition.map((field) => {
-    let group = field.group
-    if (group.indexOf("/")) {
-      return {
-        ...field,
-        group: group.replace(/([^\/]*)\/.*/, "$1"),
-        subgroup: group.replace(/[^\/]*\/(.*)/, "$1")
-      }
-    } else {
-      return field
-    }
-  })
-  let fieldsByGroup = Object.groupBy(normalizedFormDefinition, ({ group }) => group || "main")
+  let nfd = getNormalizedFormDefinition(formMetadata)
+  let fieldsByGroup = Object.groupBy(nfd, ({ group }) => group || "main")
   let tabsTrigger = Object.keys(fieldsByGroup).map(
     (group) => <TabsTrigger key={`group-${group}]`} className={cn} value={t(Utils.camelize(group))}>{t(Utils.camelize(group))}</TabsTrigger>
   )
 
   return (
-    <Form key={"form-" + id} {...form}>
-      <form onSubmit={form.handleSubmit(onSubmitCallback ? onSubmitCallback : onSubmit)} className="space-y-6">
+      <Form key={"form-" + id} {...form}>
+        <form onSubmit={form.handleSubmit(onSubmitCallback ? onSubmitCallback : onSubmit)} className="space-y-6">
 
-        <Tabs defaultValue={t(Utils.camelize(Object.keys(fieldsByGroup)[0]))}>
+          <Tabs defaultValue={t(Utils.camelize(Object.keys(fieldsByGroup)[0]))}>
 
-          <TabsList className="grid grid-cols-5">
-            {tabsTrigger}
-          </TabsList>
+            <TabsList className="grid grid-cols-5">
+              {tabsTrigger}
+            </TabsList>
 
-          {Object.keys(fieldsByGroup).map((group) => getTabsContentForGroup(group, fieldsByGroup))}
-        </Tabs>
-      </form>
-    </Form>
+            {Object.keys(fieldsByGroup).map((group) => getTabsContentForGroup(group, fieldsByGroup))}
+          </Tabs>
+        </form>
+      </Form>
   )
+
 }
+
+
 

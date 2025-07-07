@@ -6,37 +6,53 @@ import { Utils } from '@/components/lib/utils'
 
 export const UtilsGraphQLConfiguration = {
 	log: (...args) => Logger.of("UtilsGraphQLConfiguration").trace(args),
+	//log: (...args) => console.log("UtilsGraphQLConfiguration: ", args),
 
 		/**
 	 * 
 	 * @param {*} mimeType APPLICATION_... | AUDIO_... | IMAGE_... | VIDEO_... 
 	 * @returns 
 	 */
-	listConfiguration: function(graphqlURI, cookies, type) {
+	listConfiguration: function(graphqlURI, cookies, type, id = null) {
 		const log = (...args) => UtilsGraphQLConfiguration.log("listConfiguration:", args)
 
-		function getQuery(type) {
+		function getQuery(type, id) {
+			let typeClause = type && `type: "${type}"`
+			let idClause = id && id !== "" ? `, id: "${id}"` : ""
+			log("typeClause:", typeClause, "idClause:", idClause)
+
 			let q = `
 				mutation listConfiguration {
-					listConfiguration(input: {type: "${type}"}) {
+					listConfiguration(input: {${typeClause} ${idClause}}) {
 						clientMutationId
 						result
 					}
 				}
 			`
+			alert('query: ' + q)
 			log("query:", q)
 			return q
 		}
 
-		let _type = Utils.camelize(type)	
+		let _type = Utils.camelize(type)
 		log("type:", type, "Type (camelized):", _type)
 
+		let query = getQuery(_type, id)
+		log("query:", query)
+
+		/*
+		if (id) {
+			_type = _type + "-" + id
+			log("type + id:", _type)
+		}
+		*/
+		
 		return UtilsGraphQL
 			.client(graphqlURI, cookies)
 			.mutate({
-				mutation: gql`${getQuery(_type)}`
+				mutation: gql`${query}`
 			}).then((raw) => {
-				log("type:", _type)
+				log("type:", _type, "id", id)
 				log("raw:", raw)
 				//PubSub.publish("CONFIGURATION_ELEMENT_RETRIEVED", type, id, result);
 				return JSON.parse(raw.data.listConfiguration.result)
@@ -54,7 +70,7 @@ export const UtilsGraphQLConfiguration = {
 						"id": obj?.objectId,
 						"value": row.value,
 					}
-			})
+				})
 			}).catch((e) => {
 				log(`type: ${_type} has not been retrieved. Exception: ${e}`);
 				return {

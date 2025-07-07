@@ -83,58 +83,6 @@ function register_configuration() {
 		}
 	] );
 
-	register_graphql_mutation( 'getConfiguration', [
-
-		'description' => __( 'Get configuration mutation', 'your-textdomain' ),
-		'inputFields'         => [
-			'type' => [
-				'type' => 'String',
-				'description' => __( 'Object type', 'your-textdomain' ),
-			],
-			'id' => [
-				'type' => 'String',
-				'description' => __( 'Object id', 'your-textdomain' ),
-			],
-		],
-	
-		'outputFields'        => [
-			'result' => [
-				'type' => 'String',
-				'description' => __( 'Configuration object', 'your-textdomain' ),
-			]
-		],
-	
-		'mutateAndGetPayload' => function( $input, $context, $info ) {
-			$prefix = "getConfiguration";
-
-			$data = [
-				"type" => sanitize_text_field( $input["type"] ),
-				"id" => sanitize_text_field( $input["id"] ),
-			];
-
-			log(  $prefix . ': data: ' . print_r( $data, true ) );
-			//\Veepdotai_Util::set_option( 'veepdotai-' . $data["type"] . '-' . $data["id"], $data["value"] );
-
-			$item = [
-				'type' => $data['type'],
-				'id' => $data['id'],
-				'group' => 'Sample Experience Group',
-				'name' => 'Sample Experience Name',
-				'value' => 'Sample Experience Value',
-				'status' => 'active',
-			];
-
-			$result = [
-				'status' => 'success',
-				'msg' => __( 'Configuration retrieved successfully', 'your-textdomain' ),
-				'items' => $item,
-			];
-
-			log( $prefix . "result: " . print_r( $result, true ) );
-			return [ 'result' => json_encode( $result ) ]; 
-		}
-	] );
-
 	register_graphql_mutation( 'listConfiguration', [
 
 		'description' => __( 'List Configuration mutation', 'your-textdomain' ),
@@ -169,7 +117,7 @@ function register_configuration() {
 
 			$data = [
 				"type" => sanitize_text_field( $input["type"] ),
-				"id" => isset($input["id"]) && sanitize_text_field( $input["id"] ),
+				"id" => sanitize_text_field( $input["id"] ),
 				"name" => sanitize_text_field( $input["name"] ),
 				"status" => sanitize_text_field( $input["status"] )
 			];
@@ -181,12 +129,20 @@ function register_configuration() {
 
 			$user_login = wp_get_current_user()->user_login;
 			$type = $data['type'];
+			$id = $data['id'];
 			$my_option_name = "${user_login}-veepdotai-form-${type}";
+			if ( $id && "" !== $id ) {
+				$my_option_name = $my_option_name . "-${id}";
+				$vars = [
+					$wpdb->esc_like( $my_option_name )
+				];
+			} else {
+				$vars = [
+					$wpdb->esc_like( $my_option_name ) . '%'
+				];
+			}
 			log( $prefix . ": my_option_name: " . $my_option_name );
 
-			$vars = [
-				$wpdb->esc_like( $my_option_name ) . '%'
-			];
 			$sql = $wpdb->prepare(
 				"SELECT option_name, option_value "
 				. "FROM $wpdb->options "
@@ -198,7 +154,7 @@ function register_configuration() {
 
 			$convertFn = function( $item ) {
 				$name = $item->option_name;
-				preg_match( '/-([a-zA-Z]*)(-?([0-9]*))?$/', $name, $matches );
+				preg_match( '/-([a-zA-Z0-9]*)(-?([a-zA-Z0-9]*))?$/', $name, $matches );
 				if ( $matches && count( $matches ) >= 2 ) {
 					$object_id = null;
 					if (count( $matches ) === 4 ) {
