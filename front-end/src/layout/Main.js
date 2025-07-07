@@ -46,7 +46,7 @@ let home = null
  * @param {*} current The current screen 
  * @returns 
  */
-export default function Main({credits, current}) {
+export default function Main({genericMenu, dataMenu, configurationMenu, credits, current}) {
   const log = Logger.of(Main.name);
 
   const isDesktop = useMediaQuery("(min-width: 768px)")
@@ -91,9 +91,9 @@ export default function Main({credits, current}) {
       <Tab.Content key="menu-panes" className="p-0">
         
         {/* Create panes for each menu item */}
-        {UtilsMenu.createPaneFromMenuItem(UtilsMenu.getGenericMenu(), home)}
-        {UtilsMenu.createPaneFromMenuItem(UtilsMenu.getMainContentMenu(), home)}
-        {UtilsMenu.createPaneFromMenuItem(UtilsMenu.getConfigurationMenu(), home)}
+        {genericMenu && UtilsMenu.createPaneFromMenuItem(genericMenu, home)}
+        {dataMenu && UtilsMenu.createPaneFromMenuItem(dataMenu, home)}
+        {configurationMenu && UtilsMenu.createPaneFromMenuItem(configurationMenu, home)}
 
         {/* Create panes for other elements */}
         {panes.map((pane, i) =>

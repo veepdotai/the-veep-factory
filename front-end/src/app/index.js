@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Logger } from 'react-logger-lib';
 import { useCookies, CookiesProvider } from "react-cookie";
 import { Toaster } from 'react-hot-toast';
-import { Toaster as ShadcnToaster } from "@/components/ui/toaster"
+import { Toaster as ShadcnToaster } from "@/components/ui/toaster"    
 
 import { ThemeProvider, Col, Row, Tab } from 'react-bootstrap';
 
@@ -15,9 +15,22 @@ import Cover from "src/components/common/Cover"
 import VeepToast from "src/components/common/VeepToast"
 import PromptDialog from "src/components/common/PromptDialog"
 
+import { Button } from "src/components/ui/shadcn/button"
+
 import { getGenericData } from "src/api/service-fetch"
 import { ProfileContext } from  "src/context/ProfileProvider"
 import { Utils } from "src/components/lib/utils"
+import { UtilsMenu } from 'src/components/lib/utils-menu'
+import { UtilsGraphQLConfiguration } from '@/api/utils-graphql-configuration'
+
+import { Constants } from '@/constants/Constants';
+
+/* Default menus */
+import startMenuDefinition from 'src/config/menu-definitions/utils-menu-start-definition.json'
+import dataMenuDefinition from 'src/config/menu-definitions/utils-menu-data-definition.json'
+import configurationMenuDefinition from 'src/config/menu-definitions/utils-menu-configuration-definition.json'
+import configurationMenuDefinitionForUser from 'src/config/menu-definitions/utils-menu-configuration-definition-user.json'
+import configurationMenuDefinitionForAdmin from 'src/config/menu-definitions/utils-menu-configuration-definition-admin.json'
 
 /* Layout */
 import Header from "src/layout/Header"
@@ -31,12 +44,13 @@ import { useToast } from "src/components/ui/shadcn/hooks/use-toast"
 
 //export default function App() {
 export default function Index() {
-  const log = Logger.of(Index.name);
+  const log = (...args) => Logger.of(Index.name).trace(args)
 
   const { profile } = useContext(ProfileContext);
   
   const DEFAULT_ACTIVE_KEY = "home"
 
+  const graphqlURI = Constants.WORDPRESS_GRAPHQL_ENDPOINT;
   const [cookies] = useCookies(['JWT']);
   const [credits, setCredits] = useState();
   //const [current, setCurrent] = useState();
@@ -51,12 +65,32 @@ export default function Index() {
 
   const { toast } = useToast()
 
+  const [genericMenu, setGenericMenu] = useState(null)
+  const [dataMenu, setDataMenu] = useState(null)
+  const [configurationMenu, setConfigurationMenu] = useState(null)
+
   const menuStyle = {
 //    backgroundColor: "#3663EA",
 //    color: "white",
 //    width: "217px"
   }
 
+  /**
+   * Based on DynamicForm.getDefinitionFromType
+   * @param {*} type 
+   * @param {*} definitions 
+   * @returns 
+   */
+  function getDefinitionFromType(type, definitions) {
+      log("getDefinitionFromType:", type)
+      let definition = definitions?.find((def) => {
+          log("menu type:", type, "definition:", def)
+          return type === def.name
+      })?.definition
+
+      return definition
+  }
+  
   // Get credits
   function getCredits() {
     return getGenericData({
@@ -68,6 +102,12 @@ export default function Index() {
     toast(message)
   }
 
+  function resetMenu() {
+    setGenericMenu(null)
+    setDataMenu(null)
+    setConfigurationMenu(null)
+  }
+
   useEffect(() => {
     function computeMenuDirection() {
       if (["xxs", "xs", "sm"].includes(size)) {
@@ -76,7 +116,7 @@ export default function Index() {
         setMenuDirection('vertical');
       }
 
-      log.trace("useEffect: selectMenuDirection: " + size);
+      log("useEffect: selectMenuDirection: ", size)
     }
 
     computeMenuDirection();  
@@ -117,7 +157,7 @@ export default function Index() {
   }, []);
 
   useEffect(() => {
-    log.trace(`Index: current: ${current}`)
+    log("Index: current:", current)
   }, [current]);
 
   useEffect(() => {
@@ -127,7 +167,83 @@ export default function Index() {
     }
   }, [profile]);
 
+  /**
+   * Based on DynamicForm.initForm()
+   * @param {*} type  It's about menu type 
+   * @param {*} setMenu 
+   * @param {*} defaultDefinitions 
+   */
+  function initMenu(type, cType, setDefinition, defaultDefinitions) {
+      let def = null
+      UtilsGraphQLConfiguration.
+          listConfiguration(graphqlURI, cookies, "Menu", cType)
+          .then((data) => {
+              log("useEffect: menu type:", type, "data from db: data:", data)
+              let ldefinition = data?.length > 0 && data[0]?.definition 
+              if (ldefinition) {
+
+                  let defString = Utils.normalize(ldefinition)
+                  log("useEffect: menu type:", type, "normalized data.definition: def: ", defString)
+
+                  def = JSON.parse(defString)
+                  log("useEffect: menu type:", type, "json data.definition: def: ", def)
+
+                  if (! def) {
+                      def = getDefinitionFromType(type, defaultDefinitions)
+                      log("useEffect: menu type:", type, "default definition because can't convert data.definition from db: def: ", def)
+                  }
+              } else {
+                  def = getDefinitionFromType(type, defaultDefinitions)
+                  log("useEffect: menu type:", type, "default definition: def: ", def)
+              }
+
+              /**
+               * Type is inknown. Provide a default basic definition.
+               */
+              if (! def) {
+                  def = getDefinitionFromType(type, defaultDefinitions)
+                  log("useEffect: type:", type, "default menu definition because nothing else has been provided: def: ", def)
+              }
+
+              setDefinition(UtilsMenu.processMenu(def))
+          })
+          .catch((e) => {
+              log("ERROR: useEffect: type:", type, "getDefinition: e: ", e)
+
+              def = getDefinitionFromType("menu", defaultDefinitions)
+              log("useEffect: type:", type, "default definition because an exception has been raised: def: ", def)
+
+              setDefinition(UtilsMenu.processMenu(def))
+          })
+  }
+
+  useEffect(() => {
+      if (! genericMenu) {
+              initMenu("generic", "genericMenu", setGenericMenu, defaultDefinitions)
+      }
+      if (! dataMenu) {
+              initMenu("data", "dataMenu", setDataMenu, defaultDefinitions)
+      }
+      if (! configurationMenu) {
+              initMenu("configurationForAdmin", "configurationMenu", setConfigurationMenu, defaultDefinitions)
+      }
+  }, [genericMenu, dataMenu, configurationMenu])
+
   //defaultActiveKey={"contents"}
+
+  const defaultDefinitions = [
+      { name: "generic", definition: startMenuDefinition },
+      { name: "data", definition: dataMenuDefinition },
+      { name: "configuration", definition: configurationMenuDefinition },
+      { name: "configurationForAdmin", definition: configurationMenuDefinitionForAdmin },
+      { name: "configurationForUser", definition: configurationMenuDefinitionForUser },
+  ]
+    
+  let menus = () => { return {
+    genericMenu: genericMenu,
+    dataMenu: dataMenu,
+    configurationMenu: configurationMenu
+  }}
 
   return (
       <ThemeProvider data-bs-theme="dark">
@@ -154,7 +270,8 @@ export default function Index() {
             menuDirection == 'vertical' ?
               <>
                 <Col style={{height: "100%", overflowY: "auto"}} className="bg-light vh-100 border-end" md={3} xl={2}>
-                    <MenuVertical id="menu" direction={menuDirection} isManager={isManager} profile={profile}/>
+                    <Button size="icon" onClick={() => resetMenu()}>Reset</Button>
+                    <MenuVertical id="menu" {...menus()} direction={menuDirection} isManager={isManager} profile={profile}/>
                 </Col>
                 <Col style={{overflowY: "auto"}} className="vh-100 bg-white" md={9} xl={10}>
                   <div style={{height: "100%"}}>
@@ -162,7 +279,7 @@ export default function Index() {
                   {/*<Row><Header /></Row>*/}
                   <Row style={{height: "100%"}}>
                     <>
-                      <Main credits={credits} current={current}/>
+                      <Main {...menus()} credits={credits} current={current} />
                     </>
                   </Row>
                   {/*<Row><Footer /></Row>*/}
@@ -172,10 +289,10 @@ export default function Index() {
             :
               <>
                 <Col className="p-0" xs={12}>
-                  <MenuHorizontal direction={menuDirection} isManager={isManager} profile={profile} />
+                  <MenuHorizontal {...menus()} direction={menuDirection} isManager={isManager} profile={profile} />
                 </Col>
                 <Col className="p-0" xs={12}>
-                  <Main credits={credits} current={current}/>
+                  <Main {...menus()} credits={credits} current={current}/>
                 </Col>
                 <Footer />
               </>

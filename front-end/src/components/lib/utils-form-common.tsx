@@ -289,7 +289,7 @@ export const UtilsFormCommon = {
             )
         } else if (fieldType === "textarea") {
             return (
-                <Textarea className={lcn || "min-h-[200px]"} placeholder={t(fieldName + "PlaceHolder")} {...field} />
+                <Textarea className={lcn || "min-h-[200px]"} placeholder={t(fieldName + "PlaceHolder")} style={{height: "250px"}} {...field} style={{height: "251px"}} />
             )
         } else if (fieldType === "select") {
             lcn = lcn || "w-[300px]"

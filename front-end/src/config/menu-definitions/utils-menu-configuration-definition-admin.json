@@ -1,92 +1,20 @@
 [
-    { 
-      "id": "context",
-      "title": "Context",
-      "label": "ContextLabel",
-      "itemType": "screen",
+      { 
+      "id": "conception",
+      "title": "Conception",
+      "itemType": "menu",
       "items": [
-        { "id": "brand-voice", "itemType": "form", "label": "BrandVoiceLabel"},
-        { "id": "editorial-line", "itemType": "form", "label": "EditorialLineLabel"},
-        { "id": "pdf-export", "itemType": "form", "label": "PdfExportLabel"},
-        { "id": "template", "itemType": "form", "label": {"f": ["t", "Template"]}},
-        { "id": "images", "itemType": "medialibrary", "label": {"f": ["t", "MediaLibrary"]}}
 
-      ]
-    },
     { 
-      "id": "my-expertise",
-      "title": "MyExpertise",
-      "label": "MyExpertiseLabel",
+      "id": "conception2",
+      "title": "Conception2",
       "itemType": "menu",
       "items": [
-        { "id": "my-experiences", "itemType": "form", "label": "MyExperiences" }
-      ]
-    },
-    { 
-      "id": "knowledge-bases",
-      "label": "KnowledgeBaseLabel",
-      "title": "KnowledgeBaseTitle",
-      "itemType": "menu",
-      "items": [
-        { "id": "websites", "itemType": "form", "label": "WebsiteLabel"},
-        { "id": "documents", "itemType": "form", "label": "DocumentsLabel"},
-        { "id": "news", "itemType": "form", "label": "NewsLabel"},
-        { "id": "misc", "itemType": "form", "label": "MiscLabel"}
-      ]
-    },
-    { 
-      "id": "automations",
-      "title": "AutomationsTitle",
-      "itemType": "",
-      "items": [
-        
-      ]
-    },
-    { 
-      "id": "enumerations",
-      "title": "EnumerationsTitle",
-      "itemType": "menu",
-      "items": [
-        { "!id": "configuration", "itemType": "form", "label": "ConfigurationLabel"},
-        { "id": "classification", "itemType": "form", "label": "ClassificationLabel"},
-        { "id": "prompt", "itemType": "form", "label": "PromptLabel"}
-      ]
-    },
-    { 
-      "id": "menus",
-      "title": "MenusTitle",
-      "itemType": "menu",
-      "items": [
-        { "id": "welcome", "itemType": "form", "label": "WelcomeLabel"},
-        { "id": "data", "itemType": "form", "label": "DataLabel"},
-        { "id": "configuration", "itemType": "form", "label": "ConfigurationLabel"}
-      ]
-    },
-    { 
-      "id": "forms",
-      "title": "FormsTitle",
-      "label": "FormsLabel",
-      "itemType": "screen",
-      "items": [
+        { "id": "menu", "itemType": "form", "label": "MenuLabel"},
         { "id": "form", "itemType": "form", "label": "FormsLabel"},
+        { "id": "enumeration", "itemType": "form", "label": "EnumerationLabel"},
         { "id": "spreadsheet", "itemType": "spreadsheet", "label": "SpreadsheetLabel"}
       ]
-    },
-    { 
-      "id": "templates",
-      "title": "TemplatesTitle",
-      "itemType": "menu",
-      "items": [
-        { "!id": "documents", "itemType": "form", "label": "DocumentsLabel"},
-        { "id": "carousel", "itemType": "form", "label": "CarouselLabel"}
-      ]
-    },
-    { 
-      "id": "data-analysis",
-      "title": "AnalysisTitle",
-      "itemType": "menu",
-      "items": [
-        { "id": "kpi", "itemType": "form", "label": "KpisLabel"}
-      ]
-    }
+    }]
+      }
 ]
