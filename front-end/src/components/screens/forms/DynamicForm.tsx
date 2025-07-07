@@ -14,12 +14,12 @@ import { z } from "zod"
 import { UtilsFormCommon as UFC } from '../../lib/utils-form-common'
 import { Utils } from '../../lib/utils'
 
-import defaultEditorialLineFormDefinition from "./definitions/editorial-line-form-definition.json"
-import defaultFormFormDefinition from "./definitions/form-form-definition.json"
-import defaultBrandVoiceFormDefinition from "./definitions/brand-form-definition.json"
-import defaultTemplateFormDefinition from "./definitions/template-form-definition.json"
-import defaultUploadFormDefinition from "./definitions/upload-form-definition.json"
-import defaultPdfExportFormDefinition from "./definitions/pdf-export-form-definition.json"
+import defaultEditorialLineFormDefinition from "src/config/form-definitions/editorial-line-form-definition.json"
+import defaultFormFormDefinition from "src/config/form-definitions/form-form-definition.json"
+import defaultBrandVoiceFormDefinition from "src/config/form-definitions/brand-form-definition.json"
+import defaultTemplateFormDefinition from "src/config/form-definitions/template-form-definition.json"
+import defaultUploadFormDefinition from "src/config/form-definitions/upload-form-definition.json"
+import defaultPdfExportFormDefinition from "src/config/form-definitions/pdf-export-form-definition.json"
 
 import { Button } from "src/components/ui/shadcn/button"
 import { Form, } from "src/components/ui/shadcn/form"
@@ -30,12 +30,12 @@ import JSON2Form from '@/components/import-to-form/JSON2Form'
 import { UtilsGraphQLConfiguration } from '@/api/utils-graphql-configuration'
 
 const defaultDefinitions = [
-    { formName: "editorial-line", formDef: defaultEditorialLineFormDefinition },
-    { formName: "form", formDef: defaultFormFormDefinition },
-    { formName: "brand-voice", formDef: defaultBrandVoiceFormDefinition },
-    { formName: "template", formDef: defaultTemplateFormDefinition },
-    { formName: "upload", formDef: defaultUploadFormDefinition },
-    { formName: "pdf-export", formDef: defaultPdfExportFormDefinition },
+    { name: "editorial-line", definition: defaultEditorialLineFormDefinition },
+    { name: "form", definition: defaultFormFormDefinition },
+    { name: "brand-voice", definition: defaultBrandVoiceFormDefinition },
+    { name: "template", definition: defaultTemplateFormDefinition },
+    { name: "upload", definition: defaultUploadFormDefinition },
+    { name: "pdf-export", definition: defaultPdfExportFormDefinition },
 ]
 
 export default function DynamicForm({type, ...props}) {
@@ -49,17 +49,13 @@ export default function DynamicForm({type, ...props}) {
 
   const [definition, setDefinition] = useState(null)
 
-  function getFormDefinitionFromType(type, definitions) {
-    log("getFormDefinitionFromType:", type)
-    let definition = definitions?.find((definition) => {
-        log("type:", type, "definition:", definition)
-        return type === definition.formName
-    })?.formDef
+  function getDefinitionFromType(type, definitions) {
+    log("getDefinitionFromType:", type)
+    let definition = definitions?.find((def) => {
+        log("type:", type, "definition:", def)
+        return type === def.name
+    })?.definition
 
-  /*  if (! definition && "form" !== type) {
-      definition = getFormDefinitionFromType("form", definitions)
-    }
-  */
     return definition
   }
 
@@ -79,11 +75,11 @@ export default function DynamicForm({type, ...props}) {
           log("useEffect: type:", type, "json data.definition: def: ", def)
 
           if (!def) {
-            def = getFormDefinitionFromType(type, defaultDefinitions)
+            def = getDefinitionFromType(type, defaultDefinitions)
             log("useEffect: type:", type, "default definition because can't convert data.definition from db: def: ", def)
           }
         } else {
-          def = getFormDefinitionFromType(type, defaultDefinitions)
+          def = getDefinitionFromType(type, defaultDefinitions)
           log("useEffect: type:", type, "default definition: def: ", def)
         }
 
@@ -91,18 +87,18 @@ export default function DynamicForm({type, ...props}) {
          * Type is inknown. Provide a default basic definition.
          */
         if (!def) {
-          def = getFormDefinitionFromType("form", defaultDefinitions)
-          log("useEffect: type:", type, "default form definition because nothing has been provided: def: ", def)
+          def = getDefinitionFromType("form", defaultDefinitions)
+          log("useEffect: type:", type, "default definition because nothing has been provided: def: ", def)
         }
 
         setDefinition(def)
 
       })
       .catch((e) => {
-        log("ERROR: useEffect: type:", type, "getFormDefinition: e: ", e)
+        log("ERROR: useEffect: type:", type, "while getting definition: e: ", e)
 
-        def = getFormDefinitionFromType("form", defaultDefinitions)
-        log("useEffect: type:", type, "default form definition because an exception has been raised: def: ", def)
+        def = getDefinitionFromType("form", defaultDefinitions)
+        log("useEffect: type:", type, "default definition because an exception has been raised: def: ", def)
 
         setDefinition(def)
       })
@@ -116,7 +112,7 @@ export default function DynamicForm({type, ...props}) {
     if (! definition) {
       let def = null
       if (!cType) {
-          def = getFormDefinitionFromType("Form", defaultDefinitions)
+          def = getDefinitionFromType("Form", defaultDefinitions)
           log("useEffect: data from defaultDefinitions: ", def)
           setDefinition(def)
       } else {
@@ -171,17 +167,13 @@ function DisplayForm({
     "REFRESH_CONTENT_" + Utils.camelize(type),
   ]
 
-  function getFormDefinitionFromType(type, definitions) {
-    log("getFormDefinitionFromType:", type)
-    let definition = definitions?.find((definition) => {
-        log("type:", type, "definition:", definition)
-        return type === definition.formName
-    })?.formDef
+  function getDefinitionFromType(type, definitions) {
+    log("getDefinitionFromType:", type)
+    let definition = definitions?.find((def) => {
+        log("type:", type, "definition:", def)
+        return type === def.name
+    })?.definition
 
-  /*  if (! definition && "form" !== type) {
-      definition = getFormDefinitionFromType("form", definitions)
-    }
-  */
     return definition
   }
 

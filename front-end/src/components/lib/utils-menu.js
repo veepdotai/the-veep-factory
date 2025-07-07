@@ -12,19 +12,13 @@ import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHe
 
 import { Utils } from './utils';
 
-import startMenuDefinition from './menu-definitions/utils-menu-start-definition.json'
-import dataMenuDefinition from './menu-definitions/utils-menu-data-definition.json'
-
-import configurationMenuDefinition from './menu-definitions/utils-menu-configuration-definition.json'
-import configurationMenuDefinitionForUser from './menu-definitions/utils-menu-configuration-definition-user.json'
-import configurationMenuDefinitionForAdmin from './menu-definitions/utils-menu-configuration-definition-admin.json'
-
 import Spreadsheet from '../spreadsheet/Spreadsheet';
 
 import MyConfiguration from 'src/components/screens/myconfiguration/MyConfiguration'
 
 export const UtilsMenu = {
   log: Logger.of("Menu"),
+
 
   getSheetForm: function(home, open, setOpen) {
   //<Sheet open={open} onOpenChange={setOpen}>
@@ -102,39 +96,6 @@ export const UtilsMenu = {
           // This is a primitive
           return o
       }
-  },
-
-  getGenericMenu: function() {
-    let menuDefinition = UtilsMenu.process(startMenuDefinition)
-
-    return menuDefinition
-  },
-
-  /**
-   * This menu is used to build:
-   * - the left navigational menu
-   * - the main pane that will display corresponding content
-   * 
-   * returns a json definition 
-   */
-  getMainContentMenu: function() {
-    let menuDefinition = UtilsMenu.process(dataMenuDefinition)
-    menuDefinition = []
-    return menuDefinition
-  },
-
-  getConfigurationMenu: function() {
-    const role = "admin"
-    
-    let menuDefinition = []
-    if ("user" === role) {
-      menuDefinition = configurationMenuDefinitionForUser 
-    } else if ("admin" === role) {
-      menuDefinition = configurationMenuDefinitionForAdmin
-    } else {
-      menuDefinition = configurationMenuDefinition 
-    }
-    return UtilsMenu.process(menuDefinition)
   },
 
   createPaneFromMenuItem: function(menuDefinition, home = null) {

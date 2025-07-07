@@ -16,7 +16,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { ScrollArea } from 'src/components/ui/shadcn/scroll-area';
 import SocialNetworkPreview from '../../SocialNetworkPreview';
 
-import defaultData from 'src/config/layout-default.json'
+import defaultData from 'src/config/template-definitions/layout-default.json'
 import MergedContent from './MergedContent';
 import { cn } from '@/lib/utils'; 
 

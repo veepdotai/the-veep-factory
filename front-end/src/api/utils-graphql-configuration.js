@@ -29,7 +29,6 @@ export const UtilsGraphQLConfiguration = {
 					}
 				}
 			`
-			alert('query: ' + q)
 			log("query:", q)
 			return q
 		}

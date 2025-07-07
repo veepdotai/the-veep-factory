@@ -168,12 +168,13 @@ export default function getColumns(operations): ColumnDef<Data>[] {
 
   return [
       getSelect(),
-      //getEnumColumnMetadata({name: "title", title: t("MenuType"), data: [{"label":"home", "value": "Home"},{"label":"data", "value": "Data"},{"label":"config", "value": "Configuration"}]}),
-      getColumnMetadata({name: "title", title: t("Title")}),
-      getColumnMetadata({name: "menuType", title: t("MenuType")}),
       getActions(operations),
+      //getEnumColumnMetadata({name: "title", title: t("MenuType"), data: [{"label":"home", "value": "Home"},{"label":"data", "value": "Data"},{"label":"config", "value": "Configuration"}]}),
+      //getColumnMetadata({name: "objectId", title: t("Group"), width: "100px", onClick: operations.onShow}),
+      getColumnMetadata({name: "group", title: t("Group"), width: "100px", onClick: operations.onShow}),
       getColumnMetadata({name: "name", title: t("Name"), width: "150px", onClick: operations.onShow}),
-      //getColumnMetadata({name: "givenName", title: t("Author"), width: "150px", onClick: operations.onShow}),
+      getColumnMetadata({name: "description", title: t("Description"), width: "200px", onClick: operations.onShow}),
+      getColumnMetadata({name: "status", title: t("Status"), width: "100px", onClick: operations.onShow}),
       getId(),
   ].filter((item) => item != null)
 }

@@ -7,8 +7,9 @@ import { getGenericData } from "src/api/service-fetch"
 export const ProfileContext = createContext(null);
 
 export function ProfileProvider ( {children} ) {
-    const log = Logger.of(ProfileProvider.name);
-    log.trace("Initialization.")
+    const log = (...args) => Logger.of(ProfileProvider.name).trace(args);
+
+    log("Initialization.")
 
     const [profile, setProfile] = useState(null);
     const [cookies] = useCookies(['JWT']);
@@ -26,8 +27,9 @@ export function ProfileProvider ( {children} ) {
 
     useEffect(() => {
         if (profile) {
-          window.uid = profile['user_email'];
-          log.trace('uid: ' + window.uid);
+            log('useEffect: profile: ', profile);
+            window.uid = profile['user_email'];
+            log('useEffect: uid: ' + window.uid);
         }
     }, [profile]);
 
