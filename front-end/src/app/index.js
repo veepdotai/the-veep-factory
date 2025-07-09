@@ -57,6 +57,8 @@ export default function Index() {
   const [current, setCurrent] = useState(DEFAULT_ACTIVE_KEY);
   const [isManager, setIsManager] = useState(false);
 
+  const [staticMenus, setStaticMenus] = useState(true);
+
   const [activeTab, setActiveTab] = useState({})
   const [defaultActiveKey, setDefaultActiveKey] = useState({defaultActiveKey: DEFAULT_ACTIVE_KEY})
 
@@ -208,9 +210,10 @@ export default function Index() {
               setDefinition(UtilsMenu.processMenu(def))
           })
           .catch((e) => {
+              alert("ERROR: useEffect: type:", type, "getDefinition: e: " + JSON.stringify(e))
               log("ERROR: useEffect: type:", type, "getDefinition: e: ", e)
 
-              def = getDefinitionFromType("menu", defaultDefinitions)
+              def = getDefinitionFromType(type, defaultDefinitions)
               log("useEffect: type:", type, "default definition because an exception has been raised: def: ", def)
 
               setDefinition(UtilsMenu.processMenu(def))
@@ -219,13 +222,19 @@ export default function Index() {
 
   useEffect(() => {
       if (! genericMenu) {
-              initMenu("generic", "genericMenu", setGenericMenu, defaultDefinitions)
+        staticMenus ?
+          setGenericMenu(UtilsMenu.processMenu(getDefinitionFromType("generic", defaultDefinitions)))
+          : initMenu("generic", "genericMenu", setGenericMenu, defaultDefinitions)
       }
       if (! dataMenu) {
-              initMenu("data", "dataMenu", setDataMenu, defaultDefinitions)
+        staticMenus ?
+          setDataMenu(UtilsMenu.processMenu(getDefinitionFromType("data", defaultDefinitions)))
+          : initMenu("data", "dataMenu", setDataMenu, defaultDefinitions)
       }
       if (! configurationMenu) {
-              initMenu("configurationForAdmin", "configurationMenu", setConfigurationMenu, defaultDefinitions)
+        staticMenus ?
+          setConfigurationMenu(UtilsMenu.processMenu(getDefinitionFromType("configuration", defaultDefinitions)))
+          : initMenu("configurationForAdmin", "configurationMenu", setConfigurationMenu, defaultDefinitions)
       }
   }, [genericMenu, dataMenu, configurationMenu])
 
@@ -270,7 +279,6 @@ export default function Index() {
             menuDirection == 'vertical' ?
               <>
                 <Col style={{height: "100%", overflowY: "auto"}} className="bg-light vh-100 border-end" md={3} xl={2}>
-                    <Button size="icon" onClick={() => resetMenu()}>Reset</Button>
                     <MenuVertical id="menu" {...menus()} direction={menuDirection} isManager={isManager} profile={profile}/>
                 </Col>
                 <Col style={{overflowY: "auto"}} className="vh-100 bg-white" md={9} xl={10}>

@@ -1,20 +1,13 @@
 [
-      { 
-      "id": "conception",
-      "title": "Conception",
-      "itemType": "menu",
-      "items": [
-
-    { 
-      "id": "conception2",
-      "title": "Conception2",
-      "itemType": "menu",
-      "items": [
-        { "id": "menu", "itemType": "form", "label": "MenuLabel"},
-        { "id": "form", "itemType": "form", "label": "FormsLabel"},
-        { "id": "enumeration", "itemType": "form", "label": "EnumerationLabel"},
-        { "id": "spreadsheet", "itemType": "spreadsheet", "label": "SpreadsheetLabel"}
-      ]
-    }]
-      }
+  { 
+    "id": "conception",
+    "title": "Conception",
+    "itemType": "menu",
+    "items": [
+      { "id": "menu", "itemType": "form", "label": "MenuLabel"},
+      { "id": "form", "itemType": "form", "label": "FormsLabel"},
+      { "id": "enumeration", "itemType": "form", "label": "EnumerationLabel"},
+      { "id": "spreadsheet", "itemType": "spreadsheet", "label": "SpreadsheetLabel"}
+    ]
+  }
 ]

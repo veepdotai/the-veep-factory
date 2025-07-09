@@ -15,7 +15,7 @@ function register() {
 }
 
 function log( $msg ) {
-	\Veepdotai_Util::log( 'debug', 'GraphQL Mutations: ' . $msg );
+	\Veepdotai_Util::log( 'debug', 'GraphQL Mutations: Data: ' . $msg );
 }
 
 /**

@@ -1,30 +1,13 @@
 [
-    { 
-      "id": "context",
-      "title": "Context",
-      "label": "ContextLabel",
-      "itemType": "screen",
-      "items": [
-        { "id": "brand-voice", "itemType": "form", "label": "BrandVoiceLabel"},
-        { "id": "editorial-line", "itemType": "form", "label": "EditorialLineLabel"},
-        { "id": "pdf-export", "itemType": "form", "label": "PdfExportLabel"}
-      ]
-    },
-    { 
-      "id": "templates",
-      "title": "TemplatesTitle",
-      "itemType": "menu",
-      "items": [
-        { "id": "documents", "itemType": "form", "label": "DocumentsLabel"},
-        { "id": "caroussel", "itemType": "form", "label": "CarousselLabel"}
-      ]
-    },
-    { 
-      "id": "data-analysis",
-      "title": "AnalysisTitle",
-      "itemType": "menu",
-      "items": [
-        { "id": "kpi", "itemType": "form", "label": "KpisLabel"}
-      ]
-    }
+  { 
+    "id": "conception",
+    "title": "Conception",
+    "itemType": "menu",
+    "items": [
+      { "id": "menu", "itemType": "form", "label": "MenuLabel"},
+      { "id": "form", "itemType": "form", "label": "FormsLabel"},
+      { "id": "enumeration", "itemType": "form", "label": "EnumerationLabel"},
+      { "id": "spreadsheet", "itemType": "spreadsheet", "label": "SpreadsheetLabel"}
+    ]
+  }
 ]

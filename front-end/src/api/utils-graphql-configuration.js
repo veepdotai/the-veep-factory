@@ -60,7 +60,7 @@ export const UtilsGraphQLConfiguration = {
 				return result?.items.map((row) => {
 					let obj = JSON.parse(Utils.normalize(row?.value))
 					log("row:", row, "obj:", obj)
-					return obj
+					/*					
 					return {
 						"group": obj?.group,
 						"name": obj?.name,
@@ -68,7 +68,9 @@ export const UtilsGraphQLConfiguration = {
 						"status": obj?.status,
 						"id": obj?.objectId,
 						"value": row.value,
-					}
+						}
+					*/
+					return obj
 				})
 			}).catch((e) => {
 				log(`type: ${_type} has not been retrieved. Exception: ${e}`);

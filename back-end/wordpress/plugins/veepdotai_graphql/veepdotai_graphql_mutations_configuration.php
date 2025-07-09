@@ -10,7 +10,9 @@ namespace Veepdotai\Graphql\Mutations\Configuration;
  */
 
 function register() {
-	register_configuration();
+	register_create_configuration();
+	register_list_configuration();
+	register_delete_configuration();
 }
 
 function log( $msg ) {
@@ -18,7 +20,7 @@ function log( $msg ) {
 }
 
 
-function register_configuration() {
+function register_create_configuration() {
 
 	/**
 	 * createConfiguration create options from the provided parameters
@@ -82,6 +84,9 @@ function register_configuration() {
 			return [ 'result' => json_encode( $result ) ]; 
 		}
 	] );
+}
+
+function register_list_configuration() {
 
 	register_graphql_mutation( 'listConfiguration', [
 
@@ -130,9 +135,9 @@ function register_configuration() {
 			$user_login = wp_get_current_user()->user_login;
 			$type = $data['type'];
 			$id = $data['id'];
-			$my_option_name = "${user_login}-veepdotai-form-${type}";
+			$my_option_name = "{$user_login}-veepdotai-form-{$type}";
 			if ( $id && "" !== $id ) {
-				$my_option_name = $my_option_name . "-${id}";
+				$my_option_name = $my_option_name . "-{$id}";
 				$vars = [
 					$wpdb->esc_like( $my_option_name )
 				];
@@ -153,6 +158,7 @@ function register_configuration() {
 			log( $prefix . ": options: " . print_r( $options, true ) );
 
 			$convertFn = function( $item ) {
+				$prefix = "listConfiguration::convertFn";
 				$name = $item->option_name;
 				preg_match( '/-([a-zA-Z0-9]*)(-?([a-zA-Z0-9]*))?$/', $name, $matches );
 				if ( $matches && count( $matches ) >= 2 ) {
@@ -168,7 +174,8 @@ function register_configuration() {
 					log( $prefix . ": convertFn: result: " . print_r( $result, true ) );
 					return $result;
 				} else {
-					return null;
+					log( $prefix . ": convertFn: no match based on options and regex:: " . print_r( $name, true ) );
+					return [];
 				}
 			};
 			$resultsFn = array_map( $convertFn, $options );
@@ -184,6 +191,9 @@ function register_configuration() {
 			return [ 'result' => json_encode ( $result ) ]; 
 		}
 	] );
+}
+
+function register_delete_configuration() {
 
 	register_graphql_mutation( 'deleteConfiguration', [
 

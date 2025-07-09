@@ -1,36 +1,21 @@
 [
-  {
-      "id": "function-sales",
-      "title": {"f": ["t", "SalesFunction"]},
+    { 
+      "id": "domain",
+      "title": "Domaine",
+      "label": "Domaine",
+      "itemType": "screen",
       "items": [
-        { "id": "case-study", "dontcreate": false, "itemType": "query", "label": "Case studies",
-          "query": { "view": {"f": ["t", "Marketing2"]}, "status": "DRAFT", "meta": { "key": "veepdotaiCategory", "compare": "LIKE", "value": "Communication"}}},
-        {"f": ["details", "Marketing"]},
-        {"f": ["details", "Sales"]}
+        { "id": "brand-voice", "itemType": "form", "label": "BrandVoice"},
+        { "id": "editorial-line", "itemType": "form", "label": "Ligneeditoriale"},
+        { "id": "pdf-export", "itemType": "form", "label": "ExportPDF"},
+        { "id": "template", "itemType": "form", "label": {"f": ["t", "Modeles"]}},
+        { "id": "images", "itemType": "medialibrary", "label": {"f": ["t", "MediaLibrary"]}},
+        { "id": "experience", "itemType": "form", "label": "Experiences" },
+        { "id": "link", "itemType": "form", "label": "KB/Links"},
+        { "id": "document", "itemType": "form", "label": "KB/Documents"},
+        { "id": "news", "itemType": "form", "label": "KB/News"},
+        { "id": "misc", "itemType": "form", "label": "KB/Misc"},
+        { "id": "automation", "itemType": "form", "label": "Automations"}
       ]
-  },
-  {
-      "id": "function-production",
-      "title": {"f": ["t", "ProductionConsultingServicesFunction"]},
-      "items": [
-          {"f": ["details", "Management"]},
-          {"f": ["details", "Production"]},
-          {"f": ["details", "Consulting"]},
-          {"f": ["details", "Service"]},
-          {"f": ["details", "Quality"]},
-          {"f": ["details", "RandD"]}
-      ]
-  },
-  {
-      "id": "function-support",
-      "title": {"f": ["t", "SupportFunction"]},
-      "items": [
-          {"f": ["details", "Finance"]},
-          {"f": ["details", "Communication"]},
-          {"f": ["details", "HR"]},
-          {"f": ["details", "IT"]},
-          {"f": ["details", "Logistics"]},
-          {"f": ["details", "Procurement"]}
-      ]
-  }
+    }
 ]

@@ -15,37 +15,45 @@ export const UtilsGraphQL = {
 	log: Logger.of("UtilsGraphQL"),
 
 	client: function(graphqlURI, cookies = null) {
-		return new ApolloClient({
-			uri: graphqlURI,
-			cache: new InMemoryCache(),
-			//credentials: 'same-origin',
-			credentials: 'include',
-			mode: 'no-cors', // no-cors, *cors, same-origin
-			//    withCredentials: false,
-			headers: {
-				'authorization': 'Bearer ' + (cookies?.JWT ? cookies.JWT : ''),  
-				'client-name': 'Veep.AI fetcher',
-				'client-version': '1.0.0',
-			},
-			fetchOptions: {
-				mode: 'cors', // no-cors, *cors, same-origin
+		UtilsGraphQL.log.trace("client:", graphqlURI)
+		let client = null
+		try {
+			UtilsGraphQL.log.trace("client: getting client")
+			client = new ApolloClient({
+				uri: graphqlURI,
+				cache: new InMemoryCache(),
+				//credentials: 'same-origin',
 				credentials: 'include',
-			},
-			defaultOptions: {
-				watchQuery: {
-					fetchPolicy: 'cache_first', // network-only
+				mode: 'no-cors', // no-cors, *cors, same-origin
+				//    withCredentials: false,
+				headers: {
+					'authorization': 'Bearer ' + (cookies?.JWT ? cookies.JWT : ''),  
+					'client-name': 'Veep.AI fetcher',
+					'client-version': '1.0.0',
 				},
-			},
-		})
+				fetchOptions: {
+					mode: 'cors', // no-cors, *cors, same-origin
+					credentials: 'include',
+				},
+				defaultOptions: {
+					watchQuery: {
+						fetchPolicy: 'cache_first', // network-only
+					},
+				},
+			})
+		} catch(e) {
+			UtilsGraphQL.log.trace("Exception: while getting Apollo client, getting following exception:", e)
+		}
+		return client
 	},
 
 	list: function(graphqlURI, cookies, authorId, props, topic = null, msg = null) {
 
 		let q = UtilsGraphQLClauseBuilder.buildClauseQuery(authorId, props);
 
-		UtilsGraphQL.log.info('URI (before client): ' + graphqlURI);
+		UtilsGraphQL.log.info('URI (before client): ' + graphqlURI)
 	
-		return UtilsGraphQL
+		return (UtilsGraphQL
 			.client(graphqlURI, cookies)
 			.query({
 				query: gql`${q}`
@@ -58,7 +66,7 @@ export const UtilsGraphQL = {
 				return nodes
 			}).catch((e) => {
 				UtilsGraphQL.log.error('list: error: ' + e);
-			})
+			}))
 	},
 
 	remove: function(graphqlURI, cookies, row) {
@@ -73,10 +81,10 @@ export const UtilsGraphQL = {
 			}
 		  }    
 		`;
-	/*
-		let REMOVE_CONTENT = gql`${q}`;
-		const [removeContent, { data, loading, error }] = useMutation(REMOVE_CONTENT);
-	*/
+	//
+	//	let REMOVE_CONTENT = gql`${q}`;
+	//	const [removeContent, { data, loading, error }] = useMutation(REMOVE_CONTENT);
+	//
 	
 		return UtilsGraphQL
 			.client(graphqlURI, cookies)
