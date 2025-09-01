@@ -1,22 +1,12 @@
 import { useEffect, useState } from 'react';
 
 import { Logger } from 'react-logger-lib'
-import { useCookies } from 'react-cookie'
-import { Constants } from 'src/constants/Constants'
 
 import { Col, Nav, Stack } from 'react-bootstrap'
 
 import { t } from 'src/components/lib/utils'
 
-import startMenuDefinition from 'src/config/menu-definitions/utils-menu-start-definition.json'
-import dataMenuDefinition from 'src/config/menu-definitions/utils-menu-data-definition.json'
-import configurationMenuDefinition from 'src/config/menu-definitions/utils-menu-configuration-definition.json'
-import configurationMenuDefinitionForUser from 'src/config/menu-definitions/utils-menu-configuration-definition-user.json'
-import configurationMenuDefinitionForAdmin from 'src/config/menu-definitions/utils-menu-configuration-definition-admin.json'
-
 import { Utils } from 'src/components/lib/utils'
-import { UtilsMenu } from 'src/components/lib/utils-menu'
-import { UtilsGraphQLConfiguration } from '@/api/utils-graphql-configuration';
 
 import MenuOptions from './MenuOptions'
 import MenuItem from './MenuItems/MenuItem'
@@ -28,76 +18,12 @@ import { Switch } from "@/components/ui/switch"
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, } from "@/components/ui/accordion"
 
-const defaultDefinitions = [
-    { name: "generic", definition: startMenuDefinition },
-    { name: "data", definition: dataMenuDefinition },
-    { name: "configuration", definition: configurationMenuDefinition },
-    { name: "configurationForAdmin", definition: configurationMenuDefinitionForAdmin },
-    { name: "configurationForUser", definition: configurationMenuDefinitionForUser },
-]
-
-export default function MenuVertical( {direction, isManager, profile} ) {
+export default function MenuVertical( {genericMenu, dataMenu, configurationMenu, direction, isManager, profile} ) {
     const log = (...args) => Logger.of(MenuVertical.name).trace(args)
 
-    const graphqlURI = Constants.WORDPRESS_GRAPHQL_ENDPOINT;
-    const [cookies] = useCookies(['JWT']);
-    
     const [isNormalUser, setIsNormalUser] = useState(true) // beginner, normal, advanced
 
-    const [genericMenu, setGenericMenu] = useState(null)
-    const [dataMenu, setDataMenu] = useState(null)
-    const [configurationMenu, setConfigurationMenu] = useState(null)
-
     const [view, setView] = useState('byDpt')
-
-    /**
-     * Based on DynamicForm.getFormDefinitionFromType
-     * @param {*} menuType 
-     * @param {*} definitions 
-     * @returns 
-     */
-    function getDefinitionFromType(menuType, definitions) {
-        log("getDefinitionFromType:", menuType)
-        let definition = definitions?.find((def) => {
-            log("menu type:", menuType, "definition:", def)
-            return menuType === def.name
-        })?.definition
-
-        return definition
-    }
-
-    function getGenericMenu() {
-        let menuDefinition = UtilsMenu.process(startMenuDefinition)
-    
-        return menuDefinition
-    }
-    
-    /**
-     * This menu is used to build:
-     * - the left navigational menu
-     * - the main pane that will display corresponding content
-     * 
-     * returns a json definition 
-     */
-    function getMainContentMenu() {
-        let menuDefinition = UtilsMenu.process(dataMenuDefinition)
-        menuDefinition = []
-        return menuDefinition
-    }
-    
-    function getConfigurationMenu() {
-        const role = "admin"
-        
-        let menuDefinition = []
-        if ("user" === role) {
-          menuDefinition = configurationMenuDefinitionForUser 
-        } else if ("admin" === role) {
-          menuDefinition = configurationMenuDefinitionForAdmin
-        } else {
-          menuDefinition = configurationMenuDefinition 
-        }
-        return UtilsMenu.process(menuDefinition)
-    }
     
     function getMenuItem(key, label, direction = null) {
         return (
@@ -166,73 +92,6 @@ export default function MenuVertical( {direction, isManager, profile} ) {
             </div>
         )
     }
-
-    /**
-     * Based on DynamicForm.initForm()
-     * @param {*} type  It's about menu type 
-     * @param {*} setMenu 
-     * @param {*} defaultDefinitions 
-     */
-    function initMenu(type, cType, setDefinition, defaultDefinitions) {
-        let def = null
-        UtilsGraphQLConfiguration.
-            listConfiguration(graphqlURI, cookies, "Menu", cType)
-            .then((data) => {
-                log("useEffect: menu type:", type, "data from db: data:", data)
-                let ldefinition = data?.length > 0 && data[0]?.definition 
-                if (ldefinition) {
-
-                    let defString = Utils.normalize(ldefinition)
-                    log("useEffect: menu type:", type, "normalized data.definition: def: ", defString)
-
-                    def = JSON.parse(defString)
-                    log("useEffect: menu type:", type, "json data.definition: def: ", def)
-
-                    if (! def) {
-                        def = getDefinitionFromType(type, defaultDefinitions)
-                        log("useEffect: menu type:", type, "default definition because can't convert data.definition from db: def: ", def)
-                    }
-                } else {
-                    def = getDefinitionFromType(type, defaultDefinitions)
-                    log("useEffect: menu type:", type, "default definition: def: ", def)
-                }
-
-                /**
-                 * Type is inknown. Provide a default basic definition.
-                 */
-                if (! def) {
-                    def = getDefinitionFromType(type, defaultDefinitions)
-                    log("useEffect: type:", type, "default menu definition because nothing else has been provided: def: ", def)
-                }
-
-                setDefinition(UtilsMenu.processMenu(def))
-            })
-            .catch((e) => {
-                log("ERROR: useEffect: type:", type, "getDefinition: e: ", e)
-
-                def = getDefinitionFromType("menu", defaultDefinitions)
-                log("useEffect: type:", type, "default definition because an exception has been raised: def: ", def)
-
-                setDefinition(UtilsMenu.processMenu(def))
-            })
-    }
-
-    useEffect(() => {
-        if (! genericMenu) {
-                initMenu("generic", Utils.camelize("generic"), setGenericMenu, defaultDefinitions)
-        }
-        if (! dataMenu) {
-                initMenu("data", Utils.camelize("data"), setDataMenu, defaultDefinitions)
-        }
-        if (! configurationMenu) {
-                initMenu("configuration", Utils.camelize("configuration"), setConfigurationMenu, defaultDefinitions)
-        }
-    }, [genericMenu, dataMenu, configurationMenu])
-
-    //let genericMenu = getGenericMenu()
-    //let mainContentMenu = getMainContentMenu()
-    //let configurationMenu = getConfigurationMenu()
-
 
     return (
         <Nav id="menu" className="min-vh-100 mt-2 text-black" variant={direction == "vertical" ? "pills" : "underline"}>

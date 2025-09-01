@@ -1,9 +1,16 @@
 {
+    "Default": {
+        "SCREEN_HEIGHT": "h-[1080px]",
+        "SCREEN_WIDTH": "w-[1920px]"
+    },
+    
     "SocialNetworkPreview": {
-        "DEFAULT_WIDTH": 533,
-        "DEFAULT_EDIT_WIDTH": 800,
-        "DEFAULT_ALONE_WIDTH": 533,
-        "DEFAULT_PREVIEW_WIDTH": 533
+        "DEFAULT_WIDTH": "w-[533px]",
+        "DEFAULT_EDIT_WIDTH": "w-[860px]",
+        "DEFAULT_EDIT_HEIGHT": "h-[800px]",
+        "DEFAULT_ALONE_WIDTH": "w-[533px]",
+        "DEFAULT_PREVIEW_WIDTH": "w-[533px]",
+        "DEFAULT_PREVIEW_HEIGHT": "h-[800px]"
     },
     "SideBySideViewContent": {
         "DEFAULT_VIEW": "preview",

@@ -1,0 +1,857 @@
+Prompt
+---
+A partir du texte ci-dessus, fais-moi un résumé détaillé sans introduction ni conclusion car ce texte fait partie d'un texte plus long que je dois découper pour faire des résumés intermédiares.
+
+Je ferai ensuite un résumé de tous les résumés avec une introduction et une conclusion.
+---
+
+
+Ce que je pense, c'est qu'il y a deux étages à la fusée. Le premier étage, C'est comment est-ce que l'IA peut nous aider, nous, dans notre pratique, pour automatiser des comptes rendus, des documents. Voilà, c'est ce qui nous permet de gagner du temps. Et le deuxième étage de la fusée, que je n'avais pas du tout imaginé, c'est ce que tu disais, c'est qu'en plus, Fournir aux clients. Une boîte à outils ou un truc qui lui permet de lui-même se rendre autonome dans ses autodiagnostics ultérieurs.
+
+Exactement.
+
+Donc ça, ça a vraiment du sens.
+
+Ça a du sens pour toi, d'un point de vue business ou d'un point de vue métier ?
+
+Les deux.
+
+C'est-à-dire que toi, tu imagines des gens qui font ton boulot, puisque toi, tu as une communauté.
+
+Oui.
+
+Demain, est-ce que vraiment, ça peut apporter une valeur ajoutée supplémentaire, puis également des revenus supplémentaires ?
+
+Oui, moi, Je pense que ça a le gros avantage de rassurer le client sur le fait qu'il n'est pas pieds et poings liés avec un consultant qui devient un fournisseur récurrent.
+
+Alors, quelque part, après, Quand tu fournis, après, il peut y avoir différents modèles, mais toi, tu fournis ton application, Camille Park, C'est un peu la tienne.
+
+Oui, oui, Mais le fait qu'il puisse se rendre autonome dans ses auto-évaluations, dire tous les deux mois, tous les trois mois, tu repasses la moulinette, là. Et il y a des choses, ça va te sortir des écarts par rapport à la situation d'Illane qu'on a construit ensemble. Et puis ces écarts-là, C'est à toi de dire si tu as besoin d'un accompagnement supplémentaire pour les régler, ou si tu te débrouilles tout seul, Mais au moins tu as une priorisation de tes plans, d'action.
+
+D'accord. Ok, très bien. Donc ça veut dire que... Oui, donc ça veut dire que quand même l'outil, quand toi, Ça veut dire qu'il faut l'alimenter, cet outil pour qu'il ait les données qui vont permettre de... Oui. Donc ça veut dire qu'il y a une capture d'informations, de différentes manières qui est faite à travers des outils. Que, justement, tu as contribué à mettre en place lors de la prestation. Oui, oui.
+
+Donc, jusqu'à présent, nous, On s'est basé sur un outil tout con qui est un questionnaire. Et on s'est aperçu qu'on pouvait le compléter aussi par des extractions de données. De l'ERP ou du système d'information pour dire, c'est quoi? Les quelques chiffres clés ? Est-ce qu'on est sur la trajectoire qu'on avait ratifiée au départ ?
+
+Donc, en fait, l'idée, c'est de se dire, le client, il aura, Moi, c'est complètement orienté. marketing, mais finalement, tous ces menus-là, Ils sont complètement paramétrables. Ce que j'ai ici, moi, à l'intérieur, C'est complètement orienté. Il y a Finance RH, en fait. Là, je présente la vue de dessus, En fait. Normalement, quand il y a un marketing, ici, j'aurais plutôt études de cas, livres, blancs, post LinkedIn, post, Insta, Tout ça.
+
+D'accord.
+
+Et en fait, moi, j'avais voulu donner la vision du dessus. C'est-à-dire que quelqu'un, le directeur de l'entreprise ou quelqu'un qui pilote l'entreprise, Il aurait la vue au-dessus et il aurait la vue sur chaque IA. Pour chaque service, chaque fonction.
+
+OK.
+
+On est vraiment dans la vue du dessus. Mais on pourrait tout à fait imaginer que... Par exemple, dans la fonction production que j'ai là, j'ai par exemple la fonction Management organisationnel. J'ai mis question, mais on va mettre management organisationnel. Et donc, quand on clique là, L'idée, c'est de penser en ce moment sur votre application. Sur l'application FUJIDE. Et donc qu'est-ce qu'il faudrait avoir déjà comme menu pour se dire quels sont les services qu'on va rendre à l'utilisateur. L'utilisateur, il arrive là. normalement, il a déjà eu une prestat avec toi et toi, tu vas configurer avec lui éventuellement ce système-là. Donc, tu configures les menus. Quand tu cliques sur un menu, tu vas arriver sur un contenu qui peut être soit un formulaire, Soit une liste de résultats. Et donc, à partir de là, C'est là où il faut commencer à définir un petit peu globalement, les concepts qu'on va manipuler, les données qu'on va manipuler, les documents qu'on veut, créer, Tout ce genre de choses. On informatise quelque part.
+
+Oui,
+
+ça correspond à peu près à la vision.
+
+Oui, Ce que je peux te proposer, c'est de te dérouler un petit peu. La prestation qu'on a en cours dans la boîte dans le Jura. Oui,
+
+très bien.
+
+Tu vois un petit peu par quelles étapes on est passé, où on en est et où on a prévu d'aller. Et voir là-dedans comment, en fait, et à quel moment de notre prestation, il aurait fallu qu'on commence, si tu veux, à configurer ces outils.
+
+Quelle est la boîte à outils minimale avec laquelle tu arrives ? Tu construis un outil qui devient la boîte à outils de ton client. Oui,
+
+c'est ça.
+
+Très bien. C'est super. OK. Donc, tu veux prendre l'écran ou tu n'as pas besoin de tout en box
+
+Si, je vais prendre l'écran. N'hésite pas à... Pour l'instant, cette prestation-là, C'est une première. C'est le premier client chez qui on bosse comme ça. Par contre, nous, on est vraiment dans l'idée, justement, de faire de cette méthode-là un standard possible.
+
+D'accord, ok. Une façon de créer et de gérer les process. Donc de faire un standard dans le sens où vous voulez développer une méthodologie, vous voulez écrire quelque chose dessus, qui soit un petit peu un élément de référence.
+
+Voilà, c'est ça. C'est-à-dire que là, on a quand même passé beaucoup de temps à justement configurer la méthode. Et là, On se dit que ça ne va pas tarder. Pour le prochain client, il y aura, comme on ferait un départ lancé, parce qu'il y a plein de choses qui sont déjà...
+
+Bien sûr, compré-configurées. Vous savez comment vous allez travailler. D'accord, effectivement.
+
+Et c'est où ça, je sais pas, c'est déjà, c'est des photos. Alors, comment est-ce qu'on fait? Pour supprimer Netflix? Faut que la petite maison, la voie. OK, première mission, c'était bien diagnostic industriel. Je vais te faire le rétrofilm. Ça, c'est la fin du diagnostic industriel.
+
+D'accord. Tu veux peut-être prendre un café Parce qu'on a démarré direct.
+
+C'est pas mal, ça. Un petit café. Bonne idée, ça. T'es servi, toi, déjà Oui, oui, moi.
+
+J'arrive, je me fais un café. J'ai ma petite routine. Merci.
+
+Donc, en deux mots, en fait, On a passé deux jours sur site, d'abord. On a interviewé tout le comité de direction, plus des membres du personnel. Et avant ça, un des collègues, Dominique, qui lui est notre expert finance.
+
+En fait, parmi vous trois, IL y a un expert production, toi ? Oui. Un expert finance.
+
+Oui. Moi, je suis plus expert, on va dire, métier de... Enfin, Support technique, tout ce qui est bureau d'études, bureau des méthodes, etc. Et Pascal, il est plus sur la partie atelier, production, management.
+
+Ah, d'accord, plus production.
+
+Nos trois domaines sont largement en recouvrement.
+
+Ok.
+
+Voilà, donc en gros, nous, Ce qu'on avait mis dans notre proposition commerciale, c'est que la première fois, c'était un diagnostic. D'accord. Donc, Maxime, le copain qui a acheté cette boîte, nous avait fixé un petit peu. C'est sa vision. C'est réseau plus Fou.
+
+D'accord, ok.
+
+Et en plus, le gars qui lui a vendu la boîte l'a bien roulé dans la farine. Mais bon, on ne le savait pas à ce moment-là.
+
+D'accord, ok.
+
+On a découvert qu'il y a quelques cadavres dans les placards.
+
+Tu leur as surpris de la salle quand tu rachètes. Moi, j'ai eu l'occasion de faire un rachat également dans une ancienne boîte. Tu n'es jamais à l'abri de... Tu vois tellement comment ça peut être manipulé, les chiffres. De certaines manières ou d'une autre, quelqu'un qui arrive dans l'histoire, il n'a aucun moyen de savoir. Il ne connaît pas du tout. Tous les loups, tous les agros, les pas derrière les murs.
+
+Et donc là, La bonne nouvelle, c'est que... C'est une bonne nouvelle. C'est que la Lamouette, elle, est en train de redémarrer, de redécoller, et que le constat, il est clair et complètement confirmé, y compris par leur expérience. C'est que s'il n'y avait pas eu une section qu'on leur a soufflé là, ils seraient des peuples, donc l'intervention d'accord. Donc je te la fais rapidement, tu me dis si tu veux que je m'approche sur un sujet. Ce qui m'intéresse, c'est d'avoir une vision globale.
+
+Et après, ce qui serait intéressant, c'est qu'au bout de l'heure et demie, on arrive à avoir une vision sur une appli, informe, sur un menu, et sur les grandes fonctions. En gros, qu'est-ce que ça peut faire, cette application On arrive à montrer que ça peut avoir de la valeur ajoutée. C'est vrai qu'on voit ces...
+
+Je vais débâcher un moment, je tente de boire mon café.
+
+Vas-y, vas-y, t'inquiète.
+
+Je vais essayer de ne pas te cracher la pilule. En gros, si tu veux... Ça,
+
+c'est le livrable de votre prestation
+
+Oui, ça, c'est le livrable de notre première prestation, la mission diagnostique, qui a débouché sur une deuxième prestation, qui est un accompagnement du pilotage de leur feuille de route.
+
+D'accord.
+
+Donc, en gros, si tu veux, il y a un point de départ. C'est une boîte qui était très profitable. Il y a 4-5 ans, enfin avant le Covid, qui a complètement perdu sa profitabilité. Reste positionné sur des marchés en nette perte de vitesse, notamment sur le marché automobile, qui ne s'est pas du tout diversifié, qui est resté sur un mode de gestion à l'ancienne, où c'était le patron qui gérait tout. Visiblement, le patron était parfaitement conscient qu'il était en trajectoire de crash, il ne l'avait mis à personne, et il a vendu. Donc, les autres ont découvert le truc. Voilà. Et donc là, Max, lui, Ce qu'il veut, c'est arriver, Si tu veux, donc on lui a dit, tu ne feras pas tout en une journée, on dit donne-toi 3-4 ans, donc là, il s'est donné un objectif à fin 2028, d'avoir une boîte qui a retrouvé sa profitabilité historique, avec un outil industriel adapté à ce qu'il fait, et avec une charge conséquente, si tu veux, pour amortir ses coûts. Une vision stratégique claire et partagée, Parce que, là encore une fois, c'était l'ancien dirigeant qui partait un coup à droite, un coup à gauche, mais sans vraiment fil. directeur. Une équipe solidaire et proactive, Parce que là, en fait, c'était Dallas, Les mecs qui passaient leur vie à s'en rigoler, à s'insulter.
+
+C'est une boîte de combien de personnes
+
+C'est une boîte de 25 personnes. Pour la petite histoire, en plus, On a détecté que dans les dirigeants, il y a un mec, un ancien de la boîte, qui détient quelque part, Donc il est associé, qui est une planche pourrie intégrale. C'est un manipulateur.
+
+Mais quelle est la motivation d'un type comme ça, d'une personne comme ça, alors qu'il dirige sa propre boîte
+
+Oui, mais je ne comprends pas.
+
+Je ne comprends pas.
+
+Oui, oui, Je pense que... Je pense que ça relève de la psychiatrie, mais là, je ne suis pas... Ok. Ce n'est pas ma spécialité. Mais par contre, si tu veux, là, ce que nous, On a essayé de faire, c'est premièrement, lui, de lui parler. Un truc tout bête. Tu arrives dans la boîte, le mec, directeur, Il est directeur technique et associé dans la boîte. Il dit, de toute façon, Max, le mec qui a racheté, C'est un menteur, ça fait des années qu'il nous ment. Enfin, ça fait trois mois qu'il est là. On le croit pas, donc là, lui, il a commencé. Il a rentré un nouveau commercial qui est dans le coin et qui a commencé à aller sur les routes, un nouveau commercial? Il va pas te ramener du boulot le matin, quoi? Donc il relance un petit peu le truc. Et là, ils sont sur une commande importante pour les chantiers de l'Atlantique. C'est génial, Sauf que les chantiers de l'Atlantique. C'est une grosse machine qui a un petit peu d'inertie. Et donc entre le moment où l'acheteuse l'aura dit, ouais, ouais, c'est OK, c'est bon. Et le moment où il touche la commande, il va se passer plusieurs semaines, parce qu'ils ont des circuits administratifs, de déclarer un nouveau fournisseur. Et donc l'autre, il n'arrête pas de marteler, ouais, de toute façon, ça, c'est du pipo, c'est du bidon, Cette commande-là, on ne l'aura jamais. Donc lui, justement, J'étais cette semaine, je l'ai pris entre quatre yeux. Moi, dans mon référentiel, dans mon ancienne vie, Tenir un dirigeant qui tient ce discours-là devant les troupes, c'est une faute professionnelle. Je comprends pas comment je comprends pas quoi tu joues, quoi? C'est est ce que tu veux mesure l'effet que ce discours là assure les troupes. Tu étais dirigeant de la boîte, quoi? Donc comment veux-tu que les mecs vous fasse confiance? Comité de direction Si vous passez votre vie, vous savonner la planche entre vous. Et donc ce qu'on a dit à Max et que ce mec là, qui est une sommité technique, quoi? C'est un mec qui est vraiment très, très pointu techniquement, mais qui, à côté de ça, je, je te dis, est une véritable saloperie. Il faut s'en débarrasser. Et que dans la boîte, il y en a d'autres qui sont moins experts que lui, mais qui, aujourd'hui, sont complètement sous l'été noir de ce mec-là, parce qu'il a vraiment un comportement odieux. Bon,
+
+voilà.
+
+Mais bon, ça, C'est un petit détail du truc. Je me suis écarté du fil conducteur, j'y reviens. Voilà. Donc, en gros, si tu veux, Ce qu'on a remarqué, c'est que leur codire, ce n'était pas un vrai codire. Ils avaient un patron qui s'est barré. Qui faisait tout dans son coin, qui expliquait rien de ce qu'il faisait, etc. Donc, eux, ils étaient des exécutants qui retransmettaient dans les troupes les décisions du patron, mais qui n'avaient aucune initiative et qui n'avaient surtout aucune vision de la situation économique et industrielle de la boîte. Le premier chantier, c'est de dire Il faut... Parce qu'en plus, l'autre élément, c'est que Max, qui a acheté cette boîte-là, lui, est de Saint-Nazaire. La boîte, elle, est dans le Jura. Et lui, Il a prévu d'y passer... Une semaine par mois. Sachant que dans le film que lui avait vendu le, c'est une boîte qui tourne toute seule qui est profitable. Les mecs sont autonomes. Toi, t'as juste en fin de compte à amener ton réseau de clients parce que lui, il a une boîte d'impression 3D. Et donc il a déjà si tu veux un portefeuille client. Et il disait rajouter de l'injection plastique là-dedans Mais donc là, en fait, ce modèle-là, tel qu'ils sont configurés, ne marche pas du tout. Là, ils ont besoin, si tu veux, d'être maternés du matin au soir.
+
+D'accord, ok.
+
+Bon, voilà, donc structurer le codire, le pilotage. Alors, s'occuper du facteur humain, c'est dire, La façon dont vous vous parlez entre vous, la façon dont vous parlez à vos troupes, etc., Ça ne peut pas continuer. Dans le Nouveau monde, enfin déjà, C'est complètement à l'opposé des valeurs de Max, qui a racheté la boîte.
+
+D'accord.
+
+Qui lui est plus dans l'entreprise libérée.
+
+Tu peux me donner juste cette première page
+
+Oui, bien sûr.
+
+Pour avoir la structuration.
+
+Oui, alors attends, Je ne suis pas...
+
+Non, tu me donnes après, tu n'en veux pas. Comme ça, je n'ai pas besoin de noter ça.
+
+Ah, oui, d'accord. C'est ça. Oui, oui, oui. Comment je... C'est du... Non,
+
+tu feras un copier-coller.
+
+Je ferai un copier-coller.
+
+Oui, oui, ok. Ok. Ok.
+
+Ok. Alors donc, première chose, c'était ça, c'était le structure éco-dire.
+
+Ok.
+
+Deuxième chose, c'est renforcer la culture économique. Puisqu'ils manipulaient des chiffres, qu'ils ne maîtrisaient pas du tout et que la grande image, ils n'avaient pas. Donc, là, on est en train de bosser avec eux pour qu'ils aient un tableau de bord économique où chacun est responsable dans son domaine de ses dépenses, de son plan de charge, de ses taux horaires, etc. Des notions qu'ils n'avaient pas du tout. D'accord,
+
+donc en gros, Chacun fait son budget.
+
+Alors, il n'y avait pas de budget ? Donc, les synergies, c'est entre... Bon, ça, c'est parce qu'en fait, Biatex, c'est la boîte de Max ici à Saint-Nazaire, Donc il fait l'impression 3D. Et MDP, c'est mule Design, Prototype. Donc, c'est la boîte qu'il a rachetée.
+
+D'accord.
+
+Où là, aujourd'hui, C'est deux entités qui ne bossent pas du tout ensemble.
+
+La boîte de...
+
+C'est Max Max, oui.
+
+Ils en ont. Combien? Sur Saint-Nazaire ?
+
+Justement, je ne sais pas. C'est une toute petite boîte. Ils sont une petite dizaine à peine.
+
+D'accord.
+
+Donc, tu vois, Par exemple, mutualiser une partie des achats, mutualiser une partie des fonctions centrales, style, contrôle de gestion, etc. Enfin, tu vois, des choses... Oui,
+
+un truc tout con,
+
+mais bon, voilà. Alors, pilotage du plan commercial. Et bien, oui, c'est ça. C'est-à-dire que là, en fait, ils ont une vision très, très, floue. De quels sont leurs clients, leurs marchés, leurs produits de demain, mais de demain matin. Qu'est-ce qu'on vend aujourd'hui Déjà, si tu veux, qu'ils se remettent un petit peu les choses à plaire. Le codire,
+
+il y a combien de personnes
+
+Le codire, il y a Max, Kevin, Le nouveau commercial, le fameux Hervé. Il y a Cécilia, qui est un peu la DAF. Ça fait quatre. Ça, c'est le codire restreint. Et Lionel, qui est le patron de site qui est un peu le patron de Prod. Donc ça fait 5. Et après, à ce codire là, tu rajoutes 3 personnes supplémentaires qui sont arrachées à Lionel. Qui sont Stéphane, le patron du BE Jérôme, le patron de l'Atelier d'Usinage et l'autre Stéphane, qui est le patron de l'atelier d'injection plastique
+
+D'accord, ok. Qui correspond globalement, Tout ça, c'est les managers de l'organisation. Voilà,
+
+c'est ça. Matriser le patrimoine industriel, Parce que là, on s'aperçoit qu'ils ont plein de machines, plein de machines, dont certaines qui ne tournent pas du tout, d'autres qui sont complètement obsolètes, par contre, à l'inverse, des pépites, des trucs hyper pointus. Mais comme déjà, ils n'ont pas une vision claire, si tu veux, de leur catalogue, produit. Je pense qu'ils ont dû faire de l'opportunisme. Tiens, il y a une machine là, on va la prendre. Après, il y a celle-là qui traîne. Puisqu'elle ne gère pas, on la laisse.
+
+J'imagine,
+
+d'accord. Vous posiez les bonnes questions, mais dans l'ordre, si tu veux. De quoi on a besoin pour bosser Et comment on entretient ce truc-là ? C'est pareil pour une toute petite boîte comme ça. Leur spécialité, c'est le prototype. C'est un marché de niche. Ils vendent presque plus du service qu'un produit. C'est-à-dire que c'est vraiment du cycle court.
+
+Oui, bien sûr. C'est la création du prototype.
+
+Mais pour ça, quand les clients arrivent, Il faut que tu donnes une image, un petit peu d'organisation, d'efficacité, etc. C'est un bon modèle.
+
+D'accord, Je vois l'idée.
+
+Et c'est pareil, c'est Paris-Lô. Tu as des endroits où tu vois, que c'est des îlots d'organisation au milieu du monde.
+
+Tu sens qu'il y a de la compétence, mais c'est... C'est un peu confus. Et globalement, pour bien comprendre, ton pote Max qui fait de l'impression 3D, c'est quoi ? De l'impression de pièces industrielles ?
+
+Oui.
+
+Et c'est des petits trucs, des grands trucs ?
+
+Il fait les deux. Il fait les deux grands trucs,
+
+ça va jusqu'au M3
+
+Quasiment jusqu'au M3, oui. D'accord. Il fait notamment... Il bosse beaucoup pour l'événementiel et il fait notamment que c'est des statues pour les Escape Games ou pour les... D'accord.
+
+Oui, je vois bien. Oui, OK. C'est plutôt orienté...
+
+Et à côté de ça, Il fait aussi de la pièce industrielle. Et là, ils sont sur le point d'investir dans une imprimante 3D métallique.
+
+D'accord, ok.
+
+Justement, parce que...
+
+Pour l'industrie, j'imagine. Et donc, les autres, eux, Ils font des moules plus classiques. Ils font un moule, ils injectent dedans un truc et ça te fait la pièce.
+
+Voilà, c'est ça.
+
+Et là, c'est pareil, c'est ultra industriel. Tu fais beaucoup de rentées sur les voitures, j'imagine.
+
+Oui, c'est beaucoup automobile. Mais ils bossent aussi pour leur louvrier, notamment pour Rolex.
+
+Donc, ils font des petites pièces ?
+
+Oui, oui.
+
+Pour faire des grosses pièces.
+
+Voilà, tout à fait.
+
+Ok, très bien.
+
+Ils bossent aussi pas mal pour les cosmétiques, tout ce qui est packaging, tu sais, les flacons, les machins.
+
+Ah oui, donc c'est comme ça, peut être des moules pour faire des têtes. Oui. D'accord, ok, très bien.
+
+Voilà, donc ça ici, si tu veux, On leur avait fait un petit exercice, une urgence, impact, On avait identifié une trentaine d'actions. Dire Voilà tout ça qu'il y a à faire, correspondant globalement à ce qui est décrit au dessus tout ce qui est décrit au dessus. Et l'idée, c'était de dire On va pas se jeter sur tout un plan d'action aussi large, parce que là, on va se noyer. Donc là dessus, il va falloir qu'on y aille par tranche. Et donc, on leur avait fait une petite cotation sur l'impact Urgence pour dire qu'est-ce qui est super urgent et qui a beaucoup d'impact. Donc c'est tout ce qu'on a. Quoi donc OK à droite, très urgent et très impactant en haut. OK, Merci. Et donc, du coup, Ça nous a permis de lancer une première tranche, enfin de lancer, d'identifier une première tranche de plan d'action, Parce que nous, notre prestation sur la mission de diagnostic, Elle s'arrêtait là.
+
+D'accord. Ça a été fait à travers un questionnaire, ça Oui. Globalement, il y avait, je ne sais pas, 100 questions. Oui. On se répondait aux 100 questions, il répondait à la fin, ça te sort, ton graphique.
+
+Je peux éventuellement t'envoyer l'intégralité du document. Si tu me signes un truc de ton sang, comme quoi tu me juges.
+
+Oui, non, il n'y a pas de souci, effectivement. Moi, ce qui m'intéresse, c'est vraiment d'avoir la structure. Et puis, je suis curieux de voir, effectivement, Dans quelle mesure ce que vous avez fait là, à nouveau, est-ce que c'est générique ou pas Oui. Au niveau de la démarche, voire peut-être au niveau du diagnostic, peut-être que c'est des questions ultra généralistes. Mais oui, ça m'intéresse, bien sûr. Oui,
+
+oui. Donc, je fais ça. Et puis, par contre, bien évidemment, Cette conversation n'a jamais eu lieu. Et si jamais, on va au tribunal, Je dirais qu'il va voler.
+
+Je ne sais pas qu'il y avait un zéro pour voir avec un masque, il était trompé, mais je n'ai jamais vu ça. Il était mis le masque Non, ce n'est pas lui. D'accord. Non, bien sûr, je comprends.
+
+Voilà.
+
+Ça pose problème à nouveau, tu me donnes la première page, parce que moi, Ce n'est plus les éléments principaux de structure, c'est le détail.
+
+Ok, tu me dis. Ce qu'on fera, c'est que dans le dernier quart d'heure, on se fait un petit sharing.
+
+Oui, tout à fait.
+
+Ce qu'on leur disait, c'est que c'est vraiment un plan de transformation qu'il faut qu'ils enclenchent, que c'est un vrai projet qui doit être piloté comme un vrai projet. Donc, il leur faut. Un comité de pilotage, une équipe projet, de dédier du temps aux gens qui font ça, parce qu'ils ne vont pas pouvoir faire ça. En plus de tout le reste. Si tu ne leur enlèves, pas un petit peu de charge à côté. Enfin, tu vois, des basiques, si tu veux. Oui,
+
+je comprends. D'accord. Donc, après, il faut détailler tout ça. Ce qui m'intéresserait, c'est est-ce que... Tu as du questionnaire correspondant pour que je vois quelques questions. Et après, ce qui aurait été intéressant, parce que je vois assez bien le truc, mais c'est intéressant, c'est qu'après, je ne sais pas s'ils ont... Toi, c'est qu'on essaie, sur le paperboard, On essaie de dessiner le menu et globalement, les éléments qu'on pourrait trouver et qui vont avoir du sens pour les gens. Quand toi, tu as fait ton diagnostic tout au départ, et puis, après, quand vous vous en allez, vous êtes en mission pilotage. Oui. Les gens ont un suivi et puis vous, vous venez. Et finalement, à chaque fois, C'est un petit peu comme si on faisait... C'est une gestion documentaire qui est partagée. Tu mets tes docs, là, quelque part, Tu as un truc un peu métier. Donc, les menus, au lieu d'être génériques, les répertoires, C'est des trucs un peu structurés, avec parfois derrière des outils et pas seulement un document.
+
+Oui, d'accord. OK. Donc, je te montrerai. Donc, du coup, On va rétro-pédaler sur le questionnaire initial qui nous a permis de construire ça. Je voulais juste te montrer, En fait, c'était quoi? Le livrable de la mission de diagnostic Donc, du coup, on dit, nous, On te propose une feuille de route. Donc, toi, tu veux aller jusqu'à 2028. Nous, On te propose déjà le début de la feuille de route sur l'année 2025. C'est quoi les étapes par lesquelles il faut que tu passes Donc, On a identifié un certain nombre de chantiers qui sont là. C'est ce qu'on disait tout à l'heure. On disait, il faut jalonner. Donc, ça veut dire qu'il faut qu'on mette, justement, des passages de jalons, un petit peu formels. Donc, le premier jalon, c'est au mois de mars. Est-ce que vous avez atteint un niveau d'efficience relationnelle Donc ça, C'est ce qu'on est allé voir la semaine dernière. Ils ont avancé, ils ont fait 50% du chemin qu'on a fait.
+
+Ils arrivent à objectiver la progression
+
+Oui, c'est ce que nous, On essaye de leur montrer. Justement, tu vas voir ça après, si tu veux. Donc voilà. Pop, pop, pop, pop. Bon, voilà. Je pense que... Donc, à ce stade-là, tu as les... Après, si tu veux, on était vraiment descendus dans le détail, Si tu veux, de tous les champions, toutes les actions, des machins. Et ça, rétrospectivement, Je me dis que c'est trop. C'est trop parce que nous, On a passé quand même vachement de temps à construire ce truc-là. Et je pense que, du coup, comme c'est nous qui avons passé du temps à le construire, eux, Ils ne se le sont pas approprié. Et ça, C'est le genre de truc qui va vite finir dans une poubelle.
+
+Ça donne une trame, ça fait sérieux. Et effectivement, après, ça peut donner quelques idées, mais je vois ce que tu veux dire. Vous avez utilisé quel outil pour faire ça ?
+
+Ça, c'est Excel.
+
+C'est intéressant, si tu remontes tous les éléments au-dessus, au-dessus de ton tableau, vas-y, encore au-dessus, Moi, ce que je trouve très intéressant, c'est les objectifs, c'est les livrables, qui, comme ça, donnent vraiment des éléments qui doivent être créés, qui sont un petit peu comme tu disais, les jalons, les conclusions des jalons, Et là, c'est ça finalement, Tout le reste te permet de créer ces documents-là. Quand je vois ces documents-là, je me dis effectivement qu'il y a déjà des documents, Il y a des plans. Donc ça, généralement, c'est à peu près générique. Et puis, après, c'est à l'intérieur, ça change. Mais au moins, il y a la structure globale. Mais OK, d'un coup d'ac.
+
+Voilà, pour la partie diagnostique, voilà, en gros, C'était quoi, ça Les chantiers. Tu avais le détail des différents chantiers, mais je ne pense pas que…
+
+Après, tu vois, rétrospectivement, si tu viens sur le premier, le chantier, la structure et le code. dire, est-ce que ça, par exemple… Livrable attendu à date, Toi, tu as des fiches, tu as tout ça, est-ce que ça voudrait dire ce que vous avez fait dans Excel Quelque part, tout ce qui est là, en gros, Il faut appréhender. Est-ce que finalement, Ça aurait été un... C'est presque de la gestion de projet. Est-ce que ça aurait dû se retrouver, par exemple, le fichier Excel que tu as fait, en fait, Ça devient le moteur principal de l'application Oui. Et ça va être, Tu avais la ligne chantier A, tu as un menu chantier A, tu as les différents livrables attendus, tu cliques, et finalement, C'est presque un fichier Excel complètement actif, réactif.
+
+Oui, complètement, parce que là, le fichier Excel, tel qu'il est construit, il est morné.
+
+Je ne suis pas tout à fait le genre de truc. Je me vois tout à fait en codière. Voyons ce qu'on a fait. Ok, alors maintenant, on lit le fichier. Ah, oui, il va falloir lire. Ok. Parce qu'à nouveau, est-ce que quelque part, Tu voulais me présenter autre chose par rapport à tout ça ?
+
+Non, non, non, Là on arrive au bout si tu veux. Ça, c'était, Je te dis, le livrable de notre mission de diagnostic. D'accord. Et la conclusion, c'est de dire, bon, là maintenant, Ce que vous nous aviez demandé, Max, Ce que tu nous avais demandé, c'est de te faire une photo de l'état actuel de la boîte par rapport à toi, Ce que tu en attendais, et un peu une ébauche de feuilles de route pour l'emmener là où tu veux l'emmener. Nous, la mission que tu nous as achetée, Elle s'arrête là. Par contre, Si tu veux qu'on t'accompagne dans la mise en œuvre de cette feuille de route, on sait faire aussi, Par contre, si je ne te reste pas. OK, il a acheté votre poste, donc là. Du coup, si je suis allé de revenir par rapport à l'appli, ouais, et donc là, ce que tu voulais toi. Ça serait qu'on comprenne trop pénal et qu'on aille voir le questionnaire qui nous a permis de contacter un acteur. Ça m'intéresserait en même temps. Je lis que mon monde et une feuille de saison, moi, je suis désolé, j'ai aimé un petit peu productif.
+
+Oui, c'est vrai. C'est une grosse boîte, Elle fait pareil. Donc, là, globalement, Il y a un concept qu'on aurait pu appeler le diagnole. Le diagnostic, Tu vois, si on avait là, hop. Comment s'appelle la boîte que tu as avec tes copains ?
+
+C'est impulse, Conseiller.
+
+Ici, OK, la boîte, c'est le plus bailli à Machin, c'est MDP, la boîte qu'il a acheté. Mais globalement, c'est Baillat Tech, donc c'est un outil de bail pour Baillat Tech. Ici, on peut se consulter, même si après, on pourrait imaginer que ça se passe parce que ça pose un problème. C'est que le mec, il a l'impression d'être qui est manié par un fournisseur, alors qu'en fait, c'est son outil. Oui, oui,
+
+oui, tout à fait. Nous, l'idée, c'est vraiment… Le rendre autonome le plus possible. Là, on voit qu'on peut pas le... Enfin, lui-même reconnaît que là, on peut pas le lâcher là.
+
+Donc, en fait, aujourd'hui, lui, il arriverait sur un outil, C'est peut-être une approche un peu. Gestion, documentaire, Quelque part, il s'attend à un diagnostic et là, il a les différents éléments du diagnostic. Ok, donc c'est là où tu as le questionnaire et tout ça typiquement.
+
+Oui.
+
+Vas-y, show, me le questionnaire.
+
+Le questionnaire. Il se peut que les documents ne soient pas dans un état... De fraîcheur extraordinaire.
+
+Ça reste pas mis à jour Hein Ils sont pas mis à jour
+
+Si, si, si, ils sont mis à jour. Mais en termes de présentation...
+
+Il faut que tu appuies sur La croix, en fait.
+
+C'est ça, voilà. C'est elle que je cherchais. Merci.
+
+J'entends bien les gens qui cliquent chez moi. Non, c'est pas là, c'est à côté. Allez, encore une fois.
+
+Alors, attends, bouge, pas, Ça doit être dans les documents.
+
+J'adore voir cette approche gestion documentaire avec des nombres. Au début
+
+10, 20, 30 pour laisser un peu de place pour le, on douteraient de voir le 11 points. Oui, parce que quand tu rajoutes un truc entre le 8 et le 9 et que tu en as 14 derrière un premier temps, OK, alors, mission d'Empire. Je pense que c'est la préévaluation. Ah oui, c'est un certain Oui, Le premier truc qu'on avait fait, c'est qu'on leur avait envoyé ce questionnaire sous forme d'auto-évaluation.
+
+D'accord.
+
+En disant, voilà les thèmes qu'on va évaluer, et on vous demande, vous, de dire sur chacun des thèmes, On avait mis une échelle de 1 à 4, où est-ce que vous vous ciblez aujourd'hui ? Où est-ce que vous pensez qu'il faudra que vous soyez en fin 2028 ? Et là, point de passage, fin 2025, Où est-ce que vous pensez pouvoir être Et ça, C'était l'auto-éval. Et puis nous, en parallèle de ça, on a fait, nous, notre évaluation par rapport au questionnaire. On a un outil situé, on a croisé leur vision à eux et la nôtre. Et il y a des endroits où on était complètement d'accord pour dire, oui, là, vous êtes vraiment mal. Il y a des endroits où ils se voyaient beaux, comme des camions. D'accord,
+
+ok.
+
+Donc il y avait vraiment les deux aspects. C'est de dire le boulot qu'il y a à faire et la conscience qu'il y a ce boulot-là à faire.
+
+C'est vachement intéressant comme outil. Simple et en même temps, C'est ça qui me trouve intéressant. Est-ce qu'ils l'avaient bien rempli ? Ils avaient bien compris l'outil Ils l'avaient bien rempli ? Au premier coup, il a fallu les aider ? Ou globalement,
+
+Ils ont bien compris ? Ils ont bien compris. Ils ont bien compris. Ça, ça avait bien. marché.
+
+Et ils ont rempli... Ils avaient mis des commentaires ou c'était vraiment...
+
+Pas trop. Attends, Je vais te montrer le résultat.
+
+C'est hyper intéressant, ça comme outil à automatiser, c'est hyper basique. Et ça permet d'avoir un truc que tu peux facilement utiliser. Tu peux définir en ligne, ça, c'est bien plus rapide.
+
+Donc tu vois, On avait restitué ça sous forme de... De graphique. Ici, ça, c'était l'orévalin E. Et ça, c'était la cible. 2025, la cible 2028. Ça permettait de mesurer un petit peu le travail. C'est pour ça que je te dis, La mise en forme, elle reste un petit peu artisanale.
+
+Je vois bien l'idée, mais c'est vrai que c'est intéressant parce que un outil comme ça, Les gens l'ont en ligne, ils utilisent leur truc. Tu leur présentes peut-être pas de résultats graphiques, parce qu'à peu près, ils peuvent jouer un peu avec, On va améliorer la situation.
+
+Mais du coup,
+
+tu as tout ça, toi, tu as fait ton évaluation de ton côté, ça te sort un truc. Qui est nickel, direct. C'est clean et bien frais. Tu peux mettre des commentaires, tout ce que tu veux. Tu peux même dire à Lya, tiens, fais-moi Un petit commentaire sur l'organisation, et tu vois, Il va te faire un truc.
+
+Oui, oui, c'est sûr, parce que là, on a passé vachement de temps, Si tu veux, à exploiter ce truc-là, le mettre en forme.
+
+Et donc, PD, DG, GB, C'est les personnes qui vont...
+
+Ça, c'est nous, ça, c'est notre éval à nous.
+
+Ah, pardon.
+
+Donc, la maintenance, Tu vois, il n'y a que Pascal, qui avait regardé la maintenance, et lui, Ils n'ont rien. Et ça, Pascal Dupuis, Dominique Garnier, C'est notre Contrôleur de gestion, et JB, c'est moi. Et voilà, on avait pris le parti, c'est pareil, c'était un a priori, On va coter chacun de notre côté, et ça, C'était une V2, c'est-à-dire qu'on avait fait une V1 où on avait coté chacun de notre côté, il y avait des endroits où on avait des notes qui étaient très divergentes, et on a dit bon... Donc on avait discuté un petit peu et on avait le droit, Si tu veux, de...
+
+D'accord, Du coup, vous avez refait une version, mais chacun, avec son point de vue, et vous êtes d'accord, Mais c'est un petit peu aligné.
+
+Voilà, c'est ça. Et donc ça, l'éval, ça, c'était notre éval à nous. Ah oui, c'est ça. Et après, l'auto-éval, parce que, du coup, il y avait les deux, Sur le même graphique, on mettait les deux.
+
+Ok. Ça, ça m'intéresserait d'avoir ce tableau-là.
+
+Attends, je vais... Peu peu, je sais ce que je vais faire. Bouge, pas OK, évaluation. Celui là, je vais le télécharger, ça, c'est vrai, c'est sur un Dry, donc, du coup, je re dans les téléchargements tous les documents que tu veux. Ça, c'était les autorivales.
+
+Ah oui,
+
+Sauf que là, c'était la version vierge. C'est celui que je t'ai montré tout à l'heure, donc ça, ça sert. Ça m'intéresse,
+
+parce que moi, ce qui me plaît, c'est de voir, en fait, c'est quelque part. Un outil qui permet de facilement créer ce type de tour. Je vois ça par rapport au marketing. Oui, typiquement, Vous en avez tout. En fait, c'est une évaluation. Après, les thèmes changent selon le domaine dans lequel tu es, mais finalement, L'approche est pratique.
+
+Alors, c'était questionné. Oui, là, c'est pareil. On avait posé tout un tas de questions. C'est-à-dire qu'on avait rencontré les gens et on avait vraiment chiadé un questionnaire. Mais au niveau mise en forme, c'est complètement pourri.
+
+D'accord. Mais ça, vous l'avez fait avant ou après
+
+Avant.
+
+D'accord. C'est ce qui vous a permis de faire ensuite les tournées à l'établi et tout ça.
+
+Oui,
+
+voilà. D'accord, ok.
+
+Donc, tu vois, rue de direction, l'économie, le commerce et l'administration des ventes.
+
+Quand vous aviez fait ça, vous aviez mis des éléments, vous aviez répondu à toutes ces questions, vous aviez construit au fur et à mesure, C'est ce qui vous a permis de faire votre évaluation.
+
+Notre évaluation, c'est ça.
+
+Ça, je peux te le passer aussi si tu veux. Et ça veut dire qu'à nouveau, vous avez des réponses à chacun de ces points là ?
+
+Pas toujours ça, c'est justement, c'est là où on se disait. Cet outil là peut devenir un outil générique, parce que ça, quelle que soit la boîte. En fait, les questions ne sont pas les mêmes plus que de l'entrée globale, Donc, Bureau d'études et méthodes, l'organisation du système d'information.
+
+Après, dans l'approche que j'ai actuellement, pendant l'idée que je me fais de l'outil, ça, quelque part, C'est votre lien. Oui. Ça m'intéresse de voir parce que techniquement, il y a des impacts sur comment permettre de faire ceci ou de faire cela. Quels sont les outils que moi-même, Je dois mettre en place pour faciliter la création de ce genre de trucs. Mais, après, le contenu même du questionnaire, le contenu même du diagnostic, C'est vous qui le regardez, c'est le business.
+
+Oui, tout à fait.
+
+Et donc, je pense que moi, ça m'intéresse, Ce n'est pas tant pour son contenu que pour sa structure que je puisse vous aider à la mettre en place. Oui, oui. Et en son contenu, Il y a votre contenu qui est sur certaines parties très spécifiques. Puis, après, il y a un autre contenu qui peut être certainement beaucoup plus générique et dans lequel je vais me retrouver. Par rapport au marketing et dans lequel on peut se retrouver par rapport au RH, on en entend mieux. Mais OK, très bien.
+
+Voilà, donc ça, du coup, tu n'en as pas besoin, c'est trop décisif.
+
+Ça m'intéresse pour voir, parce que là, toutes les questions, typiquement, à nouveau, Il y a tout ce qui est orienté. management. Il y a des éléments qui, parfois, peuvent être communs, peut-être, avec… Je ferai du… À nouveau, moi, je suis plus dans le marketing. Je ne peux pas très bien être, Management Marketing, qui est responsable sur quel périmètre, quel pourcentage du temps et puis, ça peut se descendre. Mais bon, après, c'est peut-être d'un peu plus haut niveau. Mais dans l'idée, rubrique, thème, axe, question, C'est classique, ça m'intéresse. Si ça ne t'embête pas, moi, Ça m'intéresse de voir globalement l'idée, mais j'aurais tendance après à cocher sur chaque question des choses qui sont génériques, pas génériques, plutôt orientées, management, l'organisation. Mais mon objectif, ce n'est pas de porter... Une solution fonctionnelle. Oui, oui, oui, je comprends. À la rigueur, sur le marketing et encore. Alors attends,
+
+je regarde vite, fait. Je ne me souviens plus. Ah oui, ça. C'était la première... Voilà, C'était notre première intervention sur le terrain, c'était au moment.
+
+D'accord.
+
+Méthode de travail. Donc ça, c'était l'agenda. Je pensais aussi celui-là, C'est pas très...
+
+C'est toujours intéressant parce que c'est un truc qui a été échangé avec le client, donc quelque part, c'est un livrable. Donc c'est intéressant parce qu'il faut le produire.
+
+Et donc, ici, tu vois, On avait justement tous les temps qu'on a passés avec les différents acteurs pour dérouler le fameux questionnaire que je t'ai montré.
+
+Vous étiez tous les trois ensemble quand on a fait le questionnaire Oui. Les gens devaient ressentir complètement les civets.
+
+Alors non, en fait, on s'était répartis.
+
+Je me demandais si vous étiez en même temps, tous les trois en même temps, avec une même personne. Non, non, non,
+
+On s'était répartis. C'est pour ça qu'il y a... Là où il y a les trois croix, ça veut dire qu'on y était tous les trois. Et sinon, tu vois, Moi, j'avais vu Hervé, puis Stéphane, Pascal avait vu Jérôme, puis l'autre, Stéphane. Enfin, tu vois, c'est...
+
+Merci. D'accord, très bien.
+
+Est-ce que ça, ça t'intéresse ou pas
+
+Ça m'intéresse parce que c'est un livrable. Moi, les livrables, m'intéressent,
+
+c'est pour voir ce que je dois produire.
+
+Typiquement, la journée, Je dois produire à un moment donné, un PowerPoint. Si possible, quasi automatisé. Et à la fin, j'ai trois trucs. Mais finalement, Il est globalement généré. Oui, tout à fait. C'est intéressant. Voilà.
+
+Donc ici, le questionnaire. Le questionnaire.
+
+C'est à partir de ces résultats-là que tu as fait le graphique avec des bulles, machin, impact urgent. Et justement, impact urgent, Vous preniez quoi ? Comment vous aviez retraité entre-temps ? Vous aviez les notes, et donc vous avez retraité ce tableau pour pouvoir créer l'autre
+
+Voilà. Sauf si c'est vivant. Ah, oui, si, celui-là est intéressant, puisque là, rubrique par rubrique, On produit le graphique.
+
+Et c'est la vision du tableau Excel que tu as montré de ta marque de support de doc. Typiquement, Ça, c'est un truc qui peut être produit automatiquement à partir des données précédentes.
+
+Et là-dessus, C'est un dialogue qu'on avait eu pour dire, et là-dedans, dans les axes de progrès, qu'est-ce qu'on se décide, qu'est-ce qu'on se prend comme priorité 2025 ? On ne va pas pouvoir tout faire.
+
+Là, vous avez tout mis en vert. Ah ! C'est ça. OK.
+
+Bon, voilà. Est-ce que celui-là t'intéresse aussi ?
+
+Librable, Ça m'intéresse pour avoir un exemple de ce qu'il faut être capable de pouvoir faire. Ça, tu m'avais mis le fichier Excel correspondant que j'avais à faire le lien entre les deux
+
+Je crois,
+
+comme je crois.
+
+Je vais voir dans les télécharges. Questionnaire évaluation graphique, c'est peut-être celui-là, le questionnaire. Il est là, OK, bon, voilà donc pour la partie diagnostique. Je pense que là, on est à peu près au bout,
+
+d'accord. Globalement, on voit bien la logique aujourd'hui, donc ça veut dire que si on récapitule un petit peu ce qu'on a échangé là, Max, Quand il arrive sur l'application, et vous-même quand vous arrivez sur l'application, vous voulez avoir un petit peu un récapitule, Ce qui a été fait pour se remettre en tête, sans rien savoir où vous êtes et tout.
+
+Le premier élément,
+
+quand je clique sur ça, En fait, c'est les phases, Je vais aller sur la phase diagnostique. Donc, là, quand je clique sur le diagnostic, ici, je devrais avoir les éléments principaux, Ça va être pour les éléments principaux. Les trois cas de livrable, le principe
+
+Alors, le premier livrable, c'est le résultat brut des évaluations et auto-évaluations. Donc, c'est le résultat des questionnaires mis sur une borne.
+
+Vous parlez des évaluations
+
+Oui.
+
+Quand je clique sur évaluation, ici, On va voir effectivement les… Évaluation brute, résultat brut.
+
+Et le résultat brut, voilà.
+
+Et donc là, Dans ces cas-là, c'est le fichier Excel avec le graphique, par exemple, c'était par tranche, c'est ça, ou par thème
+
+Par thème, oui.
+
+J'ai le thème 1, j'ai les réponses, les auto-évaluations, j'ai le tableau, l'épinage, etc.
+
+Oui, c'est ça.
+
+Là, j'ai le truc, machin. Là, on avait notre, les vannes, les commentaires. À la rigueur, on n'a plus de version synthétique et quand tu cliques dessus, ça te montre éventuellement le document. Ça, c'était les évaluations. Après, éventuellement, il y avait d'autres éléments.
+
+Après, il y a celui-ci qui est le... La restitution, qui lui est un document plus formel. C'est celui que je viens de te montrer.
+
+Donc, là, comme d'hab, en fait, évaluation, On arrive sur les éléments de travail.
+
+C'est une compilation avec, en gros, L'idée ici, c'est de sélectionner, mais c'est plus en interactif, de sélectionner les priorités.
+
+Un tout petit peu de publog, Je me rends bien compte, c'est bien, ça. Donc, en fait, ça pour moi, je la résume d'un bout, peut-être que par thème ou par thème. Ça, c'est une compilation de tout ça. Sous un document, que ça peut être soit un document PDF, soit une partie. Juste pour voir la différence entre les résultats bruts et le travail des données brutes pour obtenir le résultat de restitution.
+
+C'est ça. C'est-à-dire que là, ici, Il y a un travail supplémentaire qui est une réunion de travail qu'on a faite à partir du truc. Pour dire, bon, et de là, qu'est-ce que vous décidez de prendre comme priorité, comme urgence Donc nous, On leur avait fait des suggestions.
+
+Donc, en vert,
+
+c'était vos suggestions. Oui, c'est ça. Et eux, ils ont...
+
+On a vraiment les résultats de la commission.
+
+Oui. OK.
+
+Comme si c'était un tableau, Ce document-là, mais sans vert du tout. Et après, vous avez ce document de travail que vous avez restitué avec quelques suggestions. Et donc, vous les avez validés.
+
+Voilà. Et c'est là où, de ça, Si tu veux, on a sorti justement ça, Qui est l'ébauche de plan d'action.
+
+D'accord.
+
+Pour dire, voilà, thème par thème, par rapport à ce que vous avez donné comme priorité. Voilà le plan d'action qu'on vous suggère.
+
+là-dedans, quelque part. Quand je parle de document actif, c'est au lieu de directement sélectionner, ouvert, Tu aurais tous les thèmes que vous avez identifiés, puis tous les commentaires que vous aviez rajoutés sur chaque thème, Parce que là, Il n'y avait pas vos commentaires. Dans le document, il y a vos commentaires. Ces commentaires... En fait, il ya les commentaires. Après, vous avez cliqué sur les choses. Il est l'inventeur d'un document que vous relisez avec le client. Et lui, il va dire dans sa joue. Cliquez des petits ouais. Typiquement. Ce que vous avez fait en verre, c'est pareil. Il est d'avoir un outil qui facilite ouais et comme ça, et ça, quand tu as cliqué, pof, Il y a toutes les actions qui ont été sélectionnées. Et c'est ordonné directement dans un plan d'action initial. En gros, ça génère automatiquement ce truc-là. Donc, 37 axes de progrès. Et là, du coup, On se retrouve dans le détail avec les éléments. Partie A, la partie 2, 3, qui était abaissée, d'accord, Il faut bien le codir. On retrouve bien les mêmes thèmes,
+
+on est d'accord.
+
+Et là, créer, ça, c'est les thèmes que vous aviez dans votre questionnaire. Et ça, C'est finalement ce que vous avez conclu, ce que vous aviez souligné en vert, c'est ça D'accord, ok. Donc, oui, tout à fait. C'est bien, c'est clé. Il faut combien de temps pour faire des documents comme ça
+
+C'est vachement longtemps.
+
+D'un point de vue, purement création du document, pas, réflexion, Parce que ça, la réflexion, c'est une chose, on ne peut pas la changer, on ne peut pas l'éviter. En revanche, tout ce qui est création documentaire, c'est quoi ? C'est des jours et des jours
+
+Oui, oui, t'en bouge, pas, je vais te dire. Parce que, justement, comme c'était quelque part notre chantier pilote.
+
+D'accord,
+
+Vous avez duré longtemps et tout Oui.
+
+Vous avez rempli les rapports d'activité, c'est tellement bien. C'est l'orientation dans la vie, c'est les rapports. L'enconner, c'est l'artation.
+
+C'est un petit site à l'étang passé. Et là, c'est le Rex. D'accord. On avait noté jour par jour qui était intervenu, combien de temps il y avait passé. Et après, c'était une réalisation auto-évaluée.
+
+C'est en noir ? Oui,
+
+c'est en noir.
+
+Et au final, vous arrivez à 200 heures. Vous avez deux heures. Oui. 200 heures, 220 heures, Ça fait quoi ? Ça fait un mois de travail. Oui,
+
+c'est ça. OK.
+
+Et donc là-dedans, est-ce que tu as la partie plus particulièrement création des documents Ou est-ce que c'est toujours mêlé avec une étape d'analyse, et donc ça ne sort jamais vraiment Est-ce Que toi, par exemple, Tu te rappelles d'avoir passé du temps sur un fichier, à simplement faire de la mise en page, à casser les caméras ? Oui,
+
+mais justement, Et c'est là où moi, je n'ai pas été très bon, c'est que moi, je n'ai pas forcément toujours noté la mise au point du questionnaire. Oui,
+
+mais c'est la mise au point du questionnaire, à la règle, si c'est le fond.
+
+Oui, mise en forme du questionnaire. Je ne sais pas te dire. Par exemple,
+
+la mise en forme documentaire. Moi, je fais des documents.
+
+Tu passes une journée. Oui. Oui.
+
+Donc, vous avez 4 ou 5... Documents En gros, vous avez passé 4 5 ans, ce qui veut dire 40 ans, donc à 20%
+
+du temps qui au moins en production de commentaires ah oui carrément oui oui, oui, oui, oui, tout à fait oui et vraiment c'est ça qui peut être misé c'est ça un peu mais c'est ça et attend je crois que j'essaye de voir là dedans On ne voit pas apparaître très clairement la préparation et restitution du diag. Ça, Je pense qu'il y a une bonne partie de mise à jour du document. Oui, de consulter. Oui, c'est ça. Parce que, indépendamment de ça, il y a des moments où c'est moi qui me supplie. La mise à jour des documents. Et ça, ces temps-là, je ne les ai pas notés. Ils sont en plus de ça. Donc,
+
+il y a la synchro des datas. Oui. Juste la mise en page. Oui. Donc ça, ça peut être une économie.
+
+Ah, oui.
+
+C'est-à-dire qu'en gros, aujourd'hui, vous devriez refaire cette prestation, comme tu disais. L'objectif, c'est de définir un modèle, des outils et tout ça. Dans la boîte à outils, il y a tous les modèles et les documents. Il y a le fond, la structure des questions qu'il faut poser pour votre prochain client. En même temps, il y a tous les modèles de documents. Vous changez juste en gros, le logo du nouveau client. Vous reprenez à peu près les mêmes documents. Vous allez gagner du temps, mais c'est vrai qu'on perd comme du tout. On est corrigé, on refait, on rajoute des trucs. On synchronise les données. Ça, on n'a pas le choix. Il faut repérer. Donc, il y a cette économie qui est possible. Et puis, après, ça veut dire qu'effectivement, pour la fourbe. après, Dans votre suivi, vous allez pouvoir mettre un jour, Ça va ressortir des trucs complètement matisés. Donc, là-dedans, pour l'instant, On n'a pas du tout d'IA. On ajoute en automatisation, et de l'informatisation. Là où il peut y avoir de l'IA, c'est là où ça peut être intéressant, mais à la longueur, c'est encore un truc en plus, ce serait de se dire, toi, tu donnes tous les résultats que vous avez donnés, est-ce que l'IA pourrait apporter des informations supplémentaires ? Toi, tu donnerais ça à l'IA, tu dirais Ok, maintenant, et toi, tu en penses quoi ? Tu te positionnes comme spécialiste du management targeting. nationale, notamment dans le milieu industriel, C'est là où, Voilà le contexte de toutes les infos que vous avez eues à travers les échanges avec Max. Vous avez fait un document là-dessus ou pas, d'ailleurs, qui resitue globalement le contexte, les difficultés, les ventes, tout ça.
+
+On l'a mis en introduction des différents documents. Il y a toujours un petit truc de contexte, si tu veux.
+
+Ce qui est intéressant, c'est que tu peux faire à travers un vocal. En échange, vous expliquer Bach s'expliquer. La situation. Ça, ça fait un document pour rappeler le contexte globalement de l'étude, du diagnostic. C'était à l'origine la raison de ma mission. Et finalement, tu donnes ce contexte à l'IA et tu lui dis de se positionner comme vous. Et donc, Il va venir rajouter, peut-être rédiger, peut-être avoir une idée intéressante, complétée. C'est là où éventuellement, il y a un peu, parfois apporté un petit peu plus. Oui,
+
+oui, oui, c'est tellement. Sachant que dans tout ça, il y a des domaines où nous, on n'est pas forcément spécialiste. Donc, on va poser des questions génériques et que peut-être que dans certains cas, Il faudrait aller creuser un petit peu plus dans le détail, sur des questions plus pointues.
+
+Dans le questionnaire, évaluation, c'est-à-dire, effectivement, avant, Il y avait peut-être un parti de questionnaire qu'on aurait pu mettre. Ici ou là, il y avait toutes les questions. Vous pouvez avoir un bouton là qui dirait maintenant, rajoute moi d'autres questions, donne moi les questions de base. Alors j'aime pas trop dire ça, parce que ça veut dire qu'on automatise les liens et on fait plus rien. Disons que c'est un en fait un peu en échange, L'IA va garder des trucs, toi, tu rajoutes ta couche, Et puis, après l'IA va corriger éventuellement, enfin corriger, Il va rajouter d'autres éléments, et puis non.
+
+Et à l'inverse, parce qu'en fait ce questionnaire, on se l'est construit nous autour de cette table, si tu veux, en échange en rapport. Et on s'aperçoit qu'il y a des endroits où on est allé, enfin, on s'est lâché, Si tu veux, donc il y a peut-être moyen...
+
+Oui, bien sûr, tout à fait.
+
+De dire, bon, là, c'est bon, là, c'est too much, Et il y a d'autres endroits où c'est trop là. light. Et ça, C'est vachement dur de le...
+
+Oui, tu as peut-être un peu d'expérience. Après, également, une autre approche, Pour voir où il y a peut-être quelque chose, c'est typiquement... Vous avez enregistré vos entretiens ? Tu vas t'enregistrer dans le entretien, quand je vais faire un.
+
+Là, Tu vas t'enregistrer.
+
+Et tu demandes ce que je t'ai dit tout à l'heure. Oui,
+
+oui, oui. Oh,
+
+t'enregistres ! Et du coup, après... Un, ça peut faire un bon rendu, on peut dire d'arrondir, de réfléchir, de réagir là-dessus aussi. L'IA peut aussi réfléchir et réagir là-dessus. Et donc, on peut lui demander de sortir directement un questionnaire à partir de ça.
+
+Ça pourrait mériter toi un petit peu, creuser ce point là. Oui, oui, mais où là? Effectivement, soit à partir des locaux, et puis des éléments que tu donnes du contexte. C'est là, effectivement, il ya bien là, quoi? Là, il ya un autre, enfin, il ya un truc de cette partie bâtir le questionnaire. Nous, on l'a fait en mode hyper artisanal. Et puis, c'était...
+
+Oui. En fait, il n'y a pas de terminaire à tous les niveaux. Il n'y a pas de terminaire là, pas de terminaire sur l'évaluation, après sur la partie, commentaire de chacun des thèmes. Ensuite, ça va être compilé, ça va donner un document final. On a mis un ensemble d'éléments, un ensemble de sections. C'est bien de rajouter des commentaires, parce que quelqu'un qui arrive sur un document comme ça, il manque peut-être un peu de contexte.
+
+Et peut-être une petite synthèse.
+
+Oui, tout à fait.
+
+Une petite synthèse pour dire, en gros, les points forts identifiés sur lesquels il faut vraiment s'appuyer, c'est ceux-là. Les marges de progrès principales, c'est celles-là. Et les écarts principaux par rapport à la cible que vous vous êtes fixée, Ils sont là. C'était les poids forts. J'aime bien commencer par les poids forts. Des fois, les gens... Il faut décourager les gens. Sinon, les gens ne t'écoutent déjà plus. Tu les as perdus.
+
+Après, il faut se méfier. Moi, ce que je déteste, ce qu'on déteste tous... Quand on lit, mais quand on produit, on aime bien. Quand on produit, on aime bien qu'il y a des synthèses, des machins. Mais quand on lit et qu'on détecte que c'est des trucs complètement bidons, ce n'est pas hyper intéressant. Il faut aussi retrouver le niveau de réduction qui fait que les trois lignes sont intéressantes, les dix lignes. Il y en a peut-être 7 qui sont inutiles, mais peut-être que les 3 essentielles sont pas mal. Mais donc, là, voilà. Dans votre processus de diagnostic, faites des choses, tu dis, vous avez discuté, il y a une fois sûrement, Tu es le quatrième partenaire qui fait, qui importe des éléments. Et puis ça vous fait réagir, c'est intéressant. Et puis, après, sur l'évaluation, vous faites vos questionnaires, Il peut rajouter des petites lignes de commentaires, la stipulation des petites synthèses et, à la fin, tout le reste, Vous avez cliqué sur plein de trucs. Vous avez un plan d'action, là, Ça n'a pas de rapport avec l'IA, mais ça fait partie de l'automatisation du système.
+
+Oui, oui.
+
+Et donc aujourd'hui, On va aller voir notre client. Max, est-ce que ça a intérêt de nous représenter ça de manière un peu synthétique et finalement, Ça devient un outil d'échange ?
+
+Je ne suis pas sûr. Je ne suis pas sûr. Ça peut avoir de l'intérêt au titre du retour d'expérience. Voilà un petit rappel d'où on est parti, par où on est passé, etc. Mais pour moi, le client, lui, Il va être beaucoup plus friand. De la suite.
+
+Après, diagnostique, on a ces outils-là. En fait, L'intérêt du diagnostic,
+
+c'est de poser également des outils qu'après,
+
+vous allez suivre pour évaluer l'évolution. Donc, en gros, ce qu'il y a là, on peut l'appeler Phase 2, on reprend les mêmes. Finalement, Les gens vont renoter où ils en sont. Ils savent qu'on va refaire la phase 2, Ce sera globalement le même outil. Ce sera plus suivi.
+
+Oui, c'est ça. C'est-à-dire que, dans la phase 2, il y a... Deux choses. La première, c'est réellement tout ce qu'on a listé là comme plan d'action. Là, il faut tenir la vue. Est-ce que les actions sont pertinentes ? Est-ce que les porteurs d'action sont les bons Est-ce que le résultat mesurable de l'action est au rendez-vous ? Merci.
+
+OK, et donc ça veut dire correction, ouais, et donc correction, c'est à dire que vous corrigez. Globalement, vous avez mis en place et c'est un ensemble d'outils qui vont vous accompagner tout le temps dans toute la prestat de suivi. C'est ça. Ouais, d'autres outils vont être développés. Ensuite, chaque élément. Mais globalement,
+
+le suivi global,
+
+Il va falloir le faire. Vous allez peut-être être amené à modifier un peu les questionnaires. Oui, évidemment, ça, ce n'est pas pertinent.
+
+Et c'est là où l'IA va pouvoir peut-être nous aider à cibler dans la bibliothèque. Énorme de questions, les 3-4 questions hyper pertinentes à ce stade-là. On va dire, voilà, c'est là-dessus, il faut se mesurer. Le reste, c'est fini, c'est derrière, ou c'est plus loin devant, et ce n'est pas le moment.
+
+Les questions peuvent changer par rapport à la phrase. C'est moins pertinent. Oui.
+
+Et plus ou moins d'actualité. Oui,
+
+et moins pertinent, c'est d'actualité. Vous avez déjà commencé à réfléchir un peu à la deuxième étape de suivi Oui,
+
+dans le second.
+
+Vous avez défini pour chaque étape par rapport à chacun des plans, donc A, B, C, D, E, F. Vous travaillez d'abord sur A ou c'est plutôt un peu transversal ? Je vais te montrer.
+
+Je vais te montrer. Donc, ici, on a fini la mission de diagnostic, on rentre dans la mission d'accompagnement de la feuille de route. Et là, donc ça, c'est le rapport qu'on n'aura pas encore livré, si tu veux, de notre mission de la semaine dernière.
+
+D'accord. Vous avez prévu combien de missions
+
+Ah, bah, si, ça, je pourrais te le montrer après.
+
+Et comme ça, vu que c'est 3-4, c'est 10
+
+C'était une tous les mois au début. Donc, là, c'est jusqu'à... Là, on y retourne. Fin mars. Et après, on va y se passer une tous les deux mois. Et puis, après, on verra. Mais je te montrerai le plan qu'on a prévu, qui lui aussi, en fait, Pour l'instant, est un plan prévisionnel, qui ne demande qu'à s'améliorer. Et s'affiner en fonction de l'avancement réel.
+
+Les résultats, l'avancement réel.
+
+Donc ici, si tu veux, La proposition de plan d'action, on l'a découpée en modules. Le premier module, c'est sur le premier trimestre. Donc là, on est dedans. Donc, sur le premier module, on bosse jusqu'à fin mars. Et à fin mars, on a fini le premier module.
+
+C'est des contrats différents à chaque fois ?
+
+Non, justement, nous, On avait fait une proposition commerciale où justement, on avait modularisé le truc. Et la Max, Il nous a acheté les quatre modules d'un coup.
+
+D'accord, ok.
+
+Mais, par contre, on lui facture module par module. Et il a la liberté, à la fin d'un module, de dire stop, On arrête. C'est vraiment un truc à tiroir et on voulait vraiment qu'ils se sentent libres d'arrêter. Et puis nous aussi, parce que, encore une fois, nous, on fait ça presque plus pour le plaisir. Et donc, si à un moment on se sent plus utile, on va dire bon, c'est bon d'accord.
+
+Du coup, si tu remontes juste un petit peu sur le tableau, un petit peu en dessous. Donc là, table, jalon. D'accord. Est-ce que, d'accord, là, c'est les modules dont tu me parlais, le ban. Voilà.
+
+Donc, le premier truc qu'on a fait... On les a accompagnés dans un séminaire. Comité directeur au mois de janvier. Dans le séminaire Comité directeur, on les a fait bosser sur un premier truc qui était les responsabilités. Qui est responsable? De quoi là-dedans ? C'est
+
+Télésa.
+
+On a fait une matrice des attentes de contribution, des chacun, qu'est-ce que tu attends, de qui, et qu'est-ce que toi, tu te vois comme étant contributeur, de qui. On croise les deux. On a vu qu'il y avait des trous dans la raquette. On a pu se dire attention. Et puis, un tableau des valeurs, où chacun se positionne, si tu veux, par rapport aux valeurs dans l'entreprise. Et ça, c'est super intéressant. Alors, les points positifs. Ça s'est vachement amélioré, même s'il reste du boulot à faire, notamment une personne qui est vraiment problématique. C'est pour ça que plusieurs membres ont modifié positivement leur comportement. Ils ont pris des actions immédiates. Notamment, ils ont eu trois accidents de travail en trois mois et ça avait l'air de débrouillard. Personne n'est en effet, mais c'est là où, en fait, ils n'étaient pas dans une posture de comité directeur, visiblement dans le monde. Dans le monde précédent, c'était le directeur qui est acteur et QA, parfois faux, donc, ils ont bossé sur les chantiers. Sa caisse beaucoup plus de gueule, c'est quoi, 5s 5S, c'est les méthodes japonaises d'ordre et d'arrangement. Tu sais, supprimer tout ce qui est inutile, rendre les choses visibles. C'est les méthodes industrielles, si tu veux, d'organisation, de l'espace de travail. D'accord. Donc, ils se sont décloisonnés. Ils commencent à se causer et à s'échanger entre l'atelier d'usinage et l'atelier d'injection. Ils ont des fluctuations de charges. Quelquefois, tu en as. Un qui est plein de balles et l'autre qui n'a rien à faire. Et là, naturellement, les mecs, spontanément, se sont échangés en disant « moi, je n'ai pas de boulot, toi, tu es… » . Donc, je vois qu'il y a des cloisons qui pètent. Donc, ça, c'est vachement bien. Donc, Ils nous ont fait leur première réunion codire mardi dernier. Ça n'existait pas avant. Et bon, donc, Ils ont bossé ensemble pour préparer le support Codire. Donc, c'est vachement bien. Ça, c'est vraiment un point positif. Par contre, Ils sont très, très, très loin. Nous, on attend. C'est plus une réunion que d'hier. Mais bon, on ne va pas monter toutes les marches d'un coup. Ils sont en train de se staffer à un truc tout con. En fait, l'ancien directeur, qui savait qu'ils étaient en situation économique délicate, a viré le qualité-cien. Donc, il n'y avait plus personne à l'équalité et maintenant, ça coûte et ça rapporte rien. Le mec, il ne produit pas. Et en plus, il jette des pièces qu'on aurait pu lui donner en douce. C'est ça, franchement.
+
+Aucun défaut.
+
+Non. D'accord. OK. Donc, ça, C'était juste dramatique. Parce que là, ils ont des clients comme Valeo, surtout dans l'automobile. Si tu veux, ils sont pas mal au pointu là-dessus. C'est comme ça qu'après,
+
+il y a des airbags qui font...
+
+Par exemple, oui. Là, tu te dis,
+
+mais c'est fou. OK.
+
+Bon, donc ça y est, c'est réparé. Ils n'avaient personne en charge de l'amélioration, continue. Alors que là, ça y est, et donc ils ne recrutent pas. Ils ont filé la casquette responsable Amélioration continue à un mec qui bosse, Je crois que c'est le logisticien, en disant qu'il va consacrer une partie de son temps à faire ça. Mais au moins, il y a quelqu'un d'identifié. Vous êtes rendu par,
+
+Je voyais, fiche de poste, donc éventification du contrat de travail et tout ça. Oui,
+
+après, donc tu vois discours inapproprié, donc on dit quand même, donc ça, c'est les points forts, toujours le modèle. Là après, on a vu des choses qui nous ont vraiment pas fait plaisir. Donc, notamment le fameux Hervé, qui continue de baver. Donc ça, c'est juste pas possible. Le pilotage commercial, donc pareil si tu veux. Ils étaient tous à se plaindre, qu'ils étaient en creux de charge, qui voyait pas de charges arriver, et ils ne prennent aucune action. Je dis non, attendez, là, Vous avez une situation délicate. Vous êtes en cellule de crise. Vous renforcez l'action commerciale. Peut-être que le mec du bureau d'études, qui n'a plus rien à foutre, Il va aller sur les routes avec le commercial. Faites, voilà. C'est pareil, c'était dans un des ateliers, en fait. Les mecs, ils manipulent des grosses tôles, mais en mode des trucs qui pesent plusieurs centaines de kilos. Avec des élaves pourris, enfin, Mais là, c'est des situations à risque, ça, vous pouvez pas. Vous allez tuer quelqu'un.
+
+Non, mais d'ailleurs,
+
+ça fait penser, on a trois cercueils. Bah, oui, voilà. Dans l'atelier, ça commence à aller bien, mais il y a encore des zones où tu dis, c'est trop le bordel.
+
+Donc, là, du coup, tout un ensemble d'irritants, comme tu disais. D'accord. C'est-à-dire que là, globalement, il y avait les points forts, les irritants. OK. Après, le plan d'action mis à jour suite à tout ça. Oui.
+
+Et là, on dit, on revient dans un mois. D'accord.
+
+C'est là dessus qu'on vous attend d'accord, donc ça, le plan d'action, c'est ce qui est décidé pendant la Réunion. Vous étiez là, donc là c'était, on rentre en tout ça et là, c'est la prochaine fois. Vous leur dites voilà OK, donc là, du coup, c'est correspondant aux échanges, vous pouvez donner les points forts. Marge de progrès, c'était les émissions
+
+d'accord. Bon, celui là, il n'est pas, il est alors là dessus. J'ai, j'ai demandé à mon copain un chat de GPT de m'aider. Justement, mettre le truc en forme forme pas en forme, mais le structurer un petit peu, quoi? Et donc c'est ça, c'est chat de GPT a repris tous les documents que je lui avais fait passer et moi, je lui ai demandé de faire quelque chose de très synthétique. Si tu as peut-être texte, c'est facile à lire. Et donc, Il m'a proposé ça. Bon, je l'ai...
+
+Tu l'as mis par rapport à la synthèse, notamment, sur chacun de tes titules Oui. D'accord. C'est lui qui a écrit la petite phrase derrière. Voilà. D'accord. Et donc, ça, c'était le document, le titre, c'était le...
+
+C'était le... Le compte-rendu de la Mission de suivi.
+
+Ok. D'accord. Sachant qu'avant ça, il y avait le séminaire. Au mois de janvier, par rapport à ce compte rendu globalement, est-ce que l'IA vous auriez enregistré le compte rendu. Enfin, pas le compte rendu. Mais la réunion est-ce qu'il aurait pu sortir. Un truc de base
+
+Peut-être.
+
+Est-ce que toi, Justine, Il peut donner le plan en disant « Voilà le plan que je dois obtenir. » Et donc finalement, À partir de ce qu'il a entendu, il va remettre des choses dans le plan.
+
+Peut-être.
+
+Je ne sais pas. Il va te faire un takeaway.
+
+Sachant que je me dis que la structure du document, le sommaire, on va dire, il ne va pas varier beaucoup.
+
+Non, tout à fait.
+
+Mais par contre, effectivement, peut-être zoomer un petit peu plus certaines parties. Je ne sais pas.
+
+Vas-y, redescends un petit peu. En fait, en gros, Il faudrait la prochaine fois vous enregistrer. Ah, oui. Pour voir si finalement, ce n'est pas toujours évident. Je sais que j'ai déjà tenté quelques expériences où tu es à une réunion, tu enregistres, mais c'était des réunions. Plutôt de conception, d'interface. Donc, on réfléchit un peu sur un truc comme ça que l'IA ne voit pas. Et donc là, globalement, à la fin, Tu te rends compte que le contenu qui te ressort, ne correspond absolument pas à La Réunion qui a eu lieu. En revanche, il sort un super contenu, Il a entendu 3-4 mots autour desquels il a construit le rapport. Oui. Tu as l'impression, de l'extérieur, tu te dis, putain, intéressante. La réunion, C'était pas mal. Alors, pas du tout, On n'a pas du tout parlé de ça. Il a entendu 4 mots, il a fait une réunion. Donc, il faut se méfier. Oui, oui. Mais si tu descends un petit peu, pour voir le contenu, Les points positifs. Non, ça, c'est purement constaté. Donc, il ne peut pas inventer le fondement que soit de la restitution. À la rigueur, Ce qu'il pourrait faire, c'est sur les éléments que vous avez identifiés, il pourrait dire, voilà, normalement, le climat relationnel, Ce que ça doit être dans une entreprise qui fonctionne bien.
+
+Ça permet de donner la référentielle.
+
+La bonne référentielle, globalement.
+
+La bonne pratique. Enfin,
+
+la bonne pratique que lui. Quelque part, quand il te sort quelque chose, tiens, JPT, À partir d'un ensemble de mots-clés que tu lui donnes, du texte que tu lui donnes, lui, Il va récupérer tous ces mots-clés, Il va les positionner dans son repère multidimensionnel, Et il va retrouver les documents et les contenus pour lesquels on est assez proche des éléments que tu as mis. Donc, il va te dire globalement. Climat relationnel. Dans un contexte, il va dire Voilà ce que c'est, Voilà ce que j'ai au niveau du climat relationnel. Je ne vais pas dire que c'est exactement ce qui est bien, mais c'est globalement ce qui ressort. On va dire que c'est la moyenne. Ça ne veut pas dire que c'est bien ou pas bien. Le résultat optimal, il est assez loin. Mais la moyenne, c'est plutôt ça. Ça permet de mesurer l'écart à la moyenne, selon la base de connaissances d'apprentissage qu'on ne connaît pas. Après, c'est justement en tant qu'expert à vous de juger si la moyenne est plutôt bonne ou pas bonne, mais ça permettrait assez facilement. C'est comme si, sur climat relationnel, là, tu cliquais, tu aurais déjà, par exemple, le contenu de Wikipédia pour le faire simple. Il dirait Voilà globalement ce que c'est. Et
+
+voilà, vous devez vous positionner par rapport à votre secteur d'activité. C'est là où, éventuellement, c'est quelque chose de relativement flou et d'informel. Ce truc là, c'est vraiment du. Mais après, si tu peux le factualiser, Oui.
+
+Après, c'est vrai, mais là où ça peut être ultra intéressant, tellement on prend tout son sens, normalement, l'idée, c'est que quand vous constituez votre lien vertical, c'est que vous indiquiez quelles sont les sources de votre métier. Oui, oui. On est fait en simple.
+
+Parce que là, nous, On a fait tout ça à la lumière de l'experience.
+
+Avec votre expertise. Mais justement, après, il y a vos expériences également. Il y a aussi bien les éléments métiers qui peuvent être des normes, des standards.
+
+Oui,
+
+oui, oui. Après, ça peut être des cours, simplement, Des spécialistes métiers qui produisent des contenus qui sont des livres, des cours, des sites web, des blogs ou des documents de recherche. Et tout ça, Ça constitue votre banque de connaissances, qui est votre prisme métier et ce qu'on peut appeler votre expertise métier. Et donc ça, c'est-à-dire qu'après, quand tu es dans le climat relationnel, Là, je suis en train, j'extrapole un petit peu, parce qu'aujourd'hui, Ce n'est pas exactement ce qui se passerait, Mais je vois plein de techniques en IA qui permettraient de faire des liens dans le sens où je t'en parle là, et qui sont des choses sur lesquelles moi, je travaille. Par exemple, toi, climat relationnel, soit tu demandes à ChatGPT, Il va te donner la connaissance qu'il a, mais tu peux enrichir. Chatgpt avec tes propres connaissances. Ce que j'appelle les sources et tout ça. Ce qu'on appelle durable, c'est le petit mot technique. En gros, on vectorise toute ta base de connaissances constituée avec les éléments dont on vient de parler. Lui, il positionne tout ça, vectorisé, il positionne tout ça dans un repère, globalement. Donc, ta connaissance, c'est un ensemble de repères, d'éléments, Tu vois, des grappes d'informations que tu as dans un repère multidimensionnel. Et quand tu lui poses une question, maxima relationnel, hop, Il repère parmi la connaissance de chat GPT et les connaissances supplémentaires que tu lui as apportées, Il va te donner les éléments qu'il ressent. Et du coup, il te donnerait. La vision du climat relationnel de Tchad GPT, enrichie de tes propres expériences et des sources que tu lui as. données. Donc, ça te donnerait un truc un peu fin. Et vraiment, Ce serait votre expertise de métier. Et là, Je me dis que ça aurait dû... L'ANIA, elle te donnerait un peu de recul.
+
+Oui, tout à fait. Tout à fait, parce que là, effectivement, On est... On est pas prêts.
+
+Ce serait intéressant de voir ça, de voir comment ça se positionnerait. Et c'est comme sur ton document, ça se présente un peu comme ça quand on demande à Alia de faire des suggestions, tu as ton doc, et par exemple, sur le côté, tu as des commentaires.
+
+Tu as un mot,
+
+clac, Il a des commentaires. Climat relationnels, Et le contenu est sorti de l'IA, de votre IA enrichie. Ce n'est pas un chat GPT, c'est votre IA, vos expériences. Oui, oui, oui. Et je trouve que là, on commence à avoir des trucs qui ne tournaient pas uniquement dans la production de contenu, Il a positionné des éléments. On ne lui demande pas de nous produire. Une synthèse qui est parfois un peu bidon, mais là, Il nous met quelques mots-clés, il nous donne une définition, il nous donne. La moyenne, globalement. Je ne sais pas,
+
+ça serait... Oui, oui, J'entends ce que tu dis, et ça, ça aurait vraiment du sens, et ça donnerait vraiment une dimension supplémentaire, c'est sûr.
+
+En tout cas, où l'IA, elle est consolide, donc c'est vraiment dans sa expertise métier, Mais au lieu de s'appeler climat relationnel, c'est bien plus qu'un climat. Un truc qui est un peu l'état de l'art par rapport à la vision que tous les hommes ont vu. OK, donc ça, ça pourrait être effectivement, cette fois, tu un enrichissement documentaire ont testé. On ne t'est pas sur le contrôle. À ce propos de la mission, on comprend autant il peut pas trop et des chevaux sur la rédaction, parce que c'est assez factuel. C'est ce qui se passe, donc oui, oui, on veut pas qu'il donne son nom. La restitution réelle commentaire, en revanche, là, c'était On a mis ses ambitions et donc commentaire. Par exemple, on a traité ce que moi, si tu vas, me suis des sens des clients sur l'âge, plus c'est une relationnelle. Toi, Je suis justement en train de travailler actuellement, J'ai fait une formation la semaine dernière, à quelqu'un sur ce qu'on appelle du REG. REG, c'est retrieval Augmented Generation, génération augmentée par récupération d'informations. Et c'est ça, justement, c'est un alia, qui est la connaissance écrite dans le marbre. C'est globalement quelqu'un qui se sépare. Ça, c'est l'IA. Elle a une connaissance globale. Mais c'est dans le marbre. Donc, quand tu veux apporter tes propres éléments, tu ne peux pas écrire dans le marbre, ce n'est pas possible. Donc, Il y a des techniques qui ont été développées, qui permettent de rajouter ses propres documents, ceux des liens, des réels, des PNF, ce que tu veux. Et ensuite, ça, ça se rajoute, mais ce n'est pas écrit dans le marbre. Et donc, du coup, c'est dynamique. Tu vois, les clients, tu peux rajouter des documents, tu peux rajouter un contexte ou pas. Et tu peux interroger l'IA globalement sur tout ça, et pas uniquement sur sa connaissance ici, qui est dans le marbre. Et donc, du coup, Ça permet de personnaliser les réponses.
+
+Oui, carrément. Parce que là, du coup, je note, C'est que nous, de, par nos expériences, parce qu'à nous trois, on a presque 100 ans d'expérience. Si,
+
+l'expérience, vous regarde. Oui,
+
+Et en plus d'une mission à l'autre. On enrichit en disant, tiens, voilà, des bonnes pratiques ou des écarts qu'on avait pas vu jusque-là, Tu vois.
+
+Oui, tout à fait. Et ce qui est intéressant, c'est que finalement, parce que la question qu'on se pose tous, c'est comment l'IA, quel travail l'IA va nous laisser. Mais quelque part, en faisant ça, on remet au centre du jeu. Notre expertise, notre expérience, les missions qu'on a réalisées, notre historique. Et même les gens, demain, ils vont faire des nouvelles missions. Et bien, ils vont pouvoir... Formaliser tout ça vocalement et autres et donner leur point de vue, donner leur expertise. Et donc l'IA pourra prendre en compte ça. Et donc ça veut dire qu'il reste plein de boulot, mais toute la partie, un petit peu. production, documentaire, enrichissement de l'information, sur lesquelles avant, on pouvait passer du temps, Ça, on ne le fait plus. Mais en revanche, on passe plus de temps en contact avec les gens. Oui,
+
+complètement, c'est super intéressant, ça,
+
+ouais, donc ça, c'est pas mal, Je vois bien par rapport à ça, ça pourrait être intéressant. Mais quelque part, après, d'un point de vue outillage, Ce qui serait intéressant, c'est de retrouver ce document-là. Est-ce que la suggestion que je te fais, où je te dis qu'on aurait un interprétant, finalement, ce serait, à la rigueur, Ce serait ça qu'il faudrait.
+
+Oui, oui, tout à fait. Ça a du sens.
+
+Oui, complètement. OK. Donc ça, d'accord. Donc ça, vous avez fait ça. Pareil, principaux, irritants, écarts constatés. Là, pareil, Il pourrait donner son point de vue. OK. Mais ok, très bien, donc. La prochaine fois, vous faites un autre séminaire
+
+Non, non,
+
+non. C'est juste…
+
+En janvier, on a fait un séminaire. C'est-à-dire qu'on leur a dit, vous sortez de l'entreprise, vous réservez un truc.
+
+Vous les aidez à mettre en place, qu'ils voient comment mettre en place. Voilà.
+
+Et là, on a dit, on vous envoie un mois après. Là, par contre, On reste parmi vous, et on vous regarde fonctionner, et on discute avec vous. Et en particulier, C'était la première réunion de Codir. Dans le nouveau format, en disant, là, vous êtes vraiment un vrai comité de direction, avec un ordre du jour, des sujets sur la table, des rôles et responsabilités clairement établis. Donc, comment fonctionne votre entreprise et qu'est-ce que vous décidez, qu'est-ce que vous chopez comme données d'entrée, qui amène quoi comme données d'entrée, et avec quoi vous ressortez comme décision, action, etc.
+
+Et là,
+
+bon, Il y a encore un peu de boulot.
+
+Ok. Et donc, du coup, le suivi pour vous de ce module-là, ça va être... Voilà, donc vous avez fait le premier module. C'était sur le premier trimestre, Tu m'as dit, c'est ça Oui, oui. Donc là, on est fin mars, vous y allez une deuxième fois. Voilà. Vous vous rencontrez avec eux pour voir si ça commence à rouler.
+
+Voilà.
+
+D'accord. Et donc, ça, On était sur le grand a
+
+Oui, c'est le... Le module 1 du Grand A. Oui, oui, c'est ça. Je vais te... Voilà, Et donc, en fait, ce qu'on dit, c'est qu'on leur propose un truc en quatre modules qui courent jusqu'à fin 2025. Non, On va jusqu'en 2026. Le module 1, c'est au moins à l'issue du module 1, Les jalons sur 2025 sont... Planifié et défini. C'est-à-dire, On sait à telle date qu'est-ce qu'on attend comme résultat. Et on a deux chantiers qui étaient jugés prioritaires, c'était structurer le codire et renforcer la culture économique. D'accord ? Voilà. Et puis, Il y a quatre autres chantiers qui sont moins urgents, mais qu'il faut quand même déjà avoir mis sur les rails pour que ça roule pour la suite.
+
+D'accord, c'était pour l'organisation.
+
+Voilà. Le module 2, donc la gouvernance opérationnelle, est donc...
+
+Donc,
+
+à fin mars Et justement, on va voir parce que, justement, qu'est-ce qu'on attend par efficience relationnelle Donc ça, on va leur détailler. Je vais te le montrer après. Le J2, c'est un codir robuste, aligné et serein. Ça veut dire que ce que je te disais, les réunions de Codir, elles sont planifiées. Les gens, on sait qui est autour de la table, pourquoi, qui doit amener quoi, qui repart, avec quoi. Le J3, c'est le pilotage financier, parce que là, en fin de compte, Ils ont des chiffres dans tous les sens, mais personne ne maîtrise rien. Donc, là, Dominique a fait un gros boulot avec eux, avec leur expert comptable et avec la DAF, pour sortir les quelques chiffres clés qu'il faut absolument qu'ils pilotent tous les mois.
+
+D'accord, donc là, à chaque fois, ça va se traduire, finalement, par des livrables, qui vont, Soit c'est des réunions, soit ça va être des réunions, ça sera des synthèses, des CR,
+
+avec qui on peut avoir la même approche,
+
+d'enrichissement, Comme on en parlait tout à l'heure, soit, c'est des... Production de documents typiquement pilotage financier. Ça va être un tableau de bord, j'ai besoin d'un tableau de bord.
+
+Oui, c'est ça, c'est à dire que là, ce qu'il a bâti Dominique avec eux, c'est un prévisionnel, Ils n'avaient pas de prévisionnel, donc on s'engage sur une prévision de chiffre d'affaires à la fin de l'année. Donc, Messieurs, les commerciaux, ça, c'est pour vous, et donc ça, c'est l'argent qui rentre. Et sur l'argent qui sort. Donc, il y a des frais fixes, donc on regarde qu'est ce qu'on peut faire comme économie? Parce que là, en fait, il y avait quand même quelques gâchis, notamment un truc tout court. Il avait sept intérimaires à temps plein alors qu'il y a du boulot pour 3.
+
+D'accord.
+
+Et en plus, du boulot récurrent pour 3. Donc, ça ne justifiait pas de l'intérim. Oui, d'accord. Donc, ils ont mis fin au contrat d'intérim, mais par contre, les 3, les meilleurs, Ils ont recruté en CDI. Donc, socialement, Ça envoie un signal positif aussi. Non, non, mais on remonte à la découverte des CDI. Et puis, on fait des économies. Enfin, voilà. Je suis en train de penser...
+
+Toute la démarche que vous avez actuellement, c'est centré sur la problématique de Max par rapport à son contexte, sa situation, mais est-ce que globalement, c'est assez classique ? Et donc, finalement, Demain vous avez un autre client, globalement, Ce sera la même chose, avec peut-être des priorités un peu différentes, Globalement, c'est toujours pareil Oui,
+
+je pense que...
+
+Tu donnes des formations à l'AFPA, je crois aussi
+
+Au Greta, oui.
+
+Au Greta, pardon. C'est sur, globalement, sur l'aspect méthodologique Ou c'est sur des points beaucoup mochés ?
+
+Non, c'est sur un truc beaucoup moché. C'est vraiment sur le métier. Technicien d'industrialisation. D'accord. Donc ça, C'est ce qu'on a représenté au séminaire. En fait, nous, notre... Ce n'est pas de moi, mais je l'adore, celle-là. En fait, en gros...
+
+C'est la vraie, c'est rouge. C'est celle que tu adores.
+
+C'est ça. En gros, une entreprise, c'est comme une voiture. Pour que ça roule, droit, il faut quatre roues qui fassent à peu près la même taille. On s'aperçoit que... Parce que là, ça s'adressait plutôt aux startups, Mais même pour une petite structure comme ça, on s'aperçoit que la roue qui parle de la technique, Si tu veux, l'expertise métier, c'est une route tracteur, c'est vraiment hyper costaud. Après, il y a une deuxième roue qui est la vente, le marketing, le savoir-faire. Là, Tu t'aperçois que tu as une route vélo. La troisième roue, c'est la gestion administrative et financière. Là, c'était carrément une route caddie. Et puis là, la direction, le management, C'était une route patin à roulettes. Et donc, nous, Ce qu'on leur dit, c'est sur l'expertise technique, le savoir-faire, la production, On n'a pas grand-chose à apprendre. Même s'il y a quand même deux, trois petits trucs qui nous chatouillent, mais ce n'est pas là-dessus.
+
+Oui,
+
+il est arrivé ? C'est Brice, c'est ça C'est Brice, oui. Je l'ai mis dans le bureau. D'à côté, il est arrivé en tendance. Ok, d'accord. Écoute, tu me dis que j'arrive d'ici, je pense cinq, dix minutes, quoi? Je le fais pas perdre.
+
+Et donc, OK, du coup, effectivement...
+
+Et ça, c'est valable, quelle que soit l'entreprise. Et justement... Tu peux prendre en. photo, celui-là ?
+
+Oui, bien sûr. OK. Donc, quelle que soit l'entreprise, de toute façon,
+
+C'est une entreprise globale. Et là, en fait, Ce qu'on leur dit, c'est que quand la route est large, que tu as une grande route. Toute droite, si tu veux, Ce qui était leur cas il y a quelques années... Où ils étaient quasiment en situation de monopole avec des clients captifs, où ils pouvaient faire les prix qu'ils voulaient. Ça roule. Il dit, mais là, quand la route devient plus étroite, si tes quatre roues sont pas équilibrées, le premier platin, il est pour toi.
+
+Je comprends. D'accord. Ok, mais donc tu veux dire par là que, par rapport à la question que je posais, qui était, est-ce que la problématique, L'approche que vous avez, on pourrait l'utiliser sur d'autres projets ? Globalement, c'est qu'effectivement, de toute façon, Il y a à peu près les mêmes problématiques partout.
+
+Oui, partout. Et après, c'est des détails que les déséquilibres, on ne retrouve pas. C'est clair pour nous. Ils seront pas les mêmes, forcément. Mais c'est sûr que de toute façon, c'est déséquilibré.
+
+Finalement, L'objectif de vos missions, c'est de toujours équilibrer tout ça.
+
+Au mieux, des enjeux. Encore une fois, je te dis, si t'es sur des startups qui se gafent de subventions, de trucs et machins, ça roule. Mais jusqu'à quand ça va rouler ?
+
+D'accord, Ça va moins bien. Ben oui. Ok. Je vois bien. Bon, écoute, ça roule super. Donc, là, du coup, pour conclure là-dessus, Comment est-ce qu'on pourrait imaginer une deuxième étape Comment est-ce qu'on pourrait faire? Ça Ce qu'il faudrait, c'est que toi, tu... Là, moi, Je vais essayer de formaliser un petit peu, ça. Oui. Pour voir comment ça pourrait ressembler de manière très schématique. Moi, ce que je voudrais, c'est que l'on voit, tu vois, le... La valeur ajoutée que ça peut avoir pour le client. Pour le client final, et puis pour toi, en tant que créateur d'une IA verticale, d'une IA métier, avec le fait que toi, là, tu as un premier client, donc avec ce procès, sa problématique, demain, tu as un deuxième client, Dans quelle mesure on a fait là ? C'est utilisable, Et donc, quelle est la partie qu'il faut configurer pour pouvoir...
+
+Donc ça, c'est ce qu'on disait tout à l'heure, C'est le premier étage de ma fusée, c'est-à-dire comment est-ce que tout ce qu'on a fait là, on sait... Le remettre en branle pour un autre client, en gaspillant moins de temps que ce qu'on a.
+
+Oui, en optimisant. En capitalisant sur le temps passé.
+
+Et en industrialisant, entre guillemets, la production de documents, avoir, si tu veux, Une bibliothèque de documents standards, enfin standards, en tout cas de formes standards.
+
+Oui, qui permettent de faciliter tout ça. Voilà.
+
+Ça, c'est le premier étage de la fusée. Le deuxième étage de la fusée, c'est l'histoire de ma voiture à quatre roues. C'est qu'une fois que la voiture est sur la route, qu'on a fait un premier moulot d'équilibrage, Comment est-ce que, régulièrement, On fait le petit autodiagnostic qui va bien pour dire, Oh, là, J'ai une roue qui commence à se dégonfler. Est-ce que c'est grave ?
+
+D'accord. Pour être vraiment dans une démarche d'amélioration, à partager la vie de la boîte.
+
+Est-ce que c'est grave ? Même si un petit peu braquel, je vais bouffer un petit peu de gomme, mais ça va Ou là, vraiment, on va s'approcher
+
+La question, c'est de savoir également, par rapport au diagnostic où a été mis en évidence un déséquilibre lié à un des domaines qui est là, Et donc ça a orienté, peut-être quelque part. Vos questionnaires, vos évaluations. Pour la deuxième étape, où ça commence à s'équilibrer, finalement, La priorité vient plutôt sur un autre domaine. Et donc, est-ce que c'est d'autres questionnaires ? Et donc, toi, et de la même façon que tu disais tout à l'heure, vous n'êtes pas expert partout, mais donc, sur certains domaines, c'est plus facile, sur d'autres, Vous êtes un peu plus léger, et puis, après, vous connaissez mieux la boîte, Donc, du coup, ça devient un peu plus pertinent. Et donc, ça veut dire que, finalement, est-ce qu'il faut faire quatre études de déséquilibre bien différents pour identifier globalement, Avoir des questionnaires qui soient bien pertinents sur chacun des domaines ? Ça veut dire, est-ce qu'il faut mettre en place, est-ce que quelque part, un outil de création d'IA vertical, C'est un outil qui va vous permettre justement d'exprimer à chaque fois des particularités sur chacun des domaines, mais avec des outils communs qui sont des outils d'auto-évaluation, Quelque part, c'est toujours la même chose. Oui, oui, oui. Ce sera toujours un peu dans cette blague. Ok, ok, ok. Moi, ce que je serais curieux de savoir, C'est effectivement si on peut définir ce noyau fonctionnel. d'outils, aujourd'hui qui s'appelle Excel, Mais demain, tu auras un niveau un peu plus élevé. Qui est un questionnaire, où finalement, tu précises ton questionnaire, et après, ça te fait tout ce qu'on a vu, plus ou moins en automatique, et après, tu as tes propres outils. Et c'est là où ça serait intéressant de voir si on peut aller un peu plus loin. On peut se refaire un point dans quelques semaines ? Oui.
+
+Alors, la semaine prochaine est la suivante.

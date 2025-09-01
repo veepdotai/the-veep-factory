@@ -4,7 +4,7 @@ import { Constants } from "src/constants/Constants"
 import initAppJSLogs from './init-logs.js'
 import { pushState } from './utils-analytics.js';
 
-import defaultUserAppConfig from './default-user-app-config.json'
+import defaultUserAppConfig from 'src/config/default-user-app-config.json'
 
 export default function initVeepdotaiApp(setCookie, setDone) {
     const log = Logger.of(initVeepdotaiApp.name);

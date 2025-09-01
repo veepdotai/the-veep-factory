@@ -231,18 +231,28 @@ export default function SocialNetworkPreview({
 
             let i = Math.random()
             return (    
-                <ScrollArea className="h-100 w-100">
-                    <div className="flex justify-center flex-row gap-5">
-                        <SocialNetworkPreview key={`mpc-${i}-edit`} data={data} id={localId} viewType="LinkedIn" mode="edit" editorWithContent={editorWithContent} content={content}
-                            attachmentGenerationOptions={attachmentGenerationOptions}
-                            attachmentViewType={attachmentViewType}
-                            attachmentViewOptions={attachmentViewOptions} />
-                        <SocialNetworkPreview key={`mpc-${i}-preview`} data={data} id={localId} viewType="LinkedIn" mode="preview" content={content}
-                            attachmentGenerationOptions={attachmentGenerationOptions}
-                            attachmentViewType={attachmentViewType}
-                            attachmentViewOptions={attachmentViewOptions} />
-                    </div>
-                </ScrollArea>
+                <div className="w-full flex justify-center flex-row gap-2">
+                    <ScrollArea className={cn(
+                                    `lg:${guv("SocialNetworkPreview_DEFAULT_EDIT_WIDTH")}`,
+                                    `lg:${guv("SocialNetworkPreview_DEFAULT_EDIT_HEIGHT")}`
+                                )}>
+
+                            <SocialNetworkPreview key={`mpc-${i}-edit`} data={data} id={localId} viewType="LinkedIn" mode="edit" editorWithContent={editorWithContent} content={content}
+                                attachmentGenerationOptions={attachmentGenerationOptions}
+                                attachmentViewType={attachmentViewType}
+                                attachmentViewOptions={attachmentViewOptions} />
+                    </ScrollArea>
+                    <ScrollArea className={cn(
+                                    `lg:${guv("SocialNetworkPreview_DEFAULT_PREVIEW_WIDTH")}`,
+                                    `lg:${guv("SocialNetworkPreview_DEFAULT_PREVIEW_HEIGHT")}`
+                                )}>
+
+                            <SocialNetworkPreview key={`mpc-${i}-preview`} data={data} id={localId} viewType="LinkedIn" mode="preview" content={content}
+                                attachmentGenerationOptions={attachmentGenerationOptions}
+                                attachmentViewType={attachmentViewType}
+                                attachmentViewOptions={attachmentViewOptions} />
+                    </ScrollArea>
+                </div>
             )
         }
        
@@ -385,19 +395,29 @@ export default function SocialNetworkPreview({
         let truncatedContent = 
             <div id="rootLinkedinContent" className="mt-2 text-slate-800 text-xs">
                 <div id="linkedinContent">
-                    { ! condensedView && allLines?.map((line, i) => <p key={i} className="">{line}&nbsp;</p>)}
+                    { ! condensedView && allLines?.map((line, i) => {
+                        return (
+                            <p key={i} className="">
+                                {line}
+                                { i == allLines?.length - 1 &&
+                                    <a className="cursor-pointer hover:text-underline" onClick={(e) => {setCondensedView(true)}}>
+                                        <span className="text-slate-500">&nbsp;...{t("less")}</span>
+                                    </a>
+                                }
+                            </p>
+                    )})}
+
                     { condensedView && condensedLines?.map((line, i) => {
                         return (
                             <p key={i} className="">
                                 {line}
                                 { i == condensedLines?.length - 1 &&
                                     <a className="cursor-pointer hover:text-underline" onClick={(e) => {setCondensedView(false)}}>
-                                        <span className="text-slate-500">&nbsp;...more</span>
+                                        <span className="text-slate-500">&nbsp;...{t("more")}</span>
                                     </a>
                                 }
                             </p>
-                        )
-                    })}
+                    )})}
                 </div>
             </div>
 
@@ -428,7 +448,7 @@ export default function SocialNetworkPreview({
             </div>
 
         return (
-            <Card className={`w-[${getModeSize(mode)}px] h-full whitespace-break-spaces`}>
+            <Card className={cn(getModeSize(mode), "h-full whitespace-break-spaces")}>
                 <CardContent className='m-0 p-0'>
                     <ScrollArea className="w-100 h-full">
                         <div className="flex gap-2 m-2 float-right">
