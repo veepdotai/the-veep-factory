@@ -1,0 +1,188 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP LinkedIn Auto Publish\n"
+"POT-Creation-Date: 2017-06-01 22:47+1000\n"
+"PO-Revision-Date: 2017-06-01 23:04+1000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.7\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-WPHeader: wp-linkedin-auto-publish.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: inc/options-output.php:147
+msgid "Client ID"
+msgstr "ग्राहक ID"
+
+#: inc/options-output.php:162
+msgid "Client Secret"
+msgstr "क्लाइंट सीक्रेट"
+
+#: inc/options-output.php:181
+msgid "Get Authorisation Code and Access Token"
+msgstr "प्राधिकरण कोड और एक्सेस टोकन प्राप्त करें"
+
+#: inc/options-output.php:188
+msgid "Authorisation Code"
+msgstr "प्राधिकरण कोड"
+
+#: inc/options-output.php:213
+msgid "Access Token"
+msgstr "एक्सेस टोकन"
+
+#: inc/options-output.php:247 inc/options-page-wrapper.php:28
+msgid "Profile or Company"
+msgstr "प्रोफाइल या कंपनी"
+
+#: inc/options-output.php:253
+msgid "Profile"
+msgstr "प्रोफाइल"
+
+#: inc/options-output.php:254
+msgid "Company"
+msgstr "कंपनी"
+
+#: inc/options-output.php:268
+msgid "Company Select"
+msgstr "कंपनी का चयन करें"
+
+#: inc/options-output.php:328
+msgid "Share Method"
+msgstr "शेयर विधि"
+
+#: inc/options-output.php:329
+msgid ""
+"With the simple share method you can create a default or custom message "
+"below which should contain at least the post title and link. LinkedIn will "
+"then automatically select an image, image title and description for your "
+"post. The advanced option will use the title of the post for your image "
+"title, the excerpt as the description and your featured image as the image."
+msgstr ""
+"सरल साझा पद्धति के साथ आप एक डिफ़ॉल्ट या कस्टम संदेश बना सकते हैं जिसमें कम से कम पोस्ट का "
+"शीर्षक और लिंक होना चाहिए। लिंक्डइन स्वचालित रूप से आपके पोस्ट के लिए एक छवि, छवि "
+"शीर्षक और विवरण का चयन करेंगे। उन्नत विकल्प आपकी छवि शीर्षक के लिए पोस्ट का शीर्षक, "
+"चित्र के रूप में अंश और छवि के रूप में आपकी विशेषीकृत छवि का उपयोग करेगा।"
+
+#: inc/options-output.php:336
+msgid "Simple"
+msgstr "सरल"
+
+#: inc/options-output.php:337
+msgid "Advanced"
+msgstr "उन्नत"
+
+#: inc/options-output.php:351
+msgid "Default Share Message"
+msgstr "डिफ़ॉल्ट साझा संदेश"
+
+#: inc/options-output.php:373
+msgid "Don't Share Select Post Categories on LinkedIn"
+msgstr "साझा न करें LinkedIn पर पोस्ट श्रेणियां चुनें"
+
+#: inc/options-output.php:410
+msgid "Share the following: Posts, Pages and Custom Post Types"
+msgstr "निम्नलिखित को साझा करें: पोस्ट, पृष्ठ और कस्टम पोस्ट प्रकार"
+
+#: inc/options-output.php:464
+msgid "Hide Posts Column"
+msgstr "डाक कॉलम छुपाएं"
+
+#: inc/options-output.php:465
+msgid "On your"
+msgstr "तुम्हारे ऊपर"
+
+#: inc/options-output.php:465
+msgid "posts"
+msgstr "पदों"
+
+#: inc/options-output.php:465
+msgid ""
+"page by default there's a handy new column which shows which posts have been "
+"shared and which ones haven't. You can use this setting to hide this column."
+msgstr ""
+"पृष्ठ डिफ़ॉल्ट रूप से एक नया नया कॉलम दिखाता है जो बताता है कि किस पोस्ट को साझा किया "
+"गया है और कौन सा नहीं है आप इस कॉलम को छिपाने के लिए इस सेटिंग का उपयोग कर सकते हैं।"
+
+#: inc/options-page-wrapper.php:27
+msgid "Authorisation"
+msgstr "प्राधिकरण"
+
+#: inc/options-page-wrapper.php:29
+msgid "Sharing Options"
+msgstr "शेयरिंग विकल्प"
+
+#: inc/options-page-wrapper.php:30
+msgid "Additional Options"
+msgstr "अतिरिक्त विकल्प"
+
+#: inc/options-page-wrapper.php:31
+msgid "Help"
+msgstr "मदद"
+
+#: wp-linkedin-auto-publish.php:71
+msgid "Donate"
+msgstr "दान करना"
+
+#: wp-linkedin-auto-publish.php:72
+msgid "Support Forum"
+msgstr "सहयता मंच"
+
+#: wp-linkedin-auto-publish.php:86
+msgid "Settings"
+msgstr "सेटिंग्स"
+
+#: wp-linkedin-auto-publish.php:249
+msgid "Authorisation Instructions"
+msgstr "प्राधिकरण निर्देश"
+
+#: wp-linkedin-auto-publish.php:265
+msgid "Save All Settings"
+msgstr "सभी सेटिंग्स सहेजें"
+
+#: wp-linkedin-auto-publish.php:289
+msgid "WP LinkedIn Auto Publish Settings"
+msgstr ""
+
+#: wp-linkedin-auto-publish.php:316
+msgid "Custom Share Message:"
+msgstr "कस्टम साझा संदेश:"
+
+#: wp-linkedin-auto-publish.php:333
+msgid "Don't share this post"
+msgstr "इस पोस्ट को साझा न करें"
+
+#: wp-linkedin-auto-publish.php:345
+msgid "Share Now"
+msgstr "अब साझा करें"
+
+#: wp-linkedin-auto-publish.php:697
+msgid "Shared on LinkedIn"
+msgstr "लिंक्डइन पर साझा किया गया"
+
+#. Plugin Name of the plugin/theme
+msgid "WP LinkedIn Auto Publish"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+#. Author URI of the plugin/theme
+msgid "https://www.northernbeacheswebsites.com.au"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Publish your latest posts to LinkedIn profiles or companies automatically."
+msgstr "लिंक्डइन प्रोफाइल या कंपनियों को अपने नवीनतम पोस्ट प्रकाशित करें।"
+
+#. Author of the plugin/theme
+msgid "Martin Gibson"
+msgstr ""

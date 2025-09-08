@@ -713,7 +713,7 @@ class Veepdotai_Util {
 	 * For microsecodns supports.
 	 * 
 	 */
-	public static function date_create( $date ) {
+	public static function date_create( $date = null ) {
 		$dateObj = DateTime::createFromFormat('0.u00 U', microtime());
 		$dateObj->setTimeZone(new DateTimeZone('Europe/Paris'));
 
@@ -1269,7 +1269,8 @@ class Veepdotai_Util {
 			do_action( 'wonolog.log.' . $level, array( 'message' => $message ), $object );
 		}
 
-		// Veepdotai_Util::var_error_log($object);
+		Veepdotai_Util::var_error_log($message);
+		Veepdotai_Util::var_error_log($object);
 	}
 
 	public static function error_log( $msg, $object = null ) {

@@ -1,0 +1,17 @@
+#simple-jwt-login-export-import{
+  margin-top: 10px;
+}
+#simple-jwt-login-export-import h1 {
+    font-size: 1.3rem;
+    color: #0e0e0e;
+}
+.beta{
+    background: #dc3545;
+    color: #fff;
+    font-size:12px;
+    border:1px solid #880606;
+    padding: 2px 5px;
+    border-radius: 0.3em;
+    -webkit-border-radius: 0.3em;
+    -moz-border-radius: 0.3em;
+}

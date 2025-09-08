@@ -31,11 +31,12 @@ add_action( 'rtcamp.google_user_logged_in', ['Veepdotai_Login', 'veepdotai_trans
 add_action( 'rtcamp.google_user_created', ['Veepdotai_Login', 'veepdotai_transfer_auth_after_creation'], 10, 2 );
 add_filter( 'rtcamp.google_register_user', ['Veepdotai_Login', 'veepdotai_maybe_create_username'], 20, 1 );
 add_action( 'wp_login', ['Veepdotai_Login', 'veepdotai_login_redirect'] );
+add_filter( 'rtcamp.google_default_redirect', ['Veepdotai_Login', 'veepdotai_add_redirect'] );
 
 Class Veepdotai_Login {
 	public static function log( $level, $msg ) {
 		$root = "Veepdotai_Login";
-		//Veepdotai_Util::log( $level, $root . ' | ' . $msg);
+		Veepdotai_Util::log( $level, $root . ' | ' . $msg);
 	}
 
 	// It is called AFTER the user has been created so it is too late!!!
@@ -149,15 +150,26 @@ Class Veepdotai_Login {
 		}
 		return true;
 	}
-	
+
+	public static function veepdotai_add_redirect(): string {
+		$redirect_to = "https://www.veep.ai";
+		self::log( "debug", "debugging add_redirect(raw): $redirect_to" );
+		self::log( "debug", "debugging request_uri: " . print_r( $_SERVER['REQUEST_URI'], true ) );
+		self::log( "debug", "debugging add_redirect(end)." );
+
+		return $redirect_to;
+	}
+
 	public static function veepdotai_login_redirect(): void {
 		$fn = "veepdotai_login_redirect";
 		self::log( "debug", "$fn: entering..." );
+		self::log( "debug", "debugging _GET: " . print_r( $_GET, true ));
 
 		global $veepdotai_jwt;
 	
 		if ( class_exists('RtCamp\GoogleLogin\Utils\Helper') ) {
 			$state = Helper::filter_input( INPUT_GET, 'state', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+			self::log( "debug", "debugging state(raw): " . print_r( $state, true ));
 		}
 	
 //		if ( ! $state || ! $this->authenticated ) {
@@ -169,6 +181,7 @@ Class Veepdotai_Login {
 		}
 	
 		$state = base64_decode( $state );
+		self::log( "debug", "debugging state(base64): " . print_r( $state, true ));
 	
 		$state = $state ? json_decode( $state ) : null;
 	
@@ -177,6 +190,8 @@ Class Veepdotai_Login {
 			//redirect_to may be empty...
 			//but finally, everybody is redirected to home_url()/app/
 			$redirect_to = $state->redirect_to;
+			self::log( "debug", "redirect_to: " . $redirect_to );
+
 			$redirect_to = home_url() . "/v/app/";
 			$redirect_to = (strpos( $redirect_to, '?' ) === false
 								? $redirect_to . "?"

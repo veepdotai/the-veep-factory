@@ -73,7 +73,6 @@ function register_save_data() {
 			$user = wp_get_current_user();
 			log( "$fn: user: " . print_r( $user, true) . "." );
 	
-
 			/**
 			 * If cardinality is single then option nanme hasn't any suffixes like option-name
 			 * If mcardinality isn't single, then option name has a suffix like option-name-1, option-name-2, etc.
@@ -81,7 +80,7 @@ function register_save_data() {
 			$suffix = $object_id;
 			if (empty( $suffix ) && "single" !== $cardinality ) {
 				// if no id is provided, we must create one from date in ms
-				$suffix = \Veepdotai_Util::date_create();
+				$suffix = \Veepdotai_Util::date_create(null)->format('YmdHisv');
 			}
 			log( "$fn: suffix: " . $suffix );
 

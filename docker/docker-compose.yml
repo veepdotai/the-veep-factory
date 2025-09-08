@@ -1,0 +1,47 @@
+services:
+
+  db:
+    image: mariadb
+    container_name: "wordpress-db"
+    restart: unless-stopped
+    environment:
+      #MYSQL_RANDOM_ROOT_PASSWORD: '1'
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_USER: $MYSQL_USER
+      MYSQL_PASSWORD: $MYSQL_PASSWORD
+      MYSQL_DATABASE: $MYSQL_DATABASE
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./docker-db/volume-db:/var/lib/mysql
+      - ./docker-db/volume-root-bin:/root/bin
+      - ../../backups:/backups
+    networks:
+      - network
+
+  wordpress:
+    #image: wordpress
+    image: wordpress:php8.3
+    container_name: "wordpress"
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: $MYSQL_USER
+      WORDPRESS_DB_PASSWORD: $MYSQL_PASSWORD
+      WORDPRESS_DB_NAME: $MYSQL_DATABASE
+    volumes:
+      #- ./wordpress: /var/lib/html
+      - /etc/localtime:/etc/localtime:ro
+      - ../back-end/wordpress/htdocs:/var/www/html
+      - ../back-end/wordpress/plugins-third-party:/var/www/plugins-third-party
+      - ../back-end/wordpress/plugins:/var/www/plugins
+      - ../back-end/wordpress/data:/workspaces/data
+    depends_on:
+      - db
+    networks:
+      - network
+
+networks:
+  network:
+    driver: bridge

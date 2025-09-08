@@ -116,6 +116,8 @@ require plugin_dir_path(__FILE__) . 'plugins/veepdotai-metadata.php';
 require plugin_dir_path(__FILE__) . 'plugins/veepdotai-seo.php';
 require plugin_dir_path(__FILE__) . 'plugins/veepdotai-saas.php';
 require plugin_dir_path(__FILE__) . 'plugins/www-post-thumb.php';
+require plugin_dir_path(__FILE__) . 'plugins/orhanerday-openai/OpenAI.php';
+require plugin_dir_path(__FILE__) . 'plugins/orhanerday-openai/Url.php';
 
 /**
  * Begins execution of the plugin.
@@ -139,7 +141,7 @@ if (! defined('Inpsyde\Wonolog\LOG')) {
 }
 
 // Tell the default handler to use the given directory for logs.
-Wonolog\bootstrap();
+//Wonolog\bootstrap();
 
 function veepdotai_hook_javascript()
 {

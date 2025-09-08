@@ -133,6 +133,9 @@ class Generation_Process {
     public static function transcribe( $user, $_files, $pid, $chain_id, $input_text, $input_url ) {
         self::log_step_started2( $pid, "_TRANSCRIPTION_");   
 
+        self::log( __METHOD__ . ": input_text: " . $input_text );   
+        self::log( __METHOD__ . ": input_url: " . $input_url );
+
         if ( $input_text && $input_text != "") {
             self::log( __METHOD__ . ": an input text has been provided: " . $input_text);
 
