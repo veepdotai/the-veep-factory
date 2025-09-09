@@ -4,6 +4,4 @@ dist
 node_modules
 .local
 
-debug.log
-wonolog
-wp-content/uploads
+**/vendor

@@ -202,7 +202,9 @@ Class Veepdotai_Login {
 				$redirect_to = preg_replace("#(http.?)://([^/]*)/(.*)#", "$1://$2:3000/r?JWT=" . $veepdotai_jwt, $redirect_to);
 				self::log( "debug", "$fn: localhost: new redirect_to: " . $redirect_to);
 			} else {
+				self::log( "debug", "$fn: host: redirect_to: " . $redirect_to);
 				$redirect_to = preg_replace("#(http.?)://([^/]*)/(.*)#", "$1://$2/v/app/r?JWT=" . $veepdotai_jwt, $redirect_to);				
+				self::log( "debug", "$fn: host: new redirect_to: " . $redirect_to);
 			}
 			
 			if ( isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], "scope" ) !== -1 ) {

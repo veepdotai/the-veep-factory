@@ -20,10 +20,12 @@ export default function Redirect() {
     function initCookies(wls, setCookie, setDone) {
         /* Cookies management */
         let JWT = (new URLSearchParams(wls))?.get('JWT');
+        alert('JWT: ' + JWT)
         log.trace('JWT (in searchParams) before setting JWT cookie: '+ JWT);
         if (JWT) {
             // There is a JWT in the request. Store it in a cookie
             log.trace("App: connected with JWT param")
+            alert('setCookie: ' + JWT)
 
             // We reload the page to get rid of the JWT parameter which could be stolen to connect
             // on the behalf of the user. Ideally, this JWT should be a very short one (10s, 30s, 1 min max?).
@@ -36,8 +38,15 @@ export default function Redirect() {
     }
 
     useEffect(() => {
+        let url = window.location.protocol + '//' + window.location.host
+        let root = window.location.hostname == 'localhost' ? '' : window.location.pathname.replace(/\/r\/?\??.*/, "")
+        let appUrl = window.location.hostname == 'localhost'
+                        ? 'http://' + window.location.host 
+                        : url + root
+        
         if (done) {
-            window.location.href = Constants.APP_URL;
+            alert('APP_URL: ' + appUrl)
+            window.location.href = appUrl;
         }
     }, [done])
 

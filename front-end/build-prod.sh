@@ -40,7 +40,7 @@ Command line options:
     -b          Builds the client app
     -d          Deploys the client app on the remote target 
     -D  DIR     Deploys the provided client app on the remote target 
-    -s          Deploys the client app on the remote target
+    -s          Deploys the WP server plugins on the remote WP target
 
 Examples:
     Builds and deploys client app:
@@ -62,7 +62,7 @@ Examples:
     echo "OPTIONS: $OPTIONS"
     while getopts $OPTIONS option
     do
-        echo "$option option found."
+        echo "The $option option has been found."
         case $option in
             h)
                 echo "$COMMAND_LINE_OPTIONS_HELP"
@@ -87,7 +87,7 @@ Examples:
                 DEPLOYS_SERVER_MODULES="y"
                 ;;
             :)
-                echo "$OPTARG option required an argument"
+                echo "$OPTARG option requires an argument"
                 exit 1
                 ;;
             \?)
@@ -141,10 +141,12 @@ test_sshpass() {
 }
 
 init() {
-    APP_HOST="https://app.veep.ai"
+    APP_HOST="https://mytest.veep.ai"
+    #APP_HOST="https://app.veep.ai"
+    #APP_HOST="http://localhost"
     APP_DIR=$(echo "$APP_HOST" | sed "s,https\?://,,g")
 
-    ROOT_DIR="/workspaces/the-veep-factory"
+    ROOT_DIR="$GITPOD_REPO_ROOT"
     FRONT_DIR="$ROOT_DIR/front-end"
     BACK_DIR="$ROOT_DIR/back-end"
 
@@ -152,7 +154,7 @@ init() {
     SERVER_LOCAL_DIR="$SERVER_ROOT_DIR"
     mkdir -p "$SERVER_LOCAL_DIR"
 
-    SERVER_DIST_DIR="/vhosts/app.veep.ai/htdocs"
+    SERVER_DIST_DIR="/vhosts/$APP_DIR/htdocs"
 
     DIST_DIR="$FRONT_DIR/dist"
     APP_DEST_DIR="$FRONT_DIR/versions/$APP_DIR"
@@ -213,7 +215,7 @@ deploy_build() {
     echo "=> $USER@$HOST"
 
     sshpass -f $TOK_FILE sftp -oStrictHostKeyChecking=no -oBatchMode=no -b - "$USER@$HOST" << !
-cd /vhosts/app.veep.ai/htdocs/v
+cd /vhosts/$APP_DIR/htdocs/v
 mput -r "$APP_DEST_DIR/$TAG"
 bye
 !

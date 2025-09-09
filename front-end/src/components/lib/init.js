@@ -16,18 +16,24 @@ export default function initVeepdotaiApp(setCookie, setDone) {
      */
     function initConstants(window) {
         if (Constants.WORDPRESS_URL == null) {
-            Constants.WORDPRESS_URL = window.location.protocol + '//' + window.location.host;
+            Constants.WORDPRESS_URL = window.location.protocol + '//' + window.location.host
         }
+        alert("initConstants: Constants.WORDPRESS_URL: " + Constants.WORDPRESS_URL);
 
         if (Constants.ROOT == null) {
-            Constants.ROOT = window.location.hostname == 'localhost' ? '': '/app';
+            Constants.ROOT = window.location.hostname == 'localhost' ? '': window.location.pathname
         }
+        alert("initConstants: Constants.ROOT: " + Constants.ROOT);
 
         if (Constants.APP_URL == null) {
-            Constants.APP_URL = window.location.hostname == 'localhost' ?
-                                    'http://localhost:3000' :
-                                    Constants.WORDPRESS_URL + Constants.ROOT;
+            if (window.location.hostname == 'localhost') {
+                Constants.APP_URL = 'http://' + window.location.host // host includes port number 
+            } else {
+                Constants.APP_URL = Constants.WORDPRESS_URL + Constants.ROOT;
+            } 
         }
+        alert("initConstants: Constants.APP_URL: " + Constants.APP_URL);
+
         log.trace("initConstants: Constants.ROOT: " + Constants.ROOT + " / " + window.location.hostname);
 
         if (Constants.WORDPRESS_REST_URL == null) {
@@ -152,10 +158,10 @@ export default function initVeepdotaiApp(setCookie, setDone) {
         };
     }
 
+    initAppJSLogs(Constants.PRODUCTION ? 'TRACE': 'TRACE');
     initAnalytics(Constants.ANALYTICS_JS_CONTAINER);
     initCookies(window.location.search, setCookie, setDone);
     initListeners(window);
     //initAppJSLogs(Constants.PRODUCTION ? 'NONE': 'NONE');
-    initAppJSLogs(Constants.PRODUCTION ? 'TRACE': 'TRACE');
     initConstants(window);
 }
