@@ -116,7 +116,7 @@ require plugin_dir_path(__FILE__) . 'plugins/veepdotai-metadata.php';
 require plugin_dir_path(__FILE__) . 'plugins/veepdotai-seo.php';
 require plugin_dir_path(__FILE__) . 'plugins/veepdotai-saas.php';
 require plugin_dir_path(__FILE__) . 'plugins/www-post-thumb.php';
-require plugin_dir_path(__FILE__) . 'plugins/orhanerday-openai/OpenAI.php';
+require plugin_dir_path(__FILE__) . 'plugins/orhanerday-openai/OpenAi.php';
 require plugin_dir_path(__FILE__) . 'plugins/orhanerday-openai/Url.php';
 
 /**

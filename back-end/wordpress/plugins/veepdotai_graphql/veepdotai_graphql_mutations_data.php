@@ -70,7 +70,7 @@ function register_save_data() {
 
 			log( "$fn: old_name: " . $old_name );
 	
-			$user = wp_get_current_user();
+			$user = wp_get_current_user()->ID;
 			log( "$fn: user: " . print_r( $user, true) . "." );
 	
 			/**
@@ -93,7 +93,8 @@ function register_save_data() {
 			/* Manage cardinality */
 			global $wpdb;
 
-			$my_option_name = "jckermagoret-veepdotai-form-Upload";
+			//$my_option_name = "jckermagoret-veepdotai-form-Upload";
+			$my_option_name = "${user}-veepdotai-form-Upload";
 			$vars = [
 				$wpdb->esc_like( $my_option_name ) . '%'
 			];

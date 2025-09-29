@@ -111,6 +111,7 @@ function register_Vcontent() {
 		'graphql_plural_name' => 'vcontents',
 		'supports' => array( "title", "editor", "author"), // NodeWithTitle, NodeWithContentEditor, NodeWithAuthor
 		'graphql_interfaces' => ['Icontent'],
+		'exclude_from_search' => false,
 		'taxonomies'  => [ 'category', 'post_tag' ],
 		'resolveType' => function( $node ) {
 			return get_post_type_object( $node->post_type )->graphql_single_name ?: 'Vcontent';

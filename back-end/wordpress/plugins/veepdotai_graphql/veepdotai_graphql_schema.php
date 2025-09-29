@@ -32,3 +32,18 @@ function add_hierarchy_support($args, $post_type){
 
   return $args;
 }
+
+// Register facet for Posts
+add_action( 'graphql_facetwp_init', function () {
+  register_graphql_facet_type( 'vcontent' );
+  register_graphql_facet_type( 'post' );
+} );
+
+add_filter( 'facetwp_indexer_query_args', function( $args ) {
+  $args['post_status'] = [ 'publish', 'draft' ];
+  return $args;
+});
+
+add_filter( 'facetwp_api_can_access', function( $boolean ) {
+  return current_user_can( 'manage_options' );
+});
