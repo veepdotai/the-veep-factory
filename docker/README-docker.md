@@ -36,7 +36,7 @@ What is the minimum configuration for each part and respecting our minimal secur
 
 To init the backend configurations, db must be provided without any user information and any service keys (for example for AI engines access)
 
-This is the first element to configure. Without it, WP can't work.
+Database is the first element to configure. Without it, WP can't work.
 
 The database must be created and configured with a specific user and password. Even in dev mode, some AI keys are required to access AI services and they must be restricted and hidden.
 
@@ -54,9 +54,8 @@ The following elements must be added:
 
 The following elements must be configured:
 
-* a demo user named demo (is demo@veep.ai required?)
+* a demo user named demo (is demo@veep.ai required?) that will be used as the veep demo user
 * some keys for external services (OpenAI, mistral)
-* some information about the WP user that will be used as the veep demo user
 * some veeplets configured for demo user
 
 To make things smoother, we can provide a db template with the required minimum configuration, with standard passwords for root and demo users with the risk to have some ready-to-be-hacked installations. Standard passwords must be updated to mitigate risks and no AI keys must be provided.
@@ -85,6 +84,13 @@ Once done, you can:
 * restore data
 
 These scripts will be available in the directory /root/bin du container. Un fichier environnement .env sera présent dans ce répertoire avec les permissions 400.
+
+Update user rights to access database from WP through network (You can replace '%' by a specific IP address):
+
+```sql
+alter user 'root'@'%' identified by 'XXX';
+flush privileges;
+```
 
 #### Fichier .env
 

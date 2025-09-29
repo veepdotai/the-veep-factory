@@ -137,11 +137,23 @@ class MetaQuery {
 	 * @throws \Exception
 	 */
 	public function add_input_fields( $fields, $type_name, $config, $type_registry ) {
+		
+		//error_log( "Add input field: config: " . print_r( $config, true ) . "\n", 3, "/tmp/wp-graphql-facet.log" );
+		//error_log( "Add input field: typename: " . print_r( $type_name, true ) . "\n", 3, "/tmp/wp-graphql-facet.log" );
+		// recursion => error !! error_log( "Add input field: type_registry: " . print_r( $type_registry, true ) . "\n", 3, "/tmp/wp-graphql-facet.log" );
+
 		if ( isset( $config['queryClass'] ) && 'WP_Query' === $config['queryClass'] ) {
 			$this->register_types( $type_name, $type_registry );
 			$fields['metaQuery'] = [
 				'type' => $type_name . 'MetaQuery',
 			];
+		} else if ( isset( $config['name'] ) && preg_match( "/.*Facet.*Connection.*WhereArgs/", $config['name'] ) ) {
+			//error_log( "Add input field: typename: " . print_r( $type_name, true ) . "\n", 3, "/tmp/wp-graphql-facet.log" );
+			//error_log( "Add input fields: fields: " . print_r( $fields, true ) . "\n", 3, "/tmp/wp-graphql-facet.log" );
+			//$this->register_types( $type_name, $type_registry );
+			//$fields['metaQuery'] = [
+			//	'type' => $type_name . 'MetaQuery',
+			//];
 		}
 
 		return $fields;

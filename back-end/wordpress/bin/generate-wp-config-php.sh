@@ -26,8 +26,9 @@ v_wp_config_start() {
 	# we use quotes because we don't variable interpolations
 	echo 'error_log("SERVER_NAME: " . $_SERVER["SERVER_NAME"] . "\n", 3, "/tmp/test.log");'
 	echo 'error_log("HOST_NAME: " . $_SERVER["HOST_NAME"] . "\n", 3, "/tmp/test.log");'
-
-	echo 'if ( in_array( $_SERVER['SERVER_NAME'], ["mytest.veep.ai", "localhost"] ) ) {'
+	echo
+	
+	echo 'if ( in_array( $_SERVER["SERVER_NAME"], ["mytest.veep.ai", "localhost"] ) ) {'
 	echo '	$protocol = isset( $_SERVER["HTTPS"] ) && $_SERVER["HTTPS"] == "on" ? "https" : "http";'
 	echo '	define( "WP_SITEURL", $protocol . "://" . $_SERVER["SERVER_NAME"] . "" );'
 	echo '	define( "WP_HOME", $protocol . "://" . $_SERVER["SERVER_NAME"] . "" );'
@@ -35,6 +36,7 @@ v_wp_config_start() {
 	echo '	header("HTTP/1.1 501 Not Implemented");'
 	echo '	exit;'
 	echo '}'
+	echo
 }
 
 v_wp_config_end() {
