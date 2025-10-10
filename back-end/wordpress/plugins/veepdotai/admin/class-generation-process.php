@@ -14,9 +14,10 @@ add_action( 'my_veepdotai', 'Generation_Process::process_content', 1, 3 );
 
 class Generation_Process {
 
-    public static function log( $msg, $level = 3, $filename = "/tmp/openai.log") {
-        //error_log( $msg . "\n", $level, $filename );
+    public static function log( $msg, $level = 3, $filename = "/tmp/wordpress.log") {
         Veepdotai_Util::log( "debug", $msg );
+        //$date = gettimeofday(true);
+        //error_log( "$date $msg" . "\n", $level, $filename );
     }
 
     public static function error_log( $msg, $level = 3, $filename = "/tmp/openai.log") {
@@ -514,11 +515,6 @@ class Generation_Process {
         //$prompt = preg_replace("/(\{\{inspiration\}\})/", "$inspiration", $_prompt);
         //$prompt = preg_replace("/(\{\{NOW\}\})/", date_format( date_create(), 'Y-m-d\TH:i:s' ), $prompt);
 
-        $m = new Mustache_Engine(array('entity_flags' => ENT_QUOTES));
-        $prompt = $m->render( $_prompt, $context );
-
-        self::log( __METHOD__ . ": prompt substitutions (inspiration + NOW + context.*): $prompt");
-
         // Gets all the output elements to get their content to replace  
         $chain_input = $veeplet['prompts']['chain'];
         $chain = Veepdotai_Util::get_chain( $chain_input );
@@ -527,6 +523,7 @@ class Generation_Process {
                 
         $done = false;
         
+        $previous_results = [];
         // Replaces each part corresponding to the previoulsy computed elements
         //for($i = 0; $i < $max && ! $done; $i++) {
         for( $i = 0; $i < $current_step && $i < count( $chain ) && ! $done; $i++ ) {
@@ -541,19 +538,27 @@ class Generation_Process {
             if ( $phase ) {
                 self::log( __METHOD__ . ": intermediary results: $label/$label_encoded/$phase");
     
-                $prompt = preg_replace("/(\{\{$label\}\})/", "$phase", $prompt);
+                $previous_results["$label"] = $phase; 
                 self::log( __METHOD__ . ": prompt: $prompt.");    
             } else {
                 $done = true;
             }
         }
 
+        // Replace {{variables}}
+        $context = array_merge( $context, $previous_results );
+        self::log( __METHOD__ . " Context: " . print_r( $context, true ) );
+        $m = new Mustache_Engine(array('entity_flags' => ENT_QUOTES));
+        $prompt = $m->render( $_prompt, $context );
+
+        self::log( __METHOD__ . ": prompt substitutions (inspiration + NOW + context.*): $prompt");
+
         $label = $chain[$current_step];
         $label_encoded = Veepdotai_Util::encode_prompt_id( $label );
         $phase_name = "ai-section-edcal1-phase${label_encoded}";
         $phase = Veepdotai_Util::get_option( $phase_name );
 
-        self::log( __METHOD__ . ": option name: ai-section-edcal1-phase${label_encoded}.");    
+        self::log( __METHOD__ . ": option name: ai-section-edcal1-phase${label_encoded}: ${prompt}");    
         Veepdotai_Util::set_option( "ai-section-edcal1-phase${label_encoded}", $prompt );
 
         return $prompt;
