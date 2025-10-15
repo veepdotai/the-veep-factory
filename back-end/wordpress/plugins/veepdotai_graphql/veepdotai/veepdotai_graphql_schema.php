@@ -1,6 +1,6 @@
 <?php
 
-namespace schema_old;
+namespace Veepdotai\Graphql\Schema;
 
 //define( "MAXITEMS_TO_REGISTER_IN_GRAPHQL", 50 ); // 100?
 
@@ -8,6 +8,10 @@ namespace schema_old;
 //add_action( 'init', function() {
 //	register_veepdotai_old_schema();
 //});
+
+add_action( 'init', function() {
+	\Veepdotai\Graphql\Schema\register_schema();
+});
 
 function veepdotai_graphql_register_types( $meta_attr_name, $desc, $meta_attr_default = "", $post_type = "Post", $meta_attr_type = "String" ) {
 	register_graphql_field(
@@ -32,8 +36,8 @@ function register_schema() {
 function register_schema_current() {
 	register_IContent();
 	register_VContent();
-	register_SystemMetadataFields('Vcontent');
-	register_MetadataFields('Vcontent');
+	register_SystemMetadataFields('Icontent');
+	register_MetadataFields('Icontent');
 	register_Taxonomies();
 }
 
