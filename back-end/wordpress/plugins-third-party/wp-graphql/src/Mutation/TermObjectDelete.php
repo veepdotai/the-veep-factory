@@ -47,8 +47,10 @@ class TermObjectDelete {
 				'type'        => [
 					'non_null' => 'ID',
 				],
-				// translators: The placeholder is the name of the taxonomy for the term being deleted
-				'description' => sprintf( __( 'The ID of the %1$s to delete', 'wp-graphql' ), $taxonomy->graphql_single_name ),
+				'description' => static function () use ( $taxonomy ) {
+					// translators: The placeholder is the name of the taxonomy for the term being deleted
+					return sprintf( __( 'The ID of the %1$s to delete', 'wp-graphql' ), $taxonomy->graphql_single_name );
+				},
 			],
 		];
 	}
@@ -64,7 +66,9 @@ class TermObjectDelete {
 		return [
 			'deletedId'                    => [
 				'type'        => 'ID',
-				'description' => __( 'The ID of the deleted object', 'wp-graphql' ),
+				'description' => static function () {
+					return __( 'The ID of the deleted object', 'wp-graphql' );
+				},
 				'resolve'     => static function ( $payload ) {
 					$deleted = (object) $payload['termObject'];
 
@@ -73,7 +77,9 @@ class TermObjectDelete {
 			],
 			$taxonomy->graphql_single_name => [
 				'type'        => $taxonomy->graphql_single_name,
-				'description' => __( 'The deleted term object', 'wp-graphql' ),
+				'description' => static function () {
+					return __( 'The deleted term object', 'wp-graphql' );
+				},
 				'resolve'     => static function ( $payload ) {
 					return new Term( $payload['termObject'] );
 				},
@@ -87,7 +93,7 @@ class TermObjectDelete {
 	 * @param \WP_Taxonomy $taxonomy The taxonomy type of the mutation.
 	 * @param string       $mutation_name The name of the mutation.
 	 *
-	 * @return callable
+	 * @return callable(array<string,mixed>$input,\WPGraphQL\AppContext $context,\GraphQL\Type\Definition\ResolveInfo $info):array<string,mixed>
 	 */
 	public static function mutate_and_get_payload( WP_Taxonomy $taxonomy, string $mutation_name ) {
 		return static function ( $input ) use ( $taxonomy ) {

@@ -41,8 +41,10 @@ class MediaItemUpdate {
 					'type'        => [
 						'non_null' => 'ID',
 					],
-					// translators: the placeholder is the name of the type of post object being updated
-					'description' => sprintf( __( 'The ID of the %1$s object', 'wp-graphql' ), $post_type_object->graphql_single_name ),
+					'description' => static function () use ( $post_type_object ) {
+						// translators: the placeholder is the name of the type of post object being updated
+						return sprintf( __( 'The ID of the %1$s object', 'wp-graphql' ), $post_type_object->graphql_single_name );
+					},
 				],
 			]
 		);
@@ -60,14 +62,14 @@ class MediaItemUpdate {
 	/**
 	 * Defines the mutation data modification closure.
 	 *
-	 * @return callable
+	 * @return callable(array<string,mixed>$input,\WPGraphQL\AppContext $context,\GraphQL\Type\Definition\ResolveInfo $info):array<string,mixed>
 	 */
 	public static function mutate_and_get_payload() {
 		return static function ( $input, AppContext $context, ResolveInfo $info ) {
 			$post_type_object = get_post_type_object( 'attachment' );
 
 			if ( empty( $post_type_object ) ) {
-				return null;
+				return [];
 			}
 
 			// Get the database ID for the comment.

@@ -22,6 +22,11 @@ class NodeResolver {
 	protected $context;
 
 	/**
+	 * @var string
+	 */
+	protected $route;
+
+	/**
 	 * NodeResolver constructor.
 	 *
 	 * @param \WPGraphQL\AppContext $context
@@ -31,7 +36,8 @@ class NodeResolver {
 	public function __construct( AppContext $context ) {
 		global $wp;
 		$this->wp               = $wp;
-		$this->wp->matched_rule = Router::$route . '/?$';
+		$this->route            = Router::$route . '/?$';
+		$this->wp->matched_rule = $this->route;
 		$this->context          = $context;
 	}
 
@@ -50,22 +56,6 @@ class NodeResolver {
 		if ( ! $this->is_valid_node_type( 'ContentNode' ) ) {
 			return null;
 		}
-
-		/**
-		 * Disabling the following code for now, since add_rewrite_uri() would cause a request to direct to a different valid permalink.
-		 */
-		/* phpcs:disable
-		if ( ! isset( $this->wp->query_vars['uri'] ) ) {
-			return $post;
-		}
-		$permalink    = get_permalink( $post );
-		$parsed_path  = $permalink ? wp_parse_url( $permalink, PHP_URL_PATH ) : null;
-		$trimmed_path = $parsed_path ? rtrim( ltrim( $parsed_path, '/' ), '/' ) : null;
-		$uri_path     = rtrim( ltrim( $this->wp->query_vars['uri'], '/' ), '/' );
-		if ( $trimmed_path !== $uri_path ) {
-			return null;
-		}
-		phpcs:enable */
 
 		if ( empty( $this->wp->query_vars['uri'] ) ) {
 			return $post;
@@ -122,12 +112,22 @@ class NodeResolver {
 		 * @param string $uri The uri being searched.
 		 * @param \WPGraphQL\AppContext $content The app context.
 		 * @param \WP $wp WP object.
-		 * @param mixed|array<string,mixed>|string $extra_query_vars Any extra query vars to consider.
+		 * @param array<string,mixed>|string $extra_query_vars Any extra query vars to consider.
 		 */
 		$node = apply_filters( 'graphql_pre_resolve_uri', null, $uri, $this->context, $this->wp, $extra_query_vars );
 
 		if ( ! empty( $node ) ) {
 			return $node;
+		}
+
+		/**
+		 * Comments are embedded as a #comment-{$id} in the post's content.
+		 *
+		 * If the URI is for a comment, we can resolve it now.
+		 */
+		$comment_id = $this->maybe_parse_comment_uri( $uri );
+		if ( null !== $comment_id ) {
+			return $this->context->get_loader( 'comment' )->load_deferred( $comment_id );
 		}
 
 		/**
@@ -155,11 +155,11 @@ class NodeResolver {
 		 *
 		 * This can be used by Extensions which use a different query class to resolve data.
 		 *
-		 * @param class-string          $query_class The query class used to resolve the URI. Defaults to WP_Query.
-		 * @param ?string               $uri The uri being searched.
-		 * @param \WPGraphQL\AppContext $content The app context.
-		 * @param \WP                   $wp WP object.
-		 * @param mixed|array|string    $extra_query_vars Any extra query vars to consider.
+		 * @param class-string               $query_class The query class used to resolve the URI. Defaults to WP_Query.
+		 * @param ?string                    $uri The uri being searched.
+		 * @param \WPGraphQL\AppContext      $content The app context.
+		 * @param \WP                        $wp WP object.
+		 * @param array<string,mixed>|string $extra_query_vars Any extra query vars to consider.
 		 */
 		$query_class = apply_filters( 'graphql_resolve_uri_query_class', 'WP_Query', $uri, $this->context, $this->wp, $extra_query_vars );
 
@@ -202,7 +202,7 @@ class NodeResolver {
 		 * @param \WP_Query                                     $query            The query object.
 		 * @param \WPGraphQL\AppContext                         $content          The app context.
 		 * @param \WP                                           $wp               WP object.
-		 * @param mixed|array|string                            $extra_query_vars Any extra query vars to consider.
+		 * @param array<string,mixed>|string                    $extra_query_vars Any extra query vars to consider.
 		 */
 		$node = apply_filters( 'graphql_resolve_uri', null, $uri, $queried_object, $query, $this->context, $this->wp, $extra_query_vars );
 
@@ -212,6 +212,7 @@ class NodeResolver {
 
 		// Resolve Post Objects.
 		if ( $queried_object instanceof WP_Post ) {
+
 			// If Page for Posts is set, we need to return the Page archive, not the page.
 			if ( $query->is_posts_page ) {
 				// If were intentionally querying for a something other than a ContentType, we need to return null instead of the archive.
@@ -230,6 +231,10 @@ class NodeResolver {
 
 			// Validate the post before returning it.
 			if ( ! $this->validate_post( $queried_object ) ) {
+				return null;
+			}
+
+			if ( empty( $extra_query_vars ) && isset( $this->wp->query_vars['error'] ) && '404' === $this->wp->query_vars['error'] ) {
 				return null;
 			}
 
@@ -271,8 +276,6 @@ class NodeResolver {
 				return null;
 			}
 
-
-
 			return ! empty( $queried_object->name ) ? $this->context->get_loader( 'post_type' )->load_deferred( $queried_object->name ) : null;
 		}
 
@@ -297,7 +300,7 @@ class NodeResolver {
 		 * @param \WP_Query                                     $query            The query object.
 		 * @param \WPGraphQL\AppContext                         $content          The app context.
 		 * @param \WP                                           $wp               WP object.
-		 * @param mixed|array|string                            $extra_query_vars Any extra query vars to consider.
+		 * @param array<string,mixed>|string                    $extra_query_vars Any extra query vars to consider.
 		 */
 		return apply_filters( 'graphql_post_resolve_uri', $node, $uri, $queried_object, $query, $this->context, $this->wp, $extra_query_vars );
 	}
@@ -379,7 +382,6 @@ class NodeResolver {
 		$this->wp->query_vars['uri'] = $uri;
 
 		// Process PATH_INFO, REQUEST_URI, and 404 for permalinks.
-
 
 		// Fetch the rewrite rules.
 		$rewrite = $wp_rewrite->wp_rewrite_rules();
@@ -478,7 +480,7 @@ class NodeResolver {
 				}
 			}
 
-			if ( ! empty( $this->wp->matched_rule ) ) {
+			if ( ! empty( $this->wp->matched_rule ) && $this->wp->matched_rule !== $this->route ) {
 				// Trim the query of everything up to the '?'.
 				$query = preg_replace( '!^.+\?!', '', $query );
 
@@ -584,7 +586,6 @@ class NodeResolver {
 			$this->wp->query_vars['error'] = $error;
 		}
 
-
 		// if the parsed url is ONLY a query, unset the pagename query var
 		if ( isset( $this->wp->query_vars['pagename'], $parsed_url['query'] ) && ( $parsed_url['query'] === $this->wp->query_vars['pagename'] ) ) {
 			unset( $this->wp->query_vars['pagename'] );
@@ -593,7 +594,7 @@ class NodeResolver {
 		/**
 		 * Filters the array of parsed query variables.
 		 *
-		 * @param array $query_vars The array of requested query variables.
+		 * @param array<string,mixed> $query_vars The array of requested query variables.
 		 *
 		 * @since 2.1.0
 		 */
@@ -645,5 +646,21 @@ class NodeResolver {
 
 		// We dont have an 'Archive' type, so we resolve to the ContentType.
 		return $this->context->get_loader( 'post_type' )->load_deferred( 'post' );
+	}
+
+	/**
+	 * Checks if the URI is a comment URI and, if so, returns the comment ID.
+	 *
+	 * @param string $uri The URI to check.
+	 */
+	protected function maybe_parse_comment_uri( string $uri ): ?int {
+		$comment_match = [];
+		// look for a #comment-{$id} anywhere in the uri.
+		if ( preg_match( '/#comment-(\d+)/', $uri, $comment_match ) ) {
+			$comment_id = absint( $comment_match[1] );
+			return ! empty( $comment_id ) ? $comment_id : null;
+		}
+
+		return null;
 	}
 }

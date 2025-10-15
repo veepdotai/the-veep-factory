@@ -29,8 +29,10 @@ class TermObjectCreate {
 							'type'        => [
 								'non_null' => 'String',
 							],
-							// translators: The placeholder is the name of the taxonomy for the object being mutated
-							'description' => sprintf( __( 'The name of the %1$s object to mutate', 'wp-graphql' ), $taxonomy->name ),
+							'description' => static function () use ( $taxonomy ) {
+								// translators: The placeholder is the name of the taxonomy for the object being mutated
+								return sprintf( __( 'The name of the %1$s object to mutate', 'wp-graphql' ), $taxonomy->name );
+							},
 						],
 					]
 				),
@@ -51,17 +53,24 @@ class TermObjectCreate {
 		$fields = [
 			'aliasOf'     => [
 				'type'        => 'String',
-				// translators: The placeholder is the name of the taxonomy for the object being mutated
-				'description' => sprintf( __( 'The slug that the %1$s will be an alias of', 'wp-graphql' ), $taxonomy->name ),
+				'description' => static function () use ( $taxonomy ) {
+					// translators: The placeholder is the name of the taxonomy for the object being mutated
+					return sprintf( __( 'The slug that the %1$s will be an alias of', 'wp-graphql' ), $taxonomy->name );
+				},
 			],
 			'description' => [
 				'type'        => 'String',
-				// translators: The placeholder is the name of the taxonomy for the object being mutated
-				'description' => sprintf( __( 'The description of the %1$s object', 'wp-graphql' ), $taxonomy->name ),
+				'description' => static function () use ( $taxonomy ) {
+					// translators: The placeholder is the name of the taxonomy for the object being mutated
+					return sprintf( __( 'The description of the %1$s object', 'wp-graphql' ), $taxonomy->name );
+				},
 			],
 			'slug'        => [
 				'type'        => 'String',
-				'description' => __( 'If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name.', 'wp-graphql' ),
+				'description' => static function () use ( $taxonomy ) {
+					// translators: The placeholder is the name of the taxonomy for the object being mutated
+					return sprintf( __( 'If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name.', 'wp-graphql' ), $taxonomy->name );
+				},
 			],
 		];
 
@@ -69,10 +78,19 @@ class TermObjectCreate {
 		 * Add a parentId field to hierarchical taxonomies to allow parents to be set
 		 */
 		if ( true === $taxonomy->hierarchical ) {
-			$fields['parentId'] = [
+			$fields['parentId']         = [
 				'type'        => 'ID',
-				// translators: The placeholder is the name of the taxonomy for the object being mutated
-				'description' => sprintf( __( 'The ID of the %1$s that should be set as the parent', 'wp-graphql' ), $taxonomy->name ),
+				'description' => static function () use ( $taxonomy ) {
+					// translators: The placeholder is the name of the taxonomy for the object being mutated
+					return sprintf( __( 'The ID of the %1$s that should be set as the parent. This field cannot be used in conjunction with parentDatabaseId', 'wp-graphql' ), $taxonomy->name );
+				},
+			];
+			$fields['parentDatabaseId'] = [
+				'type'        => 'Int',
+				'description' => static function () use ( $taxonomy ) {
+					// translators: The placeholder is the name of the taxonomy for the object being mutated
+					return sprintf( __( 'The database ID of the %1$s that should be set as the parent. This field cannot be used in conjunction with parentId', 'wp-graphql' ), $taxonomy->name );
+				},
 			];
 		}
 
@@ -90,8 +108,10 @@ class TermObjectCreate {
 		return [
 			$taxonomy->graphql_single_name => [
 				'type'        => $taxonomy->graphql_single_name,
-				// translators: Placeholder is the name of the taxonomy
-				'description' => sprintf( __( 'The created %s', 'wp-graphql' ), $taxonomy->name ),
+				'description' => static function () use ( $taxonomy ) {
+					// translators: Placeholder is the name of the taxonomy
+					return sprintf( __( 'The created %s', 'wp-graphql' ), $taxonomy->name );
+				},
 				'resolve'     => static function ( $payload, $_args, AppContext $context ) {
 					$id = isset( $payload['termId'] ) ? absint( $payload['termId'] ) : null;
 
@@ -107,7 +127,7 @@ class TermObjectCreate {
 	 * @param \WP_Taxonomy $taxonomy The taxonomy type of the mutation.
 	 * @param string       $mutation_name The name of the mutation.
 	 *
-	 * @return callable
+	 * @return callable(array<string,mixed>$input,\WPGraphQL\AppContext $context,\GraphQL\Type\Definition\ResolveInfo $info):array<string,mixed>
 	 */
 	public static function mutate_and_get_payload( WP_Taxonomy $taxonomy, string $mutation_name ) {
 		return static function ( $input, AppContext $context, ResolveInfo $info ) use ( $taxonomy, $mutation_name ) {
@@ -167,12 +187,12 @@ class TermObjectCreate {
 			/**
 			 * Fires after a single term is created or updated via a GraphQL mutation
 			 *
-			 * @param int         $term_id       Inserted term object
-			 * @param \WP_Taxonomy $taxonomy The taxonomy of the term being updated
-			 * @param array       $args          The args used to insert the term
-			 * @param string      $mutation_name The name of the mutation being performed
-			 * @param \WPGraphQL\AppContext $context The AppContext passed down the resolve tree
-			 * @param \GraphQL\Type\Definition\ResolveInfo $info The ResolveInfo passed down the resolve tree
+			 * @param int                                  $term_id       Inserted term object
+			 * @param \WP_Taxonomy                         $taxonomy      The taxonomy of the term being updated
+			 * @param array<string,mixed>                  $args          The args used to insert the term
+			 * @param string                               $mutation_name The name of the mutation being performed
+			 * @param \WPGraphQL\AppContext                $context       The AppContext passed down the resolve tree
+			 * @param \GraphQL\Type\Definition\ResolveInfo $info          The ResolveInfo passed down the resolve tree
 			 */
 			do_action( 'graphql_insert_term', $term['term_id'], $taxonomy, $args, $mutation_name, $context, $info );
 
@@ -181,11 +201,11 @@ class TermObjectCreate {
 			 *
 			 * The dynamic portion of the hook name, `$taxonomy->name` refers to the taxonomy of the term being mutated
 			 *
-			 * @param int         $term_id       Inserted term object
-			 * @param array       $args          The args used to insert the term
-			 * @param string      $mutation_name The name of the mutation being performed
-			 * @param \WPGraphQL\AppContext $context The AppContext passed down the resolve tree
-			 * @param \GraphQL\Type\Definition\ResolveInfo $info The ResolveInfo passed down the resolve tree
+			 * @param int                                  $term_id       Inserted term object
+			 * @param array<string,mixed>                  $args          The args used to insert the term
+			 * @param string                               $mutation_name The name of the mutation being performed
+			 * @param \WPGraphQL\AppContext                $context       The AppContext passed down the resolve tree
+			 * @param \GraphQL\Type\Definition\ResolveInfo $info          The ResolveInfo passed down the resolve tree
 			 */
 			do_action( "graphql_insert_{$taxonomy->name}", $term['term_id'], $args, $mutation_name, $context, $info );
 

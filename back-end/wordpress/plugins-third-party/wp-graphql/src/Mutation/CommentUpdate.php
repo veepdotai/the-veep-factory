@@ -44,7 +44,9 @@ class CommentUpdate {
 					'type'        => [
 						'non_null' => 'ID',
 					],
-					'description' => __( 'The ID of the comment being updated.', 'wp-graphql' ),
+					'description' => static function () {
+						return __( 'The ID of the comment being updated.', 'wp-graphql' );
+					},
 				],
 			]
 		);
@@ -62,7 +64,7 @@ class CommentUpdate {
 	/**
 	 * Defines the mutation data modification closure.
 	 *
-	 * @return callable
+	 * @return callable(array<string,mixed>$input,\WPGraphQL\AppContext $context,\GraphQL\Type\Definition\ResolveInfo $info):array<string,mixed>
 	 */
 	public static function mutate_and_get_payload() {
 		return static function ( $input, AppContext $context, ResolveInfo $info ) {

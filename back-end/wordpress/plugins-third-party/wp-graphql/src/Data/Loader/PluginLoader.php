@@ -35,7 +35,12 @@ class PluginLoader extends AbstractDataLoader {
 		if ( empty( $keys ) ) {
 			return $keys;
 		}
-		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+
+		if ( ! function_exists( 'get_plugins' ) ) {
+			// @phpstan-ignore requireOnce.fileNotFound
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+
 		// This is missing must use and drop in plugins, so we need to fetch and merge them separately.
 		$site_plugins   = apply_filters( 'all_plugins', get_plugins() );
 		$mu_plugins     = apply_filters( 'show_advanced_plugins', true, 'mustuse' ) ? get_mu_plugins() : [];
@@ -44,7 +49,7 @@ class PluginLoader extends AbstractDataLoader {
 		$plugins = array_merge( $site_plugins, $mu_plugins, $dropin_plugins );
 
 		$loaded = [];
-		if ( ! empty( $plugins ) && is_array( $plugins ) ) {
+		if ( ! empty( $plugins ) ) {
 			foreach ( $keys as $key ) {
 				if ( isset( $plugins[ $key ] ) ) {
 					$plugin         = $plugins[ $key ];

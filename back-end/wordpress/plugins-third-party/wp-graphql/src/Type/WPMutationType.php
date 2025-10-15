@@ -56,7 +56,7 @@ class WPMutationType {
 	/**
 	 * The resolver function to resolve the mutation
 	 *
-	 * @var callable|\Closure
+	 * @var callable(mixed $root,array<string,mixed> $args,\WPGraphQL\AppContext $context,\GraphQL\Type\Definition\ResolveInfo $info): array<string,mixed>
 	 */
 	protected $resolve_mutation;
 
@@ -80,7 +80,7 @@ class WPMutationType {
 		/**
 		 * Filter the config of WPMutationType
 		 *
-		 * @param array        $config         Array of configuration options passed to the WPMutationType when instantiating a new type
+		 * @param array<string,mixed>            $config           Array of configuration options passed to the WPMutationType when instantiating a new type
 		 * @param \WPGraphQL\Type\WPMutationType $wp_mutation_type The instance of the WPMutationType class
 		 *
 		 * @since 1.13.0
@@ -109,7 +109,7 @@ class WPMutationType {
 		/**
 		 * Run an action when the WPMutationType is instantiating.
 		 *
-		 * @param array        $config         Array of configuration options passed to the WPObjectType when instantiating a new type
+		 * @param array<string,mixed>            $config           Array of configuration options passed to the WPObjectType when instantiating a new type
 		 * @param \WPGraphQL\Type\WPMutationType $wp_mutation_type The instance of the WPMutationType class
 		 *
 		 * @since 1.13.0
@@ -147,7 +147,7 @@ class WPMutationType {
 			$is_valid = false;
 		}
 
-		return (bool) $is_valid;
+		return $is_valid;
 	}
 
 	/**
@@ -159,7 +159,9 @@ class WPMutationType {
 		$input_fields = [
 			'clientMutationId' => [
 				'type'        => 'String',
-				'description' => __( 'This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions.', 'wp-graphql' ),
+				'description' => static function () {
+					return __( 'This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions.', 'wp-graphql' );
+				},
 			],
 		];
 
@@ -179,7 +181,9 @@ class WPMutationType {
 		$output_fields = [
 			'clientMutationId' => [
 				'type'        => 'String',
-				'description' => __( 'If a \'clientMutationId\' input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.', 'wp-graphql' ),
+				'description' => static function () {
+					return __( 'If a \'clientMutationId\' input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.', 'wp-graphql' );
+				},
 			],
 		];
 
@@ -192,6 +196,8 @@ class WPMutationType {
 
 	/**
 	 * Gets the resolver callable for the mutation.
+	 *
+	 * @return callable(mixed $root,array<string,mixed> $args,\WPGraphQL\AppContext $context,\GraphQL\Type\Definition\ResolveInfo $info): array<string,mixed>
 	 */
 	protected function get_resolver(): callable {
 		return function ( $root, array $args, AppContext $context, ResolveInfo $info ) {
@@ -202,10 +208,10 @@ class WPMutationType {
 			/**
 			 * Filters the mutation input before it's passed to the `mutateAndGetPayload` callback.
 			 *
-			 * @param array $input The mutation input args.
-			 * @param \WPGraphQL\AppContext $context The AppContext object.
-			 * @param \GraphQL\Type\Definition\ResolveInfo $info The ResolveInfo object.
-			 * @param string $mutation_name The name of the mutation field.
+			 * @param array<string,mixed>                  $input         The mutation input args.
+			 * @param \WPGraphQL\AppContext                $context       The AppContext object.
+			 * @param \GraphQL\Type\Definition\ResolveInfo $info          The ResolveInfo object.
+			 * @param string                               $mutation_name The name of the mutation field.
 			 */
 			$input = apply_filters( 'graphql_mutation_input', $unfiltered_input, $context, $info, $this->mutation_name );
 
@@ -214,11 +220,11 @@ class WPMutationType {
 			 * Returning anything other than null will stop the callback for the mutation from executing,
 			 * and will return your data or execute your callback instead.
 			 *
-			 * @param array|callable|null $payload. The payload returned from the callback. Null by default.
-			 * @param string $mutation_name The name of the mutation field.
-			 * @param callable|\Closure $mutateAndGetPayload The callback for the mutation.
-			 * @param array $input The mutation input args.
-			 * @param \WPGraphQL\AppContext $context The AppContext object.
+			 * @param array<string,mixed>|callable|null   $payload.            The payload returned from the callback. Null by default.
+			 * @param string                $mutation_name       The name of the mutation field.
+			 * @param callable|\Closure     $mutateAndGetPayload The callback for the mutation.
+			 * @param array<string,mixed>   $input               The mutation input args.
+			 * @param \WPGraphQL\AppContext $context             The AppContext object.
 			 * @param \GraphQL\Type\Definition\ResolveInfo $info The ResolveInfo object.
 			 */
 			$pre = apply_filters( 'graphql_pre_mutate_and_get_payload', null, $this->mutation_name, $this->config['mutateAndGetPayload'], $input, $context, $info );
@@ -231,9 +237,9 @@ class WPMutationType {
 				/**
 				 * Filters the payload returned from the default mutateAndGetPayload callback.
 				 *
-				 * @param array $payload The payload returned from the callback.
-				 * @param string $mutation_name The name of the mutation field.
-				 * @param array $input The mutation input args.
+				 * @param array<string,mixed>   $payload The payload returned from the callback.
+				 * @param string                $mutation_name The name of the mutation field.
+				 * @param array<string,mixed>   $input The mutation input args.
 				 * @param \WPGraphQL\AppContext $context The AppContext object.
 				 * @param \GraphQL\Type\Definition\ResolveInfo $info The ResolveInfo object.
 				 */
@@ -243,12 +249,12 @@ class WPMutationType {
 			/**
 			 * Fires after the mutation payload has been returned from the `mutateAndGetPayload` callback.
 			 *
-			 * @param array $payload The Payload returned from the mutation.
-			 * @param array $input The mutation input args, after being filtered by 'graphql_mutation_input'.
-			 * @param array $unfiltered_input The unfiltered input args of the mutation
-			 * @param \WPGraphQL\AppContext $context The AppContext object.
-			 * @param \GraphQL\Type\Definition\ResolveInfo $info The ResolveInfo object.
-			 * @param string $mutation_name The name of the mutation field.
+			 * @param array<string,mixed>                  $payload          The Payload returned from the mutation.
+			 * @param array<string,mixed>                  $input            The mutation input args, after being filtered by 'graphql_mutation_input'.
+			 * @param array<string,mixed>                  $unfiltered_input The unfiltered input args of the mutation
+			 * @param \WPGraphQL\AppContext                $context          The AppContext object.
+			 * @param \GraphQL\Type\Definition\ResolveInfo $info             The ResolveInfo object.
+			 * @param string                               $mutation_name    The name of the mutation field.
 			 */
 			do_action( 'graphql_mutation_response', $payload, $input, $unfiltered_input, $context, $info, $this->mutation_name );
 
@@ -275,7 +281,10 @@ class WPMutationType {
 			$input_name,
 			[
 				// translators: %s is the name of the mutation.
-				'description'       => sprintf( __( 'Input for the %1$s mutation.', 'wp-graphql' ), $this->mutation_name ),
+				'description'       => function () {
+					// translators: %s is the name of the mutation.
+					return sprintf( __( 'Input for the %1$s mutation.', 'wp-graphql' ), $this->mutation_name );
+				},
 				'fields'            => $this->input_fields,
 				'deprecationReason' => ! empty( $this->config['deprecationReason'] ) ? $this->config['deprecationReason'] : null,
 			]
@@ -296,7 +305,10 @@ class WPMutationType {
 			$object_name,
 			[
 				// translators: %s is the name of the mutation.
-				'description'       => sprintf( __( 'The payload for the %s mutation.', 'wp-graphql' ), $this->mutation_name ),
+				'description'       => function () {
+					// translators: %s is the name of the mutation.
+					return sprintf( __( 'The payload for the %s mutation.', 'wp-graphql' ), $this->mutation_name );
+				},
 				'fields'            => $this->output_fields,
 				'deprecationReason' => ! empty( $this->config['deprecationReason'] ) ? $this->config['deprecationReason'] : null,
 			]
@@ -315,14 +327,18 @@ class WPMutationType {
 				'args'        => [
 					'input' => [
 						'type'              => [ 'non_null' => $this->mutation_name . 'Input' ],
-						// translators: %s is the name of the mutation.
-						'description'       => sprintf( __( 'Input for the %s mutation', 'wp-graphql' ), $this->mutation_name ),
+						'description'       => function () {
+							// translators: %s is the name of the mutation.
+							return sprintf( __( 'Input for the %s mutation', 'wp-graphql' ), $this->mutation_name );
+						},
 						'deprecationReason' => ! empty( $this->config['deprecationReason'] ) ? $this->config['deprecationReason'] : null,
 					],
 				],
 				'auth'        => $this->auth,
-				// translators: %s is the name of the mutation.
-				'description' => ! empty( $this->config['description'] ) ? $this->config['description'] : sprintf( __( 'The %s mutation', 'wp-graphql' ), $this->mutation_name ),
+				'description' => function () {
+					// translators: %s is the name of the mutation.
+					return ! empty( $this->config['description'] ) ? $this->config['description'] : sprintf( __( 'The %s mutation', 'wp-graphql' ), $this->mutation_name );
+				},
 				'isPrivate'   => $this->is_private,
 				'type'        => $this->mutation_name . 'Payload',
 				'resolve'     => $this->resolve_mutation,

@@ -31,15 +31,21 @@ class ResetUserPassword {
 		return [
 			'key'      => [
 				'type'        => 'String',
-				'description' => __( 'Password reset key', 'wp-graphql' ),
+				'description' => static function () {
+					return __( 'Password reset key', 'wp-graphql' );
+				},
 			],
 			'login'    => [
 				'type'        => 'String',
-				'description' => __( 'The user\'s login (username).', 'wp-graphql' ),
+				'description' => static function () {
+					return __( 'The user\'s login (username).', 'wp-graphql' );
+				},
 			],
 			'password' => [
 				'type'        => 'String',
-				'description' => __( 'The new password.', 'wp-graphql' ),
+				'description' => static function () {
+					return __( 'The new password.', 'wp-graphql' );
+				},
 			],
 		];
 	}
@@ -56,7 +62,7 @@ class ResetUserPassword {
 	/**
 	 * Defines the mutation data modification closure.
 	 *
-	 * @return callable
+	 * @return callable(array<string,mixed>$input,\WPGraphQL\AppContext $context,\GraphQL\Type\Definition\ResolveInfo $info):array<string,mixed>
 	 */
 	public static function mutate_and_get_payload() {
 		return static function ( $input, AppContext $context ) {

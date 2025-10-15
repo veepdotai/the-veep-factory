@@ -46,15 +46,19 @@ class TermObjectUpdate {
 			[
 				'name' => [
 					'type'        => 'String',
-					// Translators: The placeholder is the name of the taxonomy for the object being mutated
-					'description' => sprintf( __( 'The name of the %1$s object to mutate', 'wp-graphql' ), $taxonomy->name ),
+					'description' => static function () use ( $taxonomy ) {
+						// Translators: The placeholder is the name of the taxonomy for the object being mutated
+						return sprintf( __( 'The name of the %1$s object to mutate', 'wp-graphql' ), $taxonomy->name );
+					},
 				],
 				'id'   => [
 					'type'        => [
 						'non_null' => 'ID',
 					],
-					// Translators: The placeholder is the taxonomy of the term being updated
-					'description' => sprintf( __( 'The ID of the %1$s object to update', 'wp-graphql' ), $taxonomy->graphql_single_name ),
+					'description' => static function () use ( $taxonomy ) {
+						// Translators: The placeholder is the taxonomy of the term being updated
+						return sprintf( __( 'The ID of the %1$s object to update', 'wp-graphql' ), $taxonomy->graphql_single_name );
+					},
 				],
 			]
 		);
@@ -77,7 +81,7 @@ class TermObjectUpdate {
 	 * @param \WP_Taxonomy $taxonomy The taxonomy type of the mutation.
 	 * @param string       $mutation_name  The name of the mutation.
 	 *
-	 * @return callable
+	 * @return callable(array<string,mixed>$input,\WPGraphQL\AppContext $context,\GraphQL\Type\Definition\ResolveInfo $info):array<string,mixed>
 	 */
 	public static function mutate_and_get_payload( WP_Taxonomy $taxonomy, $mutation_name ) {
 		return static function ( $input, AppContext $context, ResolveInfo $info ) use ( $taxonomy, $mutation_name ) {
@@ -151,23 +155,23 @@ class TermObjectUpdate {
 			/**
 			 * Fires an action when a term is updated via a GraphQL Mutation
 			 *
-			 * @param int         $term_id       The ID of the term object that was mutated
-			 * @param \WP_Taxonomy $taxonomy The taxonomy of the term being updated
-			 * @param array       $args          The args used to update the term
-			 * @param string      $mutation_name The name of the mutation being performed (create, update, delete, etc)
-			 * @param \WPGraphQL\AppContext $context The AppContext passed down the resolve tree
-			 * @param \GraphQL\Type\Definition\ResolveInfo $info The ResolveInfo passed down the resolve tree
+			 * @param int                                  $term_id       The ID of the term object that was mutated
+			 * @param \WP_Taxonomy                         $taxonomy      The taxonomy of the term being updated
+			 * @param array<string,mixed>                  $args          The args used to update the term
+			 * @param string                               $mutation_name The name of the mutation being performed (create, update, delete, etc)
+			 * @param \WPGraphQL\AppContext                $context       The AppContext passed down the resolve tree
+			 * @param \GraphQL\Type\Definition\ResolveInfo $info          The ResolveInfo passed down the resolve tree
 			 */
 			do_action( 'graphql_update_term', $existing_term->term_id, $taxonomy, $args, $mutation_name, $context, $info );
 
 			/**
 			 * Fires an action when a term is updated via a GraphQL Mutation
 			 *
-			 * @param int         $term_id       The ID of the term object that was mutated
-			 * @param array       $args          The args used to update the term
-			 * @param string      $mutation_name The name of the mutation being performed (create, update, delete, etc)
-			 * @param \WPGraphQL\AppContext $context The AppContext passed down the resolve tree
-			 * @param \GraphQL\Type\Definition\ResolveInfo $info The ResolveInfo passed down the resolve tree
+			 * @param int                                  $term_id       The ID of the term object that was mutated
+			 * @param array<string,mixed>                  $args          The args used to update the term
+			 * @param string                               $mutation_name The name of the mutation being performed (create, update, delete, etc)
+			 * @param \WPGraphQL\AppContext                $context       The AppContext passed down the resolve tree
+			 * @param \GraphQL\Type\Definition\ResolveInfo $info          The ResolveInfo passed down the resolve tree
 			 */
 			do_action( "graphql_update_{$taxonomy->name}", $existing_term->term_id, $args, $mutation_name, $context, $info );
 

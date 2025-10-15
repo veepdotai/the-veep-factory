@@ -38,11 +38,15 @@ class UserRegister {
 						'non_null' => 'String',
 					],
 					// translators: the placeholder is the name of the type of object being updated
-					'description' => __( 'A string that contains the user\'s username.', 'wp-graphql' ),
+					'description' => static function () {
+						return __( 'A string that contains the user\'s username.', 'wp-graphql' );
+					},
 				],
 				'email'    => [
 					'type'        => 'String',
-					'description' => __( 'A string containing the user\'s email address.', 'wp-graphql' ),
+					'description' => static function () {
+						return __( 'A string containing the user\'s email address.', 'wp-graphql' );
+					},
 				],
 			]
 		);
@@ -67,7 +71,7 @@ class UserRegister {
 	/**
 	 * Defines the mutation data modification closure.
 	 *
-	 * @return callable
+	 * @return callable(array<string,mixed>$input,\WPGraphQL\AppContext $context,\GraphQL\Type\Definition\ResolveInfo $info):array<string,mixed>
 	 */
 	public static function mutate_and_get_payload() {
 		return static function ( $input, AppContext $context, ResolveInfo $info ) {

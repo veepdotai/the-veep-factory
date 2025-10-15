@@ -38,7 +38,9 @@ class UserUpdate {
 						'non_null' => 'ID',
 					],
 					// translators: the placeholder is the name of the type of post object being updated
-					'description' => __( 'The ID of the user', 'wp-graphql' ),
+					'description' => static function () {
+						return __( 'The ID of the user', 'wp-graphql' );
+					},
 				],
 			],
 			UserCreate::get_input_fields()
@@ -57,7 +59,7 @@ class UserUpdate {
 	/**
 	 * Defines the mutation data modification closure.
 	 *
-	 * @return callable
+	 * @return callable(array<string,mixed>$input,\WPGraphQL\AppContext $context,\GraphQL\Type\Definition\ResolveInfo $info):array<string,mixed>
 	 */
 	public static function mutate_and_get_payload() {
 		return static function ( $input, AppContext $context, ResolveInfo $info ) {

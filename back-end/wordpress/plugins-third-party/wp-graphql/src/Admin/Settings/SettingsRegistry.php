@@ -57,7 +57,9 @@ class SettingsRegistry {
 	 * @return void
 	 */
 	public function admin_enqueue_scripts( string $hook_suffix ) {
-		if ( 'graphql_page_graphql-settings' !== $hook_suffix ) {
+
+		// if the page is not the GraphQL Settings page, bail
+		if ( 'graphql_page_graphql-settings' !== $hook_suffix && 'toplevel_page_graphql-settings' !== $hook_suffix ) {
 			return;
 		}
 
@@ -128,9 +130,9 @@ class SettingsRegistry {
 		/**
 		 * Filter the setting field config
 		 *
-		 * @param array  $field_config The field config for the setting
-		 * @param string $field_name   The name of the field (unfilterable in the config)
-		 * @param string $section      The slug of the section the field is registered to
+		 * @param array<string,mixed>  $field_config The field config for the setting
+		 * @param string               $field_name   The name of the field (unfilterable in the config)
+		 * @param string               $section      The slug of the section the field is registered to
 		 */
 		$field = apply_filters( 'graphql_setting_field_config', $field_config, $field_name, $section );
 
@@ -160,7 +162,7 @@ class SettingsRegistry {
 		/**
 		 * Filter the settings sections
 		 *
-		 * @param array $setting_sections The registered settings sections
+		 * @param array<string,array<string,mixed>> $setting_sections The registered settings sections
 		 */
 		$setting_sections = apply_filters( 'graphql_settings_sections', $this->settings_sections );
 
@@ -493,7 +495,6 @@ class SettingsRegistry {
 		echo wp_kses( $html, Utils::get_allowed_wp_kses_html() );
 	}
 
-
 	/**
 	 * Displays a select box for creating the pages select box
 	 *
@@ -509,7 +510,7 @@ class SettingsRegistry {
 				'id'       => $args['section'] . '[' . $args['id'] . ']',
 				'echo'     => 0,
 			],
-			$args 
+			$args
 		);
 
 		$clean_args = [];
@@ -551,7 +552,7 @@ class SettingsRegistry {
 	 *
 	 * @param array<string,mixed> $options settings field args
 	 *
-	 * @return mixed
+	 * @return array<string,mixed>
 	 */
 	public function sanitize_options( array $options ) {
 		if ( ! $options ) {
@@ -576,7 +577,7 @@ class SettingsRegistry {
 	 *
 	 * @param string $slug option slug
 	 *
-	 * @return mixed string or bool false
+	 * @return callable|false
 	 */
 	public function get_sanitize_callback( $slug = '' ) {
 		if ( empty( $slug ) ) {
@@ -678,7 +679,7 @@ class SettingsRegistry {
 	/**
 	 * Tabbable JavaScript codes & Initiate Color Picker
 	 *
-	 * This code uses localstorage for displaying active tabs
+	 * This code uses URL hash fragments and localStorage for displaying active tabs
 	 *
 	 * @return void
 	 */
@@ -686,22 +687,21 @@ class SettingsRegistry {
 		?>
 		<script>
 			jQuery(document).ready(function ($) {
-				//Initiate Color Picker
+				// Initiate Color Picker
 				$('.wp-color-picker-field').wpColorPicker();
 
 				// Switches option sections
 				$('.group').hide();
 				var activetab = '';
-				if (typeof (localStorage) != 'undefined') {
-					activetab = localStorage.getItem("activetab");
-				}
+				var urlHash = window.location.hash;
 
-				//if url has section id as hash then set it as active or override the current local storage value
-				if (window.location.hash) {
-					activetab = window.location.hash;
+				if (urlHash) {
+					activetab = urlHash;
 					if (typeof (localStorage) != 'undefined') {
 						localStorage.setItem("activetab", activetab);
 					}
+				} else if (typeof (localStorage) != 'undefined') {
+					activetab = localStorage.getItem("activetab");
 				}
 
 				if (activetab != '' && $(activetab).length) {
@@ -709,6 +709,7 @@ class SettingsRegistry {
 				} else {
 					$('.group:first').fadeIn();
 				}
+
 				$('.group .collapsed').each(function () {
 					$(this).find('input:checked').parent().parent().parent().nextAll().each(
 						function () {
@@ -725,13 +726,15 @@ class SettingsRegistry {
 				} else {
 					$('.nav-tab-wrapper a:first').addClass('nav-tab-active');
 				}
+
 				$('.nav-tab-wrapper a').click(function (evt) {
 					$('.nav-tab-wrapper a').removeClass('nav-tab-active');
 					$(this).addClass('nav-tab-active').blur();
 					var clicked_group = $(this).attr('href');
 					if (typeof (localStorage) != 'undefined') {
-						localStorage.setItem("activetab", $(this).attr('href'));
+						localStorage.setItem("activetab", clicked_group);
 					}
+					history.replaceState(null, '', clicked_group);
 					$('.group').hide();
 					$(clicked_group).fadeIn();
 					evt.preventDefault();
