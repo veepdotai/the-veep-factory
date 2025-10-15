@@ -61,12 +61,12 @@ function register_save_data() {
 			$pn = "veepdotai-";
 			$prompt_prefix = "ai-prompt-";
 	
-			$cardinality = sanitize_text_field( $input['cardinality'] ) || "";
+			$cardinality = isset( $input['cardinality'] ) ? sanitize_text_field( $input['cardinality'] ) : "";
 			$param_name = sanitize_text_field( $input['option'] );
 			$option_value = sanitize_text_field( $input['value'] );
-			$object_id = sanitize_text_field( $input['objectId'] );
-			$oldName = sanitize_text_field( $input['oldName'] );
-			$old_name = $pn . $prompt_prefix . $oldName;         
+			$object_id = isset( $input['objectId'] ) ? sanitize_text_field( $input['objectId'] ) : null;
+			$oldName = isset( $input['oldName'] ) ? sanitize_text_field( $input['oldName'] ) : null;
+			$old_name = $pn . $prompt_prefix . $oldName;
 
 			log( "$fn: old_name: " . $old_name );
 	
@@ -127,12 +127,12 @@ function register_save_data() {
 			if ( $result ) {
 				log( "$fn: result: true" );
 				$data = [
-					"user_id" => $user->user_login,
+					"user_id" => $user,
 					"result" => true,
 				];
 			} else {
 				$data = [
-					"user_id" => $user->user_login,
+					"user_id" => $user,
 					"result" => false,
 				];
 			}

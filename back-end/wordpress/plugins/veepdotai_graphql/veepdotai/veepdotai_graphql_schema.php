@@ -84,7 +84,7 @@ function register_Icontent() {
 }
 
 function register_Taxonomies() {
-	register_taxonomy( 'doc_tag', 'Vcontents', [
+	register_taxonomy( 'doc_tag', 'vcontents', [
 		'labels'  => [
 		  'menu_name' => __( 'Document Tags', 'your-textdomain' ), //@see https://developer.wordpress.org/themes/functionality/internationalization/
 		],

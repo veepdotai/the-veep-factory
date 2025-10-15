@@ -121,6 +121,7 @@ function register_list_configuration() {
 			$prefix = "listConfiguration";
 
 			$data = [
+				/*"type" => isset( $input["type"] ) ? sanitize_text_field( $input["type"] ) : null,*/
 				"type" => sanitize_text_field( $input["type"] ),
 				"id" => sanitize_text_field( $input["id"] ),
 				"name" => sanitize_text_field( $input["name"] ),

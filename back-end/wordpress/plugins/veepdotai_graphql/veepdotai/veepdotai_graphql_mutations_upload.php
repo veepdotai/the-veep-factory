@@ -39,6 +39,8 @@ function register_upload() {
             ],
 
             'mutateAndGetPayload' => function( $input, $context, $info ) {
+                //\Veepdotai\Graphql\Mutations\Upload\log("mutateAndGetPayload: input:");
+
                 if (!function_exists('wp_handle_sideload')) {
                     require_once(ABSPATH . 'wp-admin/includes/file.php');
                 }
@@ -77,7 +79,7 @@ function register_upload() {
                 $result = [
                     'status' => json_encode( $data ),
                 ];
-                log("result: " . print_r( $result, true ) );
+                //log("result: " . print_r( $result, true ) );
                 return $result;
             }
         ]
