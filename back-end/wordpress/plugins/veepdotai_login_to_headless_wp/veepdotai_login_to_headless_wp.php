@@ -152,7 +152,8 @@ Class Veepdotai_Login {
 	}
 
 	public static function veepdotai_add_redirect(): string {
-		$redirect_to = "https://www.veep.ai";
+		//$redirect_to = "https://www.veep.ai";
+		$redirect_to = "http://localhost";
 		self::log( "debug", "debugging add_redirect(raw): $redirect_to" );
 		self::log( "debug", "debugging request_uri: " . print_r( $_SERVER['REQUEST_URI'], true ) );
 		self::log( "debug", "debugging add_redirect(end)." );

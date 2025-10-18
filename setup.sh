@@ -5,7 +5,8 @@
 . ./back-end/wordpress/bin/generate-wp-config-php.sh
 . ./back-end/wordpress/bin/setup-env.sh
 
-v_install_configure
+#v_install_configure
+#
 #v_read_pass
 
 DB_NAME="wp_prod"

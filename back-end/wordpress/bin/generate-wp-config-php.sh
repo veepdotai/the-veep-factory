@@ -10,7 +10,7 @@ v_generate_random_secret() {
 
 v_output() {
 	v_generate_random_secret
-	echo "define('$1', '${RET}');"
+	echo "define('$1', '$RET');"
 }
 
 v_wp_config_start() {

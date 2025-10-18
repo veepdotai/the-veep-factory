@@ -4,5 +4,10 @@ dist
 node_modules
 .local
 
-**/htdocs/
+**/htdocs/**
+**/htdocs.bak/**
 **/vendor
+
+**/plugins/lokavivo_graphql
+
+**/plugins-with-license
