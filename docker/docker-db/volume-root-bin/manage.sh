@@ -9,26 +9,27 @@ ALL_ARGS=$@
 #. ../../.env
 
 init() {
-	USER=$MYSQL_USER
-	if [ "x$USER" = "x" ]; then
+
+    USER=$DB_USER
+    if [ "x$USER" = "x" ]; then
 		echo "USER var is empty => No CONTAINER_USER env var has been found."
         exit 1;
     fi
 
-	PASSWORD=$MYSQL_PASSWORD
-	if [ "x$PASSWORD" = "x" ]; then
+    PASSWORD=$DB_PASSWORD
+    if [ "x$PASSWORD" = "x" ]; then
 		echo "PASSWORD var is empty => No CONTAINER_PASSWORD env var has been found."
         exit 1;
     fi
 
-	DATABASE=$MYSQL_DATABASE
-	if [ "x$DATABASE" = "x" ]; then
+    DATABASE=$DB_DATABASE
+    if [ "x$DATABASE" = "x" ]; then
 		echo "DATABASE var is empty => No CONTAINER_DATABASE env var has been found."
         exit 1;
     fi
 
-	BACKUP_PATH=$MYSQL_BACKUP_PATH/
-	if [ "x$BACKUP_PATH" = "x" ]; then
+    BACKUP_PATH=$DB_BACKUP_PATH/
+    if [ "x$BACKUP_PATH" = "x" ]; then
 		echo "BACKUP_PATH var is empty => No CONTAINER_BACKUP_PATH env var has been found."
         exit 1;
     fi
@@ -36,7 +37,6 @@ init() {
 }
 
 parse_options() {
-    echo "Parsing options"
 
     COMMAND_LINE_OPTIONS_HELP='
 Command line options:
@@ -56,9 +56,9 @@ Examples:
 '
     OPTIONS=":htbi:r:"
 	
-	# Possible to execute various commands with the same execution
-	BACKUP="n"
-	IMPORT_RESTORE="n"
+    # Possible to execute various commands with the same execution
+    BACKUP="n"
+    IMPORT_RESTORE="n"
 
     #echo "OPTIONS: $OPTIONS"
     while getopts $OPTIONS option
@@ -69,6 +69,10 @@ Examples:
                 echo "$COMMAND_LINE_OPTIONS_HELP"
                 exit $E_OPTERROR
                 ;;
+            n)
+                echo "dry run: Test options are recognized by the program"
+                DRY_RUN="y"
+                ;;
             b)
                 echo "Backup db data with default name"
                 BACKUP="y"
@@ -76,7 +80,7 @@ Examples:
             i)
                 echo "Import/Restore option found"
                 IMPORT_RESTORE="y"
-				BACKUP_PATH=$OPTARG
+		BACKUP_PATH=$OPTARG
                 ;;
             r)
                 echo "Import/Restore option found"
@@ -99,21 +103,19 @@ Examples:
 main() {
     parse_options $ALL_ARGS
 
-	if [ "y$TEST" = "yy" ]; then        
-        test
-    fi
-
-	if [ "y$IMPORT_RESTORE" = "yy" ]; then        
+    if [ "y$DRY_RUN" = "yy" ]; then        
+        dry_run
+    elif [ "y$IMPORT_RESTORE" = "yy" ]; then        
         import_restore
-    fi
-
-	if [ "y$BACKUP" = "yy" ]; then        
+    elif [ "y$BACKUP" = "yy" ]; then        
         backup
+    else
+	parse_options "-h"
     fi
 
 }
 
-test() {
+dry_run() {
 	echo "--- Test db connection"
 }
 
@@ -124,7 +126,7 @@ import_restore() {
 
 backup() {
 	echo "--- Backup data"
-	#docker exec mariadb /usr/bin/mariadb-dump -u $USER $ -p$PASSWORD $DATABASE | gzip > "$BACKUP_PATH/database_backup_$(date +\%F).sql.gz"
+	docker exec mariadb /usr/bin/mariadb-dump -u $USER $ -p$PASSWORD $DATABASE | gzip > "$BACKUP_PATH/database_backup_$(date +\%F).sql.gz"
 }
 
 main
