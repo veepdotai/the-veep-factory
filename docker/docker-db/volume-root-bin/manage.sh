@@ -3,6 +3,8 @@
 # hash code to use
 ALL_ARGS=$@
 
+DB_BACKUP_PATH="/backups"
+
 # Go and look at the build/env.tpl file to have an idea of the expected informations
 
 # env vars must have been loaded before running this script
@@ -10,13 +12,15 @@ ALL_ARGS=$@
 
 init() {
 
+    DATE=$(date "+%F-%T")
+
     USER=$DB_USER
     if [ "x$USER" = "x" ]; then
 		echo "USER var is empty => No CONTAINER_USER env var has been found."
         exit 1;
     fi
 
-    PASSWORD=$DB_PASSWORD
+    PASSWORD=$DB_ROOT_PASSWORD
     if [ "x$PASSWORD" = "x" ]; then
 		echo "PASSWORD var is empty => No CONTAINER_PASSWORD env var has been found."
         exit 1;
@@ -28,7 +32,7 @@ init() {
         exit 1;
     fi
 
-    BACKUP_PATH=$DB_BACKUP_PATH/
+    BACKUP_PATH=$DB_BACKUP_PATH
     if [ "x$BACKUP_PATH" = "x" ]; then
 		echo "BACKUP_PATH var is empty => No CONTAINER_BACKUP_PATH env var has been found."
         exit 1;
@@ -101,6 +105,7 @@ Examples:
 }
 
 main() {
+    init
     parse_options $ALL_ARGS
 
     if [ "y$DRY_RUN" = "yy" ]; then        
@@ -126,7 +131,8 @@ import_restore() {
 
 backup() {
 	echo "--- Backup data"
-	docker exec mariadb /usr/bin/mariadb-dump -u $USER $ -p$PASSWORD $DATABASE | gzip > "$BACKUP_PATH/database_backup_$(date +\%F).sql.gz"
+	echo "/usr/bin/mariadb-dump -u $USER -p$PASSWORD $DATABASE | gzip > $BACKUP_PATH/database_backup_$DATE.sql.gz"
+	/usr/bin/mariadb-dump -u $USER -p$PASSWORD $DATABASE | gzip > "$BACKUP_PATH/database_backup_$DATE.sql.gz"
 }
 
 main
