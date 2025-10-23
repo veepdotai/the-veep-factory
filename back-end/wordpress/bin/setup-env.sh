@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-SQL_DUMP_FILE=$ENV_SQL_DUMP_FILE
+SQL_DUMP_FILE=$TVF_ENV_SQL_DUMP_FILE
 
 v_read_pass() {
 	echo -n Password: 
@@ -13,7 +13,7 @@ v_read_pass() {
 	PASSWORD=${INPUT_PASSWD:-$RAND_PASS}
 	P_PASSWORD="-p$PASSWORD"
 
-	echo "Input password you want to use for ${DB_SYS_MAINT} mysql user and admin wordpress user: $PASSWORD"
+	echo "Input password you want to use for ${TVF_DB_SYS_MAINT} mysql user and admin wordpress user: $PASSWORD"
 }
 
 v_installation() {
@@ -32,7 +32,7 @@ v_installation() {
 	sudo apt-get -y install mysql-server ffmpeg php8.2-curl
 
 	# MySQL post-installation
-	sudo chown mysql:$DEV_PLATFORM /var/run/mysqld
+	sudo chown mysql:$TVF_DEV_PLATFORM /var/run/mysqld
 	sudo chmod g+rwx /var/run/mysqld
 
 	# MySQL start
@@ -45,28 +45,28 @@ v_mysql_configuration() {
 	echo "MySQL Configuration"
 	echo "* Configuring passwd for root user"
 	sql="ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '$PASSWORD';"
-	echo $sql | sudo mysql -u $DB_SYS_MAINT $INITIAL_P_PASSWORD
+	echo $sql | sudo mysql -u $TVF_DB_SYS_MAINT $INITIAL_P_PASSWORD
 
 	echo "* Flushing privileges for previous user"
 	sql="FLUSH PRIVILEGES;"
-	echo $sql | sudo mysql -u $DB_SYS_MAINT $INITIAL_P_PASSWORD
+	echo $sql | sudo mysql -u $TVF_DB_SYS_MAINT $INITIAL_P_PASSWORD
 }
 
 v_wordpress_configuration() {
 	sql="CREATE DATABASE wp_prod;"
-	echo $sql | sudo mysql -u $DB_SYS_MAINT $INITIAL_P_PASSWORD
+	echo $sql | sudo mysql -u $TVF_DB_SYS_MAINT $INITIAL_P_PASSWORD
 
 	# replace "app.veep.ai" by the name used on dev env (gitpod, github with codespaces...)
 	# be careful, the open ai key contains also app-veep-ai which is intercepted with app.veep.ai regex
         # but this one must not change!
 	# ffmpeg executable is /usr/bin/ffmpeg on almost all linux platforms
 	#sql_dump_file="/workspace/wordpress/backups/20240621-210000/20240621-1702373413_app_veep_ai.sql"
-	echo "Import app.veep.ai wordpress content: $SQL_DUMP_FILE"
-	sudo mysql --default-character-set=utf8mb4 -u $DB_SYS_MAINT $INITIAL_P_PASSWORD wp_prod < $SQL_DUMP_FILE
+	echo "Import app.veep.ai wordpress content: $TVF_SQL_DUMP_FILE"
+	sudo mysql --default-character-set=utf8mb4 -u $TVF_DB_SYS_MAINT $INITIAL_P_PASSWORD wp_prod < $SQL_DUMP_FILE
 
 	echo "Update WP admin passwd"
 	sql="UPDATE wp_prod.wp_users SET user_pass = md5('$PASSWORD') WHERE ID = 1;"
-	echo $sql | sudo mysql -u $DB_SYS_MAINT $INITIAL_P_PASSWORD
+	echo $sql | sudo mysql -u $TVF_DB_SYS_MAINT $INITIAL_P_PASSWORD
 }
 
 v_install_configure() {

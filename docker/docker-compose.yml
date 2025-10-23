@@ -1,49 +1,183 @@
 services:
 
+  traefik:
+    image: traefik:v3.5
+    container_name: traefik
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+
+    networks:
+     # Connect to the 'traefik_proxy' overlay network for inter-container communication across nodes
+      - proxy
+
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ${VOLUME_RP_LOG}:/var/log
+      #- ./certs:/certs:ro
+      - ${VOLUME_RP_CERTS_DIR}:/certs:ro
+      - ${VOLUME_RP_LETSENCRYPT_DIR}:/letsencrypt
+      - ${VOLUME_RP_DYNAMIC}:/dynamic:ro
+
+    command:
+      # EntryPoints
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
+      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.websecure.http.tls=true"
+
+      # Attach the static configuration tls.yaml file that contains the tls configuration settings
+      - "--providers.file.filename=/dynamic/tls.yaml"
+
+      # Providers 
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.network=proxy"
+
+      # API & Dashboard 
+      - "--api.dashboard=true"
+      - "--api.insecure=true"
+
+      # Observability 
+      - "--log.level=INFO"
+      - "--log.filePath=/var/log/traefik.log"
+      - "--accesslog=true"
+      - "--accesslog.filePath=/var/log/access_log"
+      - "--metrics.prometheus=true"
+
+  # Traefik Dynamic configuration via Docker labels
+    labels:
+      # Enable self‑routing
+      - "traefik.enable=true"
+
+      # Dashboard router
+      - "traefik.http.routers.dashboard.rule=Host(`dashboard.docker.localhost`)"
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      - "traefik.http.routers.dashboard.tls=true"
+
+      # Basic‑auth middleware
+      - "traefik.http.middlewares.dashboard-auth.basicauth.users=jck:$$apr1$$O4iX7fcA$$8VVynzh/0LgDJamD0Dws81"
+      - "traefik.http.routers.dashboard.middlewares=dashboard-auth@docker"
+
   db:
     image: mariadb
     container_name: "wordpress-db"
     restart: unless-stopped
     environment:
       #MYSQL_RANDOM_ROOT_PASSWORD: '1'
-      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
-      MYSQL_USER: $MYSQL_USER
-      MYSQL_PASSWORD: $MYSQL_PASSWORD
-      MYSQL_DATABASE: $MYSQL_DATABASE
+      MARIADB_ROOT_PASSWORD: $TVF_DB_ROOT_PASSWORD
+      MARIADB_USER: $TVF_DB_USER
+      MARIADB_PASSWORD: $TVF_DB_PASSWORD
+      MARIADB_DATABASE: $TVF_DB_NAME
+      DB_ROOT_PASSWORD: $TVF_DB_ROOT_PASSWORD
+      DB_USER: $TVF_DB_USER
+      DB_PASSWORD: $TVF_DB_PASSWORD
+      DB_DATABASE: $TVF_DB_NAME
+
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ./docker-db/volume-db:/var/lib/mysql
-      - ./docker-db/volume-root-bin:/root/bin
-      - ../../backups:/backups
+      - ${VOLUME_DB}:/var/lib/mysql
+      - ${VOLUME_DB_ROOT_BIN}:/root/bin
+      - ${VOLUME_DB_BACKUP}:/backups
+
     networks:
-      - network
+      - internal
 
   wordpress:
     #image: wordpress
     image: wordpress:php8.3
     container_name: "wordpress"
     restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
+    #ports:
+      #- "80:80"
+      #- "443:443"
+
     environment:
-      WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: $MYSQL_USER
-      WORDPRESS_DB_PASSWORD: $MYSQL_PASSWORD
-      WORDPRESS_DB_NAME: $MYSQL_DATABASE
+      WORDPRESS_DB_HOST: $TVF_DB_HOST
+      WORDPRESS_DB_NAME: $TVF_DB_NAME
+      WORDPRESS_DB_USER: $TVF_DB_USER
+      WORDPRESS_DB_PASSWORD: $TVF_DB_PASSWORD
+      TVF_DB_HOST: $TVF_DB_HOST
+      TVF_DB_NAME: $TVF_DB_NAME
+      TVF_DB_USER: $TVF_DB_USER
+      TVF_DB_PASSWORD: $TVF_DB_PASSWORD
+      TVF_ALLOWED_SERVER_NAMES: $TVF_ALLOWED_SERVER_NAMES
+      TVF_APACHE_DOCROOT: $TVF_APACHE_DOCROOT
+      TVF_APACHE_DOCROOT_IN_REPO: $TVF_APACHE_DOCROOT_IN_REPO
+      TVF_DEBUG_LOG_PATH: $TVF_DEBUG_LOG_PATH
+      TVF_DB_SYS_MAINT: $TVF_DB_SYS_MAINT
+      TVF_DEV_PLATFORM: $TVF_DEV_PLATFORM
+      TVF_ENV_SQL_DUMP_FILE: $TVF_ENV_SQL_DUMP_FILE
+      TVF_GITPOD_REPO_ROOT: $TVF_GITPOD_REPO_ROOT
+      TVF_GIT_USER: $TVF_GIT_USER
+      TVF_GIT_PASS: $TVF_GIT_PASS
+      TVF_GIT_USER_NAME: $TVF_GIT_USER_NAME
+      TVF_GIT_USER_EMAIL: $TVF_GIT_USER_EMAIL
+      TVF_HOST: $TVF_HOST
+      TVF_INFLUX_ORG_ID: $TVF_INFLUX_ORG_ID
+      TVF_INFLUX_TOKEN: $TVF_INFLUX_TOKEN
+      TVF_LINKEDIN_CLIENT_ID: $TVF_LINKEDIN_CLIENT_ID
+      TVF_LINKEDIN_CLIENT_SECRET: $TVF_LINKEDIN_CLIENT_SECRET
+      TVF_LINKEDIN_CLIENT_REDIRECT_URI: $TVF_LINKEDIN_CLIENT_REDIRECT_URI
+      TVF_LINKEDIN_SCOPE: $TVF_LINKEDIN_SCOPE
+      TVF_OPENAI_KEY: $TVF_OPENAI_KEY
+      TVF_STRIPE_SK: $TVF_STRIPE_SK
+      TVF_TOK_FILE: $TVF_TOK_FILE
+      TVF_USER: $TVF_USER
+      TVF_USAGE_BUCKET_NAME: $TVF_USAGE_BUCKET_NAME
+      TVF_USAGE_DEFAULT_USER_ID: $TVF_USAGE_DEFAULT_USER_ID
+      TVF_USAGE_SERVER: $TVF_USAGE_SERVER
+
     volumes:
       #- ./wordpress: /var/lib/html
       - /etc/localtime:/etc/localtime:ro
       - ../back-end/wordpress/htdocs:/var/www/html
       - ../back-end/wordpress/plugins-with-license:/var/www/plugins-with-license
       - ../back-end/wordpress/plugins-third-party:/var/www/plugins-third-party
+      - ../back-end/wordpress/plugins-veepdotai:/var/www/plugins-veepdotai
       - ../back-end/wordpress/plugins:/var/www/plugins
-      - ../back-end/wordpress/data:/workspaces/data
+      - ${VOLUME_WP_DATA}:/var/www/html/wp-content/uploads
+      - ${VOLUME_WP_BIN_DIR}:/var/www/bin
+      - ${VOLUME_WP_LOG_DIR}:/var/www/log
+
     depends_on:
       - db
+
     networks:
-      - network
+      - proxy
+      - internal
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.wordpress.rule=Host(`lokavivo.docker.localhost`)"
+      #- "traefik.http.routers.wordpress.entrypoints=web"
+      #- "traefik.http.routers.wordpress.entrypoints=websecure"
+      #- "traefik.http.routers.wordpress.tls=true"
+      #- "traefik.http.routers.wordpress.tls.certresolver=le"
+
+  whoami:
+    image: traefik/whoami
+    container_name: whoami
+    restart: unless-stopped
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`)"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
+      - "traefik.http.routers.whoami.tls=true"
 
 networks:
-  network:
-    driver: bridge
+  proxy:
+    name: proxy
+    external: false
+  internal:
+    internal: true
