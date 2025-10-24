@@ -8,6 +8,10 @@ node_modules
 **/htdocs.bak/**
 **/vendor
 
+**/*.lock
+
+**/.yarn*
+
 **/plugins/lokavivo_graphql
 
 **/plugins-with-license
