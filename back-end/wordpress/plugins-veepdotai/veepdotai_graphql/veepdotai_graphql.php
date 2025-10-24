@@ -31,6 +31,43 @@ function add_hierarchy_support($args, $post_type){
   return $args;
 }
 
+function graphql_response_error_patch($response, $result, $operation_name, $query, $variables, $http_status_code) {
+  if ($response instanceof \GraphQL\Executor\ExecutionResult) {
+    if (!isset($response->extensions)) {
+      $response->extensions = null;
+    }
+  }
+  return $response;
+}
+add_action('graphql_request_results', 'graphql_response_error_patch', 10, 6);
+//add_action('graphql_process_http_request_response', 'graphql_response_error_patch', 10, 6);
+
+/*
+add_filter( 'graphql_request_results', function( $response ) {
+	// If it's an ExecutionResult object, we need to handle it differently
+	if ( $response instanceof \GraphQL\Executor\ExecutionResult ) {
+		// Convert to array and remove extensions if they exist
+		$array = $response->toArray();
+		if ( isset( $array['extensions'] ) ) {
+			unset( $array['extensions'] );
+		}
+		return $array;
+	}
+
+	// Handle array responses
+	if ( is_array( $response ) && isset( $response['extensions'] ) ) {
+		unset( $response['extensions'] );
+	}
+
+	// Handle object responses
+	if ( is_object( $response ) && isset( $response->extensions ) ) {
+		unset( $response->extensions );
+	}
+
+	return $response;
+}, 99, 1 );
+*/
+
 /**
  * Register facets if facetwp plugin is installed
  * Custom content types must be added when they are defined
