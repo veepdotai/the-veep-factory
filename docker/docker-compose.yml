@@ -8,7 +8,7 @@ services:
       - no-new-privileges:true
 
     networks:
-     # Connect to the 'traefik_proxy' overlay network for inter-container communication across nodes
+      # Connect to the 'traefik_proxy' overlay network for inter-container communication across nodes
       - proxy
 
     ports:
@@ -59,6 +59,7 @@ services:
 
       # Dashboard router
       - "traefik.http.routers.dashboard.rule=Host(`dashboard.docker.localhost`)"
+      - "traefik.http.routers.dashboard.entrypoints=web"
       - "traefik.http.routers.dashboard.entrypoints=websecure"
       - "traefik.http.routers.dashboard.service=api@internal"
       - "traefik.http.routers.dashboard.tls=true"
@@ -143,7 +144,7 @@ services:
       - ../back-end/wordpress/plugins-with-license:/var/www/plugins-with-license
       - ../back-end/wordpress/plugins-third-party:/var/www/plugins-third-party
       - ../back-end/wordpress/plugins-veepdotai:/var/www/plugins-veepdotai
-      - ../back-end/wordpress/plugins:/var/www/plugins
+      - ../back-end/wordpress/plugins:/var/www/html/wp-content/plugins
       - ${VOLUME_WP_DATA}:/var/www/html/wp-content/uploads
       - ${VOLUME_WP_BIN_DIR}:/var/www/bin
       - ${VOLUME_WP_LOG_DIR}:/var/www/log
@@ -157,7 +158,7 @@ services:
 
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.wordpress.rule=Host(`lokavivo.docker.localhost`)"
+      - "traefik.http.routers.wordpress.rule=Host(`lokavivo.docker.localhost`) || Host(`localhost`)"
       #- "traefik.http.routers.wordpress.entrypoints=web"
       #- "traefik.http.routers.wordpress.entrypoints=websecure"
       #- "traefik.http.routers.wordpress.tls=true"
