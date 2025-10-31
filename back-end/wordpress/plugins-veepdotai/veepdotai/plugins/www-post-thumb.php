@@ -35,8 +35,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-add_action( 'plugins_loaded', 'GM\WWWPostThumbnail\txtdomain' );
-
+add_action( 'init', 'GM\WWWPostThumbnail\txtdomain' );
 function txtdomain() {
 	load_plugin_textdomain( 'veepdotai', false, dirname( plugin_basename( __FILE__ ) ) . '/' );
 }

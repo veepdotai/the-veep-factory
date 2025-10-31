@@ -10,12 +10,6 @@
 #
 #v_read_pass
 
-TVF_DB_NAME="wordpress"
-TVF_DB_HOST="127.0.0.1"
-TVF_DB_USER="root"
-TVF_DB_PASSWORD=$INPUT_PASSWD
-TVF_DB_PASSWORD=patrick
-
 echo "Generating Veep configuration from the following env vars:"
 echo
 env | grep "^TVF_" | sort 

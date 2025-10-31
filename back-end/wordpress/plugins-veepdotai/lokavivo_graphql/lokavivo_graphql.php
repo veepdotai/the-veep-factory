@@ -10,7 +10,7 @@ Description: Provides graphql glue between WP, Loakvivo and Veepdotai
 Author: JC Kermagoret
 Version: 1.0.0
 Author URI: http://www.lokavivo.eu
-Requires Plugins: wp-graphql, veepdotai_graphql
+Requires Plugins: veepdotai_graphql,wp-graphql
 */
 
 //require_once 'veepdotai/veepdotai_graphql.php';
