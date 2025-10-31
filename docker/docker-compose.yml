@@ -141,6 +141,7 @@ services:
       #- ./wordpress: /var/lib/html
       - /etc/localtime:/etc/localtime:ro
       - ../back-end/wordpress/htdocs:/var/www/html
+      - ../back-end/wordpress/mu-plugins:/var/www/mu-plugins
       - ../back-end/wordpress/plugins-with-license:/var/www/plugins-with-license
       - ../back-end/wordpress/plugins-third-party:/var/www/plugins-third-party
       - ../back-end/wordpress/plugins-veepdotai:/var/www/plugins-veepdotai

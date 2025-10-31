@@ -52,7 +52,7 @@ if (! defined('WPINC')) {
 
 define('VEEPDOTAI_LANG', 'fr_FR');
 
-add_action('plugins_loaded', 'veepdotai_load_textdomain');
+add_action('init', 'veepdotai_load_textdomain');
 function veepdotai_load_textdomain()
 {
     $plugin_dir = basename(dirname(__FILE__));
