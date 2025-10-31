@@ -23,7 +23,7 @@ v_wp_config_start() {
 	echo "define('DB_HOST', getenv( 'TVF_DB_HOST' ));"
 	echo "define('DB_USER', getenv( 'TVF_DB_USER' ));"
 	echo "define('DB_PASSWORD', getenv( 'TVF_DB_PASSWORD' ));"
-	echo 
+	echo
 
 	# we use quotes because we don't variable interpolations
 	echo '# $ALLOWED_SERVER_NAMES mytest.veep.ai,lokavivo.docker.localhost'
