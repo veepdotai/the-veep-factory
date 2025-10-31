@@ -19,6 +19,9 @@ function log( $msg ) {
 	\Veepdotai_Util::log( 'debug', 'GraphQL Mutations\Configuration: ' . $msg );
 }
 
+function check_and_get( $fieldName ) {
+	return isset( $input[ $fieldName ] ) && sanitize_text_field( $input[ $fieldName] );
+}
 
 function register_create_configuration() {
 
@@ -64,11 +67,11 @@ function register_create_configuration() {
 			$prefix = "createConfiguration";
 
 			$data = [
-				"type" => sanitize_text_field( $input["type"] ),
-				"id" => sanitize_text_field( $input["id"] ),
-				"name" => sanitize_text_field( $input["name"] ),
-				"value" => sanitize_text_field( $input["value"] ),
-				"status" => sanitize_text_field( $input["status"] )
+				"type" => check_and_get( "type" ),
+				"id" => check_and_get( "id" ),
+				"name" => check_and_get( "name" ),
+				"value" => check_and_get( "value" ),
+				"status" => check_and_get( "status" )
 			];
 
 			log( $prefix . ': data: ' . print_r( $data, true ) );
@@ -122,10 +125,10 @@ function register_list_configuration() {
 
 			$data = [
 				/*"type" => isset( $input["type"] ) ? sanitize_text_field( $input["type"] ) : null,*/
-				"type" => sanitize_text_field( $input["type"] ),
-				"id" => sanitize_text_field( $input["id"] ),
-				"name" => sanitize_text_field( $input["name"] ),
-				"status" => sanitize_text_field( $input["status"] )
+				"type" => check_and_get( "type" ),
+				"id" => check_and_get( "id" ),
+				"name" => check_and_get( "name" ),
+				"status" => check_and_get( "status" )
 			];
 
 			log( $prefix . ': data: ' . print_r( $data, true ) );

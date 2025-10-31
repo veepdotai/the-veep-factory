@@ -31,6 +31,9 @@ function add_hierarchy_support($args, $post_type){
   return $args;
 }
 
+/**
+ * https://github.com/veepdotai/the-veep-factory/issues/223
+ */
 function graphql_response_error_patch($response, $result, $operation_name, $query, $variables, $http_status_code) {
   if ($response instanceof \GraphQL\Executor\ExecutionResult) {
     if (!isset($response->extensions)) {
