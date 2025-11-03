@@ -299,8 +299,6 @@ function register_publish_linkedin() {
 			$content_path = $wp_root_dir . $content_storage_path_in_uploads;
 
 			$result = upload_document($access_token, $upload_url, $content_path);
-			//return [ "result" => "coucou: ${result}." ];
-
 
 			$resource = create_resource($access_token, $owner_id, $content, $document, $lifecycleState, $visibility);
 			$result = create_post($access_token, $resource);

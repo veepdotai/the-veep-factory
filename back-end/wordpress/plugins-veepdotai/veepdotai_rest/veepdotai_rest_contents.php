@@ -138,7 +138,7 @@ class Veepdotai_Contents_REST_Controller extends WP_REST_Controller {
         $attr_name = sanitize_text_field( $request['attrName'] );
         $custom = sanitize_text_field( $request['custom'] );
         $label_encoded = preg_replace("/labelEncoded:(.*)/", "$1", $custom );
-        self::log( "label_encoded: ${label_encoded}" );
+        self::log( "label_encoded: {$label_encoded}" );
 
         if ( ! $attr_name ) {
             // update all the post.
@@ -154,8 +154,8 @@ class Veepdotai_Contents_REST_Controller extends WP_REST_Controller {
                     ]
                 );
                 $output = wp_update_post( $post_array );
-                Veepdotai_Util::set_option( "ai-section-edcal0-${label_encoded}", $content );
-                Veepdotai_Util::set_option( "ai-section-edcal0-${label_encoded}-id", $id );
+                Veepdotai_Util::set_option( "ai-section-edcal0-{$label_encoded}", $content );
+                Veepdotai_Util::set_option( "ai-section-edcal0-{$label_encoded}-id", $id );
             } else if ( $label_encoded ) {
                 // We don't update veepdotaiContent because we want to keep original generated content
                 $post_array = array(
@@ -163,8 +163,8 @@ class Veepdotai_Contents_REST_Controller extends WP_REST_Controller {
                     "post_content" => $content
                 );
                 $output = wp_update_post( $post_array );
-                Veepdotai_Util::set_option( "ai-section-edcal1-phase${label_encoded}", $content );       
-                Veepdotai_Util::set_option( "ai-section-edcal1-phase${label_encoded}-id", $id );       
+                Veepdotai_Util::set_option( "ai-section-edcal1-phase{$label_encoded}", $content );       
+                Veepdotai_Util::set_option( "ai-section-edcal1-phase{$label_encoded}-id", $id );       
             }
 
         } else if ( $attr_name == "veepdotaiContent" ) {

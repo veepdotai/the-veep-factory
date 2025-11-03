@@ -168,7 +168,7 @@ class Generation_Process {
 
         self::log( __METHOD__ . ": post id after creation: id: " . $content_id );
 
-        self::log_step_finished2( $pid, "_TRANSCRIPTION_", "cid:${content_id}");
+        self::log_step_finished2( $pid, "_TRANSCRIPTION_", "cid:{$content_id}");
         return $content_id;
     }
 
@@ -246,7 +246,7 @@ class Generation_Process {
         $lsd = $meta[ "veepdotaiLastStepDone" ][0] ?? "";
         self::log( __METHOD__ . ": lsd: " . $lsd );
         if ( $lsd == "Transcription" ) {
-            self::log_step_paused2( $pid, "_CONTENT_GENERATION_", "cid:${content_id}");
+            self::log_step_paused2( $pid, "_CONTENT_GENERATION_", "cid:{$content_id}");
             self::update_last_step_done( "TranscriptionChecked", $content_id );
             self::log( __METHOD__ . ": write_transcription_details: content_id: " . $content_id);
             do_action("write_transcription_details", $user, $content_id);
@@ -285,22 +285,22 @@ class Generation_Process {
             $label = $chain[$i];
             $label_encoded = Veepdotai_Util::encode_prompt_id( $label );
 
-            self::log( __METHOD__ . ": i: ${i}: label: ${label}: key: ${label_encoded}.");
+            self::log( __METHOD__ . ": i: {$i}: label: {$label}: key: {$label_encoded}.");
 
             /*
             $current_chain = $label;
-            self::log( __METHOD__ . ": current_chain: ${label}.");
+            self::log( __METHOD__ . ": current_chain: {$label}.");
             */
 
             $instructions = $prompts[ $label_encoded ];
             $prompt = $instructions['prompt'];
-            self::log( __METHOD__ . ": phase${i} prompt: ${prompt}." );
+            self::log( __METHOD__ . ": phase{$i} prompt: {$prompt}." );
             
             self::log( __METHOD__ . ": lsd: " . $lsd );
             if ( $lsd === "TranscriptionChecked") {
                 // If last step done was TranscriptionChecked, we must continue
                 // at least one step
-                self::log( __METHOD__ . ": phase ${i}/${label}/${label_encoded} step is going to be done.");
+                self::log( __METHOD__ . ": phase {$i}/{$label}/{$label_encoded} step is going to be done.");
             } else {
 
                 if ( $i < $lsd ) {
@@ -313,22 +313,22 @@ class Generation_Process {
 
                 //if ( $prompt == "STOP" ) {
                 if ( $label == "STOP" ) {
-                    self::log_step_paused2( $pid, "_CONTENT_GENERATION_", "cid:${new_content_id}");
+                    self::log_step_paused2( $pid, "_CONTENT_GENERATION_", "cid:{$new_content_id}");
                     //self::update_last_step_done( $chain[$i + 1], $content_id );
                     self::update_last_step_done( $i + 1, $parent_id );
                     self::log( __METHOD__ . ": please pause!");
                     return $parent_id;
                     //return $content_id;
                 } else {
-                    self::log_step_continued2( $pid, "_CONTENT_GENERATION_", "cid:${new_content_id}");
+                    self::log_step_continued2( $pid, "_CONTENT_GENERATION_", "cid:{$new_content_id}");
                 }
 
-                self::log( __METHOD__ . ": phase ${i}/${label}/${label_encoded} step is going to be done.");
+                self::log( __METHOD__ . ": phase {$i}/{$label}/{$label_encoded} step is going to be done.");
             }
 
             // The step must be done so we do it!
-            //$new_content_id = self::generate($content_id, $pid, $veeplet, $instructions, "_PHASE${label_encoded}_GENERATION_", "ai-section-edcal1-phase${label_encoded}", $result, $i, $label_encoded);
-            $new_content_id = self::generate($parent_id, $pid, $veeplet, $instructions, "_PHASE${label_encoded}_GENERATION_", "ai-section-edcal1-phase${label_encoded}", $result, $i, $label_encoded);
+            //$new_content_id = self::generate($content_id, $pid, $veeplet, $instructions, "_PHASE{$label_encoded}_GENERATION_", "ai-section-edcal1-phase{$label_encoded}", $result, $i, $label_encoded);
+            $new_content_id = self::generate($parent_id, $pid, $veeplet, $instructions, "_PHASE{$label_encoded}_GENERATION_", "ai-section-edcal1-phase{$label_encoded}", $result, $i, $label_encoded);
 
             self::log( __METHOD__ . ": write_generation_details - content_id: {$new_content_id}" );
             do_action( "write_generation_details", $user, $new_content_id );
@@ -469,7 +469,7 @@ class Generation_Process {
 
         $new_content_id = self::save_generation( $content_id, "", $result, $content, $res, "veepdotaiPhase", $i, $label_encoded, $option);
 
-        self::log_step_finished2( $pid, $topic, "cid:${new_content_id}");
+        self::log_step_finished2( $pid, $topic, "cid:{$new_content_id}");
         self::log( __METHOD__ . ": generated data: topic: $topic: " . Veepdotai_Util::get_options( $option ));
         self::log( __METHOD__ . ": duration: " . self::get_duration( $start ) );
 
@@ -532,7 +532,7 @@ class Generation_Process {
             self::log( __METHOD__ . ": processing: $label/$label_encoded");
 
             //$phase_string = "ai-section-edcal1-phase$i";
-            $phase_name = "ai-section-edcal1-phase${label_encoded}";
+            $phase_name = "ai-section-edcal1-phase{$label_encoded}";
             $phase = Veepdotai_Util::get_option( $phase_name );
             self::log( __METHOD__ . ": processing: $phase_name/$phase");
             if ( $phase ) {
@@ -555,11 +555,11 @@ class Generation_Process {
 
         $label = $chain[$current_step];
         $label_encoded = Veepdotai_Util::encode_prompt_id( $label );
-        $phase_name = "ai-section-edcal1-phase${label_encoded}";
+        $phase_name = "ai-section-edcal1-phase{$label_encoded}";
         $phase = Veepdotai_Util::get_option( $phase_name );
 
-        self::log( __METHOD__ . ": option name: ai-section-edcal1-phase${label_encoded}: ${prompt}");    
-        Veepdotai_Util::set_option( "ai-section-edcal1-phase${label_encoded}", $prompt );
+        self::log( __METHOD__ . ": option name: ai-section-edcal1-phase{$label_encoded}: {$prompt}");    
+        Veepdotai_Util::set_option( "ai-section-edcal1-phase{$label_encoded}", $prompt );
 
         return $prompt;
     }
@@ -612,7 +612,7 @@ class Generation_Process {
             self::log( __METHOD__ . ": processing: $label/$label_encoded");
 
             //$phase_string = "ai-section-edcal1-phase$i";
-            $phase_name = "ai-section-edcal1-phase${label_encoded}";
+            $phase_name = "ai-section-edcal1-phase{$label_encoded}";
             $phase = Veepdotai_Util::get_option( $phase_name );
             self::log( __METHOD__ . ": processing: $phase_name/$phase");
             if ( $phase ) {
@@ -646,7 +646,7 @@ class Generation_Process {
         //$params = $prompt; // will default to davinci-003
         $role = isset( $instructions['role'] ) ? $instructions['role'] : "You are a helpful assistant";
         $llm = isset( $instructions['llm'] ) ? $instructions['llm'] : "";
-        self::log( __METHOD__ . ": llm: ${llm}.");
+        self::log( __METHOD__ . ": llm: {$llm}.");
 
         $result = [];
         if ( $llm ) {
@@ -662,7 +662,7 @@ class Generation_Process {
         $llm_engine = $result[1];
         if ( ! in_array( $llm_engine, ["openai", "mistral"])) {
             $result = ["", "openai", "gpt-4-0125-preview"];
-            //throw new Exception("LLM engine ${llm_engine} is not among the allowed values.");
+            //throw new Exception("LLM engine {$llm_engine} is not among the allowed values.");
         }
 
         $llm_model = $result[2];
@@ -676,7 +676,7 @@ class Generation_Process {
             ])) {
 
             $result = ["", "openai", "gpt-4-0125-preview"];
-            //throw new Exception("LLM model ${llm_model} is not among the allowed values.");
+            //throw new Exception("LLM model {$llm_model} is not among the allowed values.");
         }
 
         if ( $llm_engine == "openai" ) {
@@ -762,7 +762,7 @@ class Generation_Process {
         // Create metadata
         $custom_metadata = $elements["metadata"];
         $veep_metadata = array(
-            //"${prefix}${i}Content" => $label_encoded . "\n" . $content,
+            //"{$prefix}{$i}Content" => $label_encoded . "\n" . $content,
             "veepdotaiContent" => $only_content,
             "veepdotaiDetails" => json_encode( $res ),
             "veepdotaiLabelEncoded" => $label_encoded,            

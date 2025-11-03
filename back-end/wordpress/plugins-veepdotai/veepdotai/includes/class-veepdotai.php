@@ -297,10 +297,10 @@ class Veepdotai {
 					Veepdotai_Util::log( 'debug', 'Link: ' . $app_target . ' => ' . $app_src );
 
 					if (file_exists($app_target)) {
-						Veepdotai_Util::log( "debug", "We remove old target: ${app_target}" );
+						Veepdotai_Util::log( "debug", "We remove old target: {$app_target}" );
 						unlink( $app_target );
 					}
-					Veepdotai_Util::log( "debug", "Let's create the new target: ${app_target}" );
+					Veepdotai_Util::log( "debug", "Let's create the new target: {$app_target}" );
 					symlink( $app_src, $app_target );
 				}
 		}

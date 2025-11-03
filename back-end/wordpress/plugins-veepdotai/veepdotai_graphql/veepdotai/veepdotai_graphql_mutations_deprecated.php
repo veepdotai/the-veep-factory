@@ -166,7 +166,7 @@ function get_usage_data( $user_id ) {
 		"Content-type: application/vnd.flux"
 	];
 	$post_fields = <<<_EOM_
-from(bucket: "${USAGE_BUCKET_NAME}")
+from(bucket: "$USAGE_BUCKET_NAME")
 |> range(start: 2024-01-01T00:00:00Z, stop: 2024-07-31T00:00:00Z)
 |> filter(fn: (r) => r["_measurement"] == "usage")
 |> filter(fn: (r) => r["_field"] == "completion_tokens" or r["_field"] == "prompt_tokens" or r["_field"] == "total_tokens")

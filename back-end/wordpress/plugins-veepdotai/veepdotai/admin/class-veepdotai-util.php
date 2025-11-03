@@ -241,7 +241,7 @@ class Veepdotai_Util {
 
 	public static function convert_binary_data( $user, $user_param_name, $value ) {
 		$alea = uniqid();
-		$filename = self::get_storage_directory() . "/option-${alea}.data";
+		$filename = self::get_storage_directory() . "/option-{$alea}.data";
 		$fp = fopen($filename, "wb");
 
 		if (fwrite($fp, $value) === FALSE) {
@@ -254,7 +254,7 @@ class Veepdotai_Util {
 		
 		$format_input = "windows-1252";
 		$format_output = "utf-8";
-		$cmd = "iconv -c -f ${format_input} -t ${format_output} $filename > $filename.utf8";
+		$cmd = "iconv -c -f {$format_input} -t {$format_output} $filename > $filename.utf8";
 		
 		self::log( "debug", "Executing the following cmd: $cmd." );
 		
@@ -306,7 +306,7 @@ class Veepdotai_Util {
 				self::log( 'debug', "Setting option through binary serialization because transcription is empty and should not." );
 				$res = self::convert_binary_data( $user, $user_param_name, $value );
 				//$res = $value;
-				self::log( 'debug', "Update option after binary conversion ? res = ${res}." );
+				self::log( 'debug', "Update option after binary conversion ? res = {$res}." );
 			}
 		}
 		self::log( 'debug', "Option has been set: " . $res . "." );
@@ -1210,44 +1210,44 @@ class Veepdotai_Util {
 
 	public static function log_step_started( $user_log_file, $user_run_file, $pid, $topic, $msg = '' ) {
         $key = self::get_date() . ' ' . $pid;
-		error_log("$key - ${topic}STARTED${msg}\n", 3, $user_log_file);
-		error_log("$key - ${topic}STARTED_${msg}\n", 3, $user_run_file);
-//        file_put_contents( $user_log_file, "$key - ${topic}STARTED${msg}\n", FILE_APPEND);
-//        file_put_contents( $user_run_file, "$key - ${topic}STARTED_${msg}\n", FILE_APPEND);
+		error_log("$key - {$topic}STARTED{$msg}\n", 3, $user_log_file);
+		error_log("$key - {$topic}STARTED_{$msg}\n", 3, $user_run_file);
+//        file_put_contents( $user_log_file, "$key - {$topic}STARTED{$msg}\n", FILE_APPEND);
+//        file_put_contents( $user_run_file, "$key - {$topic}STARTED_{$msg}\n", FILE_APPEND);
     }
 
     public static function log_step_finished( $user_log_file, $user_run_file, $pid, $topic, $msg = '') {
         $key = self::get_date() . ' ' . $pid;
-		error_log("$key - ${topic}FINISHED${msg}\n", 3, $user_log_file);
-		error_log("$key - ${topic}FINISHED_${msg}\n", 3, $user_run_file);
-//        file_put_contents( $user_log_file, "$key - ${topic}FINISHED${msg}\n", FILE_APPEND);
-//        file_put_contents( $user_run_file, "$key - ${topic}FINISHED_${msg}\n", FILE_APPEND);
+		error_log("$key - {$topic}FINISHED{$msg}\n", 3, $user_log_file);
+		error_log("$key - {$topic}FINISHED_{$msg}\n", 3, $user_run_file);
+//        file_put_contents( $user_log_file, "$key - {$topic}FINISHED{$msg}\n", FILE_APPEND);
+//        file_put_contents( $user_run_file, "$key - {$topic}FINISHED_{$msg}\n", FILE_APPEND);
     }
 
 	public static function log_step_paused( $user_log_file, $user_run_file, $pid, $topic, $msg = '') {
         $key = self::get_date() . ' ' . $pid;
-		error_log("$key - ${topic}PAUSED${msg}\n", 3, $user_log_file);
-		error_log("$key - ${topic}PAUSED_${msg}\n", 3, $user_run_file);
-//        file_put_contents( $user_log_file, "$key - ${topic}PAUSED${msg}\n", FILE_APPEND);
-//        file_put_contents( $user_run_file, "$key - ${topic}PAUSED_${msg}\n", FILE_APPEND);
+		error_log("$key - {$topic}PAUSED{$msg}\n", 3, $user_log_file);
+		error_log("$key - {$topic}PAUSED_{$msg}\n", 3, $user_run_file);
+//        file_put_contents( $user_log_file, "$key - {$topic}PAUSED{$msg}\n", FILE_APPEND);
+//        file_put_contents( $user_run_file, "$key - {$topic}PAUSED_{$msg}\n", FILE_APPEND);
     }
 
 	public static function log_step_continued( $user_log_file, $user_run_file, $pid, $topic, $msg = '') {
         $key = self::get_date() . ' ' . $pid;
-		error_log("$key - ${topic}CONITNUED${msg}\n", 3, $user_log_file);
-		error_log("$key - ${topic}CONTINUED_${msg}\n", 3, $user_run_file);
-//        file_put_contents( $user_log_file, "$key - ${topic}PAUSED${msg}\n", FILE_APPEND);
-//        file_put_contents( $user_run_file, "$key - ${topic}PAUSED_${msg}\n", FILE_APPEND);
+		error_log("$key - {$topic}CONITNUED{$msg}\n", 3, $user_log_file);
+		error_log("$key - {$topic}CONTINUED_{$msg}\n", 3, $user_run_file);
+//        file_put_contents( $user_log_file, "$key - {$topic}PAUSED{$msg}\n", FILE_APPEND);
+//        file_put_contents( $user_run_file, "$key - {$topic}PAUSED_{$msg}\n", FILE_APPEND);
     }
 
 	public static function log_step_error( $user_log_file, $user_run_file, $pid, $topic, $msg = '') {
         $key = self::get_date() . ' ' . $pid;
-		error_log("$key - ${topic}ERROR${msg}\n", 3, $user_log_file);
-		error_log("$key - ${topic}ERROR_${msg}\n", 3, $user_run_file);
+		error_log("$key - {$topic}ERROR{$msg}\n", 3, $user_log_file);
+		error_log("$key - {$topic}ERROR_{$msg}\n", 3, $user_run_file);
 		error_log("$key - _ERROR_\n", 3, $user_log_file);
 		error_log("$key - _ERROR_\n", 3, $user_run_file);
-//        file_put_contents( $user_log_file, "$key - ${topic}FINISHED${msg}\n", FILE_APPEND);
-//        file_put_contents( $user_run_file, "$key - ${topic}FINISHED_${msg}\n", FILE_APPEND);
+//        file_put_contents( $user_log_file, "$key - {$topic}FINISHED{$msg}\n", FILE_APPEND);
+//        file_put_contents( $user_run_file, "$key - {$topic}FINISHED_{$msg}\n", FILE_APPEND);
     }
 
 	/**

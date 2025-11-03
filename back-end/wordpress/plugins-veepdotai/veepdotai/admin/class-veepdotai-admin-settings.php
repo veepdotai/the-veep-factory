@@ -230,7 +230,7 @@ class Veepdotai_Admin_Settings {
 		);
 
 		foreach ( $roles as $role => $libelle ) {
-			echo( esc_html( "Removing role: ${prefix}_${role}\n" ) );
+			echo( esc_html( "Removing role: {$prefix}_{$role}\n" ) );
 			wp_roles()->remove_role( $prefix . '_' . $role );
 		}
 	}
