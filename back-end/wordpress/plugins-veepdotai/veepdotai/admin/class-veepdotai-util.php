@@ -1278,7 +1278,7 @@ class Veepdotai_Util {
 		self::var_error_log( $object );
 	}
 
-	public static function var_error_log( $object = null, $message_type = 3, $path = '/tmp/wordpress.log' ) {
+	public static function var_error_log( $object = null, $message_type = 3, $path = '/var/www/log/wordpress.log' ) {
 		ob_start();                    // start buffer capture
 		var_dump( $object );           // dump the values
 		$contents = ob_get_contents(); // put the buffer into a variable
