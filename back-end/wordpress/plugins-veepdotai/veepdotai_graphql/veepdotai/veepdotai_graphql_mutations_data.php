@@ -130,7 +130,6 @@ function register_save_data() {
 				'items' => $options,
 			];
 
-
 			$data = [];
 			if ( $result ) {
 				log( "$fn: result: true" );
@@ -197,9 +196,9 @@ function register_list_data() {
 			$pn = "veepdotai-";
 			$prompt_prefix = "ai-prompt-";
 	
-			$param_name = sanitize_text_field( $input['option'] );
-			$object_id = sanitize_text_field( $input['objectId'] );
-			$cardinality = sanitize_text_field( $input['cardinality'] );
+			$param_name = check_and_get( "option" );
+			$object_id = check_and_get( "objectId" );
+			$cardinality = check_and_get( "cardinality" );
 
 			$user = wp_get_current_user();
 			log( "$fn: user: " . print_r( $user, true) . "." );
