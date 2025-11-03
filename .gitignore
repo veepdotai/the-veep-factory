@@ -12,6 +12,6 @@ node_modules
 
 **/.yarn*
 
-**/plugins/lokavivo_graphql
+**lokavivo**
 
 **/plugins-with-license
