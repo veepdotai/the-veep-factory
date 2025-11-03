@@ -24,3 +24,155 @@ It is open source so you can use your own architecture if you prefer.
 
 :::
 
+# Installation
+
+## Veepdotai Installation
+
+. Create a .env file with all the required env vars
+. Install veepdotai through the docker compose provided
+. Add wget (should be added in the next Veepdotai docker version)
+
+## Create .env file
+
+```bash
+#
+CONTAINERS=../../private/containers
+#CONTAINERS=./containers
+
+#
+#
+RP_HOST="lokavivo.docker.localhost"
+RP_HOST1="app.lokavivo.eu"
+RP_HOST="lokavivo.docker.localhost"
+RP_HOST2="app.lokavivo.eu"
+RP_WHO="localhost"
+#
+# traefik volumes configuration
+#
+VOLUME_RP=${CONTAINERS}/traefik
+VOLUME_RP_LOG=${CONTAINERS}/traefik/volumes/volume-log
+VOLUME_RP_DYNAMIC=${CONTAINERS}/traefik/volumes/volume-dynamic
+VOLUME_RP_CERTS_DIR=../../private/certs/rp
+VOLUME_RP_LETSENCRYPT_DIR=../../private/letsencrypt/rp
+#
+# wordpress-db volumes configuration
+#
+VOLUME_DB=${CONTAINERS}/wordpress-db/volumes/volume-db
+VOLUME_DB_ROOT_BIN=${CONTAINERS}/wordpress-db/volumes/volume-root-bin
+VOLUME_DB_BACKUP=../../backups
+#
+# wordpress-db database configuration
+#
+TVF_DB_HOST=db
+TVF_DB_NAME=your DB name
+TVF_DB_USER=your db user (root)
+TVF_DB_ROOT_PASSWORD=patrick
+TVF_DB_PASSWORD=patrick
+TVF_DB_BACKUP_PATH=/
+TVF_DB_BACKUP_FILE=
+#
+# wordpress volumes configuration
+#
+# ${CONTAINERS}: relative to the host filesystem
+#
+VOLUME_WP_DATA=${CONTAINERS}/wordpress/volumes/volume-data
+VOLUME_WP_BIN_DIR=${CONTAINERS}/wordpress/volumes/volume-bin
+VOLUME_WP_LOG_DIR=${CONTAINERS}/wordpress/volumes/volume-log
+#
+# wordpress configuration
+#
+TVF_ALLOWED_SERVER_NAMES=localhost,mytest.veep.ai,lokavivo.docker.localhost
+TVF_LOG_DIR=/var/www/log
+TVF_DEBUG_LOG_PATH=/var/www/log/debug.log
+TVF_BIN_DIR=/var/www/bin
+##
+#
+# Linkedin configuration
+#
+TVF_LINKEDIN_CLIENT_ID=your LI id
+TVF_LINKEDIN_CLIENT_SECRET=your LI secret
+TVF_LINKEDIN_CLIENT_REDIRECT_URI=your client redirect uri
+TVF_LINKEDIN_SCOPE=r_emailaddress,r_liteprofile,w_member_social
+#
+# Apps keys
+#
+TVF_OPENAI_KEY=your openai key
+TVF_STRIPE_SK=your stripe secret key
+#
+# Usage metrics configuration
+#
+TVF_INFLUX_TOKEN=Your influx token
+TVF_INFLUX_ORG_ID=Your influx org id
+#
+TVF_USAGE_BUCKET_NAME=usage
+TVF_USAGE_SERVER=https://m.veep.ai/api/v2/query
+TVF_USAGE_DEFAULT_USER_ID=email@x.y
+TVF_USER=ed2d0d1a-102c-11e9-8197-00163e4e76d5
+```
+
+You can connect and go to the Lokavivo/Veep application but there is no content for the moment. Moreover, you can't generate/do anything because there are no configured elements (no openai key..., no pipelines...)
+
+## wget Installation
+
+Install wget on the wordpress machine:
+
+```
+apt update && apt install -y wget
+```
+
+You must enter the following informations in the wp-admin panel of Veepdotai/Configuration clés
+
+* Open AI key (required): Get it from OpenAI
+* Mistral key (optional)
+* Pexel key (optional)
+* Unsplash key (optional)
+* Default Veep.AI username (required): it is a user name you will use to create the first pipelines you will have in your catalog. Your users will be able to choose them to generate the content  
+* FFmpeg executable path: it is used to extract mp3 from video and convert audio to mp3
+
+Be careful, your uploads directory must writable by the web server otherwise it can't upload data.
+Change default permalink to a specific one based on directory tree instead of ?id=123  (date and title for example)
+
+WP-Graphql-facet: be careful to use the plugin binary version. Of course, you must buy the FacetWP plugin if you want it.
+
+# Configuration
+
+. Connect to the just created wordpress server with the admin credentials you setup in your env file
+. Install and activate all the plugins required by Veep
+. Configure the simple-login-jwt plugin
+. Configure role permissions
+. Configure your veeplets catalog
+
+## Simple jwt configuration
+
+### General Screen
+
+* Create a JWT Decryption Key by generating a random key. Use a very strong key.
+* Check the "All WordPress endpoints checks for JWT authentication" so all server access are authenticated through JWT
+
+### Login Screen
+
+* Allow Auto-Login : Yes
+* JWT Login Settings : Log in by WordPress Userd ID
+* JWT parameter key : data.user.id
+
+### Register Screen
+
+* Allow register : No
+
+### CORS Screen
+
+* Allow CORS: Yes
+* CORS Headers: Check "Access-Control-Allow-Origin" and indicate *
+
+### Protect Endpoints Screen
+
+* Protect endpoints enbaled: Yes
+
+## User Role Configuration
+
+For vcontent, add the edit_vcontent permission to the Veepdotai_Content_Marketer role through the User Role Editor, otherwise users (who all have Veepdotai Content Marketer permission for the moment) won't see draft contents.
+
+## First Veeplet Configuration
+
+Once they are configured, connect with the default veep.ai user you indicated so you can configure veeplets.
+
