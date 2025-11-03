@@ -18,6 +18,14 @@ function log( $msg ) {
 	\Veepdotai_Util::log( 'debug', 'GraphQL Mutations: Data: ' . $msg );
 }
 
+function check_and_get( $fieldName, $default = "" ) {
+	if ( isset( $input[ $fieldName ] ) ) {
+		return sanitize_text_field( $input[ $fieldName] );
+	} else {
+		return $default;
+	}
+}
+
 /**
  * Save provided option name with new value. If the option old name is provided, it is deleted.
  */
@@ -61,11 +69,11 @@ function register_save_data() {
 			$pn = "veepdotai-";
 			$prompt_prefix = "ai-prompt-";
 	
-			$cardinality = isset( $input['cardinality'] ) ? sanitize_text_field( $input['cardinality'] ) : "";
-			$param_name = sanitize_text_field( $input['option'] );
-			$option_value = sanitize_text_field( $input['value'] );
-			$object_id = isset( $input['objectId'] ) ? sanitize_text_field( $input['objectId'] ) : null;
-			$oldName = isset( $input['oldName'] ) ? sanitize_text_field( $input['oldName'] ) : null;
+			$cardinality = check_and_get( "cardinality" );
+			$param_name = check_and_get( "option" );
+			$option_value = check_and_get( "value" );
+			$object_id = check_and_get( "objectId", null );
+			$oldName = check_and_get( "cardinality", null );
 			$old_name = $pn . $prompt_prefix . $oldName;
 
 			log( "$fn: old_name: " . $old_name );
@@ -94,7 +102,7 @@ function register_save_data() {
 			global $wpdb;
 
 			//$my_option_name = "jckermagoret-veepdotai-form-Upload";
-			$my_option_name = "${user}-veepdotai-form-Upload";
+			$my_option_name = "$user-veepdotai-form-Upload";
 			$vars = [
 				$wpdb->esc_like( $my_option_name ) . '%'
 			];
