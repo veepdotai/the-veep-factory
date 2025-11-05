@@ -136,13 +136,68 @@ WP-Graphql-facet: be careful to use the plugin binary version. Of course, you mu
 
 # Configuration
 
-. Connect to the just created wordpress server with the admin credentials you setup in your env file
+. Configure permalinks
+. Generate wp-config.php and wp-veep.php
 . Install and activate all the plugins required by Veep
+. Configure Veepdotai
 . Configure the simple-login-jwt plugin
 . Configure role permissions
 . Configure your veeplets catalog
 
+## Configure permalinks
+
+Connect to the just created wordpress server with the admin credentials in your env file.
+
+Go to Settings/permalinks and configure permalink structure in another thing than the default. For example Day and Name.
+
+## Generate wp-config.php and wp-veep.php
+
+In the server host, go to the main veep factory directory:
+```
+sudo sh setup.sh
+```
+
+wp-config.php and wp-veep.php are generated.
+
+You can configure logs in the wp-veep.php file.
+
+Edit .htaccess to increase upload size limit and max execution time to whatever you want.
+
+```php
+php_value upload_max_filesize 32M
+php_value post_max_size 64M
+php_value memory_limit 128M
+php_value max_execution_time 300
+php_value max_input_time 300
+```
+
+These files can be stored in ${VOLUME_WP_CONF_DIR} in docker-compose.yml
+
+## Install and activate all the plugins required by Veep
+
+Connect to the wordpress host:
+
+```sh
+docker exec -it wordpress bash
+```
+
+Then
+
+```sh
+for d in $(ls */composer.json); do cd $(dirname $d) && echo $d && php ../../bin/composer.phar install --no-dev && cd ..; done
+```
+
+## Configure Veepdotai
+
+Input the following values:
+* OpenAI key: get one on their server. You'll need an API account
+* Pexels key (optional):
+* Unsplash key (optional):
+* Default veep.ai username (used to configure veeplet catalog)
+
 ## Simple jwt configuration
+
+Execute instruction in the following steps to enable JWT authentication.
 
 ### General Screen
 
@@ -172,7 +227,47 @@ WP-Graphql-facet: be careful to use the plugin binary version. Of course, you mu
 
 For vcontent, add the edit_vcontent permission to the Veepdotai_Content_Marketer role through the User Role Editor, otherwise users (who all have Veepdotai Content Marketer permission for the moment) won't see draft contents.
 
+## OAuth2 Authentication Configuration
+
+Veep has been tested only with Google:
+
+Go to Tools/Login with Google then input information you get in google login page:
+* Client ID
+* Client secret
+* Check (or not) Create new user
+
+Go to the google console:
+* https://console.cloud.google.com
+* click on oauth consent
+* click on client
+
+Input the Authorized Javascript Origins and the Authorized Redirection URI. In Lokavivo or Veep.AI case, it was :
+* Authorized Javascript Origins: https://app.veep.ai
+* Authorized Redirection URI: https://app.veep.ai/wp-login.php
+
+Don't forget to click on Add an URI in each case.
+
+## System update
+
+```sh
+apt update
+apt install -y wget
+```
+
+Not this one => apt-install -y ffmpeg (about 500Mb). I prefer to install the static program (100 Mb), it is lighter.
+On another hand, we'll need later convert from imagemagick...
+
 ## First Veeplet Configuration
 
 Once they are configured, connect with the default veep.ai user you indicated so you can configure veeplets.
 
+# After Installation
+
+Check permission
+Check dirs are writable by www-data:ubuntu with 770 mode.
+
+Web server is usually executed as www-data and if you are on a ubuntu system, you will use this user. Thus it is useful to have the permissions to write from the host to the service. But don't forget to fix permissions after:
+
+```sh
+chown www-data:ubuntu your_file or your_dir
+```
