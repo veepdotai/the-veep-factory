@@ -2,6 +2,8 @@
 
 namespace Veepdotai\Graphql\Mutations\Configuration;
 
+//use Veepdotai_Util;
+
 /**
  * @package Veepdotai\Graphql\Mutations\Configuration
  * @version 0.0.1
@@ -17,10 +19,6 @@ function register() {
 
 function log( $msg ) {
 	\Veepdotai_Util::log( 'debug', 'GraphQL Mutations\Configuration: ' . $msg );
-}
-
-function check_and_get( $fieldName ) {
-	return isset( $input[ $fieldName ] ) && sanitize_text_field( $input[ $fieldName] );
 }
 
 function register_create_configuration() {
@@ -67,11 +65,11 @@ function register_create_configuration() {
 			$prefix = "createConfiguration";
 
 			$data = [
-				"type" => check_and_get( "type" ),
-				"id" => check_and_get( "id" ),
-				"name" => check_and_get( "name" ),
-				"value" => check_and_get( "value" ),
-				"status" => check_and_get( "status" )
+				"type" => \Veepdotai_Util::check_and_get( $input, "type" ),
+				"id" => \Veepdotai_Util::check_and_get( $input, "id" ),
+				"name" => \Veepdotai_Util::check_and_get( $input, "name" ),
+				"value" => \Veepdotai_Util::check_and_get( $input, "value" ),
+				"status" => \Veepdotai_Util::check_and_get( $input, "status" )
 			];
 
 			log( $prefix . ': data: ' . print_r( $data, true ) );
@@ -125,10 +123,10 @@ function register_list_configuration() {
 
 			$data = [
 				/*"type" => isset( $input["type"] ) ? sanitize_text_field( $input["type"] ) : null,*/
-				"type" => check_and_get( "type" ),
-				"id" => check_and_get( "id" ),
-				"name" => check_and_get( "name" ),
-				"status" => check_and_get( "status" )
+				"type" => \Veepdotai_Util::check_and_get( $input, "type" ),
+				"id" => \Veepdotai_Util::check_and_get( $input, "id" ),
+				"name" => \Veepdotai_Util::check_and_get( $input, "name" ),
+				"status" => \Veepdotai_Util::check_and_get( $input, "status" )
 			];
 
 			log( $prefix . ': data: ' . print_r( $data, true ) );
@@ -224,8 +222,8 @@ function register_delete_configuration() {
 			$prefix = "deleteConfiguration";
 
 			$data = [
-				"type" => sanitize_text_field( $input["type"] ),
-				"id" => sanitize_text_field( $input["id"] ),
+				"type" => \Veepdotai_Util::check_and_get( $input, "type" ),
+				"id" => \Veepdotai_Util::check_and_get( $input, "id" ),
 			];
 
 			log( $prefix . ': data: ' . print_r( $data, true ) );

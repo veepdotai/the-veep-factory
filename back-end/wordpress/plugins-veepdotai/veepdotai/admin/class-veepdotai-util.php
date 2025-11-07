@@ -26,6 +26,19 @@ class Veepdotai_Util {
 		);
 	}
 
+	public static function check_and_get( $input, $fieldName, $default = "" ) {
+		$result = "";
+		if ( isset( $input[ $fieldName ] ) ) {
+			$result = sanitize_text_field( $input[ $fieldName ] );
+		} else {
+			$result = $default;
+		}
+
+		self::log('debug', "check_and_get: fieldName: $fieldName => result: $result.");
+		return $result;
+	}
+
+
 	public static function generate_audio( $url ) {
 		$url_escaped = $url;
 		self::log( 'debug', "Generates an audio component for $url_escaped" );

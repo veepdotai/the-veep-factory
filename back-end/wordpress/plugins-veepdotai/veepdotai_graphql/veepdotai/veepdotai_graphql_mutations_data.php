@@ -2,6 +2,8 @@
 
 namespace Veepdotai\Graphql\Mutations\Data;
 
+//use Veepdotai_Util;
+
 /**
  * @package Veepdotai\Graphql\Data
  * @version 0.0.1
@@ -16,14 +18,6 @@ function register() {
 
 function log( $msg ) {
 	\Veepdotai_Util::log( 'debug', 'GraphQL Mutations: Data: ' . $msg );
-}
-
-function check_and_get( $fieldName, $default = "" ) {
-	if ( isset( $input[ $fieldName ] ) ) {
-		return sanitize_text_field( $input[ $fieldName] );
-	} else {
-		return $default;
-	}
 }
 
 /**
@@ -69,11 +63,11 @@ function register_save_data() {
 			$pn = "veepdotai-";
 			$prompt_prefix = "ai-prompt-";
 	
-			$cardinality = check_and_get( "cardinality" );
-			$param_name = check_and_get( "option" );
-			$option_value = check_and_get( "value" );
-			$object_id = check_and_get( "objectId", null );
-			$oldName = check_and_get( "cardinality", null );
+			$cardinality = \Veepdotai_Util::check_and_get( $input, "cardinality" );
+			$param_name = \Veepdotai_Util::check_and_get( $input, "option" );
+			$option_value = \Veepdotai_Util::check_and_get( $input, "value" );
+			$object_id = \Veepdotai_Util::check_and_get( $input, "objectId", null );
+			$oldName = \Veepdotai_Util::check_and_get( $input, "cardinality", null );
 			$old_name = $pn . $prompt_prefix . $oldName;
 
 			log( "$fn: old_name: " . $old_name );
@@ -93,7 +87,7 @@ function register_save_data() {
 			log( "$fn: suffix: " . $suffix );
 
 			$option_name = $pn . $param_name . "-" . $suffix;
-			log( "$fn: Setting option: $option_name = $option_value." );
+			log( "$fn: Setting option: option_name: $option_name => option_value: $option_value." );
 
 			$result = \Veepdotai_Util::set_option( $option_name, $option_value );
 			log( "$fn: set_option: result: $result" );
@@ -102,7 +96,10 @@ function register_save_data() {
 			global $wpdb;
 
 			//$my_option_name = "jckermagoret-veepdotai-form-Upload";
-			$my_option_name = "$user-veepdotai-form-Upload";
+			//$my_option_name = "jckermagoret$user-veepdotai-form-Upload";
+			$my_option_name = "$user-$option_name";
+			log( "$fn: listing content after creation: my_option_name: $my_option_name" );
+
 			$vars = [
 				$wpdb->esc_like( $my_option_name ) . '%'
 			];
@@ -110,6 +107,7 @@ function register_save_data() {
 			$options = $wpdb->get_results( $sql );
 			log("options: " . print_r( $options, true ) );
 
+			/*
 			$convertFn = function( $item ) {
 				$name = $item->option_name;
 				preg_match( '/-([a-zA-Z]*)-([0-9]*)$/', $name, $matches );
@@ -123,6 +121,7 @@ function register_save_data() {
 			};
 			$results = array_map( $convertFn, $options );
 			log("results: " . print_r( $results, true ) );
+			*/
 
 			$result = [
 				'status' => 'success',
@@ -196,9 +195,9 @@ function register_list_data() {
 			$pn = "veepdotai-";
 			$prompt_prefix = "ai-prompt-";
 	
-			$param_name = check_and_get( "option" );
-			$object_id = check_and_get( "objectId" );
-			$cardinality = check_and_get( "cardinality" );
+			$param_name = \Veepdotai_Util::check_and_get( $input, "option" );
+			$object_id = \Veepdotai_Util::check_and_get( $input, "objectId" );
+			$cardinality = \Veepdotai_Util::check_and_get( $input, "cardinality" );
 
 			$user = wp_get_current_user();
 			log( "$fn: user: " . print_r( $user, true) . "." );
