@@ -163,6 +163,7 @@ class Generation_Process {
             $metadata = self::prepare_content( $user, $_files, $pid, $chain_id);
         }
 
+        // metadata is saved on the parent
         $content_id = self::save_metadata( $metadata, $chain_id );
         Veepdotai_Util::set_option( 'ai-section-edcal0-transcription-id', $content_id );
 
@@ -736,6 +737,44 @@ class Generation_Process {
     }
 
     /**
+     * Returns the option_name or the option_value according the $result_type:
+     *  - 0: returns option_name
+     *  - 1: returns option_value
+     *  - 2: returns stdClass(option_name, option_value) 
+     */
+    public static function get_option_by_query($query, $result_type = 1) {
+        global $wpdb;
+
+        $vars = [
+            //$wpdb->esc_like( $query )
+            $query
+        ];
+        self::log( __METHOD__ . ": query: " . $query . ": after esc_like:" . print_r($vars, true) );
+
+        $sql = $wpdb->prepare(
+            "SELECT option_name, option_value "
+            . "FROM $wpdb->options "
+            . "WHERE option_name LIKE %s "
+            . "LIMIT 1;",
+            $vars
+        );
+        $options = $wpdb->get_results( $sql );
+
+        self::log( __METHOD__ . ": nb of results: " . count( $options) );
+
+        if ( count($options) == 0 ) return null;
+
+        self::log( __METHOD__ . ": result_type: " . $result_type . " from result:" . print_r($options, true) );
+
+        if ( $result_type == 0 ) $r = $options[0]->option_name;
+        if ( $result_type == 1 ) $r = $options[0]->option_value;
+        if ( $result_type == 2 ) $r = $options[0];
+
+        self::log( __METHOD__ . ": r:" . print_r($r, true) );
+        return $r;
+    }
+
+    /**
      * Saves information about generation:
      * - updates last step done
      * - generated content
@@ -768,9 +807,34 @@ class Generation_Process {
             "veepdotaiLabelEncoded" => $label_encoded,            
             "veepdotaiParent" => $id
         );
+
+        // Compute default template
+        $user_login = wp_get_current_user()->user_login;
+        $query = "{$user_login}-veepdotai-form-PdfExport-%-default-A4";
+        $r_user_template = Generation_Process::get_option_by_query( $query );
+        if ( ! $r_user_template ) {
+            $user_default = "demo";
+            $query = "{$user_default}-veepdotai-form-PdfExport-%-default-A4";
+            $r_default_template = Generation_Process::get_option_by_query( $query );
+            if ( ! $r_default_template ) {
+                $tvf_template = null;
+            } else {
+                $tvf_template = $r_default_template;
+            }
+        } else {
+            $tvf_template = $r_user_template;
+        }
+
+        if ( $tvf_template ) {
+            $tvf_template_metadata = ["tvfTemplate" => $tvf_template];
+        } else {
+            $tvf_template_metadata = ["tvfTemplate" => "no template"];
+        }
+
         $metadata = array_merge(
             $custom_metadata,
-            $veep_metadata
+            $veep_metadata,
+            $tvf_template_metadata
         );
 
         // Create vcontent

@@ -331,7 +331,7 @@ class Veepdotai {
 						),
 					) );
 					$users = $users_query->get_results();
-					echo "<p>${print_r( $users, true)}</p>";
+					echo "<p>" . print_r( $users, true) . "</p>";
 					if ( $users && count( $users ) > 0 ) {
 						foreach( $users as $user ) {
 							if ($user && $user->ID != 1) {

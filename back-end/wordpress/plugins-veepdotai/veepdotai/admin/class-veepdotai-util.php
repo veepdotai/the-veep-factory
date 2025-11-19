@@ -38,6 +38,20 @@ class Veepdotai_Util {
 		return $result;
 	}
 
+    public static function my_array_find_key($array, $fn, $filter) {
+        $done = false;
+        $r_key = null;
+        for($i = 0; $i < count($array) && ! $done; $i++) {
+            $key = $array[$i][0];
+            $value = $array[$i][1];
+            $done = $fn($key, $value);
+            if ($done) {
+                $r_key = $key;
+            }
+        }
+
+        return $r_key;
+    }
 
 	public static function generate_audio( $url ) {
 		$url_escaped = $url;
