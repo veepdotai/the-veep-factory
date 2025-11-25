@@ -1037,6 +1037,27 @@ class Veepdotai_Util {
 		return VEEPDOTAI_PLUGIN_TMP_DIR;
 	}
 
+	public static function normalize( $content ) {
+        self::log( 'debug', __METHOD__ . ": content: " . $content . ".");
+
+		$normalized_content = preg_replace("/_EOL_/", "\n", $content );
+        $normalized_content = preg_replace("/_G_/", '"', $normalized_content );
+
+        self::log( 'debug', __METHOD__ . ": normalized content: " . $normalized_content . ".");
+
+		return $normalized_content;
+    }
+
+	public static function denormalize( $content ) {
+        self::log( 'debug', __METHOD__ . ": content to be denormalized: " . $content . ".");
+        $denormalized_content = preg_replace("/\n/", "_EOL_", $content );
+        $denormalized_content = preg_replace("/\"/", "_G_", $denormalized_content );
+
+		self::log( 'debug', __METHOD__ . ": denormalized content: " . $denormalized_content . ".");
+
+        return $denormalized_content;
+    }
+
 	public static function fix_json( $raw ) {
 		$i    = 1;
 		$text = ( new \Delight\Str\Str( $raw ) )->normalizeLineEndings( 'EOL' );
