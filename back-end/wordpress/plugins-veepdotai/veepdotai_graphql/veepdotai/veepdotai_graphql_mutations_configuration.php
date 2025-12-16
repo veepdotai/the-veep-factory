@@ -87,6 +87,9 @@ function register_create_configuration() {
 	] );
 }
 
+/**
+ * List information about the person provided as personId
+ */
 function register_list_configuration() {
 
 	register_graphql_mutation( 'listConfiguration', [
@@ -104,6 +107,10 @@ function register_list_configuration() {
 			'name' => [
 				'type' => 'String',
 				'description' => __( 'Object name', 'your-textdomain' ),
+			],
+			'personId' => [
+				'type' => 'String',
+				'description' => __( 'Person id', 'your-textdomain' ),
 			],
 			'status' => [
 				'type' => 'String',
@@ -126,6 +133,7 @@ function register_list_configuration() {
 				"type" => \Veepdotai_Util::check_and_get( $input, "type" ),
 				"id" => \Veepdotai_Util::check_and_get( $input, "id" ),
 				"name" => \Veepdotai_Util::check_and_get( $input, "name" ),
+				"person_id" => \Veepdotai_Util::check_and_get( $input, "personId" ),
 				"status" => \Veepdotai_Util::check_and_get( $input, "status" )
 			];
 
@@ -134,7 +142,13 @@ function register_list_configuration() {
 
 	        global $wpdb;
 
-			$user_login = wp_get_current_user()->user_login;
+			/**
+			 * Be careful: we do that because these informations are public by default but
+			 * it may be necessary to make them more confidential
+			 */
+			$person_id = $data["person_id"];
+			$user_login = $person_id != "" ? $person_id : wp_get_current_user()->user_login;
+
 			$type = $data['type'];
 			$id = $data['id'];
 			$my_option_name = "{$user_login}-veepdotai-form-{$type}";
